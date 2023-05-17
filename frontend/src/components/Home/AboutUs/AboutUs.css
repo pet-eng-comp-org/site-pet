@@ -1,0 +1,54 @@
+.about-us {
+  margin: auto;
+  padding: 2rem 0;
+  height: 100%;
+  position: relative;
+  z-index: 999 !important;
+}
+
+.about-us h1 {
+  padding: 0 0rem;
+  text-align: left;
+  z-index: 999;
+  position: relative;
+  color: white;
+}
+.about-us a {
+  color: #9639c2;
+  font-weight: 300;
+}
+.about-us a:hover {
+  color: rgb(118, 31, 158);
+}
+
+.about-us p {
+  padding: 0 0rem;
+  z-index: 999;
+  position: relative;
+  color: white;
+  margin: 2rem 0;
+}
+
+.about-us .image {
+  height: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 784px) {
+  .responsive-container {
+    padding: 0 0 !important;
+  }
+
+  .image {
+    margin: 10px 0;
+    overflow: hidden;
+  }
+
+  .about-us p {
+    padding: 0 2rem;
+  }
+
+  .about-us h1 {
+    padding: 0 2rem;
+  }
+}

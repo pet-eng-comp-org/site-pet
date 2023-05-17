@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="138.744" height="60.682" viewBox="0 0 138.744 60.682">
+  <g id="Logo_PET_branca" data-name="Logo PET branca" transform="translate(0 0)">
+    <g id="Group_3" data-name="Group 3">
+      <path id="Path_1" data-name="Path 1" d="M75.034,289.245h5.086a4.113,4.113,0,1,0,5.026-5.026v-5.048a4.115,4.115,0,1,0-2.1,0v5.048a4.115,4.115,0,0,0-2.922,2.922H75.034a4.113,4.113,0,1,0-5.026,5.026v5.048a4.11,4.11,0,0,0,0,7.949v5.048a4.115,4.115,0,0,0-2.923,2.923H62.036a4.116,4.116,0,0,0-2.922-2.923v-5.048a4.113,4.113,0,1,0-5.026-5.026H49a4.115,4.115,0,1,0,0,2.1h5.086a4.115,4.115,0,0,0,2.922,2.923v5.048a4.11,4.11,0,0,0,0,7.949v5.048a4.115,4.115,0,1,0,2.1,0v-5.048a4.115,4.115,0,0,0,2.922-2.923h5.048a4.113,4.113,0,1,0,5.026-5.026v-5.048a4.116,4.116,0,0,0,2.923-2.923h5.086a4.115,4.115,0,1,0,0-2.1H75.034a4.115,4.115,0,0,0-2.923-2.922v-5.048A4.116,4.116,0,0,0,75.034,289.245Z" transform="translate(-40.912 -271.081)" fill="#fff"/>
+      <path id="Path_2" data-name="Path 2" d="M361.153,275.778h13.252a14.672,14.672,0,0,1,9.412,2.921,10.541,10.541,0,0,1,4.057,8.763v3.624a11.058,11.058,0,0,1-4,8.925,14.077,14.077,0,0,1-9.466,3.137h-2.65v13.794h-10.6Zm10.6,9.953v7.519H374.3q3.678,0,3.678-3.786,0-3.732-3.678-3.732Z" transform="translate(-306.847 -274.982)" fill="#fff"/>
+      <path id="Path_3" data-name="Path 3" d="M558.679,275.778v9.953H543.371v5.247h8.384v9.845h-8.384v5.95h15.308v10.169h-25.91V275.778Z" transform="translate(-449.361 -274.982)" fill="#fff"/>
+      <path id="Path_4" data-name="Path 4" d="M727.967,275.778v9.953h-8.114v31.211H709.3V285.731h-8.114v-9.953Z" transform="translate(-589.223 -274.982)" fill="#fff"/>
+      <g id="Group_1" data-name="Group 1" transform="translate(54.396 44.474)">
+        <path id="Path_5" data-name="Path 5" d="M367.771,537.4v-2.028h-4.057v4.057h4.057v2.028h-4.057v4.057h4.057v-2.029H369.8v4.057h-8.114v-14.2H369.8V537.4Z" transform="translate(-361.686 -533.345)" fill="#fff"/>
+        <path id="Path_6" data-name="Path 6" d="M427.58,567.41V559.3h-4.057v8.114h-2.028V557.268h8.114V567.41Z" transform="translate(-411.353 -553.211)" fill="#fff"/>
+        <path id="Path_7" data-name="Path 7" d="M481.3,565.382v-8.114h8.114v12.151H481.3V567.41h6.085v-2.028Zm2.028-6.085v4.057h4.057V559.3Z" transform="translate(-461.02 -553.211)" fill="#fff"/>
+        <path id="Path_8" data-name="Path 8" d="M547.2,537.4v-2.028h-4.057v10.142H547.2v-2.029h2.028v4.057h-8.114v-14.2h8.114V537.4Z" transform="translate(-510.687 -533.345)" fill="#fff"/>
+        <path id="Path_9" data-name="Path 9" d="M600.923,567.41V557.268h8.114V567.41Zm2.028-2.028h4.057V559.3h-4.057Z" transform="translate(-560.354 -553.211)" fill="#fff"/>
+        <path id="Path_10" data-name="Path 10" d="M666.817,567.41V559.3H662.76v8.114h-2.029V557.268h14.2V567.41H672.9V559.3h-4.057v8.114Z" transform="translate(-610.021 -553.211)" fill="#fff"/>
+        <path id="Path_11" data-name="Path 11" d="M758.454,567.41v2.008h-2.028V557.268h8.114V567.41Zm0-2.028h4.057V559.3h-4.057Z" transform="translate(-689.487 -553.211)" fill="#fff"/>
+      </g>
+      <g id="Group_2" data-name="Group 2" transform="translate(131.891 26.401)">
+        <path id="Path_12" data-name="Path 12" d="M824.358,501.783h-5.68v-.811h4.868v-1.623h-4.868v-.811h5.68Z" transform="translate(-818.678 -486.367)" fill="#fff"/>
+        <path id="Path_13" data-name="Path 13" d="M820.3,475.425h-.812v1.623h1.623v-1.623h.811v1.623h2.434v.811h-5.68v-3.246H820.3Z" transform="translate(-818.678 -466.5)" fill="#fff"/>
+        <path id="Path_14" data-name="Path 14" d="M820.3,451.5h-.812v1.623h1.623V451.5h.811v1.623h1.623V451.5h-.812v-.811h1.623v3.246h-5.68V450.69H820.3Z" transform="translate(-818.678 -446.633)" fill="#fff"/>
+        <path id="Path_15" data-name="Path 15" d="M821.924,430.012h-3.246v-3.246H820.3v.811h-.812V429.2h1.623v-2.434h3.246v3.246h-1.623V429.2h.812v-1.623h-1.623Z" transform="translate(-818.678 -426.766)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

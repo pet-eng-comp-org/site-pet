@@ -1,0 +1,20 @@
+.logoPet {
+  margin: 1rem 0;
+  max-width: 200px;
+}
+
+.desc {
+  margin-top: 4vw;
+}
+.er {
+  margin-top: 2vw;
+}
+
+.icone {
+  width: 22px;
+  height: 22px;
+}
+
+.footer-copyright {
+  font-size: 10pt;
+}

@@ -1,0 +1,19 @@
+.about {
+  padding: 5rem 0;
+}
+
+.about a {
+  color: #00b19f;
+  font-weight: 300;
+}
+
+.about a:hover {
+  color: #087267;
+}
+
+.divloader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}

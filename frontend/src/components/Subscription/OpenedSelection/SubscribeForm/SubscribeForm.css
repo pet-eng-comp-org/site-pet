@@ -1,0 +1,39 @@
+.inputFile {
+  max-width: 400px;
+  margin: 0 30px;
+  background: #fff;
+  border-radius: 4px;
+  padding: 15px 10px;
+}
+
+.inscription {
+  padding: 2rem 0;
+}
+.form-instructions {
+  color: rgb(239, 242, 245);
+  font-weight: lighter;
+}
+/* .selection-form {
+  width: 60%;
+  margin: 5% 20%;
+} */
+.file-icon {
+  margin-left: 15px;
+}
+
+.green-bg {
+  transition: 1s ease-out;
+}
+
+@media (max-width: 784px) {
+  .inscription {
+    padding: 2rem 1rem;
+  }
+}
+
+/* @media (max-width: 500px) {
+  .selection-form {
+    width: 90%;
+    margin: 30px 5% 0 5%;
+  }
+} */

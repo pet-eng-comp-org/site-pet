@@ -1,0 +1,17 @@
+.requirements{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-right: 2rem;
+    font-size: 13pt;
+    list-style-type: circle;
+}
+.text-align-left{
+    text-align: left;
+}
+.selection-description{
+    padding-top: 0vw;
+    margin-top: -10vw;
+}
+.link{
+    color: #2bbbad;
+}

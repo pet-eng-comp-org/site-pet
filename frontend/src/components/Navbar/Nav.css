@@ -1,0 +1,54 @@
+#navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 10vh;
+  background: rgb(140, 149, 153);
+}
+
+.top-nav-collapse {
+  background-color: #eeeeee;
+}
+
+.optionsPerfil {
+  background-color: black;
+}
+
+.fixed-top {
+  z-index: 999 !important;
+}
+.nav-links {
+  color: rgb(110, 108, 108);
+}
+.active-link {
+  color: #2bbbad !important;
+}
+.nav-links:hover {
+  color: #2bbbad !important;
+}
+.dropDownItems {
+  color: rgb(110, 108, 108);
+  height: 5px;
+}
+.dropDownItems:hover {
+  color: #2bbbad;
+}
+
+.message {
+  background: #9639c2;
+  color: white;
+  font-weight: 300;
+  padding: 0 0.5rem;
+  z-index: 9999;
+}
+
+.message a {
+  color: white;
+
+  font-weight: 500;
+}
+
+.message a:hover {
+  color: white;
+  text-decoration: underline;
+}

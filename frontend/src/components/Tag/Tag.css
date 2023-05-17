@@ -1,0 +1,18 @@
+.tag{
+
+    padding: 0px 5px;
+    padding-top: 3px;
+    border-radius: 5px;
+    font-size: 10pt;
+    font-weight: 500;
+    margin-bottom: .3rem;
+    max-width: fit-content;
+    box-sizing: unset;
+    white-space: nowrap
+}
+
+.linked:hover{
+    filter: brightness(90%);
+    
+}
+

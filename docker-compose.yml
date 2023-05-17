@@ -1,0 +1,43 @@
+version: "2.1"
+
+services:
+  backend:
+    build: ./
+    container_name: backendPET
+    volumes:
+      - ./backend:/usr/app
+    environment:
+      DB_CONNECT: $DB_CONNECT
+      TOKEN_SECRET: $TOKEN_SECRET
+      EMAIL: $EMAIL
+      EMAIL_PASSWORD: $EMAIL_PASSWORD
+    ports:
+      - 3333:3333
+
+    networks:
+      - sitepet
+      - traefik
+
+  frontend:
+    build: ./
+    stdin_open: true
+    container_name: frontendPET
+    volumes:
+      - ./frontend:/usr/app
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    environment:
+      REACT_APP_API_URL: $APIPET_URL
+    networks:
+      - sitepet
+      - traefik
+
+networks:
+  sitepet:
+    driver: bridge
+    name: sitepet
+  traefik:
+    name: $TRAEFIK_NETWORK
+    external: true

@@ -1,0 +1,27 @@
+
+
+@keyframes slideInR{
+    from{background-position-x: 200%}
+    to{background-position-x: 140%}
+}
+@keyframes slideInL{
+    from{background-position-x: -100%}
+    to{background-position-x: -40%}
+}
+
+.participant-background{
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    background-size: contain;
+ }
+
+.left{
+    background-position-x: -40%;
+    animation-name: slideInL;
+    animation-duration: .1s;
+}
+.right{
+    background-position-x: 140%;
+    animation-name: slideInR;
+    animation-duration: .1s;
+}

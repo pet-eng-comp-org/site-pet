@@ -1,0 +1,79 @@
+@import "assets/ufes_sans/stylesheet.css";
+
+.App {
+  text-align: justify;
+  font-family: "ufes_sans";
+  font-weight: lighter;
+  background-color: #f4f4f4;
+}
+
+.ft-normal {
+  font-weight: normal;
+}
+
+.App h1 {
+  font-weight: 300;
+  color: #00b19f;
+}
+
+.text-content {
+  /* max-width: 800px; */
+  padding: 5rem 0;
+  /* margin: auto; */
+}
+
+a {
+  margin: 0;
+}
+
+.green-bg {
+  background: #00b19f;
+  display: block;
+}
+
+.btn {
+  font-weight: lighter !important;
+}
+
+@media (max-width: 784px) {
+  .App h1 {
+    font-size: 34px;
+  }
+
+  /* .text-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  } */
+}
+
+.was-validated .form-control:valid {
+  border-color: #aa66cc;
+  color: #aa66cc;
+  background-image: none;
+}
+.was-validated .form-control:valid:focus {
+  border-color: #aa66cc;
+}
+.containerApp {
+  max-width: 900px;
+  padding: 5rem 20px;
+  margin: auto;
+}
+.title {
+  color: #00b19f;
+}
+
+.content {
+  width: 100%;
+  background: #2bbbad;
+  margin-top: -5vw;
+  align-items: center;
+  justify-content: center;
+}
+.bodyLinks {
+  color: #00b19f;
+  margin-left: 8px;
+}
+.bodyLinks:hover {
+  color: #02443e;
+}

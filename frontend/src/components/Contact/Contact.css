@@ -1,0 +1,17 @@
+.marginTop {
+  margin-top: 10vw;
+}
+.marginTitle {
+  margin-top: 3vw;
+}
+.contactForm {
+  padding-top: 15px;
+}
+.was-validated .form-control:valid {
+  border-color: #00b19f;
+  color: rgb(39, 177, 39);
+  background-image: none;
+}
+.was-validated .form-control:valid:focus {
+  border-color: #00b19f;
+}

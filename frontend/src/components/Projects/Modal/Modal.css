@@ -1,0 +1,40 @@
+.comission-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #00b19f;
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
+.modal-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.modal-image span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 250px;
+  height: 250px;
+  background-color: #2bbbad;
+}
+
+.modal-image img {
+  min-height: 7vw;
+  /* min-height: 150px; */
+  max-height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 360px) {
+  .modal-image span {
+    width: 150px;
+    height: 150px;
+  }
+}
