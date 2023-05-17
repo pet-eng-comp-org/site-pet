@@ -17,6 +17,13 @@ services:
       - sitepet
       - traefik
 
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sitepet-backend.entrypoints=http
+      - traefik.http.routers.sitepet-backend.rule=Host(`$APIPET_URL`)
+      - traefik.http.services.boca-web.loadbalancer.server.port=80
+      - traefik.docker.network=$TRAEFIK_NETWORK
+
   frontend:
     build:
       context: frontend
@@ -31,6 +38,12 @@ services:
     networks:
       - sitepet
       - traefik
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sitepet-backend.entrypoints=http
+      - traefik.http.routers.sitepet-backend.rule=Host(`$SITEPET_URL`)
+      - traefik.http.services.boca-web.loadbalancer.server.port=80
+      - traefik.docker.network=$TRAEFIK_NETWORK
 
 networks:
   sitepet:
