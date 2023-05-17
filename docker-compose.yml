@@ -2,10 +2,9 @@ version: "2.1"
 
 services:
   backend:
-    build: ./
-    container_name: backendPET
-    volumes:
-      - ./backend:/usr/app
+    build:
+      context: backend
+    container_name: sitepet-backend
     environment:
       DB_CONNECT: $DB_CONNECT
       TOKEN_SECRET: $TOKEN_SECRET
@@ -19,11 +18,10 @@ services:
       - traefik
 
   frontend:
-    build: ./
+    build:
+      context: frontend
     stdin_open: true
-    container_name: frontendPET
-    volumes:
-      - ./frontend:/usr/app
+    container_name: sitepet-frontend
     depends_on:
       - backend
     ports:
