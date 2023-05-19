@@ -20,8 +20,8 @@ services:
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.http.routers.sitepet-backend.entrypoints=http
-        - traefik.http.routers.sitepet-backend.rule=Host(`$APIPET_URL`)
+        - traefik.http.routers.sitepetbackend.entrypoints=http
+        - traefik.http.routers.sitepetbackend.rule=Host(`$APIPET_URL`)
         - traefik.http.services.boca-web.loadbalancer.server.port=3333
         - traefik.docker.network=$TRAEFIK_NETWORK
 
@@ -43,8 +43,8 @@ services:
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.http.routers.sitepet-backend.entrypoints=http
-        - traefik.http.routers.sitepet-backend.rule=Host(`$SITEPET_URL`)
+        - traefik.http.routers.sitepetfrontend.entrypoints=http
+        - traefik.http.routers.sitepetfrontend.rule=Host(`$SITEPET_URL`)
         - traefik.http.services.boca-web.loadbalancer.server.port=3000
         - traefik.docker.network=$TRAEFIK_NETWORK
 
