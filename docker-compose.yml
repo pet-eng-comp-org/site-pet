@@ -2,9 +2,7 @@ version: "2.1"
 
 services:
   backend:
-    build:
-      context: backend
-    container_name: sitepet-backend
+    image: sitepet-backend
     environment:
       DB_CONNECT: $DB_CONNECT
       TOKEN_SECRET: $TOKEN_SECRET
@@ -17,42 +15,33 @@ services:
       - sitepet
       - traefik
 
-    deploy:
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.sitepetbackend.entrypoints=http
-        - traefik.http.routers.sitepetbackend.rule=Host(`$APIPET_URL`)
-        - traefik.http.services.boca-web.loadbalancer.server.port=3333
-        - traefik.docker.network=$TRAEFIK_NETWORK
-      mode: global
-      placement:
-        constraints: [node.role == manager]
-
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sitepetbackend.entrypoints=http
+      - traefik.http.routers.sitepetbackend.rule=Host(`$APIPET_URL`)
+      - traefik.http.services.sitepetbackend.loadbalancer.server.port=3333
+      - traefik.docker.network=$TRAEFIK_NETWORK
+      
   frontend:
-    build:
-      context: frontend
+    image: sitepet-frontend
     stdin_open: true
-    container_name: sitepet-frontend
     depends_on:
       - backend
     ports:
       - 3000:3000
     environment:
-      REACT_APP_API_URL: $APIPET_URL
+      REACT_APP_API_URL: $REACTAPIPET_URL
     networks:
       - sitepet
       - traefik
 
-    deploy:
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.sitepetfrontend.entrypoints=http
-        - traefik.http.routers.sitepetfrontend.rule=Host(`$SITEPET_URL`)
-        - traefik.http.services.boca-web.loadbalancer.server.port=3000
-        - traefik.docker.network=$TRAEFIK_NETWORK
-      mode: global
-      placement:
-        constraints: [node.role == manager]
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sitepetfrontend.entrypoints=http
+      - traefik.http.routers.sitepetfrontend.rule=Host(`$SITEPET_URL`)
+      - traefik.http.services.sitepetfrontend.loadbalancer.server.port=3000
+      - traefik.docker.network=$TRAEFIK_NETWORK
 
 networks:
   sitepet:
