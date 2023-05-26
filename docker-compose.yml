@@ -19,7 +19,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.sitepetbackend.entrypoints=web, websecure
-	  - traefik.http.routers.sitepetbackend.tls=true
+      - traefik.http.routers.sitepetbackend.tls=true
       - traefik.http.routers.sitepetbackend.tls.certresolver=production
       - traefik.http.routers.sitepetbackend.rule=Host(`$APIPET_URL`)
       - traefik.http.services.sitepetbackend.loadbalancer.server.port=3333
@@ -46,7 +46,7 @@ services:
       - traefik.http.routers.sitepetfrontend.rule=Host(`$SITEPET_URL`)
       - traefik.http.services.sitepetfrontend.loadbalancer.server.port=3000
       - traefik.http.routers.sitepetfrontend.tls=true
-	  - traefik.http.routers.sitepetfrontend.tls.certresolver=production
+      - traefik.http.routers.sitepetfrontend.tls.certresolver=production
       - traefik.docker.network=$TRAEFIK_NETWORK
 
 networks:
