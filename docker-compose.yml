@@ -16,6 +16,10 @@ services:
       - sitepet
       - traefik
 
+    volumes:
+     - sitepetpublic:/usr/app/public
+     - sitepetuploads:/usr/app/uploads
+
     labels:
       - traefik.enable=true
       - traefik.http.routers.sitepetbackend.entrypoints=web, websecure
@@ -56,3 +60,7 @@ networks:
   traefik:
     name: $TRAEFIK_NETWORK
     external: true
+
+volumes:
+  sitepetpublic:
+  sitepetuploads:
