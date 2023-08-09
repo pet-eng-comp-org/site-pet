@@ -10,6 +10,7 @@ import Documents from "./components/Documents/Documents";
 import Home from "./components/Home/Home";
 import Nav from "./components/Navbar/Nav";
 import isAuth from "./services/Auth";
+import Egress from "./components/About/Egress/Egress";
 import {
   BrowserRouter as Router,
   Switch,
@@ -44,6 +45,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/sobre" component={About} />
+          <Route path="/egressos" component={Egress} />
           <Route path="/documentos" exact component={Documents} />
           <Route path="/inscricoes" exact component={Subscription} />
           <Route path="/projetos" exact component={Projects} />
