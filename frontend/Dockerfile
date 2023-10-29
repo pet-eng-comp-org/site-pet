@@ -9,4 +9,4 @@ RUN npm install
 RUN npm install serve
 RUN npm run build
 
-CMD npx serve -s build
+CMD npx serve -l 80 -s build
