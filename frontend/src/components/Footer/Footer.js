@@ -64,7 +64,7 @@ const Footer = () => {
                       src={iconeFacebook}
                       className="icone"
                     />{" "}
-                    PETEngCompUfes
+                    PET EngComp Ufes
                   </p>
                 </a>
               </MDBCol>
