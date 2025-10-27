@@ -170,8 +170,8 @@ const ContactPage = () => {
                           </MDBBtn>
                           <p>Universidade Federal do Espírito Santo.</p>
                           <p className="mb-md-0">
-                            Departamento de Informática, CT-7, 2º andar, sala
-                            36.
+                            CT-XIII, 2º andar, sala
+                            18.
                           </p>
                         </MDBCol>
                         <MDBCol md="4">
@@ -195,7 +195,7 @@ const ContactPage = () => {
                           >
                             <MDBIcon icon="envelope" />
                           </MDBBtn>
-                          <p className="mb-md-0">petengcomp@inf.ufes.br</p>
+                          <p className="mb-md-0">petengcomp.ufes@gmail.com</p>
                         </MDBCol>
                       </MDBRow>
                     </MDBCol>

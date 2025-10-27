@@ -72,7 +72,7 @@ const Footer = () => {
                 <Link to="/contato">
                   <p>
                     <img alt="iconeEmail" src={iconeEmail} className="icone" />{" "}
-                    petengcomp@inf.ufes.br
+                    petengcomp.ufes@gmail.com
                   </p>
                 </Link>
               </MDBCol>
