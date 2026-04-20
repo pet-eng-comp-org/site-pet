@@ -1,0 +1,60 @@
+services:
+  backend:
+    image: ghcr.io/petengcomp/sitepet-backend:${BACKEND_TAG:-latest}
+    environment:
+      DB_CONNECT: $DB_CONNECT
+      TOKEN_SECRET: $TOKEN_SECRET
+      EMAIL: $EMAIL
+      EMAIL_PASSWORD: $EMAIL_PASSWORD
+    ports:
+      - 3333:3333
+
+    networks:
+      - sitepet
+      - traefik
+
+    volumes:
+     - sitepetpublic:/usr/app/public
+     - sitepetuploads:/usr/app/uploads
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sitepetbackend.entrypoints=web, websecure
+      - traefik.http.routers.sitepetbackend.tls=true
+      - traefik.http.routers.sitepetbackend.tls.certresolver=production
+      - traefik.http.routers.sitepetbackend.rule=Host(`$APIPET_URL`)
+      - traefik.http.services.sitepetbackend.loadbalancer.server.port=3333
+      - traefik.docker.network=$TRAEFIK_NETWORK
+
+  frontend:
+    image: ghcr.io/petengcomp/sitepet-frontend:${FRONTEND_TAG:-latest}
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    environment:
+      REACT_APP_API_URL: $REACTAPIPET_URL
+    networks:
+      - sitepet
+      - traefik
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sitepetfrontend.entrypoints=web, websecure
+      - traefik.http.routers.sitepetfrontend.rule=Host(`$SITEPET_URL`)
+      - traefik.http.services.sitepetfrontend.loadbalancer.server.port=3000
+      - traefik.http.routers.sitepetfrontend.tls=true
+      - traefik.http.routers.sitepetfrontend.tls.certresolver=production
+      - traefik.docker.network=$TRAEFIK_NETWORK
+
+networks:
+  sitepet:
+    driver: bridge
+    name: sitepet
+  traefik:
+    name: $TRAEFIK_NETWORK
+    external: true
+
+volumes:
+  sitepetpublic:
+  sitepetuploads:
