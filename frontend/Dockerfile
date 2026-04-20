@@ -1,12 +1,28 @@
-FROM node:14
-
+# ---- Stage 1: build ----
+FROM node:18-alpine AS builder
 WORKDIR /usr/app
 
+ARG REACT_APP_API_URL=https://api.pet.inf.ufes.br/
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
 COPY . .
+RUN yarn build
 
-ENV REACT_APP_API_URL "https://api.pet.inf.ufes.br/"
-RUN npm install
-RUN npm install serve
-RUN npm run build
+# ---- Stage 2: runtime ----
+FROM node:18-alpine
+WORKDIR /usr/app
 
-CMD npx serve -l 80 -s build
+RUN npm install -g serve
+
+COPY --from=builder /usr/app/build ./build
+
+USER node
+
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
+
+CMD ["serve", "-l", "3000", "-s", "build"]

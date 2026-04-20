@@ -19,11 +19,13 @@ const selectionRoute = require("./routes/selection");
 mongoose.connect(
   process.env.DB_CONNECT,
   { useNewUrlParser: true, useUnifiedTopology: true },
-  () => console.log("Conneted to db!")
+  () => console.log("Connected to db!")
 );
 
 app.use(express.json());
 app.use(cors());
+
+app.get("/health", (req, res) => res.status(200).send("ok"));
 
 app.use("/api/news", newsRoute);
 app.use("/api/inscriptions", inscriptionsRoute);
