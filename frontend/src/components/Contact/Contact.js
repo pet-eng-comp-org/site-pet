@@ -159,7 +159,7 @@ const ContactPage = () => {
                       </div>
                       <br />
                       <MDBRow className="text-center">
-                        <MDBCol md="4">
+                        <MDBCol md="6">
                           <MDBBtn
                             tag="a"
                             style={{ cursor: "auto" }}
@@ -168,25 +168,13 @@ const ContactPage = () => {
                           >
                             <MDBIcon icon="map-marker-alt" />
                           </MDBBtn>
-                          <p>Universidade Federal do Espírito Santo.</p>
+                          <p>PET Engenharia de Computação</p>
                           <p className="mb-md-0">
-                            CT-XIII, 2º andar, sala
-                            18.
+                            CT XIII – UFES – Goiabeiras, Vitória – ES,
+                            29075-073. Sala 18, 2º andar
                           </p>
                         </MDBCol>
-                        <MDBCol md="4">
-                          <MDBBtn
-                            tag="a"
-                            floating="true"
-                            className="accent-1"
-                            style={{ cursor: "auto" }}
-                          >
-                            <MDBIcon icon="phone" />
-                          </MDBBtn>
-                          <p>(27)3335-2139</p>
-                          <p className="mb-md-0">(27)4009-2139</p>
-                        </MDBCol>
-                        <MDBCol md="4">
+                        <MDBCol md="6">
                           <MDBBtn
                             tag="a"
                             floating="true"
