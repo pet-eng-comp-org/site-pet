@@ -1,7 +1,6 @@
 const Member = require("../models/Member");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
 const { passwordValidation } = require("../utils/validation");
 
 module.exports = {
@@ -10,7 +9,9 @@ module.exports = {
     //https://www.youtube.com/watch?v=T_PGIyEh0dg
     //usar basic autentication para que as infos venham no header
 
-    const [, hash] = req.headers.authorization.split(" ");
+    // Sem cabecalho, ou fora do formato Basic, e credencial invalida — nao erro.
+    const [tipo, hash] = (req.headers.authorization || "").split(" ");
+    if (tipo !== "Basic" || !hash) return res.status(401).send("Access Denied");
     const [email, password] = Buffer.from(hash, "base64").toString().split(":");
 
     try {
@@ -32,43 +33,6 @@ module.exports = {
     }
   },
 
-  async forgotPassword(req, res) {
-    const member = await Member.findOne({ email: req.body.email });
-    if (!member) {
-      return res.status(400).send("Email is not found");
-    }
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
-
-    const newPassword = randomString();
-    //Hash passwords
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-    Member.updateOne({ email: req.body.email }, { password: hashedPassword })
-      .then(updatedPassword)
-      .catch((err) => {
-        console.log(err);
-      });
-
-    const message = await transporter.sendMail({
-      from: process.env.EMAIL,
-      to: req.body.email,
-      subject: "Pedido de alteração de senha - SitePET EngComp",
-      html: `Olá recebemos um pedido de alteração de senha, sua nova senha é ${newPassword}.<br>
-                  Caso deseje alterá-la, visite basta fazer isso no site do PET.`,
-    });
-
-    res.json({ message });
-  },
 
   async newPassword(req, res) {
     const data = { password: req.body.newPassword };
