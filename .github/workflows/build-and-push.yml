@@ -100,35 +100,54 @@ jobs:
 
       - name: Escreve o digest novo no compose de producao
         env:
-          ANTES: ${{ github.event.before }}
           EVENTO: ${{ github.event_name }}
         run: |
-          # Disparo manual, ou push sem commit anterior conhecido: implanta os dois.
-          if [ "$EVENTO" != push ] || ! git cat-file -e "$ANTES^{commit}" 2>/dev/null; then
-            mudou="backend frontend"
-          else
-            mudou=$(git diff --name-only "$ANTES" "$GITHUB_SHA" | cut -d/ -f1 | grep -xE 'backend|frontend' | sort -u)
+          set -euo pipefail
+          # Execucao antiga nao implanta por cima de uma mais nova: se entrou
+          # commit de codigo depois deste (os do bot nao contam), a execucao
+          # dele implanta.
+          novo=$(git log -1 --format=%H --invert-grep --grep='^deploy:' "${GITHUB_SHA}..HEAD")
+          if [ -n "$novo" ]; then
+            echo "Ha commit mais novo ($novo); a execucao dele implanta."; exit 0
           fi
 
-          tag="sha-${GITHUB_SHA::7}"
-          for servico in $mudou; do
-            img="ghcr.io/${GITHUB_REPOSITORY}-${servico}"
-            digest=$(docker buildx imagetools inspect "${img}:${tag}" --format '{{json .Manifest}}' | jq -r .digest)
-            # Digest vazio apagaria a imagem do compose e derrubaria o site.
+          mudou=""
+          for servico in backend frontend; do
+            img="ghcr.io/${GITHUB_REPOSITORY,,}-${servico}"
+            # Compara com o commit que esta EM PRODUCAO (o :sha- anotado no
+            # compose), nao com o push anterior: deploy que falhou ou foi
+            # cancelado entra na proxima execucao em vez de se perder.
+            ultimo=$(grep -oE "${img}:sha-[0-9a-f]+" docker-compose.prod.yml | head -1 | sed 's/.*:sha-//' || true)
+            if [ "$EVENTO" = push ] && [ -n "$ultimo" ] && git cat-file -e "${ultimo}^{commit}" 2>/dev/null; then
+              if ! git diff --name-only "$ultimo" "$GITHUB_SHA" | grep -q "^${servico}/"; then
+                continue
+              fi
+            fi
+            digest=$(docker buildx imagetools inspect "${img}:sha-${GITHUB_SHA::7}" --format '{{json .Manifest}}' | jq -r .digest)
+            # Digest vazio apagaria a imagem do compose e derrubaria o servico.
             if ! echo "$digest" | grep -qxE 'sha256:[0-9a-f]{64}'; then
               echo "Digest invalido para ${img}: '${digest}'"; exit 1
             fi
-            sed -i -E "s#(${img})@sha256:[0-9a-f]+#\1@${digest}#; s#(${img}):sha-[0-9a-f]+#\1:${tag}#" docker-compose.prod.yml
+            sed -i -E "s#(${img})@sha256:[0-9a-f]+#\1@${digest}#; s#(${img}):sha-[0-9a-f]+#\1:sha-${GITHUB_SHA::7}#" docker-compose.prod.yml
+            # Linha que nao casou (imagem renomeada, dono novo) nao pode passar em verde.
+            if ! grep -qF "${img}@${digest}" docker-compose.prod.yml; then
+              echo "A linha image: de ${img} nao foi encontrada no compose"; exit 1
+            fi
+            mudou="$mudou $servico"
           done
 
           if git diff --quiet -- docker-compose.prod.yml; then
-            echo "Nada a implantar: backend/ e frontend/ nao mudaram."
-            exit 0
+            echo "Nada a implantar: nenhum servico mudou desde o que esta em producao."; exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -qm "deploy: $(echo $mudou) no commit ${GITHUB_SHA:0:8}
+          git commit -qm "deploy:$mudou no commit ${GITHUB_SHA:0:8}
 
           Para reverter esta implantacao: git revert deste commit." -- docker-compose.prod.yml
-          git push -q origin HEAD:main
+          # Merge que entrou entre o checkout e o push: rebase e tenta de novo.
+          for tentativa in 1 2 3; do
+            git push -q origin HEAD:main && exit 0
+            sleep 5; git pull -q --rebase origin main
+          done
+          echo "O push do commit de deploy falhou 3 vezes"; exit 1
