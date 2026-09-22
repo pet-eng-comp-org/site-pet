@@ -24,7 +24,8 @@ services:
       TOKEN_SECRET: $TOKEN_SECRET
       EMAIL: $EMAIL
       EMAIL_PASSWORD: $EMAIL_PASSWORD
-      PORT: $BACKEND_PORT
+      # 80 fixo: e a porta do HEALTHCHECK do Dockerfile e do Traefik abaixo.
+      PORT: 80
     volumes:
       - sitepetpublic:/usr/app/public
       - sitepetuploads:/usr/app/uploads
@@ -34,10 +35,10 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`api.pet.inf.ufes.br`)"
-      - "traefik.http.services.backend.loadbalancer.server.port=$BACKEND_PORT"
-      - "traefik.http.routers.backend.entrypoints=websecure"
-      - "traefik.http.routers.backend.tls.certresolver=le"
+      - "traefik.http.routers.sitepetbackend.rule=Host(`api.pet.inf.ufes.br`)"
+      - "traefik.http.services.sitepetbackend.loadbalancer.server.port=80"
+      - "traefik.http.routers.sitepetbackend.entrypoints=websecure"
+      - "traefik.http.routers.sitepetbackend.tls.certresolver=le"
       - "traefik.docker.network=traefik"
 
   frontend:
@@ -54,10 +55,10 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`pet.inf.ufes.br`)"
-      - "traefik.http.services.frontend.loadbalancer.server.port=80"
-      - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.routers.frontend.tls.certresolver=le"
+      - "traefik.http.routers.sitepetfrontend.rule=Host(`pet.inf.ufes.br`)"
+      - "traefik.http.services.sitepetfrontend.loadbalancer.server.port=80"
+      - "traefik.http.routers.sitepetfrontend.entrypoints=websecure"
+      - "traefik.http.routers.sitepetfrontend.tls.certresolver=le"
       - "traefik.docker.network=traefik"
 
 networks:
