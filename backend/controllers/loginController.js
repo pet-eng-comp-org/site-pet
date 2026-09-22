@@ -12,7 +12,14 @@ module.exports = {
     // Sem cabecalho, ou fora do formato Basic, e credencial invalida — nao erro.
     const [tipo, hash] = (req.headers.authorization || "").split(" ");
     if (tipo !== "Basic" || !hash) return res.status(401).send("Access Denied");
-    const [email, password] = Buffer.from(hash, "base64").toString().split(":");
+    // Separa so no PRIMEIRO ":" — a senha pode conter ":". Sem ":", ou com um dos
+    // lados vazio, e credencial invalida: antes a senha chegava undefined, o
+    // bcrypt lancava e o catch respondia 200 com {}, que o painel lia como login.
+    const credencial = Buffer.from(hash, "base64").toString();
+    const separador = credencial.indexOf(":");
+    const email = credencial.slice(0, separador);
+    const password = credencial.slice(separador + 1);
+    if (separador < 1 || !password) return res.status(401).send("Access Denied");
 
     try {
       const user = await Member.findOne({ email }).select("+password");
@@ -29,7 +36,8 @@ module.exports = {
 
       res.send({ token });
     } catch (err) {
-      res.send(err);
+      // Vai para o handler de erro (500). Responder res.send(err) dava 200.
+      throw err;
     }
   },
 
