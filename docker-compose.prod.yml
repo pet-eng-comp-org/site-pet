@@ -1,60 +1,77 @@
+# PRODUCAO — este arquivo e a stack `sitepet` na VM do PET.
+#
+# O Portainer puxa este caminho deste repositorio e aplica sozinho quando ele
+# muda: **mexer aqui implanta**. As linhas `image:` quem escreve e o CI, a cada
+# push na main (job `implanta` em build-and-push.yml).
+#
+# As variaveis (`$DB_CONNECT` etc.) sao referencias: os valores vivem na stack,
+# dentro do Portainer, e nunca entram no git.
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 services:
   backend:
-    image: ghcr.io/petengcomp/sitepet-backend:${BACKEND_TAG:-latest}
+    # ghcr.io/pet-eng-comp-org/sitepet-backend:sha-2667518
+    image: ghcr.io/pet-eng-comp-org/sitepet-backend@sha256:beeac21f4169c0f86fa40633e69332e274dbdcd5f4c2b371e81c74b5fd96b760
+    logging: *logging
+    restart: always
     environment:
       DB_CONNECT: $DB_CONNECT
       TOKEN_SECRET: $TOKEN_SECRET
       EMAIL: $EMAIL
       EMAIL_PASSWORD: $EMAIL_PASSWORD
-    ports:
-      - 3333:3333
-
-    networks:
-      - sitepet
-      - traefik
-
+      PORT: $BACKEND_PORT
     volumes:
-     - sitepetpublic:/usr/app/public
-     - sitepetuploads:/usr/app/uploads
-
+      - sitepetpublic:/usr/app/public
+      - sitepetuploads:/usr/app/uploads
+    deploy:
+      replicas: 2
+    networks:
+      - traefik
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.sitepetbackend.entrypoints=web, websecure
-      - traefik.http.routers.sitepetbackend.tls=true
-      - traefik.http.routers.sitepetbackend.tls.certresolver=production
-      - traefik.http.routers.sitepetbackend.rule=Host(`$APIPET_URL`)
-      - traefik.http.services.sitepetbackend.loadbalancer.server.port=3333
-      - traefik.docker.network=$TRAEFIK_NETWORK
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.pet.inf.ufes.br`)"
+      - "traefik.http.services.backend.loadbalancer.server.port=$BACKEND_PORT"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=le"
+      - "traefik.docker.network=traefik"
 
   frontend:
-    image: ghcr.io/petengcomp/sitepet-frontend:${FRONTEND_TAG:-latest}
+    # ghcr.io/pet-eng-comp-org/sitepet-frontend:sha-2667518
+    image: ghcr.io/pet-eng-comp-org/sitepet-frontend@sha256:b12f4f0115527f3d055790d82d02fd9a65777e821e76b940b46e327687ffbb7e
+    logging: *logging
+    restart: always
+    stdin_open: true
     depends_on:
       - backend
-    ports:
-      - 3000:3000
-    environment:
-      REACT_APP_API_URL: $REACTAPIPET_URL
+    deploy:
+      replicas: 2
     networks:
-      - sitepet
       - traefik
-
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.sitepetfrontend.entrypoints=web, websecure
-      - traefik.http.routers.sitepetfrontend.rule=Host(`$SITEPET_URL`)
-      - traefik.http.services.sitepetfrontend.loadbalancer.server.port=3000
-      - traefik.http.routers.sitepetfrontend.tls=true
-      - traefik.http.routers.sitepetfrontend.tls.certresolver=production
-      - traefik.docker.network=$TRAEFIK_NETWORK
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`pet.inf.ufes.br`)"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=le"
+      - "traefik.docker.network=traefik"
 
 networks:
-  sitepet:
-    driver: bridge
-    name: sitepet
+  # A rede e da stack do Traefik: apagar esta stack nao pode tentar remove-la.
   traefik:
-    name: $TRAEFIK_NETWORK
+    name: traefik
     external: true
 
+# Externos: apagar ou recriar a stack nao leva as fotos e os uploads junto.
+# Entram no backup noturno da VM.
 volumes:
   sitepetpublic:
+    external: true
+    name: sitepet_sitepetpublic
   sitepetuploads:
+    external: true
+    name: sitepet_sitepetuploads

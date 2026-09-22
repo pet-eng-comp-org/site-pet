@@ -67,3 +67,68 @@ jobs:
       - name: Print published tags
         if: steps.meta.outputs.tags != ''
         run: echo "Published tags ${{ steps.meta.outputs.tags }}"
+
+  # Publicar nao e implantar: quem implanta e o commit abaixo. O CI escreve o
+  # digest recem-publicado no docker-compose.prod.yml e commita na main; o
+  # Portainer acompanha este arquivo e aplica em ate 5 minutos.
+  #
+  # So troca o digest do servico cuja pasta mudou: build nunca repete digest, e
+  # trocar os dois reiniciaria o backend por mudanca so no frontend. `git revert`
+  # no commit de deploy volta a versao anterior; o push feito com GITHUB_TOKEN
+  # nao dispara este workflow de novo.
+  implanta:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency: implanta
+
+    permissions:
+      contents: write
+      packages: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Escreve o digest novo no compose de producao
+        env:
+          ANTES: ${{ github.event.before }}
+          EVENTO: ${{ github.event_name }}
+        run: |
+          # Disparo manual, ou push sem commit anterior conhecido: implanta os dois.
+          if [ "$EVENTO" != push ] || ! git cat-file -e "$ANTES^{commit}" 2>/dev/null; then
+            mudou="backend frontend"
+          else
+            mudou=$(git diff --name-only "$ANTES" "$GITHUB_SHA" | cut -d/ -f1 | grep -xE 'backend|frontend' | sort -u)
+          fi
+
+          tag="sha-${GITHUB_SHA::7}"
+          for servico in $mudou; do
+            img="ghcr.io/${GITHUB_REPOSITORY}-${servico}"
+            digest=$(docker buildx imagetools inspect "${img}:${tag}" --format '{{json .Manifest}}' | jq -r .digest)
+            # Digest vazio apagaria a imagem do compose e derrubaria o site.
+            if ! echo "$digest" | grep -qxE 'sha256:[0-9a-f]{64}'; then
+              echo "Digest invalido para ${img}: '${digest}'"; exit 1
+            fi
+            sed -i -E "s#(${img})@sha256:[0-9a-f]+#\1@${digest}#; s#(${img}):sha-[0-9a-f]+#\1:${tag}#" docker-compose.prod.yml
+          done
+
+          if git diff --quiet -- docker-compose.prod.yml; then
+            echo "Nada a implantar: backend/ e frontend/ nao mudaram."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -qm "deploy: $(echo $mudou) no commit ${GITHUB_SHA:0:8}
+
+          Para reverter esta implantacao: git revert deste commit." -- docker-compose.prod.yml
+          git push -q origin HEAD:main
