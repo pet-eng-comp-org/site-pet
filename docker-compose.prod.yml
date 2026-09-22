@@ -15,8 +15,8 @@ x-logging: &logging
 
 services:
   backend:
-    # ghcr.io/pet-eng-comp-org/sitepet-backend:sha-2f5db7f
-    image: ghcr.io/pet-eng-comp-org/sitepet-backend@sha256:44ef06a5a35053c078186db0970d5e2459c71dee59306661e781cb5199fa1d25
+    # ghcr.io/pet-eng-comp-org/sitepet-backend:sha-d3840aa
+    image: ghcr.io/pet-eng-comp-org/sitepet-backend@sha256:f34153357548086adc0f393b3baf44380c55b7af95edb75e54f4f817dd30d8c5
     logging: *logging
     restart: always
     environment:
