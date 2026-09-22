@@ -60,7 +60,6 @@ Variáveis da stack `sitepet`, lidas pelo `docker-compose.prod.yml`:
 - `TOKEN_SECRET` — segredo JWT
 - `EMAIL` — endereço de envio (Gmail)
 - `EMAIL_PASSWORD` — senha de app do Gmail
-- `BACKEND_PORT` — porta do backend dentro do container
 
 ## Documentação adicional
 
