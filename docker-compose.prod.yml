@@ -15,8 +15,8 @@ x-logging: &logging
 
 services:
   backend:
-    # ghcr.io/pet-eng-comp-org/sitepet-backend:sha-2667518
-    image: ghcr.io/pet-eng-comp-org/sitepet-backend@sha256:beeac21f4169c0f86fa40633e69332e274dbdcd5f4c2b371e81c74b5fd96b760
+    # ghcr.io/pet-eng-comp-org/sitepet-backend:sha-d0a612f
+    image: ghcr.io/pet-eng-comp-org/sitepet-backend@sha256:b2ab4f2eabf8892a63c652fdbad52ebd27fd691b2c56649c19296ca14425c88c
     logging: *logging
     restart: always
     environment:
@@ -41,8 +41,8 @@ services:
       - "traefik.docker.network=traefik"
 
   frontend:
-    # ghcr.io/pet-eng-comp-org/sitepet-frontend:sha-2667518
-    image: ghcr.io/pet-eng-comp-org/sitepet-frontend@sha256:b12f4f0115527f3d055790d82d02fd9a65777e821e76b940b46e327687ffbb7e
+    # ghcr.io/pet-eng-comp-org/sitepet-frontend:sha-d0a612f
+    image: ghcr.io/pet-eng-comp-org/sitepet-frontend@sha256:bf1c460b058d6a77ab1882c5b6be04791863089605a0e3672d2acb544c1fc06f
     logging: *logging
     restart: always
     stdin_open: true
