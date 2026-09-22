@@ -1,4 +1,9 @@
 const express = require("express");
+// Express 4 nao captura erro de funcao async: a promise rejeitada virava
+// unhandledRejection e o Node encerrava o processo. Um GET /api/login/ sem
+// cabecalho bastava para derrubar a API. Com isto, o erro chega ao handler
+// abaixo e vira 500.
+require("express-async-errors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
@@ -37,5 +42,12 @@ app.use("/api/comissions", comissionsRoute);
 app.use("/api/members", membersRoute);
 app.use("/api/projects", projectsRoute);
 app.use("/api/selection", selectionRoute);
+
+// Ultimo middleware: erro de qualquer rota responde 500 sem detalhe e fica no log.
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: "Internal server error." });
+});
 
 app.listen(process.env.PORT || 3333, () => console.log("Server running"));
