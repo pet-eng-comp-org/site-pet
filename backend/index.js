@@ -46,6 +46,12 @@ app.use("/api/selection", selectionRoute);
 // Ultimo middleware: erro de qualquer rota responde 500 sem detalhe e fica no log.
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
+  // Erro de cliente (JSON malformado 400, corpo grande demais 413) mantem o
+  // status que o middleware deu; o resto e erro nosso: 500 sem detalhe, no log.
+  const status = err.status || err.statusCode;
+  if (status >= 400 && status < 500) {
+    return res.status(status).json({ message: "Bad request." });
+  }
   console.error(err);
   res.status(500).json({ message: "Internal server error." });
 });

@@ -5,13 +5,51 @@ on:
     branches:
       - main
       - infra/docker-node18
+  # Em pull request os testes rodam e as imagens sao construidas sem publicar.
+  pull_request:
   workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
+  # Testes de cenario do back-end (backend/test/): sobem a API contra um MongoDB e
+  # conferem login, rotas do painel, o que as rotas publicas expoem e que
+  # requisicao malformada nao derruba o processo. Falhou aqui, nada e publicado
+  # nem implantado.
+  testa:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    services:
+      mongo:
+        # Mesma linha do Atlas de producao (8.0), fixada por digest.
+        image: mongo:8.0@sha256:4968f22d0c6c10ef29952f3e807f62872ba22b3312f25803564fbfc08255efc2
+        ports: ['27017:27017']
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.runCommand({ping: 1})'"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # A versao da imagem (Dockerfile: node:18-alpine).
+          node-version: 18
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - run: npm ci
+
+      - run: npm test
+        env:
+          MONGO_URL_TESTE: mongodb://127.0.0.1:27017/sitepet_teste
+
   build:
+    needs: testa
     name: Build ${{ matrix.service }}
     runs-on: ubuntu-latest
 
