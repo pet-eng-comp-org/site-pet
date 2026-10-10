@@ -62,8 +62,10 @@ jobs:
       matrix:
         include:
           - service: backend
+            image: back-end
             context: ./backend
           - service: frontend
+            image: front-end
             context: ./frontend
 
     steps:
@@ -85,7 +87,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}-${{ matrix.service }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.image }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             type=sha,format=short,prefix=sha-
@@ -154,8 +156,10 @@ jobs:
           fi
 
           mudou=""
-          for servico in backend frontend; do
-            img="ghcr.io/${GITHUB_REPOSITORY,,}-${servico}"
+          # pasta do codigo:nome da imagem (sitepet/back-end, sitepet/front-end)
+          for par in backend:back-end frontend:front-end; do
+            servico=${par%%:*}
+            img="ghcr.io/${GITHUB_REPOSITORY,,}/${par##*:}"
             # Compara com o commit que esta EM PRODUCAO (o :sha- anotado no
             # compose), nao com o push anterior: deploy que falhou ou foi
             # cancelado entra na proxima execucao em vez de se perder.
