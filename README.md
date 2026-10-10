@@ -34,7 +34,7 @@ Backend em http://localhost:3333 — Frontend em http://localhost:3000.
 
 Merge na `main` implanta sozinho:
 
-1. O GitHub Actions (`build-and-push.yml`) builda e publica no GHCR `ghcr.io/pet-eng-comp-org/sitepet-backend` e `-frontend`, com a tag `:sha-<hash curto>`.
+1. O GitHub Actions (`build-and-push.yml`) builda e publica no GHCR `ghcr.io/pet-eng-comp-org/sitepet/back-end` e `sitepet/front-end`, com a tag `:sha-<hash curto>`.
 2. O job `implanta` escreve o digest novo no `docker-compose.prod.yml`, só do serviço cuja pasta mudou, e faz um commit `deploy:` na `main`.
 3. O Portainer acompanha esse arquivo e aplica em até 5 minutos.
 
