@@ -32,7 +32,7 @@ const CreatePetiano = ({ isOpen, toggle, getPetianos }) => {
   const [tutor, setTutor] = useState(false);
   const [titleTag, setTitleTag] = useState("");
   const [colorTag, setColorTag] = useState("#FFFFFF");
-  const [backColorTag, setBackColorTag] = useState("#2bbbad");
+  const [backColorTag, setBackColorTag] = useState("#186a6c");
   const [tags, setTags] = useState([]);
   const [nameMidia, setNameMidia] = useState("facebook");
   const [linkMidia, setLinkMidia] = useState("");

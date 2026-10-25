@@ -5,7 +5,7 @@ import { SketchPicker } from "react-color";
 const PickColor = ({ colorForm }) => {
   const [display, setDisplay] = useState(false);
   const [color, setColor] = useState({
-    hex: "#2bbbad",
+    hex: "#186a6c",
   });
 
   const handleClick = () => {

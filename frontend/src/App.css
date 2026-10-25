@@ -1,10 +1,11 @@
-@import "assets/ufes_sans/stylesheet.css";
+@import "assets/sofia_sans/stylesheet.css";
 
 .App {
   text-align: justify;
-  font-family: "ufes_sans";
-  font-weight: lighter;
-  background-color: #f4f4f4;
+  font-family: "Sofia Sans", Arial, sans-serif;
+  font-weight: 400;
+  color: #1b3f3f;
+  background-color: #fff2e1;
 }
 
 .ft-normal {
@@ -12,8 +13,9 @@
 }
 
 .App h1 {
-  font-weight: 300;
-  color: #00b19f;
+  font-family: "Sofia Sans Condensed", "Sofia Sans", Arial, sans-serif;
+  font-weight: 800;
+  color: #186a6c;
 }
 
 .text-content {
@@ -27,12 +29,12 @@ a {
 }
 
 .green-bg {
-  background: #00b19f;
+  background: #186a6c;
   display: block;
 }
 
 .btn {
-  font-weight: lighter !important;
+  font-weight: 600 !important;
 }
 
 @media (max-width: 784px) {
@@ -47,12 +49,12 @@ a {
 }
 
 .was-validated .form-control:valid {
-  border-color: #aa66cc;
-  color: #aa66cc;
+  border-color: #1e6b3a;
+  color: #1e6b3a;
   background-image: none;
 }
 .was-validated .form-control:valid:focus {
-  border-color: #aa66cc;
+  border-color: #1e6b3a;
 }
 .containerApp {
   max-width: 900px;
@@ -60,20 +62,43 @@ a {
   margin: auto;
 }
 .title {
-  color: #00b19f;
+  color: #186a6c;
 }
 
 .content {
   width: 100%;
-  background: #2bbbad;
+  background: #186a6c;
   margin-top: -5vw;
   align-items: center;
   justify-content: center;
 }
 .bodyLinks {
-  color: #00b19f;
+  color: #186a6c;
   margin-left: 8px;
 }
 .bodyLinks:hover {
-  color: #02443e;
+  color: #1b3f3f;
+}
+
+/* Botões do mdbreact nas cores da identidade visual do PET: ação em verde-escuro,
+   chamada (inscrição) em laranja-claro com texto tinta. */
+.btn-default,
+.btn-primary,
+.btn-indigo {
+  background-color: #186a6c !important;
+  color: #fff !important;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-indigo:hover,
+.btn-indigo:focus {
+  background-color: #1b3f3f !important;
+}
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #ff9a5b !important;
+  color: #1b3f3f !important;
 }

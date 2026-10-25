@@ -1,9 +1,9 @@
 .order-by {
   height: 46.3px;
   margin: 6px;
-  background-color: #2bbbad;
+  background-color: #186a6c;
   border-radius: 2px;
-  border-color: #2bbbad;
+  border-color: #186a6c;
   color: white;
   font-weight: inherit;
 }
@@ -15,13 +15,13 @@
 }
 
 #search i {
-  color: #2bbbad;
+  color: #186a6c;
 }
 
 #search input {
-  color: #2bbbad;
-  box-shadow: 0 1px 0 0 #2bbbad;
-  border-bottom: 1px solid #2bbbad;
+  color: #186a6c;
+  box-shadow: 0 1px 0 0 #186a6c;
+  border-bottom: 1px solid #186a6c;
 }
 
 #list-group {
