@@ -28,15 +28,15 @@ export const Row = styled.div`
 
   &&&.addFile {
     justify-content: center;
-    background-color: #2bbbad17;
-    color: #2bbbad;
-    border: dashed 2px #2bbbad;
+    background-color: #186a6c17;
+    color: #186a6c;
+    border: dashed 2px #186a6c;
     margin: 4px;
     transition: color linear 0.25s;
     cursor: pointer;
 
     &:hover {
-      color: #2bbbadaa;
+      color: #186a6caa;
     }
   }
 `;

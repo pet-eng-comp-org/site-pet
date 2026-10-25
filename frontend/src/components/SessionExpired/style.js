@@ -6,7 +6,7 @@ export const Content = styled.div`
   -webkit-box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.44);
   -moz-box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.44);
   box-shadow: 5px 5px 15px -1px rgba(0, 0, 0, 0.44);
-  background-color: #212121;
+  background-color: #1b3f3f;
   color: #fff;
   padding: 0 25px;
 

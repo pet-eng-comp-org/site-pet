@@ -28,7 +28,7 @@ const EditPetiano = ({ isOpen, toggle, getPetianos, idPetiano }) => {
   const [validPass, setValidPass] = useState(true);
   const [titleTag, setTitleTag] = useState("");
   const [colorTag, setColorTag] = useState("#FFFFFF");
-  const [backColorTag, setBackColorTag] = useState("#2bbbad");
+  const [backColorTag, setBackColorTag] = useState("#186a6c");
   const [nameMidia, setNameMidia] = useState("facebook");
   const [linkMidia, setLinkMidia] = useState("");
   const [petiano, setPetiano] = useState();

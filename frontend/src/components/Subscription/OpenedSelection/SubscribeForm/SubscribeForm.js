@@ -156,7 +156,7 @@ function SubscribeForm(props) {
                   <MDBCol xs="11" lg="10">
                     <div className="text-center mt-4">
                       {sendingInscription ? (
-                        <Loader color="#aa66cc" />
+                        <Loader color="#03989f" />
                       ) : (
                         <MDBBtn color="secondary" type="submit">
                           <strong>Inscrever</strong>
