@@ -14,11 +14,13 @@
   color: white;
 }
 .about-us a {
-  color: #9639c2;
-  font-weight: 300;
+  color: white;
+  font-weight: 600;
+  text-decoration: underline;
 }
 .about-us a:hover {
-  color: rgb(118, 31, 158);
+  color: white;
+  text-decoration: none;
 }
 
 .about-us p {

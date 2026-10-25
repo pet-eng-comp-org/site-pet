@@ -14,7 +14,7 @@ const Footer = () => {
         <MDBRow>
           <MDBCol md="9" className="colLogo">
             <MDBRow>
-              <MDBCol md="2">
+              <MDBCol md="4" lg="3">
                 <img alt="logoPET" src={logoPet} className="logoPet" />
               </MDBCol>
               <MDBCol middle>

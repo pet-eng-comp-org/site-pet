@@ -25,7 +25,7 @@
 }
 
 .table-of-contents a:hover {
-  color: #00b19f;
+  color: #186a6c;
 }
 
 .table-wrapper {
@@ -94,7 +94,7 @@ h4 {
 }
 
 .card-image-background {
-  background-color: #00b19f;
+  background-color: #186a6c;
   width: 180px;
   height: 180px;
   position: absolute;
@@ -109,7 +109,7 @@ h4 {
 
 .modal-button {
   margin: 0 auto;
-  color: #00b19f;
+  color: #186a6c;
   position: absolute;
   bottom: 0;
   transform: translateY(50%);

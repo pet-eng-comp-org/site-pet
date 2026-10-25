@@ -46,8 +46,8 @@ const FileList = ({ files, onDelete }) => (
             </a>
           )}
 
-          {uploadedFile.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
-          {uploadedFile.error && <MdError size={24} color="#e57878" />}
+          {uploadedFile.uploaded && <MdCheckCircle size={24} color="#03989f" />}
+          {uploadedFile.error && <MdError size={24} color="#a3321f" />}
         </div>
       </li>
     ))}

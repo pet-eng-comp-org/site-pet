@@ -8,10 +8,10 @@
   padding-top: 15px;
 }
 .was-validated .form-control:valid {
-  border-color: #00b19f;
+  border-color: #03989f;
   color: rgb(39, 177, 39);
   background-image: none;
 }
 .was-validated .form-control:valid:focus {
-  border-color: #00b19f;
+  border-color: #03989f;
 }

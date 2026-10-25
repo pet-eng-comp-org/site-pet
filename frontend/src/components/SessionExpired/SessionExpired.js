@@ -11,7 +11,7 @@ export default function SessionExpired() {
         <img src={logoPET} alt="logo PET" style={{ padding: "25px 0" }} />
         <h3>Sua sessão expirou</h3>
         <a href={window.origin + "/login"}>
-          <BtnS btncolor="rgb(0, 121, 174)" size="md">
+          <BtnS color="primary" size="md">
             Login
           </BtnS>
         </a>
