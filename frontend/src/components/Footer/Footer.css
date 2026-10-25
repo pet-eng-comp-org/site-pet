@@ -1,6 +1,7 @@
 .logoPet {
   margin: 1rem 0;
-  max-width: 200px;
+  width: 160px;
+  max-width: 100%;
 }
 
 .desc {
@@ -17,4 +18,8 @@
 
 .footer-copyright {
   font-size: 10pt;
+}
+
+.page-footer.elegant-color-dark {
+  background-color: #1b3f3f !important;
 }

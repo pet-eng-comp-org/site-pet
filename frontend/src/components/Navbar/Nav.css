@@ -21,34 +21,34 @@
   color: rgb(110, 108, 108);
 }
 .active-link {
-  color: #2bbbad !important;
+  color: #186a6c !important;
 }
 .nav-links:hover {
-  color: #2bbbad !important;
+  color: #186a6c !important;
 }
 .dropDownItems {
   color: rgb(110, 108, 108);
   height: 5px;
 }
 .dropDownItems:hover {
-  color: #2bbbad;
+  color: #186a6c;
 }
 
 .message {
-  background: #9639c2;
-  color: white;
+  background: #ff9a5b;
+  color: #1b3f3f;
   font-weight: 300;
   padding: 0 0.5rem;
   z-index: 9999;
 }
 
 .message a {
-  color: white;
+  color: #1b3f3f;
 
   font-weight: 500;
 }
 
 .message a:hover {
-  color: white;
+  color: #1b3f3f;
   text-decoration: underline;
 }

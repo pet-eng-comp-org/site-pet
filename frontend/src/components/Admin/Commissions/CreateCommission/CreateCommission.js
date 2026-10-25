@@ -27,7 +27,7 @@ const CreateCommission = ({ isOpen, toggle, getCommissions }) => {
   const [titleTag, setTitleTag] = useState("");
   const [linkTag, setLinkTag] = useState("");
   const [colorTag, setColorTag] = useState("#FFFFFF");
-  const [backColorTag, setBackColorTag] = useState("#2bbbad");
+  const [backColorTag, setBackColorTag] = useState("#186a6c");
   const [tags, setTags] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

@@ -3,7 +3,7 @@
 .title {
   margin: 2rem 0;
   font-weight: bold;
-  color: #00b19f;
+  color: #186a6c;
   margin-top: 0px;
 }
 
@@ -12,11 +12,11 @@
 }
 
 .carousel .control-prev.control-arrow::before {
-  border-right: 8px solid #00b19f;
+  border-right: 8px solid #03989f;
 }
 
 .carousel .control-next.control-arrow::before {
-  border-left: 8px solid #00b19f;
+  border-left: 8px solid #03989f;
 }
 
 .div-carousel {
@@ -37,8 +37,8 @@
 }
 
 .div-carousel .info h3 {
-  font-weight: 200;
-  color: #00b19f;
+  font-weight: 400;
+  color: #186a6c;
 }
 
 .div-carousel .info p {
@@ -68,8 +68,8 @@
   }
 
   .div-carousel .info h3 {
-    font-weight: 200;
-    color: #00b19f;
+    font-weight: 400;
+    color: #186a6c;
     margin: 0;
   }
 
