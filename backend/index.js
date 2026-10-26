@@ -21,16 +21,56 @@ const membersRoute = require("./routes/members");
 const projectsRoute = require("./routes/projects");
 const selectionRoute = require("./routes/selection");
 
-mongoose.connect(
-  process.env.DB_CONNECT,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  () => console.log("Connected to db!")
-);
+// Sem banco a API nao serve nada. Em 26/10/2026 o processo, no ar desde 13/10,
+// perdeu a conexao com o Atlas e nunca voltou: o mongoose segura cada consulta ate
+// reconectar, sem prazo, e o site ficou com as paginas carregando para sempre
+// enquanto o container aparecia "healthy". Agora a falha na conexao inicial encerra
+// o processo, e o vigia abaixo encerra depois de 3 minutos sem resposta do banco;
+// o Docker (restart: always) sobe outro, que conecta de novo.
+mongoose
+  .connect(process.env.DB_CONNECT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 15000,
+  })
+  .then(() => console.log("Connected to db!"))
+  .catch((err) => {
+    console.error("Sem conexao com o banco:", err.message);
+    process.exit(1);
+  });
+
+function pingaBanco() {
+  if (mongoose.connection.readyState !== 1) {
+    return Promise.reject(new Error("desconectado"));
+  }
+  return Promise.race([
+    mongoose.connection.db.admin().ping(),
+    new Promise((_, rejeita) =>
+      setTimeout(() => rejeita(new Error("ping sem resposta em 10 s")), 10000)
+    ),
+  ]);
+}
+
+let falhasSeguidas = 0;
+setInterval(async () => {
+  try {
+    await pingaBanco();
+    falhasSeguidas = 0;
+  } catch (err) {
+    falhasSeguidas += 1;
+    console.error(`Banco sem resposta (${falhasSeguidas}/3):`, err.message);
+    if (falhasSeguidas >= 3) process.exit(1);
+  }
+}, 60000).unref();
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/health", (req, res) => res.status(200).send("ok"));
+app.get("/health", (req, res) =>
+  pingaBanco()
+    .then(() => res.status(200).send("ok"))
+    .catch(() => res.status(503).send("sem banco"))
+);
 
 app.use("/api/news", newsRoute);
 app.use("/api/inscriptions", inscriptionsRoute);
