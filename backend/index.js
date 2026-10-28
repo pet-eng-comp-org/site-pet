@@ -29,8 +29,6 @@ const selectionRoute = require("./routes/selection");
 // o Docker (restart: always) sobe outro, que conecta de novo.
 mongoose
   .connect(process.env.DB_CONNECT, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 15000,
   })
   .then(() => console.log("Connected to db!"))
