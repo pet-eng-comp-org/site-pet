@@ -1,15 +1,15 @@
 import React from "react";
-import { css } from "@emotion/core";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
-// Can be a string as well. Need to ensure each key-value pair ends with ;
-const override = css`
-  display: block;
-  margin-left: 50%;
-  margin-top: 5%;
-  padding-bottom: 30px;
-  border-color: #03989f;
-`;
+// O react-spinners 0.12+ trocou a prop `css` (emotion) por `cssOverride`, um
+// objeto de estilo comum.
+const override = {
+  display: "block",
+  marginLeft: "50%",
+  marginTop: "5%",
+  paddingBottom: "30px",
+  borderColor: "#03989f",
+};
 
 class Loader extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class Loader extends React.Component {
     return (
       <div className="sweet-loading">
         <PropagateLoader
-          css={override}
+          cssOverride={override}
           size={15}
           color={this.props.color ? this.props.color : "#03989f"}
           loading={this.state.loading}
