@@ -32,7 +32,7 @@ let saida = "";
 async function preparaBanco() {
   const nome = new URL(URL_BANCO).pathname.slice(1);
   if (!/teste/.test(nome)) throw new Error(`recuso apagar o banco "${nome}": o nome precisa conter "teste"`);
-  conexao = await mongoose.createConnection(URL_BANCO, { useNewUrlParser: true, useUnifiedTopology: true });
+  conexao = await mongoose.createConnection(URL_BANCO);
   await conexao.dropDatabase();
   await conexao.db.collection("members").insertMany([
     { memberName: "Membro Teste", email: MEMBRO.email, password: bcrypt.hashSync(MEMBRO.senha, 4), active: true },

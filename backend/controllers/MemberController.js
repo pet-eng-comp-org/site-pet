@@ -91,8 +91,7 @@ module.exports = {
           tutor: request.body.tutor,
           socialMidia: request.body.socialMidia,
           tags: request.body.tags,
-        },
-        { useFindAndModify: false }
+        }
       );
 
       return response.send("Success!");
@@ -107,8 +106,7 @@ module.exports = {
       const removedMember = await Member.findOneAndDelete(
         {
           _id: request.params.memberId,
-        },
-        { useFindAndModify: false }
+        }
       ).populate("profilePhoto");
 
       if (!removedMember.profilePhoto) return response.json(removedMember);
@@ -159,8 +157,7 @@ module.exports = {
           description: null,
           tags: null,
           endPet: request.body.endPet,
-        },
-        { useFindAndModify: false }
+        }
       );
 
       response.status(200).send("Success");
