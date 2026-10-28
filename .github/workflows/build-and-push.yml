@@ -23,8 +23,11 @@ jobs:
       contents: read
     services:
       mongo:
-        # Mesma linha do Atlas de producao (8.0), fixada por digest.
-        image: mongo:8.0@sha256:4968f22d0c6c10ef29952f3e807f62872ba22b3312f25803564fbfc08255efc2
+        # O Atlas de producao e 8.0, mas o MongoDB 8.0 se recusa a subir em kernel
+        # 6.19 ou mais novo (SERVER-121912), que os runners do GitHub passaram a
+        # usar em 10/2026. A 8.2 sobe; voltar para a linha do Atlas quando a 8.0
+        # tiver a correcao. Fixada por digest.
+        image: mongo:8.2.12@sha256:e0ce8c35124d4a9f9785532d1f268f39e9728ffa1cb38f46fa482436424c4bd3
         ports: ['27017:27017']
         options: >-
           --health-cmd "mongosh --quiet --eval 'db.runCommand({ping: 1})'"
