@@ -65,7 +65,6 @@ module.exports = {
       return res.status(400).send("invalid old password");
     }
 
-    console.log(req.body.oldPassword, req.body.newPassword);
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
 
