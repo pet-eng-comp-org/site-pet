@@ -38,6 +38,19 @@ services:
       - "traefik.http.services.site-pet_back-end.loadbalancer.server.port=80"
       - "traefik.http.routers.site-pet_back-end.entrypoints=websecure"
       - "traefik.http.routers.site-pet_back-end.tls.certresolver=le"
+      # Rotas publicas que nao pedem token: o login do painel, o contato (que
+      # manda e-mail) e o envio de inscricao. O Traefik conta por IP e barra o
+      # excesso antes de chegar ao back-end. A prioridade alta faz este
+      # roteador ganhar do geral acima.
+      - "traefik.http.routers.site-pet_back-end-publico.rule=Host(`api.pet.inf.ufes.br`) && (Path(`/api/login`) || Path(`/api/login/`) || (Method(`POST`) && PathRegexp(`^/api/(contact|inscriptions)/?$`)))"
+      - "traefik.http.routers.site-pet_back-end-publico.priority=200"
+      - "traefik.http.routers.site-pet_back-end-publico.entrypoints=websecure"
+      - "traefik.http.routers.site-pet_back-end-publico.tls.certresolver=le"
+      - "traefik.http.routers.site-pet_back-end-publico.service=site-pet_back-end"
+      - "traefik.http.routers.site-pet_back-end-publico.middlewares=site-pet_limite-publico"
+      - "traefik.http.middlewares.site-pet_limite-publico.ratelimit.average=10"
+      - "traefik.http.middlewares.site-pet_limite-publico.ratelimit.period=1m"
+      - "traefik.http.middlewares.site-pet_limite-publico.ratelimit.burst=10"
       - "traefik.docker.network=traefik"
 
   front-end:
