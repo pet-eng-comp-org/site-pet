@@ -22,7 +22,8 @@ const desde = (participant) => {
   const mes = new Date(participant.startPet).toLocaleDateString("pt-BR", {
     month: "long",
     year: "numeric",
-    timeZone: "America/Sao_Paulo",
+    // A data de entrada é gravada como meia-noite UTC; em Brasília cairia no dia anterior.
+    timeZone: "UTC",
   });
   return `${participant.tutor ? "Tutor" : "No PET"} desde ${mes}`;
 };

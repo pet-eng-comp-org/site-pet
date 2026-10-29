@@ -137,7 +137,7 @@ export const Tags = styled.div`
 export const Tag = styled.span`
   display: inline-flex;
   align-items: center;
-  min-height: 32px;
+  min-height: 44px;
   padding: 0 0.75rem;
   margin: 0 0.5rem 0.5rem 0;
   border: 1px solid #fff;
