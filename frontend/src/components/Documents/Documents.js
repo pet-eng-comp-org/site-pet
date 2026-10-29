@@ -36,16 +36,7 @@ const Documents = () => {
       <h1>Documentos</h1>
       <p className="pagina-intro">
         Normas, planejamentos, relatórios e editais do PET Engenharia de
-        Computação. Documentos de todos os grupos PET estão no{" "}
-        <a
-          className="link-texto"
-          target="_blank"
-          href="http://pet.ufes.br/documentos/"
-          rel="noopener noreferrer"
-        >
-          site do PET Ufes
-        </a>
-        , e a legislação do programa, no{" "}
+        Computação. A legislação do programa está no{" "}
         <a
           className="link-texto"
           target="_blank"
