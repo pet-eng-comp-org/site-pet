@@ -3,9 +3,8 @@ import styled from "styled-components";
 export const DivButtons = styled.div`
   display: flex;
   padding: 0.5rem;
-  justify-content: space-between;
+  gap: 10px;
   align-items:end;
-  width: 32%;
 `;
 
 export const SpanIcon = styled.span`
