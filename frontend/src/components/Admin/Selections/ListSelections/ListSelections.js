@@ -87,7 +87,7 @@ const ListSelections = () => {
             <DivButtons>
               {selection.open ? (
                 <>
-                  <SpanIcon
+                  <SpanIcon title="Editar" aria-label="Editar"
                     background="#ffc107"
                     onClick={() => {
                       setIdSelection(selection._id);
@@ -96,7 +96,7 @@ const ListSelections = () => {
                   >
                     <MDBIcon icon="edit" />
                   </SpanIcon>
-                  <SpanIcon
+                  <SpanIcon title="Finalizar seleção" aria-label="Finalizar seleção"
                     background="#fd7e14"
                     onClick={() => {
                       setIdSelection(selection._id);
@@ -107,7 +107,7 @@ const ListSelections = () => {
                   </SpanIcon>
                 </>
               ) : (
-                <SpanIcon
+                <SpanIcon title="Excluir" aria-label="Excluir"
                   background="#dc3545"
                   onClick={() => {
                     setIdSelection(selection._id);

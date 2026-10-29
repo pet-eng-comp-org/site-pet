@@ -10,6 +10,11 @@ const Table = ({ rows, columns }) => {
       responsive
       hover
       data={{ rows, columns }}
+      entriesLabel="Mostrar"
+      searchLabel="Buscar"
+      infoLabel={["Mostrando", "a", "de", "itens"]}
+      paginationLabel={["Anterior", "Próxima"]}
+      noRecordsFoundLabel="Nada encontrado"
     />
   );
 };

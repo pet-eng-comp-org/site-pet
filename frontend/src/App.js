@@ -18,8 +18,13 @@ import {
   Redirect,
 } from "react-router-dom";
 import Login from "./components/Admin/Login/Login";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+// Mensagem de erro fica na tela até a pessoa fechar; as de sucesso somem sozinhas.
+const avisoDeErro = toast.error;
+toast.error = (mensagem, opcoes) =>
+  avisoDeErro(mensagem, { autoClose: false, ...opcoes });
 
 const AdminRoute = ({ component: Component, ...rest }) => {
   return (

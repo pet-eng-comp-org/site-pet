@@ -74,7 +74,7 @@ const Admin = () => {
                 onClick={() => changeActive(2)}
                 className={activeOption[2]}
               >
-                Noticias
+                Notícias
               </NavLink>
               <NavLink
                 onClick={() => changeActive(3)}
