@@ -4,8 +4,6 @@ import {
   MDBNavbar,
   MDBNavbarNav,
   MDBNavItem,
-  MDBNavLink,
-  MDBNavbarToggler,
   MDBCollapse,
   MDBNavbarBrand,
   MDBIcon,
@@ -14,7 +12,7 @@ import "./Nav.css";
 import logoPet from "../../assets/logo_pet.svg";
 import App from "../../App";
 import api from "../../services/api";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 // Aviso no topo de todas as páginas enquanto a seleção estiver aberta.
 const fimDaSelecaoAberta = async () => {
@@ -32,6 +30,15 @@ const fimDaSelecaoAberta = async () => {
   return null;
 };
 
+const paginas = [
+  ["/", "Início"],
+  ["/sobre", "Quem somos"],
+  ["/projetos", "Projetos"],
+  ["/documentos", "Documentos"],
+  ["/contato", "Contato"],
+  ["/inscricoes", "Participe"],
+];
+
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
@@ -43,22 +50,13 @@ function Nav() {
       setShowMessage(Boolean(fim));
     });
   }, []);
-  const [tabActive, setTabActive] = useState("");
-
-  useEffect(() => {
-    let path = window.location.pathname.replace("/", "") || "inicio";
-    if (path.lastIndexOf("/") > 0) {
-      path = path.split("/")[0];
-    }
-    let link = document.querySelector(`#${path}`);
-    if (link) link.classList.add("active-link");
-    if (path !== "inicio")
-      document.getElementById("inicio").classList.remove("active-link");
-  }, [tabActive]);
 
   const toggleCollapse = () => {
     setIsOpen(!isOpen);
   };
+
+  // No celular, escolher uma página fecha o menu, que senão cobre o título.
+  const fecharMenu = () => setIsOpen(false);
 
   const logout = () => {
     localStorage.removeItem("LOGINPET_TOKEN");
@@ -87,7 +85,7 @@ function Nav() {
 
       <MDBNavbar color="white" expand="md" light>
         <MDBNavbarBrand>
-          <Link to="/" onClick={() => setTabActive("inicio")}>
+          <Link to="/" onClick={fecharMenu}>
             <img
               alt="PET Engenharia de Computação, página inicial"
               src={logoPet}
@@ -95,95 +93,52 @@ function Nav() {
             />
           </Link>
         </MDBNavbarBrand>
-        <MDBNavbarToggler onClick={toggleCollapse} />
+        <button
+          type="button"
+          className="navbar-toggler"
+          onClick={toggleCollapse}
+          aria-controls="navbarCollapse3"
+          aria-expanded={isOpen}
+          aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
 
         <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
           <MDBNavbarNav right>
-            <MDBNavItem>
-              <MDBNavLink
-                to="/"
-                id="inicio"
-                onClick={() => setTabActive("inicio")}
-                className="nav-links"
-              >
-                Início
-              </MDBNavLink>
-            </MDBNavItem>
-
-            <MDBNavItem>
-              <MDBNavLink
-                to="/sobre"
-                id="sobre"
-                onClick={() => setTabActive("sobre")}
-                className="nav-links"
-              >
-                Quem somos
-              </MDBNavLink>
-            </MDBNavItem>
-
-            <MDBNavItem>
-              <MDBNavLink
-                to="/projetos"
-                id="projetos"
-                onClick={() => setTabActive("projetos")}
-                className="nav-links"
-              >
-                Projetos
-              </MDBNavLink>
-            </MDBNavItem>
-
-            <MDBNavItem>
-              <MDBNavLink
-                to="/documentos"
-                id="documentos"
-                className="nav-links"
-                onClick={() => setTabActive("documentos")}
-              >
-                Documentos
-              </MDBNavLink>
-            </MDBNavItem>
-
-            <MDBNavItem>
-              <MDBNavLink
-                to="/contato"
-                id="contato"
-                onClick={() => setTabActive("contato")}
-                className="nav-links"
-              >
-                Contato
-              </MDBNavLink>
-            </MDBNavItem>
-
-            <MDBNavItem>
-              <MDBNavLink
-                to="/inscricoes"
-                id="inscricoes"
-                className="nav-links"
-                onClick={() => setTabActive("inscricoes")}
-              >
-                Participe
-              </MDBNavLink>
-            </MDBNavItem>
+            {paginas.map(([to, rotulo]) => (
+              <MDBNavItem key={to}>
+                <NavLink
+                  to={to}
+                  exact={to === "/"}
+                  className="nav-link nav-links"
+                  activeClassName="active-link"
+                  onClick={fecharMenu}
+                >
+                  {rotulo}
+                </NavLink>
+              </MDBNavItem>
+            ))}
             {localStorage.getItem("LOGINPET_TOKEN") && (
               <>
                 <MDBNavItem>
-                  <MDBNavLink
+                  <NavLink
                     to="/admin"
-                    id="admin"
-                    className="nav-links"
-                    onClick={() => setTabActive("admin")}
+                    className="nav-link nav-links"
+                    activeClassName="active-link"
+                    onClick={fecharMenu}
                   >
                     Admin
-                  </MDBNavLink>
+                  </NavLink>
                 </MDBNavItem>
                 <MDBNavItem>
-                  <MDBNavLink
-                    to="#!"
-                    onClick={() => logout()}
-                    className="nav-links"
+                  <button
+                    type="button"
+                    onClick={logout}
+                    className="nav-link nav-links nav-sair"
                   >
                     Sair
-                  </MDBNavLink>
+                  </button>
                 </MDBNavItem>
               </>
             )}
