@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import logoPet from "../../assets/logo_pet_branca.svg";
 import iconeInstagram from "../../assets/icone_instagram.svg";
 import iconeEmail from "../../assets/icone_email.svg";
@@ -23,10 +22,9 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    PET Engenharia de Computação
+                    Sala 18, 2º andar do CT XIII
                     <br />
-                    CT XIII – Ufes – Goiabeiras, Vitória – ES, 29075-073. Sala
-                    18, 2º andar
+                    Ufes, campus de Goiabeiras, Vitória (ES), 29075-073
                   </a>
                 </p>
               </MDBCol>
@@ -37,7 +35,7 @@ const Footer = () => {
             <MDBRow end>
               <MDBCol md="auto">
                 <a
-                  href="https://www.instagram.com/petengcomp/?hl=pt-br"
+                  href="https://www.instagram.com/petengcomp/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -52,20 +50,19 @@ const Footer = () => {
                 </a>
               </MDBCol>
               <MDBCol md="auto">
-                <Link to="/contato">
+                <a href="mailto:petengcomp.ufes@gmail.com">
                   <p>
                     <img alt="" src={iconeEmail} className="icone" />{" "}
                     petengcomp.ufes@gmail.com
                   </p>
-                </Link>
+                </a>
               </MDBCol>
             </MDBRow>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
       <div className="footer-copyright text-center py-2">
-        &copy; {new Date().getFullYear()} Copyright: PET Engenharia de
-        Computação - Ufes
+        © {new Date().getFullYear()} PET Engenharia de Computação · Ufes
       </div>
     </MDBFooter>
   );
