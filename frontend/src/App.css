@@ -1,7 +1,7 @@
 @import "assets/sofia_sans/stylesheet.css";
 
 .App {
-  text-align: justify;
+  text-align: left;
   font-family: "Sofia Sans", Arial, sans-serif;
   font-weight: 400;
   color: #1b3f3f;
