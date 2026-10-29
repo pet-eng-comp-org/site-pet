@@ -1,7 +1,38 @@
+.rodape.page-footer {
+  background-color: #1b3f3f;
+}
+
+/* Mesma largura e mesmas margens do cabeçalho e do conteúdo (1140px). */
+.rodape-faixa {
+  display: flex;
+  align-items: center;
+  gap: 2rem 3rem;
+  max-width: calc(1140px + 2rem);
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
 .logoPet {
-  margin: 1rem 0;
   width: 160px;
-  max-width: 100%;
+  flex-shrink: 0;
+}
+
+.rodape-endereco {
+  line-height: 1.6;
+}
+
+.rodape-contatos {
+  margin: 0 0 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+/* Ícones na mesma coluna e área de toque de 44px. */
+.rodape-contatos a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
 }
 
 .icone {
@@ -9,28 +40,18 @@
   height: 22px;
 }
 
-/* Área de toque de pelo menos 44px nos contatos. */
-.page-footer a {
-  display: inline-block;
-}
-
-.page-footer a p {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  min-height: 44px;
-  margin: 0;
-}
-
 .footer-copyright {
   font-size: 10pt;
 }
 
-.page-footer.elegant-color-dark {
-  background-color: #1b3f3f !important;
-}
+@media (max-width: 767.98px) {
+  .rodape-faixa {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 
-/* Mesmo alinhamento do cabeçalho e do conteúdo (largura de 1140px). */
-.page-footer > .container-fluid {
-  max-width: calc(1140px + 2rem);
+  .rodape-contatos {
+    margin-left: 0;
+  }
 }
