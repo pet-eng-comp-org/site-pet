@@ -26,7 +26,7 @@ const Footer = () => {
                   >
                     PET Engenharia de Computação
                     <br />
-                    CT XIII – UFES – Goiabeiras, Vitória – ES, 29075-073. Sala
+                    CT XIII – Ufes – Goiabeiras, Vitória – ES, 29075-073. Sala
                     18, 2º andar
                   </a>
                 </p>
