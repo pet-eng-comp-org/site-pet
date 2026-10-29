@@ -1,6 +1,10 @@
 @import "assets/sofia_sans/stylesheet.css";
 
+/* Rodapé sempre no fim da tela, mesmo em página curta. */
 .App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   text-align: left;
   font-family: "Sofia Sans", Arial, sans-serif;
   font-weight: 400;
@@ -185,4 +189,8 @@ a {
 .btn-secondary:focus {
   background-color: #ff9a5b !important;
   color: #1b3f3f !important;
+}
+
+.App > .page-footer {
+  margin-top: auto;
 }
