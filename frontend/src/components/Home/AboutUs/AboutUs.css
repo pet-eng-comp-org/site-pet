@@ -6,7 +6,8 @@
   z-index: 999 !important;
 }
 
-.about-us h1 {
+.about-us h2 {
+  font-size: 2.5rem;
   padding: 0 0rem;
   text-align: left;
   z-index: 999;
@@ -50,7 +51,7 @@
     padding: 0 2rem;
   }
 
-  .about-us h1 {
+  .about-us h2 {
     padding: 0 2rem;
   }
 }

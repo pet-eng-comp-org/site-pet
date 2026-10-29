@@ -14,7 +14,7 @@ const AboutUs = () => {
         <MDBContainer>
           <MDBRow center>
             <MDBCol xs="11" lg="10">
-              <h1>Um pouco sobre nós</h1>
+              <h2>Um pouco sobre nós</h2>
             </MDBCol>
           </MDBRow>
           <MDBRow center>

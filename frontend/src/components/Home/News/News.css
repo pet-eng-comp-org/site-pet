@@ -1,6 +1,7 @@
 @import "../../../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css";
 
 .title {
+  font-size: 2.5rem;
   margin: 2rem 0;
   font-weight: bold;
   color: #186a6c;
