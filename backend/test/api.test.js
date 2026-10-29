@@ -147,12 +147,7 @@ describe("rotas do painel", () => {
     ["PATCH", `/api/documents/removeFile/${ID}`],
     ["PUT", `/api/documents/${ID}`],
     ["DELETE", `/api/documents/${ID}`],
-    ["GET", `/api/file/downloadInscription/${ID}`],
     ["DELETE", `/api/file/${ID}`],
-    ["GET", "/api/inscriptions/"],
-    ["GET", `/api/inscriptions/${ID}`],
-    ["DELETE", `/api/inscriptions/${ID}`],
-    ["PATCH", `/api/inscriptions/acceptInscription/${ID}`],
     ["PATCH", `/api/login/changePassword/${ID}`],
     ["POST", "/api/members/"],
     ["GET", "/api/members/all/"],
@@ -174,7 +169,6 @@ describe("rotas do painel", () => {
     ["GET", `/api/selection/${ID}`],
     ["POST", "/api/selection/"],
     ["PUT", `/api/selection/${ID}`],
-    ["PATCH", `/api/selection/removeInscription/${ID}`],
     ["PATCH", `/api/selection/finalizeSelection/${ID}`],
     ["DELETE", `/api/selection/${ID}`],
   ];
@@ -214,5 +208,38 @@ describe("rotas publicas", () => {
     assert.equal(r.status, 400);
     assert.ok(!(await r.text()).includes("SyntaxError"), "detalhe do erro na resposta");
     await processoVivo();
+  });
+});
+
+describe("selecao", () => {
+  const selecao = {
+    title: "Seleção de teste",
+    dateBegin: "2026-01-01T00:00:00-03:00",
+    dateEnd: "2099-01-01T23:59:59-03:00",
+    formLink: "https://forms.gle/exemplo",
+  };
+  const envia = (token, corpo) =>
+    api("POST", "/api/selection/", {
+      headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+      corpo: JSON.stringify(corpo),
+    });
+
+  it("recusa link do formulario que nao e https", async () => {
+    const r = await envia(await entra(), { ...selecao, formLink: "http://forms.gle/exemplo" });
+    assert.equal(r.status, 400);
+  });
+
+  it("a selecao aberta mostra ao site so titulo, datas e o link do formulario", async () => {
+    assert.equal((await envia(await entra(), selecao)).status, 200);
+    const r = await api("GET", "/api/selection/openSelection");
+    assert.equal(r.status, 200);
+    const { selection } = await r.json();
+    assert.deepEqual(Object.keys(selection).sort(), ["_id", "dateBegin", "dateEnd", "formLink", "title"]);
+    assert.equal(selection.formLink, selecao.formLink);
+  });
+
+  it("o site nao recebe mais inscricao: ela e feita no Google Forms", async () => {
+    const r = await api("POST", "/api/inscriptions/");
+    assert.equal(r.status, 404);
   });
 });
