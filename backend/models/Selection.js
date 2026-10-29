@@ -1,27 +1,12 @@
 const mongoose = require("mongoose");
+
+// As inscrições são feitas no Google Forms; a seleção só diz ao site quando
+// mostrar o botão de inscrição e para onde ele leva.
 const selectionSchema = new mongoose.Schema({
-  phases: [
-    {
-      date: {
-        type: Date,
-        required: true,
-      },
-      hour: {
-        type: String,
-        required: true,
-      },
-      local: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
-  inscriptions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Inscriptions",
-    },
-  ],
+  title: {
+    type: String,
+    required: true,
+  },
   dateBegin: {
     type: Date,
     required: true,
@@ -30,7 +15,7 @@ const selectionSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  title: {
+  formLink: {
     type: String,
     required: true,
   },

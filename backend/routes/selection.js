@@ -7,11 +7,6 @@ router.get("/openSelection", selectionController.openSelection);
 router.get("/:id", verify, selectionController.show);
 router.post("/", verify, selectionController.store);
 router.put("/:id", verify, selectionController.update);
-router.patch(
-  "/removeInscription/:id",
-  verify,
-  selectionController.removeInscription
-);
 router.patch("/finalizeSelection/:id", verify, selectionController.finalize);
 router.delete("/:id", verify, selectionController.destroy);
 

@@ -1,14 +1,5 @@
 const Joi = require("@hapi/joi");
 
-const inscriptionsValidation = (data) => {
-  const schema = Joi.object({
-    name: Joi.string().min(2).required(),
-    email: Joi.string().min(6).email().required(),
-    phone: Joi.string().min(11).max(15).required(),
-  });
-  return schema.validate(data);
-};
-
 const newsValidation = (data) => {
   const schema = Joi.object({
     title: Joi.string().min(5).max(100).required(),
@@ -27,21 +18,11 @@ const documentsValidation = (data) => {
 const selectionValidation = (data) => {
   const schema = Joi.object({
     title: Joi.string().min(5).max(30).required(),
-    phases: Joi.array()
-      .items(
-        Joi.object({
-          _id: Joi.string(),
-          date: Joi.date().greater("now").required(),
-          hour: Joi.string()
-            .regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)
-            .required(),
-          local: Joi.string().min(5).required(),
-        })
-      )
-      .min(1)
-      .required(),
     dateBegin: Joi.date().required(),
     dateEnd: Joi.date().greater(Joi.ref("dateBegin")).required(),
+    formLink: Joi.string()
+      .uri({ scheme: ["https"] })
+      .required(),
   });
   return schema.validate(data);
 };
@@ -122,7 +103,6 @@ const comissionsValidation = (data) => {
   return schema.validate(data);
 };
 
-module.exports.inscriptionsValidation = inscriptionsValidation;
 module.exports.newsValidation = newsValidation;
 module.exports.documentsValidation = documentsValidation;
 module.exports.selectionValidation = selectionValidation;

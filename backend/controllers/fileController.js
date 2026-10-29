@@ -12,13 +12,6 @@ module.exports = {
     res.json({ file });
   },
 
-  async downloadInscription(req, res) {
-    const file = await File.findOne({ _id: req.params.fileId });
-
-    const pathFile = path.resolve(`uploads/inscriptions/${file.key}`);
-    res.sendFile(pathFile);
-  },
-
   async downloadDocument(req, res) {
     const file = await File.findOne({ _id: req.params.fileId });
 
