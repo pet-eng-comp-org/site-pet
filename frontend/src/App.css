@@ -74,6 +74,7 @@ a {
 }
 .bodyLinks {
   color: #186a6c;
+  text-decoration: underline;
   margin-left: 8px;
 }
 .bodyLinks:hover {
