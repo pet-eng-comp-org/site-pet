@@ -13,11 +13,36 @@ import {
 import "./Nav.css";
 import logoPet from "../../assets/logo_pet.svg";
 import App from "../../App";
+import api from "../../services/api";
 import { Link } from "react-router-dom";
+
+// Aviso no topo de todas as páginas enquanto a seleção estiver aberta.
+const fimDaSelecaoAberta = async () => {
+  try {
+    const { data } = await api.get("api/selection/openSelection");
+    const s = data.selection;
+    const agora = Date.now();
+    if (s && agora > Date.parse(s.dateBegin) && agora < Date.parse(s.dateEnd))
+      return new Date(s.dateEnd).toLocaleDateString("pt-BR", {
+        day: "numeric",
+        month: "long",
+        timeZone: "America/Sao_Paulo",
+      });
+  } catch (err) {}
+  return null;
+};
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+  const [fimSelecao, setFimSelecao] = useState();
+
+  useEffect(() => {
+    fimDaSelecaoAberta().then((fim) => {
+      setFimSelecao(fim);
+      setShowMessage(Boolean(fim));
+    });
+  }, []);
   const [tabActive, setTabActive] = useState("");
 
   useEffect(() => {
@@ -47,11 +72,14 @@ function Nav() {
         style={{ display: showMessage ? "flex" : "none" }}
       >
         <p style={{ margin: 0 }}>
-          Processo seletivo aberto! <a href="/subscription">Saiba mais</a>
+          Inscrições abertas para o PET até {fimSelecao}.{" "}
+          <Link to="/inscricoes">Saiba como participar</Link>
         </p>
         <span
           style={{ marginLeft: "auto", cursor: "pointer" }}
-          onClick={() => setShowMessage(!showMessage)}
+          onClick={() => setShowMessage(false)}
+          role="button"
+          aria-label="Fechar aviso"
         >
           <MDBIcon icon="times" />
         </span>

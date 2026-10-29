@@ -45,7 +45,7 @@ const About = () => {
         </p>
         <p className="pagina-intro">
           O{" "}
-          <a className="link-texto" href="http://portal.mec.gov.br/pet">
+          <a className="link-texto" href="https://www.gov.br/mec/pt-br/pet">
             Programa de Educação Tutorial
           </a>{" "}
           foi criado pela CAPES em 1979, com o nome de Programa Especial de
