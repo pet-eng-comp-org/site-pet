@@ -18,6 +18,89 @@
   color: #186a6c;
 }
 
+/* Página interna: mesma largura do cabeçalho e do rodapé, título em tinta
+   como o da página inicial e texto numa medida confortável de leitura. */
+.pagina {
+  max-width: calc(1140px + 3rem);
+  margin: 0 auto;
+  padding: 4rem 1.5rem 5rem;
+}
+
+.App .pagina h1 {
+  font-size: 3rem;
+  line-height: 1.1;
+  color: #1b3f3f;
+  margin-bottom: 1rem;
+}
+
+.pagina h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1b3f3f;
+}
+
+.pagina-intro {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  max-width: 46rem;
+}
+
+.link-texto {
+  color: #186a6c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.link-texto:hover,
+.link-texto:focus {
+  color: #1b3f3f;
+}
+
+@media (max-width: 900px) {
+  .pagina {
+    padding: 2.5rem 1rem 3rem;
+  }
+
+  .App .pagina h1 {
+    font-size: 2.25rem;
+  }
+}
+
+.botao-principal {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 1.5rem;
+  border-radius: 8px;
+  background: #186a6c;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.botao-principal:hover,
+.botao-principal:focus {
+  background: #1b3f3f;
+  color: #fff;
+}
+
+.botao-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  color: #186a6c;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.botao-link:hover,
+.botao-link:focus {
+  color: #1b3f3f;
+}
+
+
 .text-content {
   /* max-width: 800px; */
   padding: 5rem 0;

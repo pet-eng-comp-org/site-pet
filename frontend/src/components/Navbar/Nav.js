@@ -89,7 +89,7 @@ function Nav() {
                 onClick={() => setTabActive("sobre")}
                 className="nav-links"
               >
-                Quem Somos
+                Quem somos
               </MDBNavLink>
             </MDBNavItem>
 
@@ -133,7 +133,7 @@ function Nav() {
                 className="nav-links"
                 onClick={() => setTabActive("inscricoes")}
               >
-                Participe!
+                Participe
               </MDBNavLink>
             </MDBNavItem>
             {localStorage.getItem("LOGINPET_TOKEN") && (

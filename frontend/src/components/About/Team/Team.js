@@ -1,57 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { MDBCol, MDBRow, MDBContainer } from "mdbreact";
+import React from "react";
 import Participant from "../Participant/Participant";
 import "./Team.css";
-import Loader from "../../Loader/Loader";
 
-const Team = ({ petianos }) => {
-  const [team, setTeam] = useState();
-
-  useEffect(() => {
-    let aux = [...petianos];
-
-    let tutor;
-
-    aux.sort((a, b) => {
-      if (
-        new Date(a.startPet) <= new Date(b.startPet) &&
-        !a.tutor &&
-        !b.tutor
-      ) {
-        return 1;
-      } else {
-        return -1;
-      }
-    });
-
-    tutor = { ...aux[0] };
-    for (let i = 0; i < aux.length - 1; i++) {
-      aux[i] = aux[i + 1];
-    }
-    aux[aux.length - 1] = { ...tutor };
-
-    setTeam([...aux]);
-  }, [petianos]);
-
-  return (
-    <>
-      {!team ? (
-        <Loader />
-      ) : (
-        <div className="green-bg">
-          <MDBContainer>
-            <MDBRow>
-              {team.map((participant, index) => (
-                <MDBCol xs="12" lg="6" className="pb-4 pt-4" key={index}>
-                  <Participant participant={participant} />
-                </MDBCol>
-              ))}
-            </MDBRow>
-          </MDBContainer>
-        </div>
-      )}
-    </>
-  );
+// Alunos do mais novo para o mais antigo no grupo; o tutor fecha a lista.
+const ordenar = (petianos) => {
+  const alunos = petianos
+    .filter((p) => !p.tutor)
+    .sort((a, b) => new Date(b.startPet) - new Date(a.startPet));
+  return [...alunos, ...petianos.filter((p) => p.tutor)];
 };
+
+const Team = ({ petianos }) => (
+  <section className="green-bg equipe">
+    <div className="equipe-conteudo">
+      <h2>Petianos atuais</h2>
+      <div className="equipe-grade">
+        {ordenar(petianos).map((participant) => (
+          <Participant participant={participant} key={participant._id} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 export default Team;
