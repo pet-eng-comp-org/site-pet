@@ -19,13 +19,14 @@
   border-radius: 16px;
   background: #fff;
   color: #1b3f3f;
-  font: inherit;
-  cursor: pointer;
+  text-decoration: none;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .projeto:hover,
 .projeto:focus-visible {
+  color: #1b3f3f;
+  text-decoration: none;
   box-shadow: 0 16px 32px -20px rgba(27, 63, 63, 0.6);
   transform: translateY(-2px);
 }
