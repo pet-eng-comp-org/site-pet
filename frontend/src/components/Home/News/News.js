@@ -2,6 +2,18 @@ import React, { useState, useEffect } from "react";
 import "./News.css";
 import api from "../../../services/api";
 
+// Endereço escrito no texto da notícia vira link de verdade.
+const comLinks = (texto) =>
+  texto.split(/(https:\/\/\S+[^\s.,;:!?)])/).map((parte, i) =>
+    i % 2 ? (
+      <a key={i} href={parte} target="_blank" rel="noopener noreferrer">
+        {parte.replace(/^https:\/\//, "")}
+      </a>
+    ) : (
+      parte
+    )
+  );
+
 const News = () => {
   const [news, setNews] = useState();
 
@@ -33,7 +45,7 @@ const News = () => {
               />
               <div className="noticia-texto">
                 <h3>{singleNew.title}</h3>
-                <p>{singleNew.text}</p>
+                <p>{comLinks(singleNew.text)}</p>
               </div>
             </article>
           ))}
