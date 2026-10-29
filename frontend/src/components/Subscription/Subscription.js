@@ -10,7 +10,6 @@ import goUp from "../../utils/goUp";
 import Loader from "../Loader/Loader";
 
 import "./Subscription.css";
-import { MDBAnimation, MDBCol, MDBContainer, MDBRow } from "mdbreact";
 
 function Subscription() {
   function Content() {
@@ -34,53 +33,37 @@ function Subscription() {
     };
 
     return (
-      <>
-        <div className="text-content">
-          <MDBContainer className="ft-normal">
-            <MDBRow center>
-              <MDBCol xs="11" lg="10">
-                <h1 className="text-align-left">
-                  Faça parte do PET Engenharia de Computação!
-                </h1>
-              </MDBCol>
-            </MDBRow>
-            <MDBRow center>
-              <MDBCol xs="11" lg="10">
-                <p>
-                  Você tem interesse em participar do nosso grupo? Você pode
-                  fazer parte de algum projeto conosco (confira os{" "}
-                  <Link className="link" to="/projetos">
-                    {" "}
-                    nossos projetos{" "}
-                  </Link>{" "}
-                  e entre em contato conosco caso tenha interesse de atuar em
-                  algum deles) ou você pode passar pelo processo seletivo de PET
-                  Eng Comp, caso atenda aos seguintes critérios:
-                </p>
-              </MDBCol>
-            </MDBRow>
-            <MDBRow center>
-              <MDBCol xs="11" lg="10">
-                <ul className="requirements">
-                  <li>Cursar Engenharia de Computação na Ufes Goiabeiras</li>
-                  <li>Estar entre o segundo e quarto períodos</li>
-                  <li>Ter um CR de 5.0 ou maior</li>
-                  <li>Ter vontade de aprender o se auto desenvolver</li>
-                </ul>
-              </MDBCol>
-            </MDBRow>
-          </MDBContainer>
-        </div>
+      <div className="pagina">
+        <h1>Faça parte do PET</h1>
+        <p className="pagina-intro">
+          Para ser petiano, é preciso passar pelo processo seletivo. Pode se
+          inscrever quem:
+        </p>
+        <ul className="requisitos">
+          <li>cursa Engenharia de Computação na Ufes, em Goiabeiras;</li>
+          <li>está entre o segundo e o quarto período;</li>
+          <li>tem CR de 5,0 ou mais;</li>
+          <li>tem vontade de aprender e se desenvolver.</li>
+        </ul>
         {renderSelection()}
-      </>
+        <p className="pagina-intro">
+          Também dá para participar de um projeto sem ser petiano: veja os{" "}
+          <Link className="link-texto" to="/projetos">
+            nossos projetos
+          </Link>{" "}
+          e{" "}
+          <Link className="link-texto" to="/contato">
+            fale com a gente
+          </Link>
+          .
+        </p>
+      </div>
     );
   }
 
   return (
     <SelectionProvider>
-      <MDBAnimation type="fadeIn">
-        <Content />
-      </MDBAnimation>
+      <Content />
     </SelectionProvider>
   );
 }

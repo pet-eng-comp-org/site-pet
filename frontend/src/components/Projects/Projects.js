@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Project from "./Project/Project";
 import "./Projects.css";
 import api from "../../services/api";
-import { MDBContainer, MDBCard, MDBIcon, MDBRow, MDBAnimation } from "mdbreact";
+import goUp from "../../utils/goUp";
 
 import Modal from "./Modal/Modal";
 import Loader from "../Loader/Loader";
@@ -10,70 +10,54 @@ import Loader from "../Loader/Loader";
 const Projects = () => {
   const [modal, setModal] = useState();
   const [idComission, setIdComission] = useState("");
-  const [comissions, setComissions] = useState([]);
-
-  const getComissions = async () => {
-    try {
-      const response = await api.get("api/comissions");
-      setComissions([...response.data.comissions]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const [comissions, setComissions] = useState();
 
   useEffect(() => {
+    goUp();
+    const getComissions = async () => {
+      try {
+        const response = await api.get("api/comissions");
+        setComissions([...response.data.comissions]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getComissions();
   }, []);
 
-  return (
-    <div>
-      <MDBAnimation type="fadeIn">
-        {!comissions ? (
-          <div className="divloader">
-            <Loader />
-          </div>
-        ) : (
-          <>
-            <MDBContainer className="text-content">
-              <h1>Projetos</h1>
-              <p style={{ fontWeight: "normal" }}>
-                Devido a natureza dos grupos PET no Brasil, nossos projetos se
-                baseiam no triplé acadêmico de pesquisa, ensino e extensão. O
-                PET Engenharia de Computação Ufes divide suas tarefas em várias
-                comissões. Cada comissão possui um líder que coordena todos os
-                projetos pertencentes a ela. Logo abaixo é possível conhecer um
-                pouco mais sobre nosso trabalho.
-              </p>
-            </MDBContainer>
+  if (!comissions) {
+    return (
+      <div className="divloader">
+        <Loader />
+      </div>
+    );
+  }
 
-            <MDBContainer className="cards-projects">
-              <MDBRow center>
-                {comissions.map((comission) => {
-                  return (
-                    <MDBCard className="card-project" key={comission._id}>
-                      <Project
-                        title={comission.title}
-                        description={comission.description}
-                        icon={comission.photos[0]}
-                        alt={`Ícone da comissao ${comission.title}`}
-                      />
-                      <MDBIcon
-                        icon="plus-circle"
-                        size="3x"
-                        className="modal-button"
-                        onClick={() => {
-                          setModal((old) => !old);
-                          setIdComission(comission._id);
-                        }}
-                      />
-                    </MDBCard>
-                  );
-                })}
-              </MDBRow>
-            </MDBContainer>
-          </>
-        )}
-      </MDBAnimation>
+  return (
+    <div className="pagina">
+      <h1>Projetos</h1>
+      <p className="pagina-intro">
+        Como todo grupo PET, trabalhamos no tripé de ensino, pesquisa e
+        extensão. As atividades se dividem em comissões, cada uma com um líder
+        que coordena os seus projetos. Escolha uma para saber mais.
+      </p>
+
+      <ul className="projetos-grade">
+        {comissions.map((comission) => (
+          <li key={comission._id}>
+            <Project
+              title={comission.title}
+              description={comission.description}
+              icon={comission.photos[0]}
+              onClick={() => {
+                setModal(true);
+                setIdComission(comission._id);
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+
       <Modal
         idComission={idComission}
         isOpen={modal}

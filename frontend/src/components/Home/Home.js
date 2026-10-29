@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import BackgroundImage from "./BackgroundImage/BackgroundImage";
+import Hero from "./Hero/Hero";
 import News from "./News/News";
 import goUp from "../../utils/goUp";
 import AboutUs from "./AboutUs/AboutUs";
-import { MDBAnimation } from "mdbreact";
 
 function Home() {
   useEffect(() => {
@@ -11,11 +10,11 @@ function Home() {
   }, []);
 
   return (
-    <MDBAnimation type="fadeIn">
-      <BackgroundImage />
+    <>
+      <Hero />
       <News />
       <AboutUs />
-    </MDBAnimation>
+    </>
   );
 }
 

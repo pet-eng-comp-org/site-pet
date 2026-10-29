@@ -23,3 +23,8 @@
 .page-footer.elegant-color-dark {
   background-color: #1b3f3f !important;
 }
+
+/* Mesmo alinhamento do cabeçalho e do conteúdo (largura de 1140px). */
+.page-footer > .container-fluid {
+  max-width: calc(1140px + 2rem);
+}

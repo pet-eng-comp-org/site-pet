@@ -11,15 +11,14 @@ import {
   MDBIcon,
 } from "mdbreact";
 import "./Nav.css";
-import iconePet from "../../assets/icone_pet.svg";
+import logoPet from "../../assets/logo_pet.svg";
 import App from "../../App";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [tabActive, setTabActive] = useState("");
-  let history = useHistory();
 
   useEffect(() => {
     let path = window.location.pathname.replace("/", "") || "inicio";
@@ -39,11 +38,6 @@ function Nav() {
   const logout = () => {
     localStorage.removeItem("LOGINPET_TOKEN");
     ReactDOM.render(<App />, document.querySelector("#root"));
-  };
-
-  const petButton = () => {
-    history.push("/");
-    setTabActive("inicio");
   };
 
   return (
@@ -66,12 +60,13 @@ function Nav() {
       <MDBNavbar color="white" expand="md" light>
         <MDBNavbarToggler onClick={toggleCollapse} />
         <MDBNavbarBrand>
-          <img
-            alt="iconePET"
-            src={iconePet}
-            onClick={petButton}
-            style={{ cursor: "pointer" }}
-          />
+          <Link to="/" onClick={() => setTabActive("inicio")}>
+            <img
+              alt="PET Engenharia de Computação, página inicial"
+              src={logoPet}
+              className="logo-nav"
+            />
+          </Link>
         </MDBNavbarBrand>
 
         <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
@@ -94,7 +89,7 @@ function Nav() {
                 onClick={() => setTabActive("sobre")}
                 className="nav-links"
               >
-                Quem Somos
+                Quem somos
               </MDBNavLink>
             </MDBNavItem>
 
@@ -138,7 +133,7 @@ function Nav() {
                 className="nav-links"
                 onClick={() => setTabActive("inscricoes")}
               >
-                Participe!
+                Participe
               </MDBNavLink>
             </MDBNavItem>
             {localStorage.getItem("LOGINPET_TOKEN") && (

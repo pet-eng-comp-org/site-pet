@@ -1,10 +1,16 @@
-.comission-title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #186a6c;
-  text-transform: uppercase;
-  font-size: 2rem;
+.comissao-cabecalho {
+  background: #186a6c;
+  color: #fff;
+}
+
+.comissao-cabecalho .modal-title {
+  font-weight: 700;
+}
+
+.comissao-cabecalho .close,
+.comissao-cabecalho .close:hover {
+  color: #fff;
+  opacity: 1;
 }
 
 .modal-image {

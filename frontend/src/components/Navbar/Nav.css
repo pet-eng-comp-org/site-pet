@@ -17,11 +17,20 @@
 .fixed-top {
   z-index: 999 !important;
 }
+.logo-nav {
+  width: 160px;
+  height: auto;
+  display: block;
+}
 .nav-links {
-  color: rgb(110, 108, 108);
+  color: #1b3f3f !important;
+  font-weight: 500;
 }
 .active-link {
   color: #186a6c !important;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 }
 .nav-links:hover {
   color: #186a6c !important;
@@ -51,4 +60,10 @@
 .message a:hover {
   color: #1b3f3f;
   text-decoration: underline;
+}
+
+/* Logo e links alinhados com o conteúdo das páginas (largura de 1140px). */
+.navbar {
+  padding-left: max(1rem, calc((100% - 1140px) / 2)) !important;
+  padding-right: max(1rem, calc((100% - 1140px) / 2)) !important;
 }

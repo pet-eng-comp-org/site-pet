@@ -1,4 +1,3 @@
-import { MDBCol, MDBContainer, MDBRow } from "mdbreact";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { SelectionContext } from "../SelectionContext/SelectionContext";
@@ -8,35 +7,20 @@ function OpenedSelection() {
   const [selection] = useContext(SelectionContext);
 
   return (
-    <div className="selection-description" style={{ marginBottom: "5rem" }}>
-      <div className="text-content ft-normal">
-        <MDBContainer>
-          <MDBRow center>
-            <MDBCol xs="11" lg="10">
-              <h1>Seleção</h1>
-            </MDBCol>
-          </MDBRow>
-          <MDBRow center>
-            <MDBCol xs="11" lg="10">
-              <p>{selection?.description}</p>
-            </MDBCol>
-          </MDBRow>
-          <MDBRow center>
-            <MDBCol xs="11" lg="10">
-              <p>
-                Para compreender melhor o processo seletivo, leia o edital que
-                está na nossa
-                <Link to="/documentos" className="bodyLinks">
-                  página de Documentos
-                </Link>
-                .
-              </p>
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-      </div>
+    <>
+      <section className="aviso-selecao">
+        <h2>Inscrições abertas</h2>
+        <p>{selection?.description}</p>
+        <p>
+          Antes de se inscrever, leia o edital na página de{" "}
+          <Link to="/documentos" className="link-texto">
+            Documentos
+          </Link>
+          .
+        </p>
+      </section>
       <SubscribeForm idSelection={selection._id} />
-    </div>
+    </>
   );
 }
 export default OpenedSelection;

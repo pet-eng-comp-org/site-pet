@@ -9,13 +9,13 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <MDBFooter color="elegant-color-dark" className="font-small pt-4 mt-4">
+    <MDBFooter color="elegant-color-dark" className="font-small pt-4">
       <MDBContainer fluid>
         <MDBRow>
           <MDBCol md="9" className="colLogo">
             <MDBRow>
               <MDBCol md="4" lg="3">
-                <img alt="logoPET" src={logoPet} className="logoPet" />
+                <img alt="PET Engenharia de Computação" src={logoPet} className="logoPet" />
               </MDBCol>
               <MDBCol middle>
                 <p>
@@ -44,7 +44,7 @@ const Footer = () => {
                 >
                   <p>
                     <img
-                      alt="iconeInstagram"
+                      alt=""
                       src={iconeInstagram}
                       className="icone"
                     />{" "}
@@ -60,7 +60,7 @@ const Footer = () => {
                 >
                   <p>
                     <img
-                      alt="iconeFacebook"
+                      alt=""
                       src={iconeFacebook}
                       className="icone"
                     />{" "}
@@ -71,7 +71,7 @@ const Footer = () => {
               <MDBCol md="auto">
                 <Link to="/contato">
                   <p>
-                    <img alt="iconeEmail" src={iconeEmail} className="icone" />{" "}
+                    <img alt="" src={iconeEmail} className="icone" />{" "}
                     petengcomp.ufes@gmail.com
                   </p>
                 </Link>

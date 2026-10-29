@@ -1,0 +1,69 @@
+.hero {
+  background: #fff2e1;
+  padding: 4rem 1.5rem 5rem;
+}
+
+.hero-conteudo {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-sobretitulo {
+  color: #186a6c;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.App .hero h1 {
+  font-size: 3.5rem;
+  line-height: 1.05;
+  color: #1b3f3f;
+  margin-bottom: 1.25rem;
+}
+
+.hero-descricao {
+  font-size: 1.25rem;
+  line-height: 1.55;
+  max-width: 32rem;
+  margin-bottom: 2rem;
+}
+
+.hero-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero-foto {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -24px rgba(27, 63, 63, 0.5);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding: 2.5rem 1rem 3rem;
+  }
+
+  .hero-conteudo {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .App .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-descricao {
+    font-size: 1.1rem;
+  }
+}
