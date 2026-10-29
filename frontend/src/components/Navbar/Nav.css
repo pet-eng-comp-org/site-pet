@@ -77,7 +77,15 @@
   }
 }
 
-/* O ícone do menu, não a caixa do botão, encosta na margem do conteúdo. */
+/* O ícone do menu, não a caixa do botão, encosta na margem do conteúdo;
+   a caixa tem a altura mínima de toque. */
 .navbar-toggler {
+  min-height: 44px;
   margin-right: -0.75rem;
+}
+
+.nav-sair {
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
