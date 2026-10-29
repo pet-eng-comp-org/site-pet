@@ -9,6 +9,7 @@ import useTitulo from "../../utils/useTitulo";
 const About = () => {
   useTitulo("Quem somos");
   const [petianos, setPetianos] = useState();
+  const [projetos, setProjetos] = useState([]);
 
   useEffect(() => {
     goUp();
@@ -25,6 +26,10 @@ const About = () => {
     };
 
     getPetianos();
+    api
+      .get("api/comissions")
+      .then(({ data }) => setProjetos(data.comissions))
+      .catch(() => {});
   }, []);
 
   if (!petianos) {
@@ -56,7 +61,7 @@ const About = () => {
           destacadas. Na Ufes são 13 grupos PET.
         </p>
       </div>
-      <Team petianos={petianos} />
+      <Team petianos={petianos} projetos={projetos} />
     </>
   );
 };
