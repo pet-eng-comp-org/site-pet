@@ -50,6 +50,14 @@
 .noticia p {
   margin: 0;
   line-height: 1.55;
+  white-space: pre-line;
+}
+
+.noticia a {
+  color: #186a6c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 900px) {

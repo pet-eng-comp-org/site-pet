@@ -46,8 +46,10 @@
 .message {
   background: #ff9a5b;
   color: #1b3f3f;
-  font-weight: 300;
-  padding: 0 0.5rem;
+  font-weight: 400;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem max(1rem, calc((100% - 1140px) / 2));
   z-index: 9999;
 }
 

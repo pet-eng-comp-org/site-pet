@@ -14,7 +14,7 @@ const AboutUs = () => {
           Somos o grupo PET (Programa de Educação Tutorial) do curso de
           Engenharia de Computação da Ufes, orientado por um professor tutor.
           Não sabe o que é o PET?{" "}
-          <a href="http://portal.mec.gov.br/pet">Conheça o programa</a>.
+          <a href="https://www.gov.br/mec/pt-br/pet">Conheça o programa</a>.
         </p>
         <div className="about-us-fotos">
           <img alt="Petianos na JACEE" src={imagemNos2} loading="lazy" />
