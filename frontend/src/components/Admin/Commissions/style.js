@@ -77,9 +77,12 @@ export const Image = styled.div`
   grid-area: IM;
 
   z-index: 999;
-  width: 140px;
-  height: 140px;
-  background-size: cover;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #186a6c;
+  background-size: 56%;
+  background-position: center;
   background-repeat: no-repeat;
   background-image: url(${(props) => props.url});
 `;

@@ -37,7 +37,11 @@ const Login = () => {
       history.push("/admin");
     } catch (err) {
       setErrorSendMessage(true);
-      setErrorMessage(err?.response?.data);
+      setErrorMessage(
+        err?.response && err.response.status < 500
+          ? "E-mail ou senha incorretos."
+          : "Não foi possível entrar agora. Tente de novo em alguns minutos."
+      );
       setValidLogin("is-invalid");
     }
   }
@@ -56,30 +60,32 @@ const Login = () => {
               noValidate
               onSubmit={handleLogin}
             >
-              <p className="h4 text-center mb-4">Login</p>
-              <label htmlFor="email" className="grey-text">
-                Email
+              <h1 className="h4 text-center mb-4">Entrar no painel</h1>
+              <label htmlFor="email">
+                E-mail
               </label>
               <input
                 type="email"
                 id="email"
+                autoComplete="username"
                 className={`form-control ${validLogin}`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <br />
-              <label htmlFor="password" className="grey-text">
+              <label htmlFor="password">
                 Senha
               </label>
               <input
                 type="password"
                 id="password"
+                autoComplete="current-password"
                 className={`form-control ${validLogin}`}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <div className="text-center mt-4">
-                <MDBBtn color="indigo" type="submit">
+                <MDBBtn color="primary" type="submit">
                   Entrar
                 </MDBBtn>
               </div>
