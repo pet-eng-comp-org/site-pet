@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Perfil = styled.div`
   color: white;
@@ -7,14 +8,15 @@ export const Perfil = styled.div`
   @media (min-width: 568px) {
     display: grid;
 
-    grid-template-columns: 140px auto auto auto;
-    grid-template-rows: auto auto auto auto;
+    grid-template-columns: 140px 1fr;
+    /* A foto ocupa 140 px; o que sobrar fica na descrição, não entre nome e data. */
+    grid-template-rows: auto auto 1fr auto;
 
     grid-template-areas:
-      "PH NM NM NM"
-      "PH SP SP SP"
-      "PH DP DP DP"
-      "SM TG TG TG";
+      "PH NM"
+      "PH SP"
+      "PH DP"
+      "PH TG";
   }
 
   @media (max-width: 567px) {
@@ -30,6 +32,18 @@ export const Perfil = styled.div`
       "PH SM"
       "DP DP"
       "TG TG";
+  }
+`;
+
+// Foto e redes sociais juntas, numa coluna; no celular cada uma vai para a sua área.
+export const Lado = styled.div`
+  grid-area: PH;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 567px) {
+    display: contents;
   }
 `;
 
@@ -52,19 +66,26 @@ export const Social = styled.div`
   grid-area: SM;
 
   display: flex;
-  align-items: center;
   justify-content: center;
+  padding-top: 0.5rem;
 
   a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
     color: white;
     font-size: 30px;
-    margin: 0px 5px;
   }
   @media (max-width: 567px) {
     justify-content: flex-start;
 
+    padding-top: 0;
+
     a {
-      margin: 0 0.75rem 0 0;
+      justify-content: flex-start;
+      margin-right: 0.25rem;
     }
   }
 `;
@@ -134,7 +155,7 @@ export const Tags = styled.div`
 `;
 
 // Uma cor só para todas as etiquetas, como na página de cada projeto.
-export const Tag = styled.span`
+export const Tag = styled(Link)`
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -146,8 +167,8 @@ export const Tag = styled.span`
   font-weight: 600;
   font-size: 0.9rem;
 
-  &[href]:hover,
-  &[href]:focus {
+  &:hover,
+  &:focus {
     background: #fff;
     color: #1b3f3f;
     text-decoration: none;
