@@ -83,7 +83,14 @@ const Petianos = () => {
     const populateTable = () => {
       const pets = [];
 
-      petianos.forEach((petiano) => {
+      // Ativos primeiro, em ordem alfabética; os egressos depois.
+      const ordem = [...petianos].sort(
+        (a, b) =>
+          Number(b.active) - Number(a.active) ||
+          a.memberName.localeCompare(b.memberName, "pt-BR")
+      );
+
+      ordem.forEach((petiano) => {
         pets.push({
           id: petiano._id,
           name: petiano.memberName,
@@ -94,7 +101,7 @@ const Petianos = () => {
             <DivButtons>
               {petiano.active && (
                 <>
-                  <SpanIcon
+                  <SpanIcon title="Editar" aria-label="Editar"
                     background="#ffc107"
                     onClick={() => {
                       setIdPetiano(petiano._id);
@@ -104,7 +111,7 @@ const Petianos = () => {
                     <MDBIcon icon="edit" />
                   </SpanIcon>
 
-                  <SpanIcon
+                  <SpanIcon title="Registrar saída do PET" aria-label="Registrar saída do PET"
                     background="#fd7e14"
                     onClick={() => {
                       setIdPetiano(petiano._id);
@@ -115,7 +122,7 @@ const Petianos = () => {
                   </SpanIcon>
                 </>
               )}
-              <SpanIcon
+              <SpanIcon title="Excluir" aria-label="Excluir"
                 background="#dc3545"
                 onClick={() => {
                   setIdPetiano(petiano._id);

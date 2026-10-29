@@ -7,9 +7,9 @@ export const ListLinks = styled.ul`
 
 export const NavLink = styled.li`
   color: white;
-  font-weight: 300;
+  font-weight: 400;
   list-style-type: none;
-  padding: 10px 5px;
+  padding: 10px 12px;
   cursor: pointer;
   transition: linear 0.25s background-color, linear 0.25s color;
 
@@ -25,7 +25,7 @@ export const NavLink = styled.li`
 `;
 
 export const MDBColS = styled(MDBCol)`
-  padding-top: 100px;
+  padding-top: 2rem;
   justify-content: start;
   padding-bottom: 15px;
 

@@ -58,9 +58,10 @@ const Commissions = () => {
           title: commission.title,
           description: commission.description,
           tags: commission.tags,
+          photos: commission.photos,
           actions: (
             <DivButtons>
-              <SpanIcon
+              <SpanIcon title="Editar" aria-label="Editar"
                 background="#ffc107"
                 onClick={() => {
                   setIdCommission(commission._id);
@@ -70,7 +71,7 @@ const Commissions = () => {
               >
                 <MDBIcon icon="edit" />
               </SpanIcon>
-              <SpanIcon
+              <SpanIcon title="Excluir" aria-label="Excluir"
                 background="#dc3545"
                 onClick={() => {
                   setIdCommission(commission._id);
@@ -130,9 +131,10 @@ const Commissions = () => {
       <MDBListGroup id="list-group" style={{ width: "38rem" }}>
         {rows !== [] &&
           rows.map((commission, index) => {
-            let imgUrl =
-              "https://image.freepik.com/fotos-gratis/gotas-de-oleo" +
-              "-na-imagem-abstrata-padrao-psicodelico-de-agua_23-2148290141.jpg";
+            const icone = commission.photos?.[0];
+            const imgUrl = icone
+              ? `${process.env.REACT_APP_API_URL}api/file/getComissionPhoto/${icone._id || icone}`
+              : "";
 
             return (
               <Commission key={index}>
