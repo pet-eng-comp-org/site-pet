@@ -15,7 +15,7 @@ RUN NODE_OPTIONS=--openssl-legacy-provider yarn build
 FROM node:18-alpine
 WORKDIR /usr/app
 
-RUN npm install -g serve
+RUN npm install -g serve@14.2.6
 
 COPY --from=builder /usr/app/build ./build
 
@@ -25,4 +25,6 @@ EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
 CMD wget --no-verbose --tries=1 --spider http://localhost:80/ || exit 1
 
-CMD ["serve", "-l", "80", "-s", "build"]
+# Sem -s: cada página tem o seu HTML (scripts/paginas.js) e o que não existe
+# recebe o 404.html com status 404. As rotas de projeto estão em public/serve.json.
+CMD ["serve", "-l", "80", "build"]
