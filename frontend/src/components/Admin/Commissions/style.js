@@ -71,6 +71,27 @@ export const Commission = styled.div`
     "IM NM NM NM"
     "IM DP DP DP"
     "AC TG TG TG";
+
+  @media (max-width: 575.98px) {
+    grid-template-columns: 72px 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+      "IM NM"
+      "DP DP"
+      "TG TG"
+      "AC AC";
+    padding-bottom: 15px;
+
+    & > div {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    & > div:nth-child(3) {
+      padding-left: 15px;
+      align-self: center;
+      margin-bottom: 0;
+    }
+  }
 `;
 
 export const Image = styled.div`
@@ -85,10 +106,20 @@ export const Image = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-image: url(${(props) => props.url});
+
+  @media (max-width: 575.98px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 export const Actions = styled.div`
   grid-area: AC;
+
+  @media (max-width: 575.98px) {
+    justify-content: flex-start;
+    padding: 10px 20px 0;
+  }
 
   display: flex;
   align-items: center;

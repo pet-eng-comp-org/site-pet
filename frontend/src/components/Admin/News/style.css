@@ -12,6 +12,7 @@
   margin: 0rem;
   align-self: center;
   width: 17rem;
+  max-width: 100%;
 }
 
 #search i {
@@ -25,7 +26,8 @@
 }
 
 #list-group {
-  width: 40rem;
+  width: 100%;
+  max-width: 40rem;
 }
 
 .news-row {
@@ -55,8 +57,7 @@
 }
 
 .header-news div:first-child {
-  width: 45%;
-  justify-content: space-between;
+  gap: 1rem;
 }
 
 /* .header{
