@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 const CollapseDocument = ({ title, files, idDocument, getDocuments }) => {
   const [collapseId, setCollapseId] = useState("");
   const [selectedFile, setSelectedFile] = useState();
+  const [nome, setNome] = useState("");
   const [idFile, setIdFile] = useState();
   const [modalDelete, setModalDelete] = useState(false);
   const [modalRemove, setModalRemove] = useState(false);
@@ -24,6 +25,7 @@ const CollapseDocument = ({ title, files, idDocument, getDocuments }) => {
 
     const data = new FormData();
 
+    data.append("name", nome.trim());
     data.append("file", selectedFile);
 
     try {
@@ -33,7 +35,9 @@ const CollapseDocument = ({ title, files, idDocument, getDocuments }) => {
         },
       });
 
-      toast.success("Arquivo adicionado com sucesso!");
+      toast.success("Arquivo adicionado. Ele aparece no topo da lista.");
+      setSelectedFile();
+      setNome("");
 
       getDocuments();
     } catch (err) {
@@ -95,9 +99,26 @@ const CollapseDocument = ({ title, files, idDocument, getDocuments }) => {
           </InputFile>
         </Row>
         {selectedFile && (
-          <MDBBtn size="sm" color="primary" onClick={handleSubmit}>
-            Enviar
-          </MDBBtn>
+          <Row>
+            <label htmlFor={`nome-${idDocument}`} style={{ margin: 0 }}>
+              Nome no site
+            </label>
+            <input
+              id={`nome-${idDocument}`}
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              placeholder="Ex.: Edital nº 018/2026, Relatório de atividades 2026"
+              style={{ flex: 1, margin: "0 8px", minHeight: 36 }}
+            />
+            <MDBBtn
+              size="sm"
+              color="primary"
+              disabled={nome.trim().length < 3}
+              onClick={handleSubmit}
+            >
+              Enviar
+            </MDBBtn>
+          </Row>
         )}
       </MDBCollapse>
       <EditDocument
