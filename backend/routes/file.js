@@ -5,11 +5,6 @@ const verify = require("../utils/verifyToken");
 router.get("/", fileController.index);
 router.get("/:fileId", fileController.show);
 router.get("/downloadDocument/:fileId", fileController.downloadDocument);
-router.get(
-  "/downloadInscription/:fileId",
-  verify,
-  fileController.downloadInscription
-);
 router.get("/getImageNews/:fileId", fileController.getImageNews);
 router.get("/getProfilePhoto/:fileId", fileController.getProfilePhoto);
 router.get("/getComissionPhoto/:fileId", fileController.getComissionPhoto);

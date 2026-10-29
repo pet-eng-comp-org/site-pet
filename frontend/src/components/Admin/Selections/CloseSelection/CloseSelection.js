@@ -44,7 +44,7 @@ const CloseSelection = ({ isOpen, toggle, getSelections, idSelection }) => {
         },
       });
 
-      toast.success("Pocesso seletivo finalizado com sucesso!");
+      toast.success("Seleção finalizada.");
 
       getSelections();
       toggle();
@@ -71,8 +71,8 @@ const CloseSelection = ({ isOpen, toggle, getSelections, idSelection }) => {
           </MDBRow>
           <MDBRow>
             <MDBCol md="12">
-              Ao clicar em Confirmar, os arquivos dos inscritos serão deletados,
-              mas seus nomes ficarão salvos.
+              O botão de inscrição sai do site. As respostas continuam no
+              Google Forms.
             </MDBCol>
           </MDBRow>
         </MDBContainer>

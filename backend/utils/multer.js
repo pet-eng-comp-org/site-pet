@@ -6,10 +6,7 @@ const fs = require("fs");
 const multerConfig = (type) => {
   let folder, allowedMimes;
 
-  if (type === "zip") {
-    folder = "inscriptions";
-    allowedMimes = ["application/zip"];
-  } else if (type === "pdf") {
+  if (type === "pdf") {
     folder = "documents";
     allowedMimes = ["application/pdf"];
   } else if (type === "news") {
