@@ -33,17 +33,14 @@ export const Perfil = styled.div`
   }
 `;
 
-export const Photo = styled.div`
+export const Photo = styled.img`
   grid-area: PH;
 
-  z-index: 999;
   width: 140px;
   height: 140px;
-  background-size: cover;
-  background-position-y: ${(props) => props.bgPosition};
+  object-fit: cover;
+  object-position: top;
   border-radius: 50%;
-  background-repeat: no-repeat;
-  background-image: url(${(props) => props.url});
 
   @media (max-width: 567px) {
     width: 90px;
@@ -136,22 +133,23 @@ export const Tags = styled.div`
   }
 `;
 
+// Uma cor só para todas as etiquetas, como na página de cada projeto.
 export const Tag = styled.span`
-  background-color: ${(props) => props.backColor};
-  color: ${(props) => props.color};
-  padding: 3px 5px 0;
-  border-radius: 5px;
-  font-weight: 500;
-  font-size: 14px;
-  max-width: -webkit-fit-content;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-  box-sizing: unset;
-  margin: 0 8px 8px 0;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.75rem;
+  margin: 0 0.5rem 0.5rem 0;
+  border: 1px solid #fff;
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
 
-  &:hover {
-    filter: brightness(0.85);
+  &[href]:hover,
+  &[href]:focus {
+    background: #fff;
+    color: #1b3f3f;
+    text-decoration: none;
   }
 `;
