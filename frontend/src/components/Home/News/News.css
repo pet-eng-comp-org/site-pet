@@ -47,7 +47,14 @@
   margin-bottom: 0.75rem;
 }
 
+.noticia time {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+
 .noticia p {
+  max-width: 34rem;
   margin: 0;
   line-height: 1.55;
   white-space: pre-line;
