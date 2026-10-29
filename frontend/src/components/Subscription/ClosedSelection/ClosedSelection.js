@@ -6,7 +6,7 @@ function ClosedSelection() {
       <h2>Inscrições fechadas</h2>
       <p>
         Costumamos abrir vagas todo semestre. Quando abrir um novo processo
-        seletivo, avisamos por e-mail e no Instagram{" "}
+        seletivo, avisamos no Instagram{" "}
         <a
           href="https://www.instagram.com/petengcomp/"
           target="_blank"
