@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logoPet from "../../assets/logo_pet_branca.svg";
 import iconeInstagram from "../../assets/icone_instagram.svg";
-import iconeFacebook from "../../assets/icone_facebook.svg";
 import iconeEmail from "../../assets/icone_email.svg";
 import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import "./Footer.css";
@@ -49,22 +48,6 @@ const Footer = () => {
                       className="icone"
                     />{" "}
                     petengcomp
-                  </p>
-                </a>
-              </MDBCol>
-              <MDBCol md="auto">
-                <a
-                  href="https://www.facebook.com/PETEngCompUfes/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <p>
-                    <img
-                      alt=""
-                      src={iconeFacebook}
-                      className="icone"
-                    />{" "}
-                    PET EngComp Ufes
                   </p>
                 </a>
               </MDBCol>

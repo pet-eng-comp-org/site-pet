@@ -28,10 +28,7 @@ const AboutUs = () => {
         </p>
         <p>
           Conheça <Link to="/sobre">um pouco mais sobre nós</Link> e descubra os{" "}
-          <Link to="/projetos">nossos projetos</Link>! Acesse também o{" "}
-          <a href="http://pet.ufes.br/">site do PET Ufes</a> (mantido pelo nosso
-          grupo) para conhecer os grupos PET de outros cursos da nossa
-          universidade.
+          <Link to="/projetos">nossos projetos</Link>!
         </p>
       </div>
     </section>
