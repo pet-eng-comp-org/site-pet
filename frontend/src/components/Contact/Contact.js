@@ -89,6 +89,7 @@ const ContactPage = () => {
             {...campo("name")}
             type="text"
             autoComplete="name"
+            minLength={2}
             maxLength={100}
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -110,6 +111,7 @@ const ContactPage = () => {
           <input
             {...campo("subject")}
             type="text"
+            minLength={3}
             maxLength={120}
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
@@ -120,6 +122,7 @@ const ContactPage = () => {
           <textarea
             {...campo("message")}
             rows="5"
+            minLength={3}
             maxLength={5000}
             value={message}
             onChange={(e) => setMessage(e.target.value)}

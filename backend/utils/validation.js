@@ -36,10 +36,10 @@ const campoContato = (campo, regra, mensagem) =>
 
 const contactValidation = (data) => {
   const schema = Joi.object({
-    name: campoContato("name", Joi.string().trim().min(2).max(100).required(), "Escreva o seu nome (até 100 caracteres)."),
+    name: campoContato("name", Joi.string().trim().min(2).max(100).required(), "Escreva o seu nome, com 2 a 100 caracteres."),
     email: campoContato("email", Joi.string().trim().max(254).email().required(), "Escreva um e-mail válido, para podermos responder."),
-    subject: campoContato("subject", Joi.string().trim().min(3).max(120).required(), "Escreva o assunto (até 120 caracteres)."),
-    message: campoContato("message", Joi.string().trim().min(3).max(5000).required(), "Escreva a mensagem (até 5000 caracteres)."),
+    subject: campoContato("subject", Joi.string().trim().min(3).max(120).required(), "Escreva o assunto, com 3 a 120 caracteres."),
+    message: campoContato("message", Joi.string().trim().min(3).max(5000).required(), "Escreva a mensagem, com 3 a 5000 caracteres."),
   });
   return schema.validate(data);
 };
