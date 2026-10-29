@@ -4,7 +4,6 @@ import goUp from "../../utils/goUp";
 import api from "../../services/api";
 import "./About.css";
 import Loader from "../Loader/Loader";
-import { MDBAnimation, MDBCol, MDBContainer, MDBRow } from "mdbreact";
 
 const About = () => {
   const [petianos, setPetianos] = useState();
@@ -26,76 +25,40 @@ const About = () => {
     getPetianos();
   }, []);
 
+  if (!petianos) {
+    return (
+      <div className="divloader">
+        <Loader />
+      </div>
+    );
+  }
+
+  const alunos = petianos.filter((p) => !p.tutor).length;
+
   return (
     <>
-      {!petianos ? (
-        <div className="divloader">
-          <Loader />
-        </div>
-      ) : (
-        <MDBAnimation type="fadeIn">
-          <div className="about">
-            <MDBContainer>
-              <MDBRow center>
-                <MDBCol xs="11" lg="10">
-                  <h1>O que é o PET?</h1>
-                </MDBCol>
-              </MDBRow>
-              <MDBRow center>
-                <MDBCol xs="11" lg="10">
-                  <p className="ft-normal">
-                    O{" "}
-                    <a href="http://portal.mec.gov.br/pet">
-                      PET – Programa de Educação Tutorial
-                    </a>{" "}
-                    é um programa que foi criado e implantado em 1979, com o
-                    nome inicial de Programa Especial de Treinamento, pela CAPES
-                    que a partir de 31 de dezembro de 1999, teve sua gestão
-                    transferida para a SESu. É destinado a grupos de alunos que
-                    demonstrem potencial, interesse e habilidades destacadas em
-                    cursos de graduação reconhecidos pelo Conselho Nacional de
-                    Educação. Só na Ufes, temos 13 grupos PET. Para saber mais,
-                    visite o<a href="http://pet.ufes.br/"> site do PET Ufes </a>
-                    .
-                    <br />
-                    <br />O PET Engenharia de Computação é um dos PETs originais
-                    da Ufes, criado em 1993. Hoje é composto por{" "}
-                    {petianos?.length - 1} alunos e um professor tutor.
-                  </p>
-                </MDBCol>
-              </MDBRow>
-              <MDBRow center>
-                <MDBCol xs="11" lg="10">
-                  <h2 style={{ fontSize: "2.5rem" }}>Petianos atuais</h2>
-                </MDBCol>
-              </MDBRow>
-              <MDBRow center>
-                <MDBCol xs="11" lg="10">
-                  <p className="ft-normal">
-                    Somos, atualmente, {petianos?.length - 1} petianos alunos e
-                    um professor tutor. Conheça um pouquinho sobre quem compõe
-                    esse grupo:
-                  </p>
-                </MDBCol>
-              </MDBRow>
-            </MDBContainer>
-            <div style={{ margin: "100px 0" }}>
-              <Team petianos={petianos} />
-            </div>
-            <MDBContainer>
-              <MDBRow center>
-                <MDBCol sm="11" lg="10">
-                  <p className="ft-normal">
-                    Muitas pessoas entram e saem do PET Engenharia de
-                    Computação. Assim, em breve estaremos lançando nossa página
-                    de egressos, fique ligado!
-                  </p>
-                </MDBCol>
-              </MDBRow>
-            </MDBContainer>
-          </div>
-        </MDBAnimation>
-      )}
+      <div className="pagina">
+        <h1>Quem somos</h1>
+        <p className="pagina-intro">
+          O PET Engenharia de Computação é um dos grupos PET originais da Ufes,
+          criado em 1993. Hoje somos {alunos} alunos e um professor tutor.
+        </p>
+        <p className="pagina-intro">
+          O{" "}
+          <a className="link-texto" href="http://portal.mec.gov.br/pet">
+            Programa de Educação Tutorial
+          </a>{" "}
+          foi criado pela CAPES em 1979, com o nome de Programa Especial de
+          Treinamento, e desde 1999 é gerido pela SESu. É destinado a alunos de
+          graduação que demonstrem potencial, interesse e habilidades
+          destacadas. Na Ufes são 13 grupos PET; conheça todos no{" "}
+          <a className="link-texto" href="http://pet.ufes.br/">
+            site do PET Ufes
+          </a>
+          .
+        </p>
+      </div>
+      <Team petianos={petianos} />
     </>
   );
 };

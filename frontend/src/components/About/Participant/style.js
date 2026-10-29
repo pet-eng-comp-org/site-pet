@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Perfil = styled.div`
   color: white;
-  font-weight: lighter;
+  font-weight: 400;
 
   @media (min-width: 568px) {
     display: grid;
@@ -20,15 +20,16 @@ export const Perfil = styled.div`
   @media (max-width: 567px) {
     display: grid;
 
-    grid-template-columns: 90px auto auto auto;
-    grid-template-rows: 35px auto auto auto auto;
+    grid-template-columns: 90px 1fr;
+    column-gap: 1rem;
+    align-items: center;
 
     grid-template-areas:
-      "PH NM NM NM"
-      "PH SM SM SM"
-      "PH SP SP SP"
-      "DP DP DP DP"
-      "TG TG TG TG";
+      "PH NM"
+      "PH SP"
+      "PH SM"
+      "DP DP"
+      "TG TG";
   }
 `;
 
@@ -63,15 +64,19 @@ export const Social = styled.div`
     margin: 0px 5px;
   }
   @media (max-width: 567px) {
+    justify-content: flex-start;
+
     a {
-      margin: 0px 5%;
+      margin: 0 0.75rem 0 0;
     }
   }
 `;
 
 export const Name = styled.div`
   grid-area: NM;
-  font-size: 25px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.2;
 
   @media (min-width: 568px) {
     margin-bottom: 10px;
@@ -79,30 +84,31 @@ export const Name = styled.div`
   }
 
   @media (max-width: 567px) {
-    padding: 0 10px;
-    text-align: center;
-    overflow: hidden;
+    margin-bottom: 0.25rem;
   }
 `;
 
 export const Start = styled.div`
   grid-area: SP;
-  font-size: 12px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
 
   @media (min-width: 568px) {
     padding: 0 20px;
   }
 
   @media (max-width: 567px) {
-    padding: 0 10px;
-    text-align: center;
+    margin-bottom: 0.25rem;
   }
 `;
 
 export const Description = styled.div`
   grid-area: DP;
 
-  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
   overflow: hidden;
 
   @media (min-width: 568px) {
@@ -110,7 +116,7 @@ export const Description = styled.div`
   }
 
   @media (max-width: 567px) {
-    padding: 10px 0 0 0;
+    padding-top: 1rem;
   }
 `;
 

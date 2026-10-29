@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import api from "../../../services/api";
 import "./Modal.css";
 import { Tag, Tags } from "./style";
-import { LogoDefault } from '../../../assets/icone_pet.svg'
 import Carousel from "../Carousel/Carousel";
 import {
   MDBContainer,
@@ -47,7 +46,7 @@ function Modal({ isOpen, toggle, idComission }) {
     <>
       <MDBContainer>
         <MDBModal isOpen={isOpen} toggle={toggle} size="lg">
-          <MDBModalHeader className="text-white bg-dark" toggle={toggle}>
+          <MDBModalHeader className="comissao-cabecalho" toggle={toggle}>
             {comission?.title}
           </MDBModalHeader>
           <MDBModalBody>
@@ -59,13 +58,12 @@ function Modal({ isOpen, toggle, idComission }) {
                       <img
                         src={src}
                         style={{ height: "60%" }}
-                        alt={`Imagem da comissão ${comission?.title}`}
+                        alt=""
                       />
                     </span>
                   </div>
                 </MDBCol>
                 <MDBCol>
-                  <h1 className="comission-title">{comission?.title}</h1>
                   <p>{comission?.description}</p>
                   <Tags>
                     {comission?.tags?.map((tag, index) => (
