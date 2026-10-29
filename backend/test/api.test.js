@@ -209,6 +209,17 @@ describe("rotas publicas", () => {
     assert.ok(!(await r.text()).includes("SyntaxError"), "detalhe do erro na resposta");
     await processoVivo();
   });
+
+  it("contato invalido diz qual campo e o que fazer, em portugues", async () => {
+    const r = await api("POST", "/api/contact/", {
+      headers: { "content-type": "application/json" },
+      corpo: JSON.stringify({ name: "Ana", email: "ana@exemplo.com", subject: "Parceria", message: "x".repeat(5001) }),
+    });
+    assert.equal(r.status, 400);
+    const corpo = await r.json();
+    assert.equal(corpo.campo, "message");
+    assert.match(corpo.erro, /mensagem/);
+  });
 });
 
 describe("selecao", () => {

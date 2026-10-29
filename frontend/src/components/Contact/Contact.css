@@ -45,3 +45,14 @@
     grid-template-columns: 1fr;
   }
 }
+
+.contato-erro {
+  color: #b3261e;
+  font-size: 0.95rem;
+  margin: -0.85rem 0 1.25rem;
+}
+
+.contato-contador {
+  font-size: 0.9rem;
+  margin: -0.85rem 0 1.25rem;
+}

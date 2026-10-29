@@ -1,31 +1,59 @@
 const nodemailer = require("nodemailer");
 const { contactValidation } = require("../utils/validation");
 
+// O formulário é público e manda e-mail: até 5 mensagens por IP a cada 10 min.
+const JANELA_MS = 10 * 60 * 1000;
+const MAXIMO_POR_JANELA = 5;
+const envios = new Map();
+
+function excedeuLimite(ip) {
+  const agora = Date.now();
+  const recentes = (envios.get(ip) || []).filter((t) => agora - t < JANELA_MS);
+  if (recentes.length >= MAXIMO_POR_JANELA) return true;
+  if (envios.size > 10000) envios.clear();
+  recentes.push(agora);
+  envios.set(ip, recentes);
+  return false;
+}
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
+
 module.exports = {
   async sendEmail(req, res) {
-    const { error } = contactValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    const { error, value } = contactValidation(req.body);
+    if (error) {
+      const { campo, mensagem } = error.details[0].context.erro || {};
+      return res.status(400).json({ campo, erro: mensagem || "Confira os campos." });
+    }
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: "465",
-      secure: true,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
+    if (excedeuLimite(req.ip))
+      return res.status(429).json({
+        erro: "Muitas mensagens em pouco tempo. Tente de novo em alguns minutos.",
+      });
 
     try {
-      const message = await transporter.sendMail({
+      // Texto puro: o que a pessoa escreve não vira HTML no e-mail do PET.
+      await transporter.sendMail({
         from: process.env.EMAIL,
         to: process.env.EMAIL,
-        subject: req.body.subject,
-        html: `<b>E-mail enviado por ${req.body.name}.</b><br/><br/> ${req.body.message}<br/><br/>Retorne para ${req.body.email}`,
+        replyTo: { name: value.name, address: value.email },
+        subject: `[Site] ${value.subject}`,
+        text: `${value.name} <${value.email}> escreveu pelo site:\n\n${value.message}`,
       });
-      res.json({ message });
+      res.json({ enviado: true });
     } catch (err) {
-      res.status(400).send(err);
+      console.error("contato: falha ao enviar e-mail:", err.message);
+      res.status(502).json({
+        erro: "Não conseguimos enviar agora. Tente de novo mais tarde ou escreva para petengcomp.ufes@gmail.com.",
+      });
     }
   },
 };
