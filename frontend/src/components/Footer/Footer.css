@@ -4,16 +4,22 @@
   max-width: 100%;
 }
 
-.desc {
-  margin-top: 4vw;
-}
-.er {
-  margin-top: 2vw;
-}
-
 .icone {
   width: 22px;
   height: 22px;
+}
+
+/* Área de toque de pelo menos 44px nos contatos. */
+.page-footer a {
+  display: inline-block;
+}
+
+.page-footer a p {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 44px;
+  margin: 0;
 }
 
 .footer-copyright {
