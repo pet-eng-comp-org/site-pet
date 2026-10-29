@@ -56,41 +56,46 @@ const Admin = () => {
     <>
       <MDBContainer fluid>
         <MDBRow>
-          <MDBColS xs="4" sm="3" md="2" className="sideBar">
-            <ListLinks>
+          <MDBColS size="12" sm="3" md="2" className="sideBar">
+            <ListLinks aria-label="Seções do painel">
               <NavLink
                 onClick={() => changeActive(0)}
                 className={activeOption[0]}
+                aria-current={activeOption[0] ? "page" : undefined}
               >
                 Petianos
               </NavLink>
               <NavLink
                 onClick={() => changeActive(1)}
                 className={activeOption[1]}
+                aria-current={activeOption[1] ? "page" : undefined}
               >
                 Documentos
               </NavLink>
               <NavLink
                 onClick={() => changeActive(2)}
                 className={activeOption[2]}
+                aria-current={activeOption[2] ? "page" : undefined}
               >
                 Notícias
               </NavLink>
               <NavLink
                 onClick={() => changeActive(3)}
                 className={activeOption[3]}
+                aria-current={activeOption[3] ? "page" : undefined}
               >
                 Comissões
               </NavLink>
               <NavLink
                 onClick={() => changeActive(4)}
                 className={activeOption[4]}
+                aria-current={activeOption[4] ? "page" : undefined}
               >
                 Seleções
               </NavLink>
             </ListLinks>
           </MDBColS>
-          <MDBColS xs="8" sm="9" md="10">
+          <MDBColS size="12" sm="9" md="10">
             {renderSelected()}
           </MDBColS>
         </MDBRow>

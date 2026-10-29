@@ -272,7 +272,7 @@ const News = () => {
               >
                 <MDBIcon icon="trash" />
               </SpanIcon>
-              <SpanIcon
+              <SpanIcon title="Ver prévia" aria-label="Ver prévia"
                 background="#007bff"
                 onClick={() => {
                   setIdNews(news._id);
@@ -336,8 +336,8 @@ const News = () => {
             onChange={newsFilterOnChange}
             className="form-control form-control-sm ml-3 w-75"
             type="text"
-            placeholder="Search"
-            aria-label="Search"
+            placeholder="Buscar notícia"
+            aria-label="Buscar notícia"
           />
         </div>
       </MDBRow>
@@ -358,16 +358,16 @@ const News = () => {
           return (
             <MDBListGroupItem key={singleNews.id}>
               <MDBRow size="10" className="news-rows">
-                <MDBCol size="4" className="image-col">
+                <MDBCol size="12" md="4" className="image-col">
                   <div className="col-">
                     <img
                       src={imgUrl}
-                      style={{ maxWidth: 200, maxHeight: 130 }}
+                      style={{ maxWidth: "100%", maxHeight: 130 }}
                       alt="imagem"
                     />
                   </div>
                 </MDBCol>
-                <MDBCol size="8" className="text-col">
+                <MDBCol size="12" md="8" className="text-col">
                   <div style={{ padding: "0 1rem 0" }}>
                     <MDBRow size="2" style={{ justifyContent: "center" }}>
                       <h3>{singleNews.title}</h3>

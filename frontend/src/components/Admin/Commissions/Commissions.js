@@ -128,7 +128,7 @@ const Commissions = () => {
         Cadastrar nova comissão
       </MDBBtn>
 
-      <MDBListGroup id="list-group" style={{ width: "38rem" }}>
+      <MDBListGroup id="list-group" style={{ maxWidth: "38rem" }}>
         {rows !== [] &&
           rows.map((commission, index) => {
             const icone = commission.photos?.[0];
