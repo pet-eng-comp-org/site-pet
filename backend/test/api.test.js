@@ -243,3 +243,35 @@ describe("selecao", () => {
     assert.equal(r.status, 404);
   });
 });
+
+describe("documentos", () => {
+  const PDF = Buffer.from("%PDF-1.4\n%%EOF\n");
+  const envia = async (token, idDoc, nome, arquivo) => {
+    const corpo = new FormData();
+    if (nome) corpo.append("name", nome);
+    corpo.append("file", new Blob([PDF], { type: "application/pdf" }), arquivo);
+    return fetch(`${BASE}/api/documents/addFile/${idDoc}`, {
+      method: "PATCH",
+      headers: { authorization: `Bearer ${token}` },
+      body: corpo,
+    });
+  };
+
+  it("o arquivo novo entra no topo, com o nome escolhido no painel", async () => {
+    const token = await entra();
+    const criado = await api("POST", "/api/documents/", {
+      headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+      corpo: JSON.stringify({ title: "Editais de teste" }),
+    });
+    assert.equal(criado.status, 200, await criado.clone().text());
+    const lista = await (await api("GET", "/api/documents/")).json();
+    const idDoc = lista.documents.find((d) => d.title === "Editais de teste")._id;
+
+    assert.equal((await envia(token, idDoc, "Edital nº 001/2026", "edital_001_assinado.pdf")).status, 200);
+    assert.equal((await envia(token, idDoc, "Edital nº 002/2026", "edital_002_assinado.pdf")).status, 200);
+    assert.equal((await envia(token, idDoc, "", "sem_nome.pdf")).status, 200);
+
+    const doc = (await (await api("GET", "/api/documents/")).json()).documents.find((d) => d._id === idDoc);
+    assert.deepEqual(doc.files.map((f) => f.name), ["sem_nome.pdf", "Edital nº 002/2026", "Edital nº 001/2026"]);
+  });
+});
