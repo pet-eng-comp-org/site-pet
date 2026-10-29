@@ -66,7 +66,7 @@ const About = () => {
               </MDBRow>
               <MDBRow center>
                 <MDBCol xs="11" lg="10">
-                  <h1>Petianos atuais</h1>
+                  <h2 style={{ fontSize: "2.5rem" }}>Petianos atuais</h2>
                 </MDBCol>
               </MDBRow>
               <MDBRow center>
