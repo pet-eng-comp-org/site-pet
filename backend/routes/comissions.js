@@ -3,6 +3,7 @@ const comissionController = require("../controllers/ComissionController");
 const multer = require("multer");
 const { multerConfig } = require("../utils/multer");
 const verify = require("../utils/verifyToken");
+const otimizaImagem = require("../utils/otimizaImagem");
 
 router.post("/", verify, comissionController.store);
 router.get("/", comissionController.index);
@@ -22,6 +23,7 @@ router.patch(
   "/addPhoto/:comissionId",
   verify,
   multer(multerConfig("comissions")).single("photo"),
+  otimizaImagem("comissions"),
   comissionController.addPhoto
 );
 router.patch(
