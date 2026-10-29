@@ -4,14 +4,11 @@ import "./Projects.css";
 import api from "../../services/api";
 import goUp from "../../utils/goUp";
 
-import Modal from "./Modal/Modal";
 import Loader from "../Loader/Loader";
 import useTitulo from "../../utils/useTitulo";
 
 const Projects = () => {
   useTitulo("Projetos");
-  const [modal, setModal] = useState();
-  const [idComission, setIdComission] = useState("");
   const [comissions, setComissions] = useState();
 
   useEffect(() => {
@@ -51,22 +48,10 @@ const Projects = () => {
               title={comission.title}
               description={comission.description}
               icon={comission.photos[0]}
-              onClick={() => {
-                setModal(true);
-                setIdComission(comission._id);
-              }}
             />
           </li>
         ))}
       </ul>
-
-      <Modal
-        idComission={idComission}
-        isOpen={modal}
-        toggle={() => {
-          setModal((old) => !old);
-        }}
-      />
     </div>
   );
 };
