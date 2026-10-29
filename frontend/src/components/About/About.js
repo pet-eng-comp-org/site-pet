@@ -53,11 +53,7 @@ const About = () => {
           foi criado pela CAPES em 1979, com o nome de Programa Especial de
           Treinamento, e desde 1999 é gerido pela SESu. É destinado a alunos de
           graduação que demonstrem potencial, interesse e habilidades
-          destacadas. Na Ufes são 13 grupos PET; conheça todos no{" "}
-          <a className="link-texto" href="http://pet.ufes.br/">
-            site do PET Ufes
-          </a>
-          .
+          destacadas. Na Ufes são 13 grupos PET.
         </p>
       </div>
       <Team petianos={petianos} />
