@@ -47,7 +47,7 @@ const News = () => {
         <MDBContainer>
           <MDBRow center>
             <MDBCol xs="12" md="11" lg="10">
-              <h1 className="title">Notícias</h1>
+              <h2 className="title">Notícias</h2>
             </MDBCol>
           </MDBRow>
           <MDBRow center>
