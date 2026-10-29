@@ -1,16 +1,3 @@
-.about {
-  padding: 5rem 0;
-}
-
-.about a {
-  color: #186a6c;
-  font-weight: 300;
-}
-
-.about a:hover {
-  color: #087267;
-}
-
 .divloader {
   display: flex;
   align-items: center;

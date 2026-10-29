@@ -1,27 +1,27 @@
-
-
-@keyframes slideInR{
-    from{background-position-x: 200%}
-    to{background-position-x: 140%}
-}
-@keyframes slideInL{
-    from{background-position-x: -100%}
-    to{background-position-x: -40%}
+.equipe {
+  padding: 4rem 1.5rem 5rem;
 }
 
-.participant-background{
-    background-repeat: no-repeat;
-    background-blend-mode: multiply;
-    background-size: contain;
- }
-
-.left{
-    background-position-x: -40%;
-    animation-name: slideInL;
-    animation-duration: .1s;
+.equipe-conteudo {
+  max-width: 1140px;
+  margin: 0 auto;
 }
-.right{
-    background-position-x: 140%;
-    animation-name: slideInR;
-    animation-duration: .1s;
+
+.equipe h2 {
+  color: #fff;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+}
+
+.equipe-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr));
+  gap: 3rem 4rem;
+}
+
+@media (max-width: 900px) {
+  .equipe {
+    padding: 3rem 1rem;
+  }
 }

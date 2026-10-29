@@ -12,10 +12,9 @@ const AboutUs = () => {
         <h2>Um pouco sobre nós</h2>
         <p>
           Somos o grupo PET (Programa de Educação Tutorial) do curso de
-          Engenharia de Computação da Ufes. Somos compostos por 12 bolsistas
-          graduandos da Engenharia de Computação e um tutor professor, também
-          bolsista. Não sabe o que é o PET?{" "}
-          <a href="http://portal.mec.gov.br/pet">Conheça o Programa</a>.
+          Engenharia de Computação da Ufes, orientado por um professor tutor.
+          Não sabe o que é o PET?{" "}
+          <a href="http://portal.mec.gov.br/pet">Conheça o programa</a>.
         </p>
         <div className="about-us-fotos">
           <img alt="Petianos na JACEE" src={imagemNos2} loading="lazy" />
