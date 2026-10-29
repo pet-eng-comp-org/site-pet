@@ -14,6 +14,18 @@ const comLinks = (texto) =>
     )
   );
 
+// Só aparece o que é recente: notícia velha faz o site parecer abandonado.
+const SEIS_MESES = 183 * 24 * 60 * 60 * 1000;
+const recente = (n) => Date.now() - Date.parse(n.date) < SEIS_MESES;
+
+const dataDa = (n) =>
+  new Date(n.date).toLocaleDateString("pt-BR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "America/Sao_Paulo",
+  });
+
 const News = () => {
   const [news, setNews] = useState();
 
@@ -21,7 +33,7 @@ const News = () => {
     const getNews = async () => {
       try {
         const response = await api.get("api/news/");
-        setNews([...response.data.news]);
+        setNews(response.data.news.filter(recente));
       } catch (err) {
         console.log(err.response);
       }
@@ -44,6 +56,7 @@ const News = () => {
                 loading="lazy"
               />
               <div className="noticia-texto">
+                <time dateTime={singleNew.date}>{dataDa(singleNew)}</time>
                 <h3>{singleNew.title}</h3>
                 <p>{comLinks(singleNew.text)}</p>
               </div>
