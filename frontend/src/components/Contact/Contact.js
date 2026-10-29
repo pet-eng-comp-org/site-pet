@@ -13,10 +13,10 @@ const ContactPage = () => {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [messageSend, setMessageSend] = useState(false);
-  const [errorSendMessage, setErrorSendMessage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [validLogin, setValidLogin] = useState("");
+  const [enviada, setEnviada] = useState(false);
+  // Erro de um campo aparece ao lado dele; o resto (rede, limite), acima do botão.
+  const [erroCampo, setErroCampo] = useState({});
+  const [erroGeral, setErroGeral] = useState("");
 
   useEffect(() => {
     goUp();
@@ -24,27 +24,45 @@ const ContactPage = () => {
 
   async function sendMessage(e) {
     e.preventDefault();
-
+    setEnviada(false);
+    setErroCampo({});
+    setErroGeral("");
+    setLoading(true);
     try {
-      setErrorSendMessage(false);
-      setMessageSend(false);
-      setLoading(true);
       await api.post("api/contact/", { name, email, subject, message });
-      setLoading(false);
-      setValidLogin("");
-      setMessageSend(true);
+      setEnviada(true);
       setName("");
       setEmail("");
       setMessage("");
       setSubject("");
     } catch (err) {
-      console.log(err);
-      setLoading(false);
-      setErrorSendMessage(true);
-      setErrorMessage(err?.response?.data);
-      setValidLogin("is-invalid");
+      const { campo, erro } = err?.response?.data || {};
+      if (campo) setErroCampo({ [campo]: erro });
+      else
+        setErroGeral(
+          typeof erro === "string"
+            ? erro
+            : "Não conseguimos enviar agora. Confira a sua conexão e tente de novo."
+        );
     }
+    setLoading(false);
   }
+
+  // Props comuns de cada campo: borda vermelha e texto do erro ligados a ele.
+  const campo = (id) => ({
+    id: `contato-${id}`,
+    className: `form-control ${erroCampo[id] ? "is-invalid" : ""}`,
+    "aria-invalid": Boolean(erroCampo[id]),
+    "aria-describedby": erroCampo[id] ? `contato-${id}-erro` : undefined,
+    required: true,
+  });
+
+  const erroDo = (id) =>
+    erroCampo[id] && (
+      <p className="contato-erro" id={`contato-${id}-erro`}>
+        {erroCampo[id]}
+      </p>
+    );
 
   return (
     <div className="pagina">
@@ -60,56 +78,62 @@ const ContactPage = () => {
 
       <div className="contato-grade">
         <form className="contato-formulario" onSubmit={sendMessage}>
-          {messageSend && (
-            <MDBAlert color="success">
-              Mensagem enviada. Obrigado pelo contato!
+          {enviada && (
+            <MDBAlert color="success" role="status">
+              Mensagem enviada. Respondemos pelo e-mail que você informou.
             </MDBAlert>
           )}
-          {errorSendMessage && (
-            <MDBAlert color="danger">{errorMessage}</MDBAlert>
-          )}
 
-          <label htmlFor="contato-nome">Nome</label>
+          <label htmlFor="contato-name">Nome</label>
           <input
-            id="contato-nome"
+            {...campo("name")}
             type="text"
-            className={`form-control ${validLogin}`}
             autoComplete="name"
-            required
+            maxLength={100}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+          {erroDo("name")}
 
           <label htmlFor="contato-email">E-mail</label>
           <input
-            id="contato-email"
+            {...campo("email")}
             type="email"
-            className={`form-control ${validLogin}`}
             autoComplete="email"
-            required
+            maxLength={254}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          {erroDo("email")}
 
-          <label htmlFor="contato-assunto">Assunto</label>
+          <label htmlFor="contato-subject">Assunto</label>
           <input
-            id="contato-assunto"
+            {...campo("subject")}
             type="text"
-            className={`form-control ${validLogin}`}
-            required
+            maxLength={120}
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
           />
+          {erroDo("subject")}
 
-          <label htmlFor="contato-mensagem">Mensagem</label>
+          <label htmlFor="contato-message">Mensagem</label>
           <textarea
-            id="contato-mensagem"
-            className={`form-control ${validLogin}`}
+            {...campo("message")}
             rows="5"
-            required
+            maxLength={5000}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
+          {erroDo("message")}
+          {message.length > 4000 && (
+            <p className="contato-contador">{message.length} de 5000 caracteres</p>
+          )}
+
+          {erroGeral && (
+            <MDBAlert color="danger" role="alert">
+              {erroGeral}
+            </MDBAlert>
+          )}
 
           {loading ? (
             <Loader />
