@@ -27,3 +27,11 @@
 .aviso-selecao p + p {
   margin-top: 0.75rem;
 }
+
+.aviso-selecao-aberta {
+  border-left-color: #186a6c;
+}
+
+.aviso-selecao .botao-principal {
+  margin-top: 1.25rem;
+}

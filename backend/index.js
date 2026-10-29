@@ -11,7 +11,6 @@ const cors = require("cors");
 const app = express();
 
 const newsRoute = require("./routes/news");
-const inscriptionsRoute = require("./routes/inscriptions");
 const documentsRoute = require("./routes/documents");
 const fileRoute = require("./routes/file");
 const contactRoute = require("./routes/contact");
@@ -71,7 +70,6 @@ app.get("/health", (req, res) =>
 );
 
 app.use("/api/news", newsRoute);
-app.use("/api/inscriptions", inscriptionsRoute);
 app.use("/api/documents", documentsRoute);
 app.use("/api/file", fileRoute);
 app.use("/api/contact", contactRoute);

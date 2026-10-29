@@ -3,7 +3,7 @@ import goUp from "../../utils/goUp";
 import { MDBContainer, MDBRow } from "mdbreact";
 import { ListLinks, NavLink, MDBColS } from "./style.js";
 import Petianos from "./Petianos/Petianos";
-import Selections from "./Selections/Selections";
+import Selections from "./Selections/ListSelections/ListSelections";
 import Documents from "./Documents/Documents";
 import News from "./News/News";
 import Commissions from "./Commissions/Commissions";

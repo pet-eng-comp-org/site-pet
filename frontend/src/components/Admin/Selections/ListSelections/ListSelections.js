@@ -16,8 +16,8 @@ const columns = [
     width: 150,
   },
   {
-    label: "Quantidade inscritos",
-    field: "qtd",
+    label: "Inscrições",
+    field: "periodo",
     sort: "asc",
     width: 150,
   },
@@ -38,13 +38,16 @@ const columns = [
 const INITIAL_ROWS = [
   {
     title: "",
-    qtd: "",
+    periodo: "",
     situation: "",
     actions: <></>,
   },
 ];
 
-const ListSelections = ({ goToInspect }) => {
+const dia = (data) =>
+  new Date(data).toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" });
+
+const ListSelections = () => {
   const [selections, setSelections] = useState();
   const [idSelection, setIdSelection] = useState();
   const [modalCreate, setModalCreate] = useState(false);
@@ -78,19 +81,10 @@ const ListSelections = ({ goToInspect }) => {
         selecs.push({
           id: selection._id,
           title: selection.title,
-          qtd: selection.inscriptions.length,
+          periodo: `${dia(selection.dateBegin)} a ${dia(selection.dateEnd)}`,
           situation: selection.open ? "Aberto" : "Finalizado",
           actions: (
             <DivButtons>
-              <SpanIcon
-                background="#007bff"
-                onClick={() => {
-                  setIdSelection(selection._id);
-                  goToInspect(2, selection._id);
-                }}
-              >
-                <MDBIcon icon="eye" />
-              </SpanIcon>
               {selection.open ? (
                 <>
                   <SpanIcon
@@ -132,7 +126,7 @@ const ListSelections = ({ goToInspect }) => {
     };
 
     if (selections) populateTable();
-  }, [selections, goToInspect]);
+  }, [selections]);
 
   return (
     <MDBContainer fluid>
@@ -141,7 +135,7 @@ const ListSelections = ({ goToInspect }) => {
           style={{ fontWeight: "bold" }}
           onClick={() => setModalCreate((old) => !old)}
         >
-          Criar novo Processo Seletivo
+          Nova seleção
         </MDBBtn>
       </MDBRow>
       <MDBRow>
