@@ -9,6 +9,7 @@ import Admin from "./components/Admin/Admin";
 import Documents from "./components/Documents/Documents";
 import Home from "./components/Home/Home";
 import Nav from "./components/Navbar/Nav";
+import NaoEncontrada from "./components/NaoEncontrada/NaoEncontrada";
 import isAuth from "./services/Auth";
 import {
   BrowserRouter as Router,
@@ -50,7 +51,8 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/contato" exact component={Contact} />
           <AdminRoute path="/admin" exact component={Admin} />
-          <Redirect from="*" to="/" />
+          <Redirect from="/subscription" to="/inscricoes" />
+          <Route component={NaoEncontrada} />
         </Switch>
         <Footer />
       </Router>

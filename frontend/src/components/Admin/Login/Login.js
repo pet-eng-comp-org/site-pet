@@ -3,8 +3,10 @@ import { MDBContainer, MDBAlert, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { DivLogin } from "./style.js";
 import { useHistory } from "react-router-dom";
 import api from "../../../services/api";
+import useTitulo from "../../../utils/useTitulo";
 
 const Login = () => {
+  useTitulo("Entrar no painel");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validLogin, setValidLogin] = useState("");
