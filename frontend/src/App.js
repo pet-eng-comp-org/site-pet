@@ -4,6 +4,7 @@ import Footer from "./components/Footer/Footer";
 import About from "./components/About/About";
 import Subscription from "./components/Subscription/Subscription";
 import Projects from "./components/Projects/Projects";
+import ProjetoPagina from "./components/Projects/ProjetoPagina/ProjetoPagina";
 import Contact from "./components/Contact/Contact";
 import Admin from "./components/Admin/Admin";
 import Documents from "./components/Documents/Documents";
@@ -53,6 +54,7 @@ function App() {
           <Route path="/documentos" exact component={Documents} />
           <Route path="/inscricoes" exact component={Subscription} />
           <Route path="/projetos" exact component={Projects} />
+          <Route path="/projetos/:projeto" exact component={ProjetoPagina} />
           <Route path="/login" exact component={Login} />
           <Route path="/contato" exact component={Contact} />
           <AdminRoute path="/admin" exact component={Admin} />

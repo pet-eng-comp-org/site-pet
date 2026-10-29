@@ -1,0 +1,66 @@
+.projeto-voltar {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.projeto-voltar::before {
+  content: "←";
+  margin-right: 0.5rem;
+}
+
+.projeto-descricao {
+  white-space: pre-line;
+}
+
+.projeto-tags {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.projeto-tags a,
+.projeto-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid #186a6c;
+  color: #186a6c;
+  font-weight: 600;
+}
+
+.projeto-tags a {
+  background: #186a6c;
+  color: #fff;
+}
+
+.projeto-tags a:hover,
+.projeto-tags a:focus {
+  background: #1b3f3f;
+  border-color: #1b3f3f;
+  color: #fff;
+}
+
+/* Colunas em vez de grade: as fotos têm proporções diferentes e nenhuma é cortada. */
+.projeto-fotos {
+  columns: 2 420px;
+  column-gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.projeto-fotos img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1.5rem;
+  border-radius: 16px;
+  background: #f0e4d4;
+  break-inside: avoid;
+}
