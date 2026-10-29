@@ -10,8 +10,10 @@ import goUp from "../../utils/goUp";
 import Loader from "../Loader/Loader";
 
 import "./Subscription.css";
+import useTitulo from "../../utils/useTitulo";
 
 function Subscription() {
+  useTitulo("Faça parte do PET");
   function Content() {
     useEffect(() => {
       goUp();

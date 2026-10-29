@@ -6,8 +6,10 @@ import goUp from "../../utils/goUp";
 
 import Modal from "./Modal/Modal";
 import Loader from "../Loader/Loader";
+import useTitulo from "../../utils/useTitulo";
 
 const Projects = () => {
+  useTitulo("Projetos");
   const [modal, setModal] = useState();
   const [idComission, setIdComission] = useState("");
   const [comissions, setComissions] = useState();

@@ -4,8 +4,10 @@ import "./Contact.css";
 import api from "../../services/api";
 import goUp from "../../utils/goUp";
 import Loader from "../Loader/Loader";
+import useTitulo from "../../utils/useTitulo";
 
 const ContactPage = () => {
+  useTitulo("Contato");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");

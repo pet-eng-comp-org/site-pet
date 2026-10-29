@@ -4,8 +4,10 @@ import goUp from "../../utils/goUp";
 import api from "../../services/api";
 import GrupoDocumentos from "./GrupoDocumentos/GrupoDocumentos";
 import "./Documents.css";
+import useTitulo from "../../utils/useTitulo";
 
 const Documents = () => {
+  useTitulo("Documentos");
   const [documents, setDocuments] = useState();
 
   useEffect(() => {

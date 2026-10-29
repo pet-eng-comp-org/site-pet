@@ -4,8 +4,10 @@ import goUp from "../../utils/goUp";
 import api from "../../services/api";
 import "./About.css";
 import Loader from "../Loader/Loader";
+import useTitulo from "../../utils/useTitulo";
 
 const About = () => {
+  useTitulo("Quem somos");
   const [petianos, setPetianos] = useState();
 
   useEffect(() => {
