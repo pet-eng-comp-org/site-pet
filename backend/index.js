@@ -60,6 +60,9 @@ setInterval(async () => {
   }
 }, 60000).unref();
 
+// Atrás do Traefik: req.ip é o IP de quem acessou, não o do proxy.
+app.set("trust proxy", 1);
+
 app.use(express.json());
 app.use(cors());
 
