@@ -75,18 +75,17 @@ function Nav() {
           Inscrições abertas para o PET até {fimSelecao}.{" "}
           <Link to="/inscricoes">Saiba como participar</Link>
         </p>
-        <span
-          style={{ marginLeft: "auto", cursor: "pointer" }}
+        <button
+          type="button"
+          className="message-fechar"
           onClick={() => setShowMessage(false)}
-          role="button"
           aria-label="Fechar aviso"
         >
           <MDBIcon icon="times" />
-        </span>
+        </button>
       </div>
 
       <MDBNavbar color="white" expand="md" light>
-        <MDBNavbarToggler onClick={toggleCollapse} />
         <MDBNavbarBrand>
           <Link to="/" onClick={() => setTabActive("inicio")}>
             <img
@@ -96,6 +95,7 @@ function Nav() {
             />
           </Link>
         </MDBNavbarBrand>
+        <MDBNavbarToggler onClick={toggleCollapse} />
 
         <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
           <MDBNavbarNav right>
