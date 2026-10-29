@@ -3,6 +3,7 @@ const memberController = require("../controllers/MemberController");
 const multer = require("multer");
 const { multerConfig } = require("../utils/multer");
 const verify = require("../utils/verifyToken");
+const otimizaImagem = require("../utils/otimizaImagem");
 
 router.post("/", verify, memberController.store);
 router.get("/", memberController.index);
@@ -16,12 +17,14 @@ router.patch(
   "/firstProfilePhoto/:memberId",
   verify,
   multer(multerConfig("members")).single("profilePhoto"),
+  otimizaImagem("members"),
   memberController.firstProfilePhoto
 );
 router.patch(
   "/updateProfilePhoto/:memberId",
   verify,
   multer(multerConfig("members")).single("profilePhoto"),
+  otimizaImagem("members"),
   memberController.updateProfilePhoto
 );
 router.delete("/:memberId", verify, memberController.delete);

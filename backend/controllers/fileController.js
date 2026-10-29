@@ -1,6 +1,9 @@
 const File = require("../models/File");
 const path = require("path");
 
+// Cada arquivo enviado ganha nome novo, então o que já foi baixado nunca muda.
+const CACHE = { maxAge: "365d", immutable: true };
+
 module.exports = {
   async index(req, res) {
     const files = await File.find();
@@ -17,7 +20,7 @@ module.exports = {
 
     const pathFile = path.resolve(`uploads/documents/${file.key}`);
 
-    res.sendFile(pathFile);
+    res.sendFile(pathFile, CACHE);
   },
 
   async getImageNews(req, res) {
@@ -25,7 +28,7 @@ module.exports = {
 
     const pathFile = path.resolve(`uploads/news/${file.key}`);
 
-    res.sendFile(pathFile);
+    res.sendFile(pathFile, CACHE);
   },
 
   async getProfilePhoto(req, res) {
@@ -33,7 +36,7 @@ module.exports = {
 
     const pathFile = path.resolve(`uploads/members/${file.key}`);
 
-    res.sendFile(pathFile);
+    res.sendFile(pathFile, CACHE);
   },
 
   async getComissionPhoto(req, res) {
@@ -41,7 +44,7 @@ module.exports = {
 
     const pathFile = path.resolve(`uploads/comissions/${file.key}`);
 
-    res.sendFile(pathFile);
+    res.sendFile(pathFile, CACHE);
   },
 
   async destroy(req, res) {
