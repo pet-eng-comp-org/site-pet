@@ -47,7 +47,7 @@ const Documents = () => {
         <a
           className="link-texto"
           target="_blank"
-          href="http://portal.mec.gov.br/component/content/article?id=12227%3Alegislacao-pet"
+          href="https://www.gov.br/mec/pt-br/areas-de-atuacao/educacao-superior/pet"
           rel="noopener noreferrer"
         >
           portal do MEC
