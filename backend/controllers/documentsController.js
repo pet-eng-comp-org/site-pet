@@ -35,7 +35,9 @@ module.exports = {
   async addFile(req, res) {
     if (!req.file) return res.status(400).send('"file" is required');
 
-    const { originalname: name, size, filename: key } = req.file;
+    const { originalname, size, filename: key } = req.file;
+    // Nome que aparece no site, escolhido no painel (ex.: "Edital nº 018/2026").
+    const name = String(req.body.name || "").trim().slice(0, 120) || originalname;
     const file = new File({
       name,
       size,
@@ -46,9 +48,10 @@ module.exports = {
       const savedFile = await file.save();
 
       try {
+        // O mais recente aparece primeiro na lista.
         const updatedDocument = await Documents.updateOne(
           { _id: req.params.id },
-          { $push: { files: savedFile } }
+          { $push: { files: { $each: [savedFile._id], $position: 0 } } }
         ).populate("files");
 
         return res.json({ updatedDocument });
