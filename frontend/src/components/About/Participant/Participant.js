@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { MDBIcon } from "mdbreact";
 import slug from "../../../utils/slug";
 import {
+  Lado,
   Perfil,
   Photo,
   Social,
@@ -35,41 +35,42 @@ const Participant = ({ participant, projetos }) => {
 
   return (
     <Perfil>
-      <Photo
-        src={`${process.env.REACT_APP_API_URL}api/file/getProfilePhoto/${participant.profilePhoto._id}`}
-        alt=""
-        loading="lazy"
-      />
-      <Social>
-        {participant.socialMidia.map((icon, index) => (
-          <a
-            href={icon.link}
-            key={index}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${icon.name} de ${participant.memberName}`}
-          >
-            <MDBIcon
-              fab
-              icon={icon.name === "facebook" ? "facebook-square" : icon.name}
-            />
-          </a>
-        ))}
-      </Social>
+      <Lado>
+        <Photo
+          src={`${process.env.REACT_APP_API_URL}api/file/getProfilePhoto/${participant.profilePhoto._id}`}
+          alt=""
+          loading="lazy"
+        />
+        <Social>
+          {participant.socialMidia.map((icon, index) => (
+            <a
+              href={icon.link}
+              key={index}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${icon.name} de ${participant.memberName}`}
+            >
+              <MDBIcon
+                fab
+                icon={icon.name === "facebook" ? "facebook-square" : icon.name}
+              />
+            </a>
+          ))}
+        </Social>
+      </Lado>
       <Name>{participant.memberName}</Name>
       <Start>{desde(participant)}</Start>
       <Description>{participant.description}</Description>
       <Tags>
-        {participant.tags?.map((tag, index) => {
-          const projeto = projetoDa(tag);
-          return projeto ? (
-            <Tag as={Link} key={index} to={`/projetos/${slug(projeto.title)}`}>
+        {/* Só etiqueta de projeto: "Tutor" já está em "Tutor desde…". */}
+        {participant.tags
+          ?.map(projetoDa)
+          .filter((p, i, todos) => p && todos.indexOf(p) === i)
+          .map((projeto) => (
+            <Tag key={projeto._id} to={`/projetos/${slug(projeto.title)}`}>
               {projeto.title}
             </Tag>
-          ) : (
-            <Tag key={index}>{tag.title.trim()}</Tag>
-          );
-        })}
+          ))}
       </Tags>
     </Perfil>
   );
