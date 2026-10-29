@@ -254,7 +254,7 @@ const News = () => {
           time: formatedDate(news.date)[1],
           actions: (
             <DivButtons>
-              <SpanIcon
+              <SpanIcon title="Editar" aria-label="Editar"
                 background="#ffc107"
                 onClick={() => {
                   setIdNews(news._id);
@@ -263,7 +263,7 @@ const News = () => {
               >
                 <MDBIcon icon="edit" />
               </SpanIcon>
-              <SpanIcon
+              <SpanIcon title="Excluir" aria-label="Excluir"
                 background="#dc3545"
                 onClick={() => {
                   setIdNews(news._id);
