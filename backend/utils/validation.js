@@ -27,12 +27,19 @@ const selectionValidation = (data) => {
   return schema.validate(data);
 };
 
+// Cada campo diz, em português, o que está errado; o site mostra ao lado dele.
+const campoContato = (campo, regra, mensagem) =>
+  regra.error((erros) => {
+    erros[0].local.erro = { campo, mensagem };
+    return erros[0];
+  });
+
 const contactValidation = (data) => {
   const schema = Joi.object({
-    name: Joi.string().min(3).max(40).required(),
-    message: Joi.string().min(3).max(200).required(),
-    email: Joi.string().min(6).email().required(),
-    subject: Joi.string().min(5).max(40).required(),
+    name: campoContato("name", Joi.string().trim().min(2).max(100).required(), "Escreva o seu nome (até 100 caracteres)."),
+    email: campoContato("email", Joi.string().trim().max(254).email().required(), "Escreva um e-mail válido, para podermos responder."),
+    subject: campoContato("subject", Joi.string().trim().min(3).max(120).required(), "Escreva o assunto (até 120 caracteres)."),
+    message: campoContato("message", Joi.string().trim().min(3).max(5000).required(), "Escreva a mensagem (até 5000 caracteres)."),
   });
   return schema.validate(data);
 };
