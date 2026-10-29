@@ -9,17 +9,28 @@ const ultimoDia = (data) =>
     timeZone: "America/Sao_Paulo",
   });
 
-function OpenedSelection() {
+function OpenedSelection({ edital }) {
   const [selection] = useContext(SelectionContext);
 
   return (
     <section className="aviso-selecao aviso-selecao-aberta">
       <h2>Inscrições abertas até {ultimoDia(selection.dateEnd)}</h2>
       <p>
-        Antes de se inscrever, leia o edital na página de{" "}
-        <Link to="/documentos" className="link-texto">
-          Documentos
-        </Link>
+        Antes de se inscrever, leia o{" "}
+        {edital ? (
+          <a
+            href={edital}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-texto"
+          >
+            edital
+          </a>
+        ) : (
+          <Link to="/documentos" className="link-texto">
+            edital
+          </Link>
+        )}
         .
       </p>
       <a
