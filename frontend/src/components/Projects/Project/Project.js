@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import slug from "../../../utils/slug";
 
 // O cartão inteiro é o link para a página do projeto.
-function Project({ title, description, icon }) {
+function Project({ title, description, icon, onClick }) {
   const src = icon
     ? `${process.env.REACT_APP_API_URL}api/file/getComissionPhoto/${icon}`
     : "";
 
   return (
-    <Link className="projeto" to={`/projetos/${slug(title)}`}>
+    <Link className="projeto" to={`/projetos/${slug(title)}`} onClick={onClick}>
       <span className="projeto-icone">
         {src && <img src={src} alt="" loading="lazy" />}
       </span>
