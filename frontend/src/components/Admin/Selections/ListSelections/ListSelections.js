@@ -65,7 +65,11 @@ const ListSelections = () => {
           Authorization: "Bearer " + token,
         },
       });
-      setSelections([...response.data.selections]);
+      setSelections(
+        [...response.data.selections].sort(
+          (a, b) => new Date(b.dateBegin) - new Date(a.dateBegin)
+        )
+      );
     } catch (err) {}
   }, []);
 
