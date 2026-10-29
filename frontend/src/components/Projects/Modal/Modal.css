@@ -5,6 +5,7 @@
 
 .comissao-cabecalho .modal-title {
   font-weight: 700;
+  font-size: 1.5rem;
 }
 
 .comissao-cabecalho .close,
@@ -13,34 +14,71 @@
   opacity: 1;
 }
 
-.modal-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
+.comissao-corpo {
+  padding: 1.5rem;
+  color: #1b3f3f;
 }
 
-.modal-image span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  overflow: hidden;
-  width: 250px;
-  height: 250px;
-  background-color: #186a6c;
+.comissao-descricao {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  white-space: pre-line;
 }
 
-.modal-image img {
-  min-height: 7vw;
-  /* min-height: 150px; */
-  max-height: 100%;
+.comissao-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.comissao-tags a,
+.comissao-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  border: 1px solid #186a6c;
+  color: #186a6c;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.comissao-tags a {
+  background: #186a6c;
+  color: #fff;
+}
+
+.comissao-tags a:hover,
+.comissao-tags a:focus {
+  background: #1b3f3f;
+  border-color: #1b3f3f;
+  color: #fff;
+}
+
+/* Fotos lado a lado, roláveis no celular. */
+.comissao-fotos {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+}
+
+.comissao-fotos img {
+  flex: 0 0 85%;
+  max-height: 360px;
   object-fit: cover;
+  border-radius: 12px;
+  scroll-snap-align: start;
+  background: #f0e4d4;
 }
 
-@media (max-width: 360px) {
-  .modal-image span {
-    width: 150px;
-    height: 150px;
+@media (min-width: 900px) {
+  .comissao-fotos img {
+    flex-basis: 48%;
   }
 }

@@ -7,8 +7,10 @@ import Selections from "./Selections/ListSelections/ListSelections";
 import Documents from "./Documents/Documents";
 import News from "./News/News";
 import Commissions from "./Commissions/Commissions";
+import useTitulo from "../../utils/useTitulo";
 
 const Admin = () => {
+  useTitulo("Painel");
   const [activeItem, setActiveitem] = useState(0);
   const [activeOption, setActiveOption] = useState(["activeTab", "", ""]);
 
