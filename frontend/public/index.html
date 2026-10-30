@@ -21,6 +21,11 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- A fonte vem antes do primeiro desenho da página: se chegasse depois,
+         o texto mudaria de tamanho na tela e empurraria o resto. -->
+    <link rel="preload" href="%PUBLIC_URL%/fonts/sofia-sans-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="%PUBLIC_URL%/fonts/sofia-sans-condensed-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="%PUBLIC_URL%/fonts/stylesheet.css" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>PET Engenharia de Computação · Ufes</title>
