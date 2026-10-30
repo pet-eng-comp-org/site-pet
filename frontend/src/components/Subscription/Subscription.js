@@ -50,7 +50,7 @@ function Content() {
         <section className="aviso-selecao" role="alert">
           <h2>Não conseguimos ver se as inscrições estão abertas</h2>
           <p>
-            Confira a sua conexão e recarregue a página, ou veja o Instagram{" "}
+            Confira a sua conexão e tente de novo, ou veja o Instagram{" "}
             <a
               href="https://www.instagram.com/petengcomp/"
               target="_blank"
@@ -61,6 +61,13 @@ function Content() {
             </a>
             .
           </p>
+          <button
+            type="button"
+            className="botao-principal"
+            onClick={() => window.location.reload()}
+          >
+            Tentar de novo
+          </button>
         </section>
       );
 

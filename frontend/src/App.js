@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect, useRef } from "react";
 import "./App.css";
 import Footer from "./components/Footer/Footer";
 import About from "./components/About/About";
@@ -18,6 +18,7 @@ import {
   Switch,
   Route,
   Redirect,
+  useLocation,
 } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,6 +26,21 @@ import "react-toastify/dist/ReactToastify.css";
 // O painel só é baixado por quem entra nele, não por todo visitante. O login
 // é pequeno e fica no pacote, para a tela dele não pular ao abrir.
 const Admin = lazy(() => import("./components/Admin/Admin"));
+
+// Ao trocar de página, o foco vai para o conteúdo novo: sem isso ele ficava
+// no link clicado (ou no body), e o leitor de tela não anunciava a página.
+const FocoNaTroca = () => {
+  const { pathname } = useLocation();
+  const primeira = useRef(true);
+  useEffect(() => {
+    if (primeira.current) {
+      primeira.current = false;
+      return;
+    }
+    document.querySelector("main").focus({ preventScroll: true });
+  }, [pathname]);
+  return null;
+};
 
 // Mensagem de erro fica na tela até a pessoa fechar; as de sucesso somem sozinhas.
 const avisoDeErro = toast.error;
@@ -52,8 +68,9 @@ function App() {
       <ToastContainer />
       <Router>
         <Nav />
+        <FocoNaTroca />
         {/* Leitor de tela usa o <main> para pular direto ao conteúdo. */}
-        <main className="conteudo">
+        <main className="conteudo" tabIndex={-1}>
           <Suspense
             fallback={
               <div className="divloader">
