@@ -11,11 +11,12 @@ import "./ProjetoPagina.css";
 const foto = (id) =>
   `${process.env.REACT_APP_API_URL}api/file/getComissionPhoto/${id}`;
 
-// Foto bem diferente de 3:2 (arte quadrada, captura de celular) aparece
-// inteira sobre o fundo; recortada, perderia o que importa nela.
-const ajustaFoto = (e) => {
-  const { naturalWidth: l, naturalHeight: a } = e.target;
-  if (Math.abs(l / a / 1.5 - 1) > 0.12) e.target.classList.add("foto-inteira");
+// Cada foto aparece inteira, na proporção dela, em linhas de mesma altura.
+// A API manda largura e altura, então o espaço é reservado antes de a foto
+// chegar e a página não pula.
+const proporcao = (comission, id) => {
+  const m = (comission.medidas || []).find((f) => f._id === id);
+  return m ? m.width / m.height : 1.5;
 };
 
 // Cada projeto tem endereço próprio, para dar para mandar o link a alguém.
@@ -100,9 +101,15 @@ function ProjetoPagina() {
       )}
 
       {fotos.length > 0 && (
-        <div className={`projeto-fotos ${fotos.length % 2 ? "projeto-fotos-impar" : ""}`}>
+        <div className="projeto-fotos">
           {fotos.map((id) => (
-            <img key={id} src={foto(id)} alt="" loading="lazy" onLoad={ajustaFoto} />
+            <img
+              key={id}
+              src={foto(id)}
+              alt=""
+              loading="lazy"
+              style={{ "--proporcao": proporcao(comission, id) }}
+            />
           ))}
         </div>
       )}
