@@ -3,7 +3,8 @@
   padding: 0;
   margin: 2.5rem 0 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  /* Duas colunas na tela larga: com três, o décimo projeto ficava sozinho. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
   gap: 1.5rem;
 }
 
