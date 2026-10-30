@@ -24,7 +24,16 @@
   gap: 0.5rem;
 }
 
-/* Link do projeto é ação: botão como os outros do site. Ferramenta é só rótulo. */
+.projeto-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Ferramenta é rótulo, com ou sem link: o mesmo contorno nos dois casos. */
+.projeto-tags a,
 .projeto-tags span {
   display: inline-flex;
   align-items: center;
@@ -53,4 +62,22 @@
   object-fit: cover;
   border-radius: 16px;
   background: #f0e4d4;
+}
+
+.projeto-fotos img.foto-inteira {
+  object-fit: contain;
+}
+
+.projeto-tags a:hover,
+.projeto-tags a:focus {
+  background: #186a6c;
+  color: #fff;
+}
+
+/* Número ímpar de fotos: a primeira ocupa a linha toda, e nenhuma fica
+   sozinha ao lado de um vazio no fim. */
+@media (min-width: 900px) {
+  .projeto-fotos-impar img:first-child {
+    grid-column: 1 / -1;
+  }
 }
