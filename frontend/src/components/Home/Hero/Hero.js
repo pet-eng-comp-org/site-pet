@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Hero.css";
-import fotoGrupo from "../../../assets/grupo.jpg";
+
+// Largura em que a foto aparece; o mesmo valor está no preload do index.html,
+// que pede a foto antes de o JavaScript chegar.
+const TAMANHO_FOTO = "(max-width: 900px) calc(100vw - 2rem), 538px";
 
 const Hero = () => {
   return (
@@ -26,7 +29,9 @@ const Hero = () => {
         </div>
         <img
           className="hero-foto"
-          src={fotoGrupo}
+          src={`${process.env.PUBLIC_URL}/grupo-1280.jpg`}
+          srcSet={`${process.env.PUBLIC_URL}/grupo-700.jpg 700w, ${process.env.PUBLIC_URL}/grupo-1280.jpg 1280w`}
+          sizes={TAMANHO_FOTO}
           alt="Petianos reunidos no DiaPET 2020"
           width="1280"
           height="960"

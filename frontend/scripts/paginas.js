@@ -24,6 +24,7 @@ const atributo = (texto) => texto.replace(/&/g, "&amp;").replace(/"/g, "&quot;")
 for (const [rota, [titulo, descricao]] of Object.entries(paginas)) {
   const completo = `${titulo} · PET Eng Comp Ufes`;
   let html = modelo
+    .replace(/<link[^>]*data-so-inicio[^>]*>/, "")
     .replace(/<title>[^<]*<\/title>/, `<title>${completo}</title>`)
     .replace(/(property="og:title" content=")[^"]*/, `$1${atributo(completo)}`)
     .replace(/(property="og:url" content=")[^"]*/, `$1${site}${rota}`);
