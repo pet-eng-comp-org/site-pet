@@ -11,6 +11,13 @@ import "./ProjetoPagina.css";
 const foto = (id) =>
   `${process.env.REACT_APP_API_URL}api/file/getComissionPhoto/${id}`;
 
+// Foto bem diferente de 3:2 (arte quadrada, captura de celular) aparece
+// inteira sobre o fundo; recortada, perderia o que importa nela.
+const ajustaFoto = (e) => {
+  const { naturalWidth: l, naturalHeight: a } = e.target;
+  if (Math.abs(l / a / 1.5 - 1) > 0.12) e.target.classList.add("foto-inteira");
+};
+
 // Cada projeto tem endereço próprio, para dar para mandar o link a alguém.
 // A primeira imagem da comissão é o ícone do cartão; as outras são fotos
 // (na lista da API, cada foto vem só como o id do arquivo).
@@ -41,8 +48,13 @@ function ProjetoPagina() {
   if (comission === null) return <NaoEncontrada />;
 
   const fotos = comission.photos.slice(1);
-  const links = comission.tags.filter((t) => t.link);
-  const ferramentas = comission.tags.filter((t) => !t.link);
+  // Os canais do próprio projeto ("Site do Topcom", "Instagram do Mobiliza
+  // PET") são ações: o site é o botão principal; os outros, links. O resto
+  // das etiquetas são ferramentas, mostradas como rótulo, com ou sem link.
+  const doProjeto = (t) =>
+    t.link && slug(t.title).includes(slug(comission.title));
+  const canais = comission.tags.filter(doProjeto);
+  const ferramentas = comission.tags.filter((t) => !doProjeto(t));
 
   return (
     <div className="pagina">
@@ -55,32 +67,42 @@ function ProjetoPagina() {
       <h1>{comission.title}</h1>
       <p className="pagina-intro projeto-descricao">{comission.description}</p>
 
-      {(links.length > 0 || ferramentas.length > 0) && (
-        <ul className="projeto-tags">
-          {links.map((tag) => (
-            <li key={tag._id}>
-              <a
-                className="botao-principal"
-                href={tag.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {tag.title.trim()}
-              </a>
-            </li>
+      {canais.length > 0 && (
+        <div className="projeto-acoes">
+          {canais.map((tag) => (
+            <a
+              key={tag._id}
+              className={/^site\b/i.test(tag.title.trim()) ? "botao-principal" : "botao-link"}
+              href={tag.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {tag.title.trim()}
+            </a>
           ))}
+        </div>
+      )}
+
+      {ferramentas.length > 0 && (
+        <ul className="projeto-tags" aria-label="Ferramentas">
           {ferramentas.map((tag) => (
             <li key={tag._id}>
-              <span>{tag.title.trim()}</span>
+              {tag.link ? (
+                <a href={tag.link} target="_blank" rel="noopener noreferrer">
+                  {tag.title.trim()}
+                </a>
+              ) : (
+                <span>{tag.title.trim()}</span>
+              )}
             </li>
           ))}
         </ul>
       )}
 
       {fotos.length > 0 && (
-        <div className="projeto-fotos">
+        <div className={`projeto-fotos ${fotos.length % 2 ? "projeto-fotos-impar" : ""}`}>
           {fotos.map((id) => (
-            <img key={id} src={foto(id)} alt="" loading="lazy" />
+            <img key={id} src={foto(id)} alt="" loading="lazy" onLoad={ajustaFoto} />
           ))}
         </div>
       )}
