@@ -6,6 +6,25 @@ import goUp from "../../utils/goUp";
 import Loader from "../Loader/Loader";
 import useTitulo from "../../utils/useTitulo";
 
+// As mesmas regras e mensagens do servidor (backend/utils/validation.js), para
+// o erro aparecer ao lado do campo assim que ele é preenchido, sem esperar o envio.
+const regras = {
+  name: [2, 100, "Escreva o seu nome, com 2 a 100 caracteres."],
+  email: [3, 254, "Escreva um e-mail válido, para podermos responder."],
+  subject: [3, 120, "Escreva o assunto, com 3 a 120 caracteres."],
+  message: [3, 5000, "Escreva a mensagem, com 3 a 5000 caracteres."],
+};
+
+const erroDe = (id, valor) => {
+  const [min, max, mensagem] = regras[id];
+  const v = valor.trim();
+  const valido =
+    v.length >= min &&
+    v.length <= max &&
+    (id !== "email" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+  return valido ? undefined : mensagem;
+};
+
 const ContactPage = () => {
   useTitulo("Contato");
   const [name, setName] = useState("");
@@ -22,11 +41,23 @@ const ContactPage = () => {
     goUp();
   }, []);
 
+  const valores = { name, email, subject, message };
+
   async function sendMessage(e) {
     e.preventDefault();
     setEnviada(false);
-    setErroCampo({});
     setErroGeral("");
+    const erros = {};
+    for (const id of Object.keys(regras)) {
+      const erro = erroDe(id, valores[id]);
+      if (erro) erros[id] = erro;
+    }
+    setErroCampo(erros);
+    const primeiro = Object.keys(erros)[0];
+    if (primeiro) {
+      document.getElementById(`contato-${primeiro}`).focus();
+      return;
+    }
     setLoading(true);
     try {
       await api.post("api/contact/", { name, email, subject, message });
@@ -48,13 +79,26 @@ const ContactPage = () => {
     setLoading(false);
   }
 
+  // Confere o campo ao sair dele, se já foi preenchido; e, enquanto houver
+  // erro, a cada tecla, para o aviso sumir assim que o texto ficar certo.
+  const confere = (id, valor) =>
+    setErroCampo((atual) => ({ ...atual, [id]: erroDe(id, valor) }));
+
   // Props comuns de cada campo: borda vermelha e texto do erro ligados a ele.
-  const campo = (id) => ({
+  const campo = (id, setValor) => ({
     id: `contato-${id}`,
     className: `form-control ${erroCampo[id] ? "is-invalid" : ""}`,
     "aria-invalid": Boolean(erroCampo[id]),
     "aria-describedby": erroCampo[id] ? `contato-${id}-erro` : undefined,
     required: true,
+    value: valores[id],
+    onChange: (e) => {
+      setValor(e.target.value);
+      if (erroCampo[id]) confere(id, e.target.value);
+    },
+    onBlur: (e) => {
+      if (e.target.value.trim()) confere(id, e.target.value);
+    },
   });
 
   const erroDo = (id) =>
@@ -77,7 +121,7 @@ const ContactPage = () => {
       </p>
 
       <div className="contato-grade">
-        <form className="contato-formulario" onSubmit={sendMessage}>
+        <form className="contato-formulario" onSubmit={sendMessage} noValidate>
           {enviada && (
             <MDBAlert color="success" role="status">
               Mensagem enviada. Respondemos pelo e-mail que você informou.
@@ -86,46 +130,35 @@ const ContactPage = () => {
 
           <label htmlFor="contato-name">Nome</label>
           <input
-            {...campo("name")}
+            {...campo("name", setName)}
             type="text"
             autoComplete="name"
-            minLength={2}
             maxLength={100}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
           />
           {erroDo("name")}
 
           <label htmlFor="contato-email">E-mail</label>
           <input
-            {...campo("email")}
+            {...campo("email", setEmail)}
             type="email"
             autoComplete="email"
             maxLength={254}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
           />
           {erroDo("email")}
 
           <label htmlFor="contato-subject">Assunto</label>
           <input
-            {...campo("subject")}
+            {...campo("subject", setSubject)}
             type="text"
-            minLength={3}
             maxLength={120}
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
           />
           {erroDo("subject")}
 
           <label htmlFor="contato-message">Mensagem</label>
           <textarea
-            {...campo("message")}
+            {...campo("message", setMessage)}
             rows="5"
-            minLength={3}
             maxLength={5000}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
           />
           {erroDo("message")}
           {message.length > 4000 && (
