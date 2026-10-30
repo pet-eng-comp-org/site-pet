@@ -286,3 +286,33 @@ describe("documentos", () => {
     assert.deepEqual(doc.files.map((f) => f.name), ["sem_nome.pdf", "Edital nº 002/2026", "Edital nº 001/2026"]);
   });
 });
+
+describe("imagens", () => {
+  const fs = require("node:fs");
+  const sharp = require("sharp");
+
+  // WebP e o formato que o proprio site salva; o painel aceita qualquer imagem.
+  it("foto em WebP vira a foto da noticia, como JPEG e PNG", async () => {
+    const webp = await sharp({ create: { width: 2000, height: 1000, channels: 3, background: "#186a6c" } })
+      .webp()
+      .toBuffer();
+    const corpo = new FormData();
+    corpo.append("title", "Noticia de teste");
+    corpo.append("text", "Texto de teste");
+    corpo.append("file", new Blob([webp], { type: "image/webp" }), "foto.webp");
+    const r = await fetch(`${BASE}/api/news/`, {
+      method: "POST",
+      headers: { authorization: `Bearer ${await entra()}` },
+      body: corpo,
+    });
+    assert.equal(r.status, 200, await r.clone().text());
+
+    const { news } = await (await api("GET", "/api/news/")).json();
+    const arquivo = path.join(RAIZ, "uploads", "news", news.find((n) => n.title === "Noticia de teste").file.key);
+    try {
+      assert.equal((await sharp(arquivo).metadata()).width, 1200);
+    } finally {
+      fs.rmSync(arquivo, { force: true });
+    }
+  });
+});
