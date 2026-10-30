@@ -4,6 +4,7 @@ import api from "../../../services/api";
 import goUp from "../../../utils/goUp";
 import slug from "../../../utils/slug";
 import useTitulo from "../../../utils/useTitulo";
+import CargaFalhou from "../../CargaFalhou/CargaFalhou";
 import Loader from "../../Loader/Loader";
 import NaoEncontrada from "../../NaoEncontrada/NaoEncontrada";
 import "./ProjetoPagina.css";
@@ -35,7 +36,7 @@ function ProjetoPagina() {
           data.comissions.find((c) => slug(c.title) === projeto) || null
         )
       )
-      .catch(() => setComission(null));
+      .catch(() => setComission("falhou"));
   }, [projeto]);
 
   useTitulo(comission?.title || "Projetos");
@@ -47,6 +48,7 @@ function ProjetoPagina() {
       </div>
     );
   if (comission === null) return <NaoEncontrada />;
+  if (comission === "falhou") return <CargaFalhou titulo="Projetos" />;
 
   const fotos = comission.photos.slice(1);
   // Os canais do próprio projeto ("Site do Topcom", "Instagram do Mobiliza

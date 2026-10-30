@@ -45,6 +45,25 @@ function Content() {
     if (selection === "loading")
       return <section className="aviso-selecao aviso-carregando" aria-busy="true" />;
 
+    if (selection === "falhou")
+      return (
+        <section className="aviso-selecao" role="alert">
+          <h2>Não conseguimos ver se as inscrições estão abertas</h2>
+          <p>
+            Confira a sua conexão e recarregue a página, ou veja o Instagram{" "}
+            <a
+              href="https://www.instagram.com/petengcomp/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-texto"
+            >
+              @petengcomp
+            </a>
+            .
+          </p>
+        </section>
+      );
+
     if (!selection) return <ClosedSelection edital={edital} />;
 
     if (

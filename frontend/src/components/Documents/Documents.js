@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import CargaFalhou from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
 import goUp from "../../utils/goUp";
 import api from "../../services/api";
@@ -9,6 +10,7 @@ import useTitulo from "../../utils/useTitulo";
 const Documents = () => {
   useTitulo("Documentos");
   const [documents, setDocuments] = useState();
+  const [falhou, setFalhou] = useState(false);
 
   useEffect(() => {
     goUp();
@@ -17,11 +19,13 @@ const Documents = () => {
         const response = await api.get("api/documents/");
         setDocuments(response.data.documents);
       } catch (err) {
-        console.log(err.response);
+        setFalhou(true);
       }
     };
     getDocuments();
   }, []);
+
+  if (falhou) return <CargaFalhou titulo="Documentos" />;
 
   if (!documents) {
     return (

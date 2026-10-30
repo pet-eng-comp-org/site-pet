@@ -3,12 +3,14 @@ import Team from "./Team/Team";
 import goUp from "../../utils/goUp";
 import api from "../../services/api";
 import "./About.css";
+import CargaFalhou from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
 import useTitulo from "../../utils/useTitulo";
 
 const About = () => {
   useTitulo("Quem somos");
   const [petianos, setPetianos] = useState();
+  const [falhou, setFalhou] = useState(false);
   const [projetos, setProjetos] = useState([]);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ const About = () => {
         const response = await api.get("api/members/");
         setPetianos(response.data.members.filter((p) => p.active));
       } catch (err) {
-        console.log(err.response.data);
+        setFalhou(true);
       }
     };
 
@@ -31,6 +33,8 @@ const About = () => {
       .then(({ data }) => setProjetos(data.comissions))
       .catch(() => {});
   }, []);
+
+  if (falhou) return <CargaFalhou titulo="Quem somos" />;
 
   if (!petianos) {
     return (

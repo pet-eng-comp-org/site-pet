@@ -5,6 +5,7 @@ import "./Projects.css";
 import api from "../../services/api";
 import goUp from "../../utils/goUp";
 
+import CargaFalhou from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
 import useTitulo from "../../utils/useTitulo";
 
@@ -27,6 +28,7 @@ const posicaoGuardada = () => {
 const Projects = () => {
   useTitulo("Projetos");
   const [comissions, setComissions] = useState();
+  const [falhou, setFalhou] = useState(false);
   const history = useHistory();
   const location = useLocation();
   const voltando = history.action === "POP" || location.state?.voltar;
@@ -43,11 +45,13 @@ const Projects = () => {
         const response = await api.get("api/comissions");
         setComissions([...response.data.comissions]);
       } catch (err) {
-        console.log(err);
+        setFalhou(true);
       }
     };
     getComissions();
   }, []);
+
+  if (falhou) return <CargaFalhou titulo="Projetos" />;
 
   if (!comissions) {
     return (
