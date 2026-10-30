@@ -1,5 +1,11 @@
 @import "assets/sofia_sans/stylesheet.css";
 
+/* Lugar da barra de rolagem sempre reservado: no Windows, a página inteira
+   andava para o lado quando o conteúdo chegava e a barra aparecia. */
+html {
+  scrollbar-gutter: stable;
+}
+
 /* Rodapé sempre no fim da tela, mesmo em página curta. */
 .App {
   min-height: 100vh;
@@ -14,6 +20,18 @@
 
 .ft-normal {
   font-weight: normal;
+}
+
+/* Enquanto a página carrega: na mesma caixa da página, para o conteúdo
+   entrar no lugar em vez de deslizar da largura toda para a coluna. */
+.divloader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: calc(1140px + 2rem);
+  margin: 0 auto;
+  height: 100vh;
 }
 
 .App h1 {
@@ -127,7 +145,19 @@ a {
 }
 
 @media (max-width: 784px) {
-  .App h1 {
+  /* Enquanto a página carrega: na mesma caixa da página, para o conteúdo
+   entrar no lugar em vez de deslizar da largura toda para a coluna. */
+.divloader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: calc(1140px + 2rem);
+  margin: 0 auto;
+  height: 100vh;
+}
+
+.App h1 {
     font-size: 34px;
   }
 
