@@ -11,7 +11,9 @@ export const SelectionProvider = (props) => {
         const response = await api.get("api/selection/openSelection");
         setState(response.data.selection);
       } catch (err) {
-        setState(err.response);
+        // Resposta do servidor sem seleção aberta é "fechadas"; sem resposta
+        // nenhuma, não dá para saber.
+        setState(err.response ? null : "falhou");
       }
     }
     getSelection();
