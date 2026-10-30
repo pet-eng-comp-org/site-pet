@@ -1,7 +1,13 @@
+/* 48 px de logo deixam o cabeçalho com 64 px: a marca legível sem tirar
+   da página o espaço que ela precisa no celular. */
 .logo-nav {
-  width: 160px;
-  height: auto;
+  width: 111px;
+  height: 48px;
   display: block;
+}
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .nav-links {
   color: #1b3f3f !important;
@@ -59,6 +65,13 @@
   padding-right: max(1rem, calc((100% - 1140px) / 2)) !important;
 }
 
+/* Toque de 44 px também no iPad, onde o menu já aparece aberto. */
+.navbar.navbar-light .navbar-nav .nav-item .nav-link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
 /* O texto do último link, não a caixa dele, encosta na margem do conteúdo. */
 @media (min-width: 768px) {
   .navbar-nav .nav-item:last-child .nav-link {
@@ -66,12 +79,9 @@
   }
 }
 
-/* Menu aberto no celular: texto na margem do logo e toque de 44px. */
+/* Menu aberto no celular: texto na margem do logo. */
 @media (max-width: 767.98px) {
   .navbar.navbar-light .navbar-nav .nav-item .nav-link {
-    display: flex;
-    align-items: center;
-    min-height: 44px;
     padding-left: 0;
     padding-right: 0;
   }
