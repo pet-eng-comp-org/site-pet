@@ -350,8 +350,17 @@ describe("imagens", () => {
       assert.deepEqual(medidas, [[600, 900], [800, 400]]);
       const salva = await conexao.db.collection("files").findOne({ _id: arquivo.insertedId });
       assert.equal(salva.width, 800, "a medida da foto antiga fica salva");
+
+      // O site pede versões menores (srcset); maior que o original, vem o original.
+      const largura = async (id, l) =>
+        (await sharp(Buffer.from(await (await fetch(`${BASE}/api/file/getComissionPhoto/${id}?largura=${l}`)).arrayBuffer())).metadata()).width;
+      const [emPeId] = comissions.find((c) => c._id === _id).medidas.map((m) => m._id);
+      assert.equal(await largura(emPeId, 400), 400);
+      assert.equal(await largura(emPeId, 800), 600);
+      assert.equal(await largura(emPeId, 123), 600, "largura fora da lista vem o original");
     } finally {
       fs.rmSync(caminho, { force: true });
+      fs.rmSync(path.join(RAIZ, "uploads", "comissions", "tamanhos"), { recursive: true, force: true });
       const { photos } = await conexao.db.collection("comissions").findOne({ _id: new mongoose.Types.ObjectId(_id) });
       for (const f of await conexao.db.collection("files").find({ _id: { $in: photos } }).toArray())
         fs.rmSync(path.join(RAIZ, "uploads", "comissions", f.key), { force: true });

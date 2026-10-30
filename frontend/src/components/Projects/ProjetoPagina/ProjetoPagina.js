@@ -15,10 +15,21 @@ const foto = (id) =>
 // Cada foto aparece inteira, na proporção dela, em linhas de mesma altura.
 // A API manda largura e altura, então o espaço é reservado antes de a foto
 // chegar e a página não pula.
-const proporcao = (comission, id) => {
-  const m = (comission.medidas || []).find((f) => f._id === id);
-  return m ? m.width / m.height : 1.5;
-};
+const medidas = (comission, id) =>
+  (comission.medidas || []).find((f) => f._id === id) || { width: 1600, height: 1067 };
+
+// Versões que o servidor faz (fileController): 400 e 800 px, mais o original.
+const srcSet = (id, largura) =>
+  [400, 800]
+    .filter((l) => l < largura)
+    .map((l) => `${foto(id)}?largura=${l} ${l}w`)
+    .concat(`${foto(id)} ${largura}w`)
+    .join(", ");
+
+// Largura em que a foto aparece: a fração da linha que cabe a ela, na coluna
+// de até 1140 px (1 rem de espaço entre fotos); no celular, a coluna toda.
+const tamanho = (fracao, nalinha) =>
+  `(max-width: 767.98px) calc(100vw - 2rem), calc((min(100vw, 1172px) - 2rem - ${nalinha - 1}rem) * ${fracao.toFixed(3)})`;
 
 // Divide as fotos, na ordem, em linhas de soma de proporções parecida (cerca
 // de 3,5 por linha, uns 300 px de altura na tela larga), para nenhuma linha
@@ -129,20 +140,31 @@ function ProjetoPagina() {
       {fotos.length > 0 && (
         <div className="projeto-fotos">
           {linhas(
-            fotos.map((id) => ({ id, proporcao: proporcao(comission, id) }))
-          ).map((linha) => (
-            <div className="projeto-fotos-linha" key={linha[0].id}>
-              {linha.map((f) => (
-                <img
-                  key={f.id}
-                  src={foto(f.id)}
-                  alt=""
-                  loading="lazy"
-                  style={{ "--proporcao": f.proporcao }}
-                />
-              ))}
-            </div>
-          ))}
+            fotos.map((id) => {
+              const { width, height } = medidas(comission, id);
+              return { id, width, proporcao: width / height };
+            })
+          ).map((linha, n) => {
+            const soma = linha.reduce((s, f) => s + f.proporcao, 0);
+            // A primeira linha costuma estar na primeira tela: vem logo.
+            const primeira = n === 0;
+            return (
+              <div className="projeto-fotos-linha" key={linha[0].id}>
+                {linha.map((f) => (
+                  <img
+                    key={f.id}
+                    src={foto(f.id)}
+                    srcSet={srcSet(f.id, f.width)}
+                    sizes={tamanho(f.proporcao / soma, linha.length)}
+                    alt=""
+                    loading={primeira ? "eager" : "lazy"}
+                    fetchpriority={primeira ? "high" : undefined}
+                    style={{ "--proporcao": f.proporcao }}
+                  />
+                ))}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
