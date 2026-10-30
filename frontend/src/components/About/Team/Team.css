@@ -9,7 +9,7 @@
 
 .equipe h2 {
   color: #fff;
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 2.5rem;
 }
@@ -21,6 +21,10 @@
 }
 
 @media (max-width: 900px) {
+  .equipe h2 {
+    font-size: 1.75rem;
+  }
+
   .equipe {
     padding: 3rem 1rem;
   }
