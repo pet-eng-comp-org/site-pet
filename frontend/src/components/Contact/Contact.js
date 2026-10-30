@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MDBAlert } from "mdbreact";
 import "./Contact.css";
 import api from "../../services/api";
 import goUp from "../../utils/goUp";
@@ -171,9 +170,9 @@ const ContactPage = () => {
           )}
 
           {erroGeral && (
-            <MDBAlert color="danger" role="alert">
+            <p className="alerta-erro" role="alert">
               {erroGeral}
-            </MDBAlert>
+            </p>
           )}
 
           {/* O botão fica no lugar durante o envio, só muda o texto. */}

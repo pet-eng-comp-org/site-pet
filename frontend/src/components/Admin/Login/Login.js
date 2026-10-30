@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { MDBAlert } from "mdbreact";
 import { CartaoLogin } from "./style.js";
 import { useHistory } from "react-router-dom";
 import api from "../../../services/api";
@@ -43,9 +42,9 @@ const Login = () => {
       <CartaoLogin onSubmit={handleLogin}>
         <h1>Entrar no painel</h1>
         {errorMessage && (
-          <MDBAlert color="danger" role="alert">
+          <p className="alerta-erro" role="alert">
             {errorMessage}
-          </MDBAlert>
+          </p>
         )}
         <label htmlFor="email">E-mail</label>
         <input

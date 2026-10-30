@@ -1,4 +1,102 @@
 
+/* Base das páginas públicas. O Bootstrap, o MDB e o Font Awesome (492 KB que
+   bloqueavam a primeira pintura, com 1% em uso) ficaram só no painel; isto é
+   o pouco deles que o site usava. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Sofia Sans", Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #1b3f3f;
+  background-color: #fff2e1;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: #186a6c;
+}
+
+img,
+svg {
+  vertical-align: middle;
+}
+
+button,
+input,
+textarea,
+select {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+label {
+  display: inline-block;
+}
+
+.icone-svg {
+  height: 1em;
+  width: auto;
+}
+
+/* Campo de formulário (Contato e login). */
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #1b3f3f;
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+/* Foco visível: com o tema antigo, o campo focado não mudava em nada. */
+.form-control:focus {
+  border-color: #186a6c;
+  outline: 3px solid rgba(24, 106, 108, 0.35);
+  outline-offset: 0;
+}
+
+.form-control.is-invalid {
+  border-color: #b3261e;
+}
+
+.alerta-erro {
+  padding: 0.75rem 1.25rem;
+  color: #721c24;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
 /* Lugar da barra de rolagem sempre reservado: no Windows, a página inteira
    andava para o lado quando o conteúdo chegava e a barra aparecia. */
 html {
@@ -180,6 +278,6 @@ a {
   color: #1b3f3f !important;
 }
 
-.App > .page-footer {
+.App > .rodape {
   margin-top: auto;
 }
