@@ -24,7 +24,7 @@
   gap: 0.5rem;
 }
 
-.projeto-tags a,
+/* Link do projeto é ação: botão como os outros do site. Ferramenta é só rótulo. */
 .projeto-tags span {
   display: inline-flex;
   align-items: center;
@@ -36,31 +36,21 @@
   font-weight: 600;
 }
 
-.projeto-tags a {
-  background: #186a6c;
-  color: #fff;
-}
-
-.projeto-tags a:hover,
-.projeto-tags a:focus {
-  background: #1b3f3f;
-  border-color: #1b3f3f;
-  color: #fff;
-}
-
-/* Colunas em vez de grade: as fotos têm proporções diferentes e nenhuma é cortada. */
+/* Grade de fotos 3:2: o espaço de cada uma é reservado antes de ela chegar
+   (a página não pula ao carregar) e as colunas terminam juntas. Em colunas
+   livres, a galeria se rearranjava enquanto as fotos chegavam. */
 .projeto-fotos {
-  columns: 2 420px;
-  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  gap: 1.5rem;
   margin-top: 2.5rem;
 }
 
 .projeto-fotos img {
   display: block;
   width: 100%;
-  height: auto;
-  margin-bottom: 1.5rem;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
   border-radius: 16px;
   background: #f0e4d4;
-  break-inside: avoid;
 }
