@@ -315,4 +315,46 @@ describe("imagens", () => {
       fs.rmSync(arquivo, { force: true });
     }
   });
+
+  // A galeria do site monta cada foto na proporção dela antes de ela chegar.
+  it("a lista de comissoes traz largura e altura de cada foto, inclusive das antigas", async () => {
+    const token = await entra();
+    const auth = { authorization: `Bearer ${token}` };
+    const criada = await api("POST", "/api/comissions/", {
+      headers: { ...auth, "content-type": "application/json" },
+      corpo: JSON.stringify({ title: "Comissao teste", description: "Descricao de teste", tags: [] }),
+    });
+    assert.equal(criada.status, 200, await criada.clone().text());
+    const { _id } = await criada.json();
+
+    // Foto enviada pelo painel: as medidas saem da conversao.
+    const emPe = await sharp({ create: { width: 600, height: 900, channels: 3, background: "#fff2e1" } }).png().toBuffer();
+    const corpo = new FormData();
+    corpo.append("photo", new Blob([emPe], { type: "image/png" }), "em-pe.png");
+    const r = await fetch(`${BASE}/api/comissions/addPhoto/${_id}`, { method: "PATCH", headers: auth, body: corpo });
+    assert.equal(r.status, 200, await r.clone().text());
+
+    // Foto de antes das medidas: o arquivo existe, o registro nao tem medidas.
+    const antiga = "teste-antiga.webp";
+    const caminho = path.join(RAIZ, "uploads", "comissions", antiga);
+    fs.writeFileSync(caminho, await sharp({ create: { width: 800, height: 400, channels: 3, background: "#186a6c" } }).webp().toBuffer());
+    const arquivo = await conexao.db.collection("files").insertOne({ name: antiga, size: 1, key: antiga });
+    await conexao.db.collection("comissions").updateOne(
+      { _id: new mongoose.Types.ObjectId(_id) },
+      { $push: { photos: arquivo.insertedId } }
+    );
+
+    try {
+      const { comissions } = await (await api("GET", "/api/comissions/")).json();
+      const medidas = comissions.find((c) => c._id === _id).medidas.map((m) => [m.width, m.height]);
+      assert.deepEqual(medidas, [[600, 900], [800, 400]]);
+      const salva = await conexao.db.collection("files").findOne({ _id: arquivo.insertedId });
+      assert.equal(salva.width, 800, "a medida da foto antiga fica salva");
+    } finally {
+      fs.rmSync(caminho, { force: true });
+      const { photos } = await conexao.db.collection("comissions").findOne({ _id: new mongoose.Types.ObjectId(_id) });
+      for (const f of await conexao.db.collection("files").find({ _id: { $in: photos } }).toArray())
+        fs.rmSync(path.join(RAIZ, "uploads", "comissions", f.key), { force: true });
+    }
+  });
 });

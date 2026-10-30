@@ -45,27 +45,36 @@
   font-weight: 600;
 }
 
-/* Grade de fotos 3:2: o espaço de cada uma é reservado antes de ela chegar
-   (a página não pula ao carregar) e as colunas terminam juntas. Em colunas
-   livres, a galeria se rearranjava enquanto as fotos chegavam. */
+/* Linhas de mesma altura, cada foto inteira na proporção dela: a largura
+   cresce com a proporção, e a altura sai da largura. O ::after ocupa o fim
+   da última linha, para ela não esticar as fotos que sobraram. */
 .projeto-fotos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
-  gap: 1.5rem;
+  --altura: 260px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   margin-top: 2.5rem;
+}
+
+.projeto-fotos::after {
+  content: "";
+  flex-grow: 999;
 }
 
 .projeto-fotos img {
   display: block;
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
+  flex: var(--proporcao) 1 calc(var(--proporcao) * var(--altura));
+  min-width: 0;
+  aspect-ratio: var(--proporcao);
   border-radius: 16px;
   background: #f0e4d4;
 }
 
-.projeto-fotos img.foto-inteira {
-  object-fit: contain;
+@media (max-width: 767.98px) {
+  .projeto-fotos {
+    --altura: 150px;
+    gap: 0.5rem;
+  }
 }
 
 .projeto-tags a:hover,
@@ -74,10 +83,3 @@
   color: #fff;
 }
 
-/* Número ímpar de fotos: a primeira ocupa a linha toda, e nenhuma fica
-   sozinha ao lado de um vazio no fim. */
-@media (min-width: 900px) {
-  .projeto-fotos-impar img:first-child {
-    grid-column: 1 / -1;
-  }
-}

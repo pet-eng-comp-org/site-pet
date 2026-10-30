@@ -23,7 +23,14 @@ const otimizaImagem = (pasta) => async (req, res, next) => {
       .webp({ quality: 80 })
       .toFile(destino);
     if (original !== destino) await fs.unlink(original);
-    Object.assign(req.file, { filename, path: destino, size: info.size, mimetype: "image/webp" });
+    Object.assign(req.file, {
+      filename,
+      path: destino,
+      size: info.size,
+      mimetype: "image/webp",
+      width: info.width,
+      height: info.height,
+    });
     next();
   } catch (err) {
     await fs.unlink(original).catch(() => {});

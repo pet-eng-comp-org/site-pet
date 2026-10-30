@@ -13,6 +13,9 @@ const fileSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // Medidas da imagem, para o site reservar o espaço certo antes de ela chegar.
+  width: Number,
+  height: Number,
   createdAt: {
     type: Date,
     default: Date.now,
