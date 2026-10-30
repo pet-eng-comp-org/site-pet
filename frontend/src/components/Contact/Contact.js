@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MDBAlert } from "mdbreact";
 import "./Contact.css";
 import api from "../../services/api";
 import goUp from "../../utils/goUp";
-import Loader from "../Loader/Loader";
 import useTitulo from "../../utils/useTitulo";
 
 // As mesmas regras e mensagens do servidor (backend/utils/validation.js), para
@@ -33,6 +32,7 @@ const ContactPage = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [enviada, setEnviada] = useState(false);
+  const aviso = useRef();
   // Erro de um campo aparece ao lado dele; o resto (rede, limite), acima do botão.
   const [erroCampo, setErroCampo] = useState({});
   const [erroGeral, setErroGeral] = useState("");
@@ -40,6 +40,11 @@ const ContactPage = () => {
   useEffect(() => {
     goUp();
   }, []);
+
+  // Depois do envio, o foco vai para a confirmação, que o leitor de tela lê.
+  useEffect(() => {
+    if (enviada) aviso.current.focus();
+  }, [enviada]);
 
   const valores = { name, email, subject, message };
 
@@ -123,9 +128,9 @@ const ContactPage = () => {
       <div className="contato-grade">
         <form className="contato-formulario" onSubmit={sendMessage} noValidate>
           {enviada && (
-            <MDBAlert color="success" role="status">
+            <p className="contato-enviada" role="status" tabIndex={-1} ref={aviso}>
               Mensagem enviada. Respondemos pelo e-mail que você informou.
-            </MDBAlert>
+            </p>
           )}
 
           <label htmlFor="contato-name">Nome</label>
@@ -171,13 +176,10 @@ const ContactPage = () => {
             </MDBAlert>
           )}
 
-          {loading ? (
-            <Loader />
-          ) : (
-            <button type="submit" className="botao-principal">
-              Enviar mensagem
-            </button>
-          )}
+          {/* O botão fica no lugar durante o envio, só muda o texto. */}
+          <button type="submit" className="botao-principal" disabled={loading}>
+            {loading ? "Enviando…" : "Enviar mensagem"}
+          </button>
         </form>
 
         <div className="contato-local">

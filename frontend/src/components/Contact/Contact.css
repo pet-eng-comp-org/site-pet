@@ -46,6 +46,14 @@
   }
 }
 
+.contato-enviada {
+  background: #e3f1ec;
+  border-left: 6px solid #186a6c;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
 .contato-erro {
   color: #b3261e;
   font-size: 0.95rem;

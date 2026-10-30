@@ -48,19 +48,22 @@ function App() {
       <ToastContainer />
       <Router>
         <Nav />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/sobre" component={About} />
-          <Route path="/documentos" exact component={Documents} />
-          <Route path="/inscricoes" exact component={Subscription} />
-          <Route path="/projetos" exact component={Projects} />
-          <Route path="/projetos/:projeto" exact component={ProjetoPagina} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/contato" exact component={Contact} />
-          <AdminRoute path="/admin" exact component={Admin} />
-          <Redirect from="/subscription" to="/inscricoes" />
-          <Route component={NaoEncontrada} />
-        </Switch>
+        {/* Leitor de tela usa o <main> para pular direto ao conteúdo. */}
+        <main className="conteudo">
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/sobre" component={About} />
+            <Route path="/documentos" exact component={Documents} />
+            <Route path="/inscricoes" exact component={Subscription} />
+            <Route path="/projetos" exact component={Projects} />
+            <Route path="/projetos/:projeto" exact component={ProjetoPagina} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/contato" exact component={Contact} />
+            <AdminRoute path="/admin" exact component={Admin} />
+            <Redirect from="/subscription" to="/inscricoes" />
+            <Route component={NaoEncontrada} />
+          </Switch>
+        </main>
         <Footer />
       </Router>
     </div>
