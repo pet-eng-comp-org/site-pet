@@ -7,7 +7,6 @@ import {
 import ClosedSelection from "./ClosedSelection/ClosedSelection";
 import OpenedSelection from "./OpenedSelection/OpenedSelection";
 import goUp from "../../utils/goUp";
-import Loader from "../Loader/Loader";
 import api from "../../services/api";
 
 import "./Subscription.css";
@@ -43,7 +42,10 @@ function Subscription() {
     const [selection] = useContext(SelectionContext);
 
     const renderSelection = () => {
-      if (selection === "loading") return <Loader />;
+      // O espaço do aviso fica reservado enquanto ele carrega, para o texto
+      // de baixo não pular quando ele chegar.
+      if (selection === "loading")
+        return <section className="aviso-selecao aviso-carregando" aria-busy="true" />;
 
       if (!selection) return <ClosedSelection edital={edital} />;
 
