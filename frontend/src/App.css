@@ -39,8 +39,9 @@
   margin-bottom: 1rem;
 }
 
+/* Título de seção: o mesmo em todas as páginas, inclusive na inicial. */
 .pagina h2 {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
   color: #1b3f3f;
 }
@@ -69,6 +70,10 @@
 
   .App .pagina h1 {
     font-size: 2.25rem;
+  }
+
+  .pagina h2 {
+    font-size: 1.75rem;
   }
 }
 
