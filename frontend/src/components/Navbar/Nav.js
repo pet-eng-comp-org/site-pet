@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import {
   MDBNavbar,
@@ -55,6 +55,19 @@ function Nav() {
     setIsOpen(!isOpen);
   };
 
+  // Esc fecha o menu aberto e devolve o foco ao botão que o abriu.
+  const botaoMenu = useRef();
+  useEffect(() => {
+    if (!isOpen) return;
+    const fechaComEsc = (e) => {
+      if (e.key !== "Escape") return;
+      setIsOpen(false);
+      botaoMenu.current.focus();
+    };
+    document.addEventListener("keydown", fechaComEsc);
+    return () => document.removeEventListener("keydown", fechaComEsc);
+  }, [isOpen]);
+
   // No celular, escolher uma página fecha o menu, que senão cobre o título.
   const fecharMenu = () => setIsOpen(false);
 
@@ -89,6 +102,8 @@ function Nav() {
             <img
               alt="PET Engenharia de Computação, página inicial"
               src={logoPet}
+              width="111"
+              height="48"
               className="logo-nav"
             />
           </Link>
@@ -96,6 +111,7 @@ function Nav() {
         <button
           type="button"
           className="navbar-toggler"
+          ref={botaoMenu}
           onClick={toggleCollapse}
           aria-controls="navbarCollapse3"
           aria-expanded={isOpen}
