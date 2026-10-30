@@ -3,6 +3,34 @@ const Project = require('../models/Project');
 const File = require('../models/File');
 const { comissionsValidation } = require('../utils/validation');
 const { deleteFile } = require('../utils/functions');
+const sharp = require('sharp');
+
+// Largura e altura de cada foto, para o site montar a galeria na proporção
+// de cada uma sem a página pular. Foto enviada antes de as medidas serem
+// gravadas é medida aqui uma vez e fica salva.
+const medidasDasFotos = async (comissions) => {
+  const ids = comissions.flatMap((c) => c.photos);
+  const arquivos = await File.find({ _id: { $in: ids } }).lean();
+  await Promise.all(
+    arquivos
+      .filter((f) => !f.width)
+      .map(async (f) => {
+        try {
+          const { width, height } = await sharp(`uploads/comissions/${f.key}`).metadata();
+          Object.assign(f, { width, height });
+          await File.updateOne({ _id: f._id }, { width, height });
+        } catch (err) {
+          console.log(`sem medidas para ${f.key}: ${err.message}`);
+        }
+      })
+  );
+  const porId = new Map(arquivos.map((f) => [String(f._id), f]));
+  return (fotos) =>
+    fotos
+      .map((id) => porId.get(String(id)))
+      .filter((f) => f && f.width)
+      .map((f) => ({ _id: f._id, width: f.width, height: f.height }));
+};
 
 module.exports = {
   async store(request, response) {
@@ -24,7 +52,9 @@ module.exports = {
 
   async index(request, response) {
     try {
-      const comissions = await Comission.find();
+      const comissions = await Comission.find().lean();
+      const medidas = await medidasDasFotos(comissions);
+      comissions.forEach((c) => (c.medidas = medidas(c.photos)));
 
       return response.send({ comissions });
     } catch (err) {
@@ -67,11 +97,13 @@ module.exports = {
   async addPhoto(request, response) {
     if (!request.file) return response.status(400).send('"file" is required');
 
-    const { originalname: name, size, filename: key } = request.file;
+    const { originalname: name, size, filename: key, width, height } = request.file;
     const file = new File({
       name,
       size,
       key,
+      width,
+      height,
     });
 
     try {

@@ -3,9 +3,16 @@
   padding: 0;
   margin: 2.5rem 0 0;
   display: grid;
-  /* Duas colunas na tela larga: com três, o décimo projeto ficava sozinho. */
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  /* Uma coluna no celular e duas do tablet em diante: com três, o décimo
+     projeto ficava sozinho; com mínimo de 420 px, o tablet tinha uma só. */
+  grid-template-columns: 1fr;
   gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .projetos-grade {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .projeto {
