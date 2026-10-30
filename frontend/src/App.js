@@ -11,6 +11,7 @@ import Home from "./components/Home/Home";
 import Nav from "./components/Navbar/Nav";
 import NaoEncontrada from "./components/NaoEncontrada/NaoEncontrada";
 import Loader from "./components/Loader/Loader";
+import Login from "./components/Admin/Login/Login";
 import isAuth from "./services/Auth";
 import {
   BrowserRouter as Router,
@@ -21,9 +22,9 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// O painel só é baixado por quem entra nele, não por todo visitante.
+// O painel só é baixado por quem entra nele, não por todo visitante. O login
+// é pequeno e fica no pacote, para a tela dele não pular ao abrir.
 const Admin = lazy(() => import("./components/Admin/Admin"));
-const Login = lazy(() => import("./components/Admin/Login/Login"));
 
 // Mensagem de erro fica na tela até a pessoa fechar; as de sucesso somem sozinhas.
 const avisoDeErro = toast.error;
