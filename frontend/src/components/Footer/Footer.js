@@ -2,12 +2,11 @@ import React from "react";
 import logoPet from "../../assets/logo_pet_branca.svg";
 import iconeInstagram from "../../assets/icone_instagram.svg";
 import iconeEmail from "../../assets/icone_email.svg";
-import { MDBFooter } from "mdbreact";
 import "./Footer.css";
 
 const Footer = () => {
   return (
-    <MDBFooter className="font-small rodape">
+    <footer className="rodape">
       <div className="rodape-faixa">
         <img
           alt="PET Engenharia de Computação"
@@ -43,10 +42,10 @@ const Footer = () => {
           </li>
         </ul>
       </div>
-      <div className="footer-copyright text-center py-2">
+      <div className="rodape-direitos">
         © {new Date().getFullYear()} PET Engenharia de Computação · Ufes
       </div>
-    </MDBFooter>
+    </footer>
   );
 };
 

@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
-import {
-  MDBNavbar,
-  MDBNavbarNav,
-  MDBNavItem,
-  MDBCollapse,
-  MDBNavbarBrand,
-  MDBIcon,
-} from "mdbreact";
 import "./Nav.css";
+import Icone from "../Icone/Icone";
 import logoPet from "../../assets/logo_pet.svg";
 import App from "../../App";
 import api from "../../services/api";
@@ -77,7 +70,7 @@ function Nav() {
   };
 
   return (
-    <div className="sticky-top">
+    <header className="topo">
       <div
         className="message"
         style={{ display: showMessage ? "flex" : "none" }}
@@ -92,76 +85,77 @@ function Nav() {
           onClick={() => setShowMessage(false)}
           aria-label="Fechar aviso"
         >
-          <MDBIcon icon="times" />
+          <Icone nome="fechar" />
         </button>
       </div>
 
-      <MDBNavbar color="white" expand="md" light>
-        <MDBNavbarBrand>
-          <Link to="/" onClick={fecharMenu}>
-            <img
-              alt="PET Engenharia de Computação, página inicial"
-              src={logoPet}
-              width="111"
-              height="48"
-              className="logo-nav"
-            />
-          </Link>
-        </MDBNavbarBrand>
+      <nav className="barra" aria-label="Principal">
+        <Link to="/" onClick={fecharMenu} className="barra-marca">
+          <img
+            alt="PET Engenharia de Computação, página inicial"
+            src={logoPet}
+            width="111"
+            height="48"
+            className="logo-nav"
+          />
+        </Link>
         <button
           type="button"
-          className="navbar-toggler"
+          className="barra-menu"
           ref={botaoMenu}
           onClick={toggleCollapse}
-          aria-controls="navbarCollapse3"
+          aria-controls="menu-principal"
           aria-expanded={isOpen}
           aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
         >
-          <span className="navbar-toggler-icon" />
+          <span className="barra-menu-icone" />
         </button>
 
-        <MDBCollapse id="navbarCollapse3" isOpen={isOpen} navbar>
-          <MDBNavbarNav right>
+        <div
+          id="menu-principal"
+          className={`barra-links ${isOpen ? "aberto" : ""}`}
+        >
+          <ul className="barra-lista">
             {paginas.map(([to, rotulo]) => (
-              <MDBNavItem key={to}>
+              <li key={to}>
                 <NavLink
                   to={to}
                   exact={to === "/"}
-                  className="nav-link nav-links"
+                  className="barra-link"
                   activeClassName="active-link"
                   onClick={fecharMenu}
                 >
                   {rotulo}
                 </NavLink>
-              </MDBNavItem>
+              </li>
             ))}
             {localStorage.getItem("LOGINPET_TOKEN") && (
               <>
-                <MDBNavItem>
+                <li>
                   <NavLink
                     to="/admin"
-                    className="nav-link nav-links"
+                    className="barra-link"
                     activeClassName="active-link"
                     onClick={fecharMenu}
                   >
                     Admin
                   </NavLink>
-                </MDBNavItem>
-                <MDBNavItem>
+                </li>
+                <li>
                   <button
                     type="button"
                     onClick={logout}
-                    className="nav-link nav-links nav-sair"
+                    className="barra-link nav-sair"
                   >
                     Sair
                   </button>
-                </MDBNavItem>
+                </li>
               </>
             )}
-          </MDBNavbarNav>
-        </MDBCollapse>
-      </MDBNavbar>
-    </div>
+          </ul>
+        </div>
+      </nav>
+    </header>
   );
 }
 
