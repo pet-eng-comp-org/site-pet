@@ -94,6 +94,13 @@
   margin-right: -0.75rem;
 }
 
+/* O mesmo contorno de foco dos links: depois do Esc, quem usa teclado vê
+   que o foco voltou ao botão. */
+.navbar-toggler:focus-visible {
+  outline: 3px solid #186a6c;
+  outline-offset: 2px;
+}
+
 .nav-sair {
   background: none;
   border: 0;
