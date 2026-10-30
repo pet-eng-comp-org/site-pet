@@ -45,35 +45,46 @@
   font-weight: 600;
 }
 
-/* Linhas de mesma altura, cada foto inteira na proporção dela: a largura
-   cresce com a proporção, e a altura sai da largura. O ::after ocupa o fim
-   da última linha, para ela não esticar as fotos que sobraram. */
+/* Cada linha ocupa a largura toda, com as fotos inteiras na proporção
+   delas: a largura de cada uma cresce com a proporção, e a altura sai da
+   largura, igual para a linha toda. As linhas são montadas em linhas(). */
 .projeto-fotos {
-  --altura: 260px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   margin-top: 2.5rem;
 }
 
-.projeto-fotos::after {
-  content: "";
-  flex-grow: 999;
+.projeto-fotos-linha {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .projeto-fotos img {
   display: block;
-  flex: var(--proporcao) 1 calc(var(--proporcao) * var(--altura));
+  flex: var(--proporcao) 1 0;
   min-width: 0;
+  height: auto;
   aspect-ratio: var(--proporcao);
   border-radius: 16px;
   background: #f0e4d4;
 }
 
+/* No celular, uma foto por linha, na largura toda. */
 @media (max-width: 767.98px) {
-  .projeto-fotos {
-    --altura: 150px;
-    gap: 0.5rem;
+  .projeto-fotos,
+  .projeto-fotos-linha {
+    gap: 0.75rem;
+  }
+
+  .projeto-fotos-linha {
+    flex-direction: column;
+  }
+
+  .projeto-fotos img {
+    flex: none;
+    width: 100%;
   }
 }
 

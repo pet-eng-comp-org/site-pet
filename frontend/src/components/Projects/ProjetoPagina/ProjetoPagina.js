@@ -20,6 +20,30 @@ const proporcao = (comission, id) => {
   return m ? m.width / m.height : 1.5;
 };
 
+// Divide as fotos, na ordem, em linhas de soma de proporções parecida (cerca
+// de 3,5 por linha, uns 300 px de altura na tela larga), para nenhuma linha
+// ficar com uma foto sozinha ao lado de um vazio.
+const linhas = (fotos) => {
+  const total = fotos.reduce((s, f) => s + f.proporcao, 0);
+  const k = Math.min(fotos.length, Math.max(1, Math.round(total / 3.5)));
+  const alvo = total / k;
+  // custo[i][j]: melhor divisão das i primeiras fotos em j linhas.
+  const custo = [...Array(fotos.length + 1)].map(() => Array(k + 1).fill(Infinity));
+  const corte = [...Array(fotos.length + 1)].map(() => Array(k + 1).fill(0));
+  custo[0][0] = 0;
+  for (let i = 1; i <= fotos.length; i++)
+    for (let j = 1; j <= Math.min(i, k); j++)
+      for (let a = j - 1; a < i; a++) {
+        const soma = fotos.slice(a, i).reduce((s, f) => s + f.proporcao, 0);
+        const c = custo[a][j - 1] + (soma - alvo) ** 2;
+        if (c < custo[i][j]) [custo[i][j], corte[i][j]] = [c, a];
+      }
+  const resultado = [];
+  for (let i = fotos.length, j = k; j > 0; i = corte[i][j], j--)
+    resultado.unshift(fotos.slice(corte[i][j], i));
+  return resultado;
+};
+
 // Cada projeto tem endereço próprio, para dar para mandar o link a alguém.
 // A primeira imagem da comissão é o ícone do cartão; as outras são fotos
 // (na lista da API, cada foto vem só como o id do arquivo).
@@ -104,14 +128,20 @@ function ProjetoPagina() {
 
       {fotos.length > 0 && (
         <div className="projeto-fotos">
-          {fotos.map((id) => (
-            <img
-              key={id}
-              src={foto(id)}
-              alt=""
-              loading="lazy"
-              style={{ "--proporcao": proporcao(comission, id) }}
-            />
+          {linhas(
+            fotos.map((id) => ({ id, proporcao: proporcao(comission, id) }))
+          ).map((linha) => (
+            <div className="projeto-fotos-linha" key={linha[0].id}>
+              {linha.map((f) => (
+                <img
+                  key={f.id}
+                  src={foto(f.id)}
+                  alt=""
+                  loading="lazy"
+                  style={{ "--proporcao": f.proporcao }}
+                />
+              ))}
+            </div>
           ))}
         </div>
       )}
