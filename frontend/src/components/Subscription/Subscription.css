@@ -29,6 +29,16 @@
   margin-top: 0.75rem;
 }
 
+.aviso-carregando {
+  min-height: 133px;
+}
+
+@media (max-width: 767.98px) {
+  .aviso-carregando {
+    min-height: 184px;
+  }
+}
+
 .aviso-selecao-aberta {
   border-left-color: #186a6c;
 }
