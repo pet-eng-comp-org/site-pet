@@ -11,16 +11,13 @@ const multerConfig = (type) => {
     allowedMimes = ["application/pdf"];
   } else if (type === "news") {
     folder = "news";
-    allowedMimes = ["image/jpeg", "image/png", "image/svg+xml", "image/gif"];
+    allowedMimes = ["image/jpeg", "image/png", "image/svg+xml", "image/gif", "image/webp"];
   } else if (type == "members") {
     folder = "members";
-    allowedMimes = ["image/jpeg", "image/png", "image/svg+xml", "image/gif"];
-  } else if (type == "projects") {
-    folder = "projects";
-    allowedMimes = ["image/jpeg", "image/png", "image/svg+xml", "image/gif"];
+    allowedMimes = ["image/jpeg", "image/png", "image/svg+xml", "image/gif", "image/webp"];
   } else if (type == "comissions") {
     folder = "comissions";
-    allowedMimes = ["image/jpeg", "image/png", "image/svg+xml", "image/gif"];
+    allowedMimes = ["image/jpeg", "image/png", "image/svg+xml", "image/gif", "image/webp"];
   }
 
   if (!fs.existsSync(path.resolve(__dirname, "..", "uploads", folder))) {

@@ -15,17 +15,19 @@ const otimizaImagem = (pasta) => async (req, res, next) => {
   const destino = path.join(path.dirname(original), filename);
 
   try {
-    const info = await sharp(original, { animated: true })
+    // Lida para a memória antes: um .webp enviado sai com o mesmo nome dele.
+    const entrada = await fs.readFile(original);
+    const info = await sharp(entrada, { animated: true })
       .rotate()
       .resize(maiorLado[pasta], maiorLado[pasta], { fit: "inside", withoutEnlargement: true })
       .webp({ quality: 80 })
       .toFile(destino);
-    await fs.unlink(original);
+    if (original !== destino) await fs.unlink(original);
     Object.assign(req.file, { filename, path: destino, size: info.size, mimetype: "image/webp" });
     next();
   } catch (err) {
     await fs.unlink(original).catch(() => {});
-    res.status(400).send("Não foi possível ler a imagem. Envie JPEG, PNG, GIF ou SVG.");
+    res.status(400).send("Não foi possível ler a imagem. Envie JPEG, PNG, WebP, GIF ou SVG.");
   }
 };
 
