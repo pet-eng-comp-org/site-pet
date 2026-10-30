@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from "react";
+// O tema do painel (Font Awesome, Bootstrap e MDB) vem só com o painel; as
+// páginas públicas têm estilo próprio (App.css).
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
 import goUp from "../../utils/goUp";
 import { MDBContainer, MDBRow } from "mdbreact";
 import { ListLinks, NavLink, MDBColS } from "./style.js";

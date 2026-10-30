@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBIcon } from "mdbreact";
+import Icone from "../../Icone/Icone";
 
 const url = `${process.env.REACT_APP_API_URL}api/file/downloadDocument/`;
 
@@ -21,7 +21,7 @@ const GrupoDocumentos = ({ document }) => {
         {document.files.map((file) => (
           <li key={file._id}>
             <a href={url + file._id} target="_blank" rel="noopener noreferrer">
-              <MDBIcon far icon="file-pdf" aria-hidden="true" />
+              <Icone nome="pdf" />
               {nomeLegivel(file.name)}
             </a>
           </li>

@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBIcon } from "mdbreact";
+import Icone from "../../Icone/Icone";
 import slug from "../../../utils/slug";
 import {
   Lado,
@@ -50,10 +50,7 @@ const Participant = ({ participant, projetos }) => {
               rel="noopener noreferrer"
               aria-label={`${icon.name} de ${participant.memberName}`}
             >
-              <MDBIcon
-                fab
-                icon={icon.name === "facebook" ? "facebook-square" : icon.name}
-              />
+              <Icone nome={icon.name} />
             </a>
           ))}
         </Social>
