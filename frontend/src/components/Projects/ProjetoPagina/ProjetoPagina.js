@@ -59,7 +59,12 @@ function ProjetoPagina() {
         <ul className="projeto-tags">
           {links.map((tag) => (
             <li key={tag._id}>
-              <a href={tag.link} target="_blank" rel="noopener noreferrer">
+              <a
+                className="botao-principal"
+                href={tag.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {tag.title.trim()}
               </a>
             </li>
