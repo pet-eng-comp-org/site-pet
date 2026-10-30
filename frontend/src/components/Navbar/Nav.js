@@ -36,7 +36,7 @@ const paginas = [
   ["/projetos", "Projetos"],
   ["/documentos", "Documentos"],
   ["/contato", "Contato"],
-  ["/inscricoes", "Participe"],
+  ["/inscricoes", "Faça parte"],
 ];
 
 function Nav() {
