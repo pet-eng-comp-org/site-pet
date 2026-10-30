@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./AboutUs.css";
 
 import imagemNos2 from "../../../assets/jacee.jpg";
-import imagemNos3 from "../../../assets/topcom.jpg";
+import imagemNos3 from "../../../assets/topcom.webp";
 
 const AboutUs = () => {
   return (
