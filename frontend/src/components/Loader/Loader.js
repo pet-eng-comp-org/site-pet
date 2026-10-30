@@ -8,7 +8,7 @@ const override = {
   marginLeft: "50%",
   marginTop: "5%",
   paddingBottom: "30px",
-  borderColor: "#03989f",
+  borderColor: "#186a6c",
 };
 
 class Loader extends React.Component {
@@ -25,7 +25,7 @@ class Loader extends React.Component {
         <PropagateLoader
           cssOverride={override}
           size={15}
-          color={this.props.color ? this.props.color : "#03989f"}
+          color={this.props.color ? this.props.color : "#186a6c"}
           loading={this.state.loading}
         />
       </div>
