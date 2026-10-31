@@ -9,7 +9,7 @@
 }
 
 .noticias .title {
-  font-size: 2rem;
+  font-size: var(--titulo-secao);
   font-weight: bold;
   color: #186a6c;
   margin: 0 0 2rem;
@@ -41,7 +41,7 @@
 }
 
 .noticia h3 {
-  font-size: 1.4rem;
+  font-size: var(--titulo-cartao);
   font-weight: 700;
   color: #1b3f3f;
   margin-bottom: 0.75rem;
@@ -70,10 +70,6 @@
 @media (max-width: 900px) {
   .noticias {
     padding: 3rem var(--margem);
-  }
-
-  .noticias .title {
-    font-size: 1.75rem;
   }
 
   .noticias-grade {

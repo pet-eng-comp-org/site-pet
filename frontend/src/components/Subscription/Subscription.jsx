@@ -29,6 +29,33 @@ const editalMaisRecente = async () => {
   }
 };
 
+// A API não respondeu: dizer isso e oferecer de novo, sem afirmar que as
+// inscrições estão abertas ou fechadas.
+const FalhaInscricoes = () => (
+  <section className="aviso-selecao" role="alert">
+    <h2>Não conseguimos carregar as inscrições</h2>
+    <p>
+      Tente de novo em alguns minutos ou veja o Instagram{" "}
+      <a
+        href="https://www.instagram.com/petengcomp/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="link-texto"
+      >
+        @petengcomp
+      </a>
+      .
+    </p>
+    <button
+      type="button"
+      className="botao-principal"
+      onClick={() => window.location.reload()}
+    >
+      Tentar de novo
+    </button>
+  </section>
+);
+
 function Content() {
   const [edital, setEdital] = useState();
 
@@ -40,53 +67,48 @@ function Content() {
   const [selection] = useContext(SelectionContext);
 
   const renderSelection = () => {
-    // O espaço do aviso fica reservado enquanto ele carrega, para o texto
-    // de baixo não pular quando ele chegar. Espera também o edital: o aviso
-    // sem o link tinha outra altura e o texto subia e descia.
-    if (selection === "loading" || edital === undefined)
-      return <section className="aviso-selecao aviso-carregando" aria-busy="true" />;
-
-    if (selection === "falhou")
-      return (
-        <section className="aviso-selecao" role="alert">
-          <h2>Não conseguimos ver se as inscrições estão abertas</h2>
-          <p>
-            Tente de novo em alguns minutos ou veja o Instagram{" "}
-            <a
-              href="https://www.instagram.com/petengcomp/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-texto"
-            >
-              @petengcomp
-            </a>
-            .
-          </p>
-          <button
-            type="button"
-            className="botao-principal"
-            onClick={() => window.location.reload()}
-          >
-            Tentar de novo
-          </button>
-        </section>
-      );
-
-    if (!selection) return <ClosedSelection edital={edital} />;
+    if (selection === "loading" || edital === undefined) return null;
+    if (selection === "falhou") return <FalhaInscricoes />;
 
     if (
+      selection &&
       Date.now() > Date.parse(selection.dateBegin) &&
       Date.now() < Date.parse(selection.dateEnd)
     )
-      return <OpenedSelection edital={edital} />;
-    else return <ClosedSelection edital={edital} />;
+      return (
+        <OpenedSelection
+          edital={edital}
+          fim={selection.dateEnd}
+          formulario={selection.formLink}
+        />
+      );
+    return <ClosedSelection edital={edital} />;
   };
+
+  // O lugar do aviso tem desde o início a altura do maior dos três avisos
+  // (fechado, aberto e falha), desenhados invisíveis no mesmo lugar: quando o
+  // verdadeiro chega, nada embaixo dele se move, com a fonte de qualquer
+  // aparelho. Espera também o edital, que muda o texto do aviso.
+  const aviso = (
+    <div className="aviso-lugar">
+      <div className="aviso-reserva" aria-hidden="true">
+        <ClosedSelection edital="#" />
+      </div>
+      <div className="aviso-reserva" aria-hidden="true">
+        <OpenedSelection edital="#" fim="2026-09-30T12:00:00Z" formulario="#" />
+      </div>
+      <div className="aviso-reserva" aria-hidden="true">
+        <FalhaInscricoes />
+      </div>
+      {renderSelection()}
+    </div>
+  );
 
   return (
     <div className="pagina faca-parte">
       <h1>Faça parte do PET</h1>
       {/* Quem chega quer saber primeiro se pode se inscrever agora. */}
-      {renderSelection()}
+      {aviso}
       <div className="faca-parte-texto">
         <p className="pagina-intro">
           Os petianos são alunos de Engenharia de Computação que trabalham em

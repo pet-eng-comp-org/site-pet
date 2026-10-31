@@ -67,7 +67,7 @@
 
 .petiano-nome {
   grid-area: NM;
-  font-size: 1.4rem;
+  font-size: var(--titulo-cartao);
   font-weight: 700;
   line-height: 1.2;
 }
@@ -81,7 +81,7 @@
 
 .petiano-descricao {
   grid-area: DP;
-  font-size: 1rem;
+  font-size: var(--texto);
   line-height: 1.5;
   margin-bottom: 0.75rem;
   overflow: hidden;

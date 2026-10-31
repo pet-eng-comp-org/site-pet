@@ -29,7 +29,7 @@
 }
 
 .contato-local p {
-  font-size: 1.1rem;
+  font-size: var(--texto);
   line-height: 1.6;
 }
 
