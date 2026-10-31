@@ -48,9 +48,6 @@
     padding: 3rem var(--margem);
   }
 
-  .about-us h2 {
-  }
-
   .about-us-fotos {
     grid-template-columns: 1fr;
     gap: 1rem;

@@ -163,13 +163,17 @@ label {
 html {
   overflow-y: scroll;
   /* O topo fixo tem 64 px: o campo ou link que recebe o foco não fica
-     escondido atrás dele. */
+     escondido atrás dele. Embaixo, o mesmo para a faixa de inscrições
+     abertas, quando ela aparece (--faixa, medida em Nav.jsx). */
   scroll-padding-top: 5rem;
+  scroll-padding-bottom: calc(var(--faixa, 0px) + 1rem);
 }
 
 /* Rodapé sempre no fim da tela, mesmo em página curta. */
 .App {
-  min-height: 100vh;
+  /* Com a faixa de inscrições abertas, o rodapé cresce embaixo na altura
+     dela; a página cresce junto, para o rodapé não subir em página curta. */
+  min-height: calc(100vh + var(--faixa, 0px));
   display: flex;
   flex-direction: column;
   text-align: left;

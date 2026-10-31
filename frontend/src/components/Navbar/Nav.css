@@ -158,11 +158,6 @@
   margin: 0;
 }
 
-/* Com a faixa no pé da tela, o fim do rodapé não fica escondido atrás dela. */
-.App:has(.message) {
-  padding-bottom: 4.5rem;
-}
-
 .message-fechar {
   margin-left: auto;
   /* Área de toque de 44px, com o X encostado na margem do conteúdo. */

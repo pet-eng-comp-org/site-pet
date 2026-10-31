@@ -53,8 +53,10 @@
   height: 22px;
 }
 
+/* Com a faixa de inscrições abertas no pé da tela, o rodapé cresce embaixo
+   na altura dela (--faixa, medida em Nav.jsx), e nada fica coberto. */
 .rodape-direitos {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem calc(0.5rem + var(--faixa, 0px));
   background: rgba(0, 0, 0, 0.2);
   color: rgba(255, 255, 255, 0.6);
   font-size: 10pt;
