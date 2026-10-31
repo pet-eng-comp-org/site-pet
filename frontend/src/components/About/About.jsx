@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Team from "./Team/Team";
 import goUp from "../../utils/goUp";
-import api from "../../services/api";
+import useApi from "../../services/useApi";
 import "./About.css";
 import { AvisoDeFalha } from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
@@ -9,29 +9,14 @@ import useTitulo from "../../utils/useTitulo";
 
 const About = () => {
   useTitulo("Quem somos");
-  const [petianos, setPetianos] = useState();
-  const [falhou, setFalhou] = useState(false);
-  const [projetos, setProjetos] = useState([]);
+  const membros = useApi("api/members/");
+  const comissoes = useApi("api/comissions");
+  const petianos = membros.data?.members.filter((p) => p.active);
+  const falhou = Boolean(membros.falhou || membros.status);
+  const projetos = comissoes.data?.comissions || [];
 
   useEffect(() => {
     goUp();
-  }, []);
-
-  useEffect(() => {
-    const getPetianos = async () => {
-      try {
-        const response = await api.get("api/members/");
-        setPetianos(response.data.members.filter((p) => p.active));
-      } catch (err) {
-        setFalhou(true);
-      }
-    };
-
-    getPetianos();
-    api
-      .get("api/comissions")
-      .then(({ data }) => setProjetos(data.comissions))
-      .catch(() => {});
   }, []);
 
   // O texto fixo aparece já, e continua com a API fora; só a equipe espera
