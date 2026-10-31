@@ -36,8 +36,11 @@ ol {
   margin: 0 0 1rem;
 }
 
+/* Link sem sublinhado por padrão, como era com o Bootstrap: quem quer
+   sublinhado (.link-texto, .botao-link) diz isso. */
 a {
   color: #186a6c;
+  text-decoration: none;
 }
 
 img,
@@ -101,6 +104,9 @@ label {
    andava para o lado quando o conteúdo chegava e a barra aparecia. */
 html {
   scrollbar-gutter: stable;
+  /* O topo fixo tem 64 px: o campo ou link que recebe o foco não fica
+     escondido atrás dele. */
+  scroll-padding-top: 5rem;
 }
 
 /* Rodapé sempre no fim da tela, mesmo em página curta. */

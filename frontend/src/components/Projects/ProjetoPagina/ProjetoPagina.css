@@ -6,6 +6,17 @@
   font-weight: 600;
 }
 
+/* Só o texto é sublinhado; a seta, num inline-flex, ficava com um traço
+   separado. */
+.projeto-voltar.link-texto {
+  text-decoration: none;
+}
+
+.projeto-voltar span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .projeto-voltar::before {
   content: "←";
   margin-right: 0.5rem;

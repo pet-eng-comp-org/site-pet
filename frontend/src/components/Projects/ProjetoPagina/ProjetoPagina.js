@@ -100,7 +100,7 @@ function ProjetoPagina() {
         className="projeto-voltar link-texto"
         to={{ pathname: "/projetos", state: { voltar: true } }}
       >
-        Todos os projetos
+        <span>Todos os projetos</span>
       </Link>
       <h1>{comission.title}</h1>
       <p className="pagina-intro projeto-descricao">{comission.description}</p>

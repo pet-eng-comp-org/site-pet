@@ -50,7 +50,7 @@ function Content() {
         <section className="aviso-selecao" role="alert">
           <h2>Não conseguimos ver se as inscrições estão abertas</h2>
           <p>
-            Confira a sua conexão e tente de novo, ou veja o Instagram{" "}
+            Tente de novo em alguns minutos ou veja o Instagram{" "}
             <a
               href="https://www.instagram.com/petengcomp/"
               target="_blank"
