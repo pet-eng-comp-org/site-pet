@@ -20,7 +20,7 @@
     "react-spinners": "^0.17.1",
     "react-toastify": "^5.5.0",
     "reactcss": "^1.2.3",
-    "styled-components": "^5.1.0"
+    "styled-components": "^6.6.0"
   },
   "scripts": {
     "dev": "vite",
