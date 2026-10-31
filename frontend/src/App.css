@@ -61,6 +61,19 @@ label {
   display: inline-block;
 }
 
+/* Foco por teclado com um padrão só: 3 px na cor do site, afastado do
+   elemento. Sobre fundo escuro (rodapé, faixas verdes), em branco. */
+:focus-visible {
+  outline: 3px solid #186a6c;
+  outline-offset: 3px;
+}
+
+.rodape :focus-visible,
+.about-us :focus-visible,
+.equipe :focus-visible {
+  outline-color: #fff;
+}
+
 .icone-svg {
   height: 1em;
   width: auto;
@@ -77,7 +90,7 @@ label {
   line-height: 1.5;
   color: #1b3f3f;
   background: #fff;
-  border: 1px solid #ced4da;
+  border: 1px solid #7a8a8a;
   border-radius: 4px;
 }
 
@@ -100,10 +113,23 @@ label {
   border-radius: 4px;
 }
 
-/* Lugar da barra de rolagem sempre reservado: no Windows, a página inteira
-   andava para o lado quando o conteúdo chegava e a barra aparecia. */
+/* Margem lateral do conteúdo: 16 px no celular e 32 px do tablet em diante,
+   até a coluna de 1140 px ficar com margem maior que isso. */
+:root {
+  --margem: 1rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --margem: 2rem;
+  }
+}
+
+/* Barra de rolagem sempre desenhada: a página não anda para o lado quando
+   o conteúdo cresce. (O scrollbar-gutter reservava o espaço mesmo sem a
+   barra, e o topo e o rodapé paravam a 15 px da borda nas páginas curtas.) */
 html {
-  scrollbar-gutter: stable;
+  overflow-y: scroll;
   /* O topo fixo tem 64 px: o campo ou link que recebe o foco não fica
      escondido atrás dele. */
   scroll-padding-top: 5rem;
@@ -132,7 +158,7 @@ html {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: calc(1140px + 2rem);
+  max-width: calc(1140px + 2 * var(--margem));
   margin: 0 auto;
   height: 100vh;
 }
@@ -154,9 +180,9 @@ html {
    O width evita que o .App (flex) encolha a página à largura do conteúdo. */
 .pagina {
   width: 100%;
-  max-width: calc(1140px + 2rem);
+  max-width: calc(1140px + 2 * var(--margem));
   margin: 0 auto;
-  padding: 4rem 1rem 5rem;
+  padding: 4rem var(--margem) 5rem;
 }
 
 .App .pagina h1 {
@@ -192,7 +218,7 @@ html {
 
 @media (max-width: 900px) {
   .pagina {
-    padding: 2.5rem 1rem 3rem;
+    padding: 2.5rem var(--margem) 3rem;
   }
 
   .App .pagina h1 {

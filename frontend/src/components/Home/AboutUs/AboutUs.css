@@ -1,5 +1,5 @@
 .about-us {
-  padding: 5rem 1rem;
+  padding: 5rem var(--margem);
   color: #fff;
 }
 
@@ -45,7 +45,7 @@
 
 @media (max-width: 900px) {
   .about-us {
-    padding: 3rem 1rem;
+    padding: 3rem var(--margem);
   }
 
   .about-us h2 {
