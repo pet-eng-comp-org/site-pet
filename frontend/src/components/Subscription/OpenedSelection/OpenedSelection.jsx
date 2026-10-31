@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { SelectionContext } from "../SelectionContext/SelectionContext";
 
 const ultimoDia = (data) =>
   new Date(data).toLocaleDateString("pt-BR", {
@@ -9,12 +8,12 @@ const ultimoDia = (data) =>
     timeZone: "America/Sao_Paulo",
   });
 
-function OpenedSelection({ edital }) {
-  const [selection] = useContext(SelectionContext);
-
+// fim e formulario vêm da seleção aberta; a reserva de altura (Subscription)
+// usa valores de exemplo.
+function OpenedSelection({ edital, fim, formulario }) {
   return (
     <section className="aviso-selecao aviso-selecao-aberta">
-      <h2>Inscrições abertas até {ultimoDia(selection.dateEnd)}</h2>
+      <h2>Inscrições abertas até {ultimoDia(fim)}</h2>
       <p>
         Antes de se inscrever, leia o{" "}
         {edital ? (
@@ -35,7 +34,7 @@ function OpenedSelection({ edital }) {
       </p>
       <a
         className="botao-principal"
-        href={selection.formLink}
+        href={formulario}
         target="_blank"
         rel="noopener noreferrer"
       >
