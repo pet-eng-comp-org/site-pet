@@ -74,6 +74,45 @@ function Nav() {
     };
   }, [isOpen]);
 
+  // A altura da faixa de inscrições abertas vira --faixa no <html>: o rodapé
+  // cresce nessa altura e a rolagem até o foco deixa essa folga embaixo.
+  // Medida, e não fixa, porque ela quebra em mais linhas na tela estreita.
+  const faixa = useRef();
+  const comFaixa = showMessage && pathname !== "/inscricoes";
+  useEffect(() => {
+    const raiz = document.documentElement.style;
+    if (!comFaixa) {
+      raiz.removeProperty("--faixa");
+      return;
+    }
+    const medir = new ResizeObserver(([e]) =>
+      raiz.setProperty("--faixa", `${e.target.offsetHeight}px`)
+    );
+    medir.observe(faixa.current);
+    // O navegador só rola até o foco quando ele está fora da tela; um campo
+    // alto podia ficar meio coberto pela faixa. Rola o que faltar.
+    const mostrarFoco = (e) => {
+      if (faixa.current.contains(e.target)) return;
+      const falta =
+        e.target.getBoundingClientRect().bottom -
+        faixa.current.getBoundingClientRect().top +
+        16;
+      if (falta > 0) window.scrollBy(0, falta);
+    };
+    document.addEventListener("focusin", mostrarFoco);
+    return () => {
+      medir.disconnect();
+      document.removeEventListener("focusin", mostrarFoco);
+      raiz.removeProperty("--faixa");
+    };
+  }, [comFaixa]);
+
+  // Fechar a faixa leva o foco ao conteúdo, e não ao começo da página.
+  const fecharFaixa = () => {
+    setShowMessage(false);
+    document.querySelector("main").focus({ preventScroll: true });
+  };
+
   // No celular, escolher uma página fecha o menu, que senão cobre o título.
   const fecharMenu = () => setIsOpen(false);
 
@@ -87,8 +126,13 @@ function Nav() {
       {/* Fixo no pé da tela, por cima da página: ele só chega depois da
           API, e no topo empurrava a página inteira para baixo. No Faça parte
           não aparece, que lá o aviso já está no conteúdo. */}
-      {showMessage && pathname !== "/inscricoes" && (
-        <div className="message" role="region" aria-label="Inscrições abertas">
+      {comFaixa && (
+        <div
+          className="message"
+          role="region"
+          aria-label="Inscrições abertas"
+          ref={faixa}
+        >
           <p>
             Inscrições abertas até {fimSelecao}.{" "}
             <Link to="/inscricoes">Saiba como participar</Link>
@@ -96,7 +140,7 @@ function Nav() {
           <button
             type="button"
             className="message-fechar"
-            onClick={() => setShowMessage(false)}
+            onClick={fecharFaixa}
             aria-label="Fechar aviso"
           >
             <Icone nome="fechar" />
