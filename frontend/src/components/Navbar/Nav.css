@@ -12,14 +12,14 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.375rem max(var(--margem), calc((100% - 1140px) / 2));
+  padding: 0.4375rem max(var(--margem), calc((100% - 1140px) / 2));
   background: #fff;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 /* 120 px de largura, o mínimo do guia da identidade para o logo sem "UFES"
-   ("Tamanho mínimo", no guia do Figma); com 52 px de altura, o cabeçalho continua com
-   64 px: a marca legível sem tirar da página o espaço do celular. */
+   ("Tamanho mínimo", no guia do Figma). Em volta, os 7 px de respiro do guia
+   (o tamanho de um nó do grafo nessa largura): o cabeçalho fica com 66 px. */
 .barra-marca {
   display: block;
   margin-right: 1rem;
@@ -102,7 +102,9 @@
    a caixa tem a altura mínima de toque. */
 .barra-menu {
   min-height: 44px;
-  margin-right: -0.75rem;
+  /* O traço do ícone começa 3,75 px dentro do desenho: compensa para ele
+     terminar na margem do conteúdo, como o fim do logo começa nela. */
+  margin-right: calc(-0.75rem - 3.75px);
   padding: 0.25rem 0.75rem;
   background: none;
   border: 0;
