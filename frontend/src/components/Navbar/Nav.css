@@ -103,7 +103,7 @@
 .barra-menu {
   min-height: 44px;
   /* O traço do ícone começa 3,75 px dentro do desenho: compensa para ele
-     terminar na margem do conteúdo, como o fim do logo começa nela. */
+     terminar na margem do conteúdo, como o logo começa nela. */
   margin-right: calc(-0.75rem - 3.75px);
   padding: 0.25rem 0.75rem;
   background: none;
@@ -128,7 +128,9 @@
    que o foco voltou ao botão. */
 .barra-menu:focus-visible {
   outline: 3px solid #186a6c;
-  outline-offset: 2px;
+  /* Dentro da caixa: ela encosta na borda da tela no celular, e um contorno
+     de fora perdia o lado direito. */
+  outline-offset: -3px;
 }
 
 .nav-sair {
