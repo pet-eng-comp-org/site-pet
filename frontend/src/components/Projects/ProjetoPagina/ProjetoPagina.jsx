@@ -10,7 +10,7 @@ import NaoEncontrada from "../../NaoEncontrada/NaoEncontrada";
 import "./ProjetoPagina.css";
 
 const foto = (id) =>
-  `${process.env.REACT_APP_API_URL}api/file/getComissionPhoto/${id}`;
+  `${import.meta.env.VITE_API_URL}api/file/getComissionPhoto/${id}`;
 
 // Cada foto aparece inteira, na proporção dela, em linhas de mesma altura.
 // A API manda largura e altura, então o espaço é reservado antes de a foto

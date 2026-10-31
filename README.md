@@ -5,7 +5,7 @@ Site do PET (Programa de Educação Tutorial) da Engenharia de Computação — 
 ## Estrutura
 
 - `backend/` — API REST (Node 18 + Express + Mongoose, MongoDB Atlas)
-- `frontend/` — SPA React (build estático servido via `serve`)
+- `frontend/` — React com Vite; o build gera o HTML de cada página já com o texto (`scripts/paginas.js`), servido pelo `serve`
 - `docker-compose.yml` — composição local (builda a partir do código)
 - `docker-compose.prod.yml` — a stack de produção: o Portainer aplica o que estiver aqui
 - `.github/workflows/build-and-push.yml` — CI: builda e publica imagens no GHCR
@@ -18,8 +18,8 @@ Sem Docker:
 # Backend (porta 3333)
 cd backend && npm install && npm start
 
-# Frontend (porta 3000)
-cd frontend && yarn install && yarn start
+# Frontend (porta 5173); VITE_API_URL diz qual API usar
+cd frontend && yarn install && VITE_API_URL=http://localhost:3333/ yarn dev
 ```
 
 Com Docker (builda a partir do código local):
@@ -28,7 +28,7 @@ Com Docker (builda a partir do código local):
 docker compose up --build
 ```
 
-Backend em http://localhost:3333 — Frontend em http://localhost:3000.
+Backend em http://localhost:3333 — Frontend em http://localhost:5173.
 
 ## Deploy
 
@@ -48,7 +48,7 @@ Merge na `main` implanta sozinho:
 
 Configuradas em **Settings → Secrets and variables → Actions**:
 
-- `REACT_APP_API_URL` (repository **variable**, não secret) — URL da API embutida no build do React. Se não definida, o Dockerfile usa o default `https://api.pet.inf.ufes.br/`.
+- `VITE_API_URL` (repository **variable**, não secret) — URL da API embutida no build do front. Se não definida, o Dockerfile usa o default `https://api.pet.inf.ufes.br/`.
 
 Não há secrets adicionais: o workflow usa o `GITHUB_TOKEN` nativo para autenticar no GHCR.
 

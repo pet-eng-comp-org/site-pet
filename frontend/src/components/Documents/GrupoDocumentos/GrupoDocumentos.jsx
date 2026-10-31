@@ -1,7 +1,7 @@
 import React from "react";
 import Icone from "../../Icone/Icone";
 
-const url = `${process.env.REACT_APP_API_URL}api/file/downloadDocument/`;
+const url = `${import.meta.env.VITE_API_URL}api/file/downloadDocument/`;
 
 // "planejamento_2021.pdf" vira "planejamento 2021": o ícone já diz que é PDF.
 const nomeLegivel = (nome) =>

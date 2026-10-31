@@ -51,7 +51,7 @@ const News = () => {
           {news.map((singleNew) => (
             <article key={singleNew._id} className="noticia">
               <img
-                src={`${process.env.REACT_APP_API_URL}api/file/getImageNews/${singleNew.file._id}`}
+                src={`${import.meta.env.VITE_API_URL}api/file/getImageNews/${singleNew.file._id}`}
                 alt=""
                 loading="lazy"
               />

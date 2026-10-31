@@ -347,7 +347,7 @@ const News = () => {
           const getImg = async () => {
             try {
               imgUrl =
-                `${process.env.REACT_APP_API_URL}api/file/getImageNews/` +
+                `${import.meta.env.VITE_API_URL}api/file/getImageNews/` +
                 singleNews.image._id;
             } catch (err) {
               console.log(err);

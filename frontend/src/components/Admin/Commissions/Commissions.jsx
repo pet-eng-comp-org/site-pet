@@ -133,7 +133,7 @@ const Commissions = () => {
           rows.map((commission, index) => {
             const icone = commission.photos?.[0];
             const imgUrl = icone
-              ? `${process.env.REACT_APP_API_URL}api/file/getComissionPhoto/${icone._id || icone}`
+              ? `${import.meta.env.VITE_API_URL}api/file/getComissionPhoto/${icone._id || icone}`
               : "";
 
             return (

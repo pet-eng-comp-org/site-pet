@@ -163,6 +163,13 @@ html {
   height: 100vh;
 }
 
+/* Onde os dados da API entram, enquanto ela não responde: o texto fixo da
+   página já está em cima, e o rodapé fica fora da tela até os dados
+   chegarem, em vez de subir e descer. */
+.carregando-dados {
+  min-height: 100vh;
+}
+
 /* O foco vai para o <main> ao trocar de página (FocoNaTroca); o contorno
    ali só confundiria quem usa o mouse. */
 .conteudo:focus {

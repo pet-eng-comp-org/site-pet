@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CargaFalhou from "../CargaFalhou/CargaFalhou";
+import { AvisoDeFalha } from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
 import goUp from "../../utils/goUp";
 import api from "../../services/api";
@@ -25,16 +25,6 @@ const Documents = () => {
     getDocuments();
   }, []);
 
-  if (falhou) return <CargaFalhou titulo="Documentos" />;
-
-  if (!documents) {
-    return (
-      <div className="divloader">
-        <Loader />
-      </div>
-    );
-  }
-
   return (
     <div className="pagina">
       <h1>Documentos</h1>
@@ -51,11 +41,21 @@ const Documents = () => {
         </a>
         .
       </p>
-      <div className="documentos-grade">
-        {documents.map((document) => (
-          <GrupoDocumentos key={document._id} document={document} />
-        ))}
-      </div>
+      {/* O título e a abertura são fixos: aparecem já, e os documentos
+          entram embaixo quando a API responde. */}
+      {falhou && <AvisoDeFalha />}
+      {!documents && !falhou && (
+        <div className="carregando-dados">
+          <Loader />
+        </div>
+      )}
+      {documents && (
+        <div className="documentos-grade">
+          {documents.map((document) => (
+            <GrupoDocumentos key={document._id} document={document} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

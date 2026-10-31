@@ -9,7 +9,7 @@ const primeiraFrase = (texto) => texto.match(/^[\s\S]*?[.!?](?=\s|$)/)?.[0] || t
 // O cartão inteiro é o link para a página do projeto.
 function Project({ title, description, icon, onClick }) {
   const src = icon
-    ? `${process.env.REACT_APP_API_URL}api/file/getComissionPhoto/${icon}`
+    ? `${import.meta.env.VITE_API_URL}api/file/getComissionPhoto/${icon}`
     : "";
 
   return (

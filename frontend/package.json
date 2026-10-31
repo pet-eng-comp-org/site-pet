@@ -1,56 +1,35 @@
 {
-  "name": "my-app",
+  "name": "site-pet",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.1",
-    "@testing-library/user-event": "^7.2.1",
-    "acorn": "^7.1.1",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "axios": "^0.19.2",
-    "immutability-helper": "^3.1.1",
+    "bootstrap-css-only": "4.4.1",
+    "filesize": "6.0.1",
+    "lodash": "^4.17.21",
     "mdbreact": "^4.25.3",
+    "react": "^18.3.1",
     "react-circular-progressbar": "^2.2.0",
     "react-color": "^2.19.3",
-    "react-dom": "^16.13.0",
+    "react-dom": "^18.3.1",
     "react-dropzone": "^11.2.0",
     "react-icons": "^3.11.0",
-    "react-input-mask": "^2.0.4",
-    "react-scripts": "^3.4.3",
-    "react-sidebar": "^3.0.2",
+    "react-is": "^18.3.1",
+    "react-router-dom": "^5.3.4",
     "react-spinners": "^0.17.1",
-    "react-toast-notifications": "^2.5.1",
-    "styled-components": "^5.1.0",
-    "validar-cpf": "^2.1.2"
+    "react-toastify": "^5.5.0",
+    "reactcss": "^1.2.3",
+    "styled-components": "^5.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "vite",
     "prebuild": "node scripts/sem-google-fonts.js",
-    "build": "react-scripts build && node scripts/paginas.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir build-ssr && node scripts/paginas.js"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^2.5.1"
-  }
+    "@vitejs/plugin-react": "6.1.2",
+    "vite": "8.3.4"
+  },
+  "type": "module"
 }
