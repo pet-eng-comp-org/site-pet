@@ -7,6 +7,12 @@ import api from "./api";
 // pronta e o React não busca de novo.
 const DadosIniciais = createContext({});
 
+// Os dados que vieram com a página valem para ela e para as páginas abertas
+// logo depois; passado esse tempo, cada página busca de novo, para quem
+// navega muito tempo sem recarregar ver o que mudou.
+const carregadaEm = Date.now();
+const VALIDADE = 30 * 1000;
+
 export const ComDadosIniciais = ({ dados, children }) => (
   <DadosIniciais.Provider value={dados || {}}>{children}</DadosIniciais.Provider>
 );
@@ -14,7 +20,8 @@ export const ComDadosIniciais = ({ dados, children }) => (
 // Estado de uma busca: { carregando }, { data }, { status } (a API respondeu
 // com erro) ou { falhou } (a API não respondeu).
 export default function useApi(caminho) {
-  const inicial = useContext(DadosIniciais)[caminho];
+  const recebido = useContext(DadosIniciais)[caminho];
+  const inicial = Date.now() - carregadaEm < VALIDADE ? recebido : undefined;
   const [estado, setEstado] = useState(inicial || { carregando: true });
 
   useEffect(() => {
@@ -30,7 +37,7 @@ export default function useApi(caminho) {
     return () => {
       vivo = false;
     };
-  }, [caminho, inicial]);
+  }, [caminho]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return estado;
 }

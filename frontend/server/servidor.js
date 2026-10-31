@@ -19,34 +19,42 @@ const PORTA = Number(process.env.PORT) || 80;
 
 // ---- Dados da API -----------------------------------------------------------
 
-// Cada caminho fica guardado 60 s. Depois disso a página ainda sai com o que
-// está guardado e a busca nova corre por trás; só a primeira visita espera a
-// API, e no máximo 2 s. Sem resposta, a página sai sem os dados e o navegador
-// tenta de novo, como antes.
+// Dado bom fica guardado 30 s. Vencido, a visita espera a busca nova por até
+// 1 s e, sem resposta, sai com o que está guardado; sem nada guardado, espera
+// até 2 s. Erro da API não é guardado como dado: fica só a lembrança de que
+// ela falhou, por 15 s, para as visitas seguintes não esperarem de novo. Sem
+// dado, a página sai com o carregando e o navegador busca sozinho.
 const guardado = new Map();
-const VALIDADE = 60 * 1000;
+const falhouEm = new Map();
+const VALIDADE = 30 * 1000;
+const PAUSA_DEPOIS_DE_FALHA = 15 * 1000;
 
-const buscarNaApi = async (caminho) => {
+// Só o que a página mostra: a lista de membros traz também os que já saíram.
+const enxugar = (caminho, data) =>
+  caminho === "api/members/"
+    ? { ...data, members: data.members.filter((m) => m.active) }
+    : data;
+
+const buscarNaApi = async (caminho, limite) => {
   try {
-    const resposta = await fetch(API + caminho, { signal: AbortSignal.timeout(2000) });
-    const valor = resposta.ok
-      ? { data: await resposta.json() }
-      : { status: resposta.status };
+    const resposta = await fetch(API + caminho, { signal: AbortSignal.timeout(limite) });
+    if (!resposta.ok) throw new Error(`API respondeu ${resposta.status}`);
+    const valor = { data: enxugar(caminho, await resposta.json()) };
     guardado.set(caminho, { valor, em: Date.now() });
+    falhouEm.delete(caminho);
     return valor;
   } catch {
-    return guardado.get(caminho)?.valor;
+    falhouEm.set(caminho, Date.now());
+    return undefined;
   }
 };
 
-const buscar = (caminho) => {
+// fresco: ignora o guardado (projeto que não está na lista pode ser novo).
+const buscar = async (caminho, { fresco = false } = {}) => {
   const item = guardado.get(caminho);
-  if (!item) return buscarNaApi(caminho);
-  if (Date.now() - item.em > VALIDADE && !item.buscando) {
-    item.buscando = true;
-    buscarNaApi(caminho).finally(() => (item.buscando = false));
-  }
-  return item.valor;
+  if (item && !fresco && Date.now() - item.em < VALIDADE) return item.valor;
+  if (Date.now() - (falhouEm.get(caminho) || 0) < PAUSA_DEPOIS_DE_FALHA) return item?.valor;
+  return (await buscarNaApi(caminho, item ? 1000 : 2000)) || item?.valor;
 };
 
 // ---- Páginas ----------------------------------------------------------------
@@ -90,10 +98,17 @@ const paginas = {
 const primeiraFrase = (texto) =>
   (texto.match(/^.*?[.!?](\s|$)/s)?.[0] || texto).trim().slice(0, 200);
 
-const fotoDoProjeto = (c) =>
-  c.photos.length > 1
-    ? `${API}api/file/getComissionPhoto/${c.photos[1]}?largura=800`
-    : null;
+// A primeira foto deitada da galeria: a prévia do link é larga, e foto em pé
+// sai cortada. Sem nenhuma, fica a imagem padrão do site.
+const fotoDoProjeto = (c) => {
+  const deitada = c.photos
+    .slice(1)
+    .find((id) => {
+      const m = (c.medidas || []).find((f) => f._id === id);
+      return m && m.width >= 1.2 * m.height;
+    });
+  return deitada ? `${API}api/file/getComissionPhoto/${deitada}?largura=800` : null;
+};
 
 const atributo = (texto) =>
   String(texto)
@@ -150,6 +165,15 @@ const gerarPagina = async (url) => {
   ))
     if (valor) dados[caminho] = valor;
 
+  // Projeto fora da lista guardada pode ter sido criado agora: confere na
+  // API antes de responder 404.
+  const naLista = (d) =>
+    d["api/comissions"]?.data?.comissions.some((x) => slug(x.title) === projeto);
+  if (projeto && dados["api/comissions"] && !naLista(dados)) {
+    const nova = await buscar("api/comissions", { fresco: true });
+    if (nova) dados["api/comissions"] = nova;
+  }
+
   const conteudo = render(url, dados);
   if (pagina)
     return {
@@ -203,7 +227,13 @@ const COMPRIMIR = /^(text\/|application\/(json|manifest)|image\/svg)/;
 // O que não é página nem está em build/ (index.html fica de fora: as páginas
 // saem do servidor).
 const arquivoDo = (url) => {
-  const alvo = path.join(build, decodeURIComponent(url));
+  let caminho;
+  try {
+    caminho = decodeURIComponent(url);
+  } catch {
+    return null; // codificação inválida: segue como página, e dá 404
+  }
+  const alvo = path.join(build, caminho);
   if (!alvo.startsWith(build + path.sep) || alvo.endsWith(".html")) return null;
   try {
     return fs.statSync(alvo).isFile() ? alvo : null;
@@ -279,8 +309,14 @@ const servidor = http.createServer(async (req, res) => {
       return;
     }
 
-    // "/sobre/" é a mesma página que "/sobre".
-    const url = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+    // "/sobre/" é a mesma página que "/sobre". Endereço com codificação
+    // inválida (%E0%A4%A) não é página nenhuma: vira o 404.
+    let url = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+    try {
+      decodeURI(url);
+    } catch {
+      url = "/pagina-nao-encontrada";
+    }
     const { status, html } = await gerarPagina(url);
     const corpo = Buffer.from(html);
     const aceita = req.headers["accept-encoding"] || "";
