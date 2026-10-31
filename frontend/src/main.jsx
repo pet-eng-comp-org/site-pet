@@ -21,5 +21,5 @@ const site = (
 // só assume o que já está na tela. Login e painel chegam vazios e são
 // montados aqui.
 const raiz = document.getElementById("root");
-if (raiz.hasChildNodes()) hydrateRoot(raiz, site);
+if (raiz.firstElementChild) hydrateRoot(raiz, site);
 else createRoot(raiz).render(site);
