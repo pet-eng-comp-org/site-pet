@@ -21,7 +21,10 @@ export const ComDadosIniciais = ({ dados, children }) => (
 // com erro) ou { falhou } (a API não respondeu).
 export default function useApi(caminho) {
   const recebido = useContext(DadosIniciais)[caminho];
-  const inicial = Date.now() - carregadaEm < VALIDADE ? recebido : undefined;
+  // No servidor, os dados acabaram de ser buscados: valem sempre. O relógio
+  // é só do navegador (no servidor, carregadaEm é a hora em que ele subiu).
+  const valido = typeof window === "undefined" || Date.now() - carregadaEm < VALIDADE;
+  const inicial = valido ? recebido : undefined;
   const [estado, setEstado] = useState(inicial || { carregando: true });
 
   useEffect(() => {
