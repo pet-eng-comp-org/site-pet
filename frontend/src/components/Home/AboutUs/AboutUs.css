@@ -4,7 +4,7 @@
 }
 
 .about-us h2 {
-  font-size: 2rem;
+  font-size: var(--titulo-secao);
   font-weight: bold;
   color: #fff;
   margin: 0 0 1.5rem;
@@ -12,7 +12,7 @@
 
 .about-us p {
   color: #fff;
-  font-size: 1.15rem;
+  font-size: var(--texto);
   line-height: 1.6;
   max-width: 36rem;
   margin: 0 0 1.25rem;
@@ -46,10 +46,6 @@
 @media (max-width: 900px) {
   .about-us {
     padding: 3rem var(--margem);
-  }
-
-  .about-us h2 {
-    font-size: 1.75rem;
   }
 
   .about-us-fotos {

@@ -8,11 +8,17 @@
   box-sizing: border-box;
 }
 
+/* Texto na fonte do sistema (SF no Apple, Segoe no Windows, Roboto no
+   Android): feita para ler em tela em cada aparelho, com o espaçamento
+   ajustado ao tamanho, e sem nada para baixar. A marca fica no título, na
+   Sofia Sans Condensed (.App h1). Sem system-ui na lista: no Linux ele
+   segue a configuração da máquina e já caiu numa fonte chinesa; lá vale a
+   Arial. */
 body {
   margin: 0;
-  font-family: "Sofia Sans", Arial, sans-serif;
-  font-size: 1rem;
-  font-weight: 300;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--texto);
+  font-weight: 400;
   line-height: 1.5;
   color: #1b3f3f;
   background-color: #fff2e1;
@@ -34,6 +40,19 @@ p,
 ul,
 ol {
   margin: 0 0 1rem;
+}
+
+/* Sem palavra sozinha na última linha do parágrafo, e título em linhas de
+   tamanho parecido. Navegador que não conhece a regra quebra como sempre. */
+p,
+li {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 /* Link sem sublinhado por padrão, como era com o Bootstrap: quem quer
@@ -85,7 +104,7 @@ label {
   width: 100%;
   min-height: 44px;
   padding: 0.375rem 0.75rem;
-  font-size: 1rem;
+  font-size: var(--texto);
   font-weight: 400;
   line-height: 1.5;
   color: #1b3f3f;
@@ -117,11 +136,24 @@ label {
    até a coluna de 1140 px ficar com margem maior que isso. */
 :root {
   --margem: 1rem;
+  /* Escala de texto, num lugar só. Um tamanho para todo texto corrido; os
+     títulos em degraus claros (o da página cerca de 1,6 vez o da seção, como
+     na Apple). */
+  --texto: 1.0625rem; /* 17 px */
+  --texto-abertura: 1.25rem; /* 20 px, só o parágrafo de abertura da inicial */
+  --titulo-cartao: 1.25rem; /* 20 px */
+  --titulo-secao: 1.375rem; /* 22 px no celular, 28 px na tela larga */
 }
 
 @media (min-width: 768px) {
   :root {
     --margem: 2rem;
+  }
+}
+
+@media (min-width: 901px) {
+  :root {
+    --titulo-secao: 1.75rem;
   }
 }
 
@@ -131,18 +163,20 @@ label {
 html {
   overflow-y: scroll;
   /* O topo fixo tem 64 px: o campo ou link que recebe o foco não fica
-     escondido atrás dele. */
+     escondido atrás dele. Embaixo, o mesmo para a faixa de inscrições
+     abertas, quando ela aparece (--faixa, medida em Nav.jsx). */
   scroll-padding-top: 5rem;
+  scroll-padding-bottom: calc(var(--faixa, 0px) + 1rem);
 }
 
 /* Rodapé sempre no fim da tela, mesmo em página curta. */
 .App {
-  min-height: 100vh;
+  /* Com a faixa de inscrições abertas, o rodapé cresce embaixo na altura
+     dela; a página cresce junto, para o rodapé não subir em página curta. */
+  min-height: calc(100vh + var(--faixa, 0px));
   display: flex;
   flex-direction: column;
   text-align: left;
-  font-family: "Sofia Sans", Arial, sans-serif;
-  font-weight: 400;
   color: #1b3f3f;
   background-color: #fff2e1;
 }
@@ -177,7 +211,7 @@ html {
 }
 
 .App h1 {
-  font-family: "Sofia Sans Condensed", "Sofia Sans", Arial, sans-serif;
+  font-family: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
   font-weight: 800;
   color: #186a6c;
 }
@@ -201,13 +235,13 @@ html {
 
 /* Título de seção: o mesmo em todas as páginas, inclusive na inicial. */
 .pagina h2 {
-  font-size: 2rem;
+  font-size: var(--titulo-secao);
   font-weight: 700;
   color: #1b3f3f;
 }
 
 .pagina-intro {
-  font-size: 1.15rem;
+  font-size: var(--texto);
   line-height: 1.6;
   max-width: 36rem;
 }
@@ -231,10 +265,6 @@ html {
   .App .pagina h1 {
     font-size: 2.25rem;
   }
-
-  .pagina h2 {
-    font-size: 1.75rem;
-  }
 }
 
 .botao-principal {
@@ -248,7 +278,7 @@ html {
   background: #186a6c;
   color: #fff;
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: var(--texto);
 }
 
 .botao-principal:hover,
@@ -268,7 +298,7 @@ html {
   min-height: 48px;
   color: #186a6c;
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: var(--texto);
   text-decoration: underline;
   text-underline-offset: 4px;
 }

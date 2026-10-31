@@ -136,13 +136,26 @@
 }
 
 .message {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 44px;
+  padding: 0.5rem max(var(--margem), calc((100% - 1140px) / 2));
+  /* A barra do iPhone não cobre o botão de fechar. */
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   background: #ff9a5b;
   color: #1b3f3f;
   font-weight: 400;
-  align-items: center;
-  min-height: 44px;
-  padding: 0.5rem max(var(--margem), calc((100% - 1140px) / 2));
-  z-index: 9999;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.12);
+  z-index: 1030;
+}
+
+.message p {
+  margin: 0;
 }
 
 .message-fechar {
