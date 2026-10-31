@@ -97,7 +97,7 @@ label {
 /* Foco visível: com o tema antigo, o campo focado não mudava em nada. */
 .form-control:focus {
   border-color: #186a6c;
-  outline: 3px solid rgba(24, 106, 108, 0.35);
+  outline: 3px solid #186a6c;
   outline-offset: 0;
 }
 
