@@ -1,17 +1,8 @@
 import React from "react";
 import Icone from "../../Icone/Icone";
 import slug from "../../../utils/slug";
-import {
-  Lado,
-  Perfil,
-  Photo,
-  Social,
-  Name,
-  Start,
-  Description,
-  Tags,
-  Tag,
-} from "./style";
+import { Link } from "react-router-dom";
+import "./Participant.css";
 
 // "Game Jam", "GameJam" e "PET Game Jam" são o mesmo projeto: compara sem
 // "pet", sem separador e sem plural.
@@ -34,14 +25,15 @@ const Participant = ({ participant, projetos }) => {
     projetos.find((p) => chave(p.title) === chave(tag.title));
 
   return (
-    <Perfil>
-      <Lado>
-        <Photo
-          src={`${process.env.REACT_APP_API_URL}api/file/getProfilePhoto/${participant.profilePhoto._id}`}
+    <div className="petiano">
+      <div className="petiano-lado">
+        <img
+          className="petiano-foto"
+          src={`${import.meta.env.VITE_API_URL}api/file/getProfilePhoto/${participant.profilePhoto._id}`}
           alt=""
           loading="lazy"
         />
-        <Social>
+        <div className="petiano-redes">
           {participant.socialMidia.map((icon, index) => (
             <a
               href={icon.link}
@@ -53,23 +45,23 @@ const Participant = ({ participant, projetos }) => {
               <Icone nome={icon.name} />
             </a>
           ))}
-        </Social>
-      </Lado>
-      <Name>{participant.memberName}</Name>
-      <Start>{desde(participant)}</Start>
-      <Description>{participant.description}</Description>
-      <Tags>
+        </div>
+      </div>
+      <div className="petiano-nome">{participant.memberName}</div>
+      <div className="petiano-desde">{desde(participant)}</div>
+      <div className="petiano-descricao">{participant.description}</div>
+      <div className="petiano-etiquetas">
         {/* Só etiqueta de projeto: "Tutor" já está em "Tutor desde…". */}
         {participant.tags
           ?.map(projetoDa)
           .filter((p, i, todos) => p && todos.indexOf(p) === i)
           .map((projeto) => (
-            <Tag key={projeto._id} to={`/projetos/${slug(projeto.title)}`}>
+            <Link className="petiano-etiqueta" key={projeto._id} to={`/projetos/${slug(projeto.title)}`}>
               {projeto.title}
-            </Tag>
+            </Link>
           ))}
-      </Tags>
-    </Perfil>
+      </div>
+    </div>
   );
 };
 

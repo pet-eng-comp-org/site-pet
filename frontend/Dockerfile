@@ -1,18 +1,18 @@
 # ---- Stage 1: build ----
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 WORKDIR /usr/app
 
-ARG REACT_APP_API_URL=https://api.pet.inf.ufes.br/
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
+ARG VITE_API_URL=https://api.pet.inf.ufes.br/
+ENV VITE_API_URL=$VITE_API_URL
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 COPY . .
-RUN NODE_OPTIONS=--openssl-legacy-provider yarn build
+RUN yarn build
 
 # ---- Stage 2: runtime ----
-FROM node:18-alpine
+FROM node:22-alpine
 WORKDIR /usr/app
 
 RUN npm install -g serve@14.2.6
@@ -25,6 +25,6 @@ EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
 CMD wget --no-verbose --tries=1 --spider http://localhost:80/ || exit 1
 
-# Sem -s: cada página tem o seu HTML (scripts/paginas.js) e o que não existe
+# Sem -s: cada página tem o seu HTML, já com o texto (scripts/paginas.js), e o que não existe
 # recebe o 404.html com status 404. As rotas de projeto estão em public/serve.json.
 CMD ["serve", "-l", "80", "build"]

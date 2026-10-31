@@ -49,7 +49,7 @@ const CreateCommission = ({ isOpen, toggle, getCommissions, idCommission }) => {
             `api/file/getComissionPhoto/${photos[index]._id}`
           );
 
-          const url = `${process.env.REACT_APP_API_URL}api/file/getComissionPhoto/${photos[index]._id}`;
+          const url = `${import.meta.env.VITE_API_URL}api/file/getComissionPhoto/${photos[index]._id}`;
           const obj = {
             file: img,
             id: photos[index]._id,

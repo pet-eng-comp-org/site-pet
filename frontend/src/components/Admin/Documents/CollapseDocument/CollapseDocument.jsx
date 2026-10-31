@@ -67,7 +67,7 @@ const CollapseDocument = ({ title, files, idDocument, getDocuments }) => {
         {files?.map((file, index) => (
           <Row background={index} key={index}>
             <Text
-              href={`${process.env.REACT_APP_API_URL}api/file/downloadDocument/${file._id}`}
+              href={`${import.meta.env.VITE_API_URL}api/file/downloadDocument/${file._id}`}
               target="_blank"
             >
               {file.name}

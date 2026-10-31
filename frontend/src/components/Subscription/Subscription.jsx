@@ -12,7 +12,7 @@ import api from "../../services/api";
 import "./Subscription.css";
 import useTitulo from "../../utils/useTitulo";
 
-const urlDocumento = `${process.env.REACT_APP_API_URL}api/file/downloadDocument/`;
+const urlDocumento = `${import.meta.env.VITE_API_URL}api/file/downloadDocument/`;
 
 // O edital mais novo do grupo "Editais de seleção", para a página não fixar
 // regra que muda a cada seleção (o semestre de entrada aceito, por exemplo).
@@ -41,8 +41,9 @@ function Content() {
 
   const renderSelection = () => {
     // O espaço do aviso fica reservado enquanto ele carrega, para o texto
-    // de baixo não pular quando ele chegar.
-    if (selection === "loading")
+    // de baixo não pular quando ele chegar. Espera também o edital: o aviso
+    // sem o link tinha outra altura e o texto subia e descia.
+    if (selection === "loading" || edital === undefined)
       return <section className="aviso-selecao aviso-carregando" aria-busy="true" />;
 
     if (selection === "falhou")

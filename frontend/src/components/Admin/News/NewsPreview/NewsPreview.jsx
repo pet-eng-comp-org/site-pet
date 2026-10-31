@@ -28,7 +28,7 @@ const NewsPreview = ({ isOpen, toggle, singleNews, idNews }) => {
   useEffect(() => {
     let path = "api/file/getImageNews/";
     if (news) {
-      setSrc(`${process.env.REACT_APP_API_URL + path}${news.file._id}`);
+      setSrc(`${import.meta.env.VITE_API_URL + path}${news.file._id}`);
     }
   }, [news]);
 

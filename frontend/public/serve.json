@@ -1,13 +1,20 @@
 {
+  "redirects": [
+    {
+      "source": "/subscription",
+      "destination": "/inscricoes",
+      "type": 301
+    }
+  ],
   "rewrites": [
     {
       "source": "/projetos/:projeto",
-      "destination": "/projetos/index.html"
+      "destination": "/projetos/_projeto/index.html"
     }
   ],
   "headers": [
     {
-      "source": "static/**",
+      "source": "assets/**",
       "headers": [
         {
           "key": "Cache-Control",
