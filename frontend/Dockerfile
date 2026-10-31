@@ -15,9 +15,10 @@ RUN yarn build
 FROM node:22-alpine
 WORKDIR /usr/app
 
-RUN npm install -g serve@14.2.6
-
 COPY --from=builder /usr/app/build ./build
+COPY --from=builder /usr/app/build-ssr ./build-ssr
+COPY --from=builder /usr/app/server ./server
+COPY --from=builder /usr/app/package.json ./
 
 USER node
 
@@ -25,6 +26,6 @@ EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
 CMD wget --no-verbose --tries=1 --spider http://localhost:80/ || exit 1
 
-# Sem -s: cada página tem o seu HTML, já com o texto (scripts/paginas.js), e o que não existe
-# recebe o 404.html com status 404. As rotas de projeto estão em public/serve.json.
-CMD ["serve", "-l", "80", "build"]
+# As páginas saem do servidor a cada visita, já com o texto e os dados da API
+# (server/servidor.js); os arquivos do build, dele também.
+CMD ["node", "server/servidor.js"]

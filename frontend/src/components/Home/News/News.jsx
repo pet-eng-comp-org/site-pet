@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./News.css";
-import api from "../../../services/api";
+import useApi from "../../../services/useApi";
 
 // Endereço escrito no texto da notícia vira link de verdade.
 const comLinks = (texto) =>
@@ -27,19 +27,7 @@ const dataDa = (n) =>
   });
 
 const News = () => {
-  const [news, setNews] = useState();
-
-  useEffect(() => {
-    const getNews = async () => {
-      try {
-        const response = await api.get("api/news/");
-        setNews(response.data.news.filter(recente));
-      } catch (err) {
-        console.log(err.response);
-      }
-    };
-    getNews();
-  }, []);
+  const news = useApi("api/news/").data?.news.filter(recente);
 
   if (!news?.length) return null;
 
