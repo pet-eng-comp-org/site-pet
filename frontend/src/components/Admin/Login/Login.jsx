@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { CartaoLogin } from "./style.js";
+import React, { useEffect, useState } from "react";
+import "./Login.css";
 import { useHistory } from "react-router-dom";
 import api from "../../../services/api";
 import useTitulo from "../../../utils/useTitulo";
@@ -10,6 +10,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   let history = useHistory();
+
+  // O painel manda para cá quando o token vence (services/api.js).
+  useEffect(() => {
+    if (!sessionStorage.getItem("sessaoExpirou")) return;
+    sessionStorage.removeItem("sessaoExpirou");
+    setErrorMessage("Sua sessão expirou. Entre de novo.");
+  }, []);
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -39,7 +46,7 @@ const Login = () => {
 
   return (
     <div className="pagina">
-      <CartaoLogin onSubmit={handleLogin}>
+      <form className="cartao-login" onSubmit={handleLogin}>
         <h1>Entrar no painel</h1>
         {errorMessage && (
           <p className="alerta-erro" role="alert">
@@ -69,7 +76,7 @@ const Login = () => {
         <button type="submit" className="botao-principal">
           Entrar
         </button>
-      </CartaoLogin>
+      </form>
     </div>
   );
 };

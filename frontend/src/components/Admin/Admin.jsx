@@ -13,6 +13,14 @@ import Documents from "./Documents/Documents";
 import News from "./News/News";
 import Commissions from "./Commissions/Commissions";
 import useTitulo from "../../utils/useTitulo";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Só o painel mostra avisos flutuantes. A mensagem de erro fica na tela até a
+// pessoa fechar; as de sucesso somem sozinhas.
+const avisoDeErro = toast.error;
+toast.error = (mensagem, opcoes) =>
+  avisoDeErro(mensagem, { autoClose: false, ...opcoes });
 
 const Admin = () => {
   useTitulo("Painel");
@@ -59,6 +67,7 @@ const Admin = () => {
 
   return (
     <>
+      <ToastContainer />
       <MDBContainer fluid>
         <MDBRow>
           <MDBColS size="12" sm="3" md="2" className="sideBar">

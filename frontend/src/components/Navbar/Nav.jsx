@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
 import "./Nav.css";
 import Icone from "../Icone/Icone";
 import logoPet from "../../assets/logo_pet.svg";
-import App from "../../App";
 import api from "../../services/api";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory, useLocation } from "react-router-dom";
 
 // Aviso no topo de todas as páginas enquanto a seleção estiver aberta.
 const fimDaSelecaoAberta = async () => {
@@ -36,6 +34,12 @@ function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [fimSelecao, setFimSelecao] = useState();
+  // Lido depois de montar, e de novo a cada troca de página (entrar e sair
+  // trocam de página): o HTML pronto das páginas é o de quem não entrou.
+  const [logado, setLogado] = useState(false);
+  const { pathname } = useLocation();
+  useEffect(() => setLogado(Boolean(localStorage.getItem("LOGINPET_TOKEN"))), [pathname]);
+  const history = useHistory();
 
   useEffect(() => {
     fimDaSelecaoAberta().then((fim) => {
@@ -75,7 +79,7 @@ function Nav() {
 
   const logout = () => {
     localStorage.removeItem("LOGINPET_TOKEN");
-    ReactDOM.render(<App />, document.querySelector("#root"));
+    history.push("/");
   };
 
   return (
@@ -138,7 +142,7 @@ function Nav() {
                 </NavLink>
               </li>
             ))}
-            {localStorage.getItem("LOGINPET_TOKEN") && (
+            {logado && (
               <>
                 <li>
                   <NavLink

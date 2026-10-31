@@ -1,5 +1,5 @@
 import React from "react";
-import PropagateLoader from "react-spinners/PropagateLoader";
+import { PropagateLoader } from "react-spinners";
 
 // O react-spinners 0.12+ trocou a prop `css` (emotion) por `cssOverride`, um
 // objeto de estilo comum.

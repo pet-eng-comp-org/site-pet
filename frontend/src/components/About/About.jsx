@@ -34,16 +34,8 @@ const About = () => {
       .catch(() => {});
   }, []);
 
-  if (!petianos && !falhou) {
-    return (
-      <div className="divloader">
-        <Loader />
-      </div>
-    );
-  }
-
-  // Com a API fora, o texto fixo continua; só a contagem e a equipe faltam.
-  const alunos = petianos && petianos.filter((p) => !p.tutor).length;
+  // O texto fixo aparece já, e continua com a API fora; só a equipe espera
+  // a resposta.
 
   return (
     <>
@@ -52,7 +44,6 @@ const About = () => {
         <p className="pagina-intro">
           O PET Engenharia de Computação é um dos grupos PET originais da Ufes,
           criado em 1993.
-          {petianos && ` Hoje somos ${alunos} alunos e um professor tutor.`}
         </p>
         <p className="pagina-intro">
           O{" "}
@@ -66,6 +57,11 @@ const About = () => {
         </p>
         {falhou && <AvisoDeFalha />}
       </div>
+      {!petianos && !falhou && (
+        <div className="carregando-dados">
+          <Loader />
+        </div>
+      )}
       {petianos && <Team petianos={petianos} projetos={projetos} />}
     </>
   );

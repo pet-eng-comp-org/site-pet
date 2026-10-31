@@ -34,7 +34,7 @@ const Dropzone = ({ onFileUploaded, idPhoto, type, text, setFileUrl }) => {
   useEffect(() => {
     if (setFileUrl)
       setFileUrl(
-        `${process.env.REACT_APP_API_URL + path}${idPhoto}?${Date.now()}`
+        `${import.meta.env.VITE_API_URL + path}${idPhoto}?${Date.now()}`
       );
   }, [idPhoto, setFileUrl, path]);
 
@@ -47,7 +47,7 @@ const Dropzone = ({ onFileUploaded, idPhoto, type, text, setFileUrl }) => {
       ) : idPhoto ? (
         <img
           src={`${
-            process.env.REACT_APP_API_URL + path
+            import.meta.env.VITE_API_URL + path
           }${idPhoto}?${Date.now()}`}
           alt="Preview"
         />
