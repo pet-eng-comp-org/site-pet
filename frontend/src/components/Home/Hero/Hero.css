@@ -1,6 +1,6 @@
 .hero {
   background: #fff2e1;
-  padding: 4rem 1rem 5rem;
+  padding: 4rem var(--margem) 5rem;
 }
 
 .hero-conteudo {
@@ -49,7 +49,7 @@
 
 @media (max-width: 900px) {
   .hero {
-    padding: 2.5rem 1rem 3rem;
+    padding: 2.5rem var(--margem) 3rem;
   }
 
   .hero-conteudo {

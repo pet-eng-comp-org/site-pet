@@ -1,5 +1,5 @@
 .equipe {
-  padding: 4rem 1.5rem 5rem;
+  padding: 4rem var(--margem) 5rem;
 }
 
 .equipe-conteudo {
@@ -26,6 +26,6 @@
   }
 
   .equipe {
-    padding: 3rem 1rem;
+    padding: 3rem var(--margem);
   }
 }
