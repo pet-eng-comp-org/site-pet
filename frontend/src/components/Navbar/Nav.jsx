@@ -91,12 +91,14 @@ function Nav() {
     medir.observe(faixa.current);
     // O navegador só rola até o foco quando ele está fora da tela; um campo
     // alto podia ficar meio coberto pela faixa. Rola o que faltar.
+    // O que não cabe entre o topo fixo (64 px) e a faixa (o <main>, ao
+    // trocar de página ou fechar a faixa) fica onde está.
     const mostrarFoco = (e) => {
       if (faixa.current.contains(e.target)) return;
-      const falta =
-        e.target.getBoundingClientRect().bottom -
-        faixa.current.getBoundingClientRect().top +
-        16;
+      const foco = e.target.getBoundingClientRect();
+      const topoDaFaixa = faixa.current.getBoundingClientRect().top;
+      if (foco.height > topoDaFaixa - 64 - 32) return;
+      const falta = foco.bottom - topoDaFaixa + 16;
       if (falta > 0) window.scrollBy(0, falta);
     };
     document.addEventListener("focusin", mostrarFoco);
