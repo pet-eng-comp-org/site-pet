@@ -43,8 +43,14 @@ function Content() {
     // O espaço do aviso fica reservado enquanto ele carrega, para o texto
     // de baixo não pular quando ele chegar. Espera também o edital: o aviso
     // sem o link tinha outra altura e o texto subia e descia.
+    // A reserva é o próprio aviso de inscrições fechadas, o caso mais comum,
+    // invisível: tem a altura certa com a fonte de cada aparelho.
     if (selection === "loading" || edital === undefined)
-      return <section className="aviso-selecao aviso-carregando" aria-busy="true" />;
+      return (
+        <div className="aviso-carregando" aria-hidden="true">
+          <ClosedSelection edital="#" />
+        </div>
+      );
 
     if (selection === "falhou")
       return (

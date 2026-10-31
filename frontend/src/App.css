@@ -8,11 +8,15 @@
   box-sizing: border-box;
 }
 
+/* Texto na fonte do sistema (SF no Apple, Segoe no Windows, Roboto no
+   Android): feita para ler em tela em cada aparelho, com o espaçamento
+   ajustado ao tamanho, e sem nada para baixar. A marca fica no título, na
+   Sofia Sans Condensed (.App h1). 17 px, o corpo de texto da Apple. */
 body {
   margin: 0;
-  font-family: "Sofia Sans", Arial, sans-serif;
-  font-size: 1rem;
-  font-weight: 300;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 400;
   line-height: 1.5;
   color: #1b3f3f;
   background-color: #fff2e1;
@@ -34,6 +38,19 @@ p,
 ul,
 ol {
   margin: 0 0 1rem;
+}
+
+/* Sem palavra sozinha na última linha do parágrafo, e título em linhas de
+   tamanho parecido. Navegador que não conhece a regra quebra como sempre. */
+p,
+li {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 /* Link sem sublinhado por padrão, como era com o Bootstrap: quem quer
@@ -141,8 +158,6 @@ html {
   display: flex;
   flex-direction: column;
   text-align: left;
-  font-family: "Sofia Sans", Arial, sans-serif;
-  font-weight: 400;
   color: #1b3f3f;
   background-color: #fff2e1;
 }
@@ -177,7 +192,7 @@ html {
 }
 
 .App h1 {
-  font-family: "Sofia Sans Condensed", "Sofia Sans", Arial, sans-serif;
+  font-family: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
   font-weight: 800;
   color: #186a6c;
 }
