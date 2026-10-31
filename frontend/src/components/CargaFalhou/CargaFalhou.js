@@ -3,12 +3,10 @@ import React from "react";
 // Quando a API não responde: dizer o que houve e oferecer de novo, em vez de
 // carregar para sempre ou afirmar algo que não se sabe ("não encontrada",
 // "inscrições fechadas").
-const CargaFalhou = ({ titulo }) => (
-  <div className="pagina">
-    <h1>{titulo}</h1>
+export const AvisoDeFalha = () => (
+  <>
     <p className="pagina-intro" role="alert">
-      Não conseguimos carregar esta página agora. Confira a sua conexão e tente
-      de novo.
+      Não conseguimos carregar agora. Tente de novo em alguns minutos.
     </p>
     <button
       type="button"
@@ -17,6 +15,13 @@ const CargaFalhou = ({ titulo }) => (
     >
       Tentar de novo
     </button>
+  </>
+);
+
+const CargaFalhou = ({ titulo }) => (
+  <div className="pagina">
+    <h1>{titulo}</h1>
+    <AvisoDeFalha />
   </div>
 );
 
