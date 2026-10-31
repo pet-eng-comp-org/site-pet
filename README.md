@@ -18,8 +18,8 @@ Sem Docker:
 # Backend (porta 3333)
 cd backend && npm install && npm start
 
-# Frontend (porta 3000)
-cd frontend && yarn install && yarn dev
+# Frontend (porta 5173); VITE_API_URL diz qual API usar
+cd frontend && yarn install && VITE_API_URL=http://localhost:3333/ yarn dev
 ```
 
 Com Docker (builda a partir do código local):
@@ -28,7 +28,7 @@ Com Docker (builda a partir do código local):
 docker compose up --build
 ```
 
-Backend em http://localhost:3333 — Frontend em http://localhost:3000.
+Backend em http://localhost:3333 — Frontend em http://localhost:5173.
 
 ## Deploy
 

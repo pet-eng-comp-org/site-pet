@@ -71,17 +71,20 @@ function App() {
             </div>
           }
         >
+          {/* Rota exata e com maiúscula diferente: o React reconhece só os
+              endereços que o servidor serve (os outros recebem o 404.html),
+              senão a página "não encontrada" chegava e era trocada por outra.
+              O /subscription antigo o servidor redireciona (serve.json). */}
           <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/sobre" component={About} />
-            <Route path="/documentos" exact component={Documents} />
-            <Route path="/inscricoes" exact component={Subscription} />
-            <Route path="/projetos" exact component={Projects} />
-            <Route path="/projetos/:projeto" exact component={ProjetoPagina} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/contato" exact component={Contact} />
-            <AdminRoute path="/admin" exact component={Admin} />
-            <Redirect from="/subscription" to="/inscricoes" />
+            <Route path="/" exact sensitive component={Home} />
+            <Route path="/sobre" exact sensitive component={About} />
+            <Route path="/documentos" exact sensitive component={Documents} />
+            <Route path="/inscricoes" exact sensitive component={Subscription} />
+            <Route path="/projetos" exact sensitive component={Projects} />
+            <Route path="/projetos/:projeto" exact sensitive component={ProjetoPagina} />
+            <Route path="/login" exact sensitive component={Login} />
+            <Route path="/contato" exact sensitive component={Contact} />
+            <AdminRoute path="/admin" exact sensitive component={Admin} />
             <Route component={NaoEncontrada} />
           </Switch>
         </Suspense>
