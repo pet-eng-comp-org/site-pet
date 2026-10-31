@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AvisoDeFalha } from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
 import goUp from "../../utils/goUp";
-import api from "../../services/api";
+import useApi from "../../services/useApi";
 import GrupoDocumentos from "./GrupoDocumentos/GrupoDocumentos";
 import "./Documents.css";
 import useTitulo from "../../utils/useTitulo";
 
 const Documents = () => {
   useTitulo("Documentos");
-  const [documents, setDocuments] = useState();
-  const [falhou, setFalhou] = useState(false);
+  const resposta = useApi("api/documents/");
+  const documents = resposta.data?.documents;
+  const falhou = Boolean(resposta.falhou || resposta.status);
 
   useEffect(() => {
     goUp();
-    const getDocuments = async () => {
-      try {
-        const response = await api.get("api/documents/");
-        setDocuments(response.data.documents);
-      } catch (err) {
-        setFalhou(true);
-      }
-    };
-    getDocuments();
   }, []);
 
   return (

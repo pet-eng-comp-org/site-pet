@@ -3,10 +3,11 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  // build/ é o que a imagem serve (Dockerfile); assets/ tem nome com hash e
-  // cache de um ano (public/serve.json).
+  // build/ é o que a imagem serve (server/servidor.js); assets/ tem nome com
+  // hash e cache de um ano.
   build: { outDir: "build", emptyOutDir: true },
-  // O HTML das páginas é gerado no build com tudo empacotado: pacotes antigos
-  // em CommonJS (styled-components) não importam direito no Node sozinhos.
+  // O servidor gera as páginas com o React empacotado em build-ssr/, sem
+  // node_modules na imagem; pacotes antigos em CommonJS (styled-components)
+  // também não importariam direito no Node sozinhos.
   ssr: { noExternal: true },
 });

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   SelectionContext,
@@ -7,7 +7,7 @@ import {
 import ClosedSelection from "./ClosedSelection/ClosedSelection";
 import OpenedSelection from "./OpenedSelection/OpenedSelection";
 import goUp from "../../utils/goUp";
-import api from "../../services/api";
+import useApi from "../../services/useApi";
 
 import "./Subscription.css";
 import useTitulo from "../../utils/useTitulo";
@@ -16,17 +16,15 @@ const urlDocumento = `${import.meta.env.VITE_API_URL}api/file/downloadDocument/`
 
 // O edital mais novo do grupo "Editais de seleção", para a página não fixar
 // regra que muda a cada seleção (o semestre de entrada aceito, por exemplo).
-const editalMaisRecente = async () => {
-  try {
-    const { data } = await api.get("api/documents/");
-    const editais = data.documents.find((g) => /edita/i.test(g.title));
-    const [maisNovo] = [...(editais?.files || [])].sort(
-      (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)
-    );
-    return maisNovo && urlDocumento + maisNovo._id;
-  } catch (err) {
-    return null;
-  }
+// undefined enquanto carrega; null se não há edital ou a API falhou.
+const editalMaisRecente = (resposta) => {
+  if (resposta.carregando) return undefined;
+  if (!resposta.data) return null;
+  const editais = resposta.data.documents.find((g) => /edita/i.test(g.title));
+  const [maisNovo] = [...(editais?.files || [])].sort(
+    (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)
+  );
+  return maisNovo ? urlDocumento + maisNovo._id : null;
 };
 
 // A API não respondeu: dizer isso e oferecer de novo, sem afirmar que as
@@ -57,11 +55,10 @@ const FalhaInscricoes = () => (
 );
 
 function Content() {
-  const [edital, setEdital] = useState();
+  const edital = editalMaisRecente(useApi("api/documents/"));
 
   useEffect(() => {
     goUp();
-    editalMaisRecente().then(setEdital);
   }, []);
 
   const [selection] = useContext(SelectionContext);

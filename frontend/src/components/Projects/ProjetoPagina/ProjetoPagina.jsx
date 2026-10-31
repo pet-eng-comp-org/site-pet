@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import api from "../../../services/api";
+import useApi from "../../../services/useApi";
 import goUp from "../../../utils/goUp";
 import slug from "../../../utils/slug";
 import useTitulo from "../../../utils/useTitulo";
@@ -60,18 +60,16 @@ const linhas = (fotos) => {
 // (na lista da API, cada foto vem só como o id do arquivo).
 function ProjetoPagina() {
   const { projeto } = useParams();
-  const [comission, setComission] = useState();
+  const resposta = useApi("api/comissions");
+  // undefined: carregando; null: não existe; "falhou": a API não respondeu.
+  const comission = resposta.data
+    ? resposta.data.comissions.find((c) => slug(c.title) === projeto) || null
+    : resposta.carregando
+    ? undefined
+    : "falhou";
 
   useEffect(() => {
     goUp();
-    api
-      .get("api/comissions")
-      .then(({ data }) =>
-        setComission(
-          data.comissions.find((c) => slug(c.title) === projeto) || null
-        )
-      )
-      .catch(() => setComission("falhou"));
   }, [projeto]);
 
   useTitulo(comission?.title || "Projetos");
