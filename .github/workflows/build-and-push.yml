@@ -105,7 +105,7 @@ jobs:
           cache-from: type=gha,scope=${{ matrix.service }}
           cache-to: type=gha,mode=max,scope=${{ matrix.service }}
           build-args: |
-            ${{ (matrix.service == 'frontend' && vars.REACT_APP_API_URL != '') && format('REACT_APP_API_URL={0}', vars.REACT_APP_API_URL) || '' }}
+            ${{ (matrix.service == 'frontend' && vars.VITE_API_URL != '') && format('VITE_API_URL={0}', vars.VITE_API_URL) || '' }}
 
       - name: Print published tags
         if: steps.meta.outputs.tags != ''

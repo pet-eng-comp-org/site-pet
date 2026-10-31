@@ -5,7 +5,7 @@ import "./Projects.css";
 import api from "../../services/api";
 import goUp from "../../utils/goUp";
 
-import CargaFalhou from "../CargaFalhou/CargaFalhou";
+import { AvisoDeFalha } from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
 import useTitulo from "../../utils/useTitulo";
 
@@ -51,16 +51,6 @@ const Projects = () => {
     getComissions();
   }, []);
 
-  if (falhou) return <CargaFalhou titulo="Projetos" />;
-
-  if (!comissions) {
-    return (
-      <div className="divloader">
-        <Loader />
-      </div>
-    );
-  }
-
   return (
     <div className="pagina">
       <h1>Projetos</h1>
@@ -70,18 +60,28 @@ const Projects = () => {
         que coordena os seus projetos. Escolha uma para saber mais.
       </p>
 
-      <ul className="projetos-grade">
-        {comissions.map((comission) => (
-          <li key={comission._id}>
-            <Project
-              title={comission.title}
-              description={comission.description}
-              icon={comission.photos[0]}
-              onClick={guardarPosicao}
-            />
-          </li>
-        ))}
-      </ul>
+      {/* O título e a abertura são fixos: aparecem já, e a lista entra
+          embaixo quando a API responde. */}
+      {falhou && <AvisoDeFalha />}
+      {!comissions && !falhou && (
+        <div className="carregando-dados">
+          <Loader />
+        </div>
+      )}
+      {comissions && (
+        <ul className="projetos-grade">
+          {comissions.map((comission) => (
+            <li key={comission._id}>
+              <Project
+                title={comission.title}
+                description={comission.description}
+                icon={comission.photos[0]}
+                onClick={guardarPosicao}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@
 <html lang="pt-br">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#186a6c" />
     <meta
@@ -23,28 +23,18 @@
     <meta name="twitter:card" content="summary_large_image" />
     <!-- A fonte vem antes do primeiro desenho da página: se chegasse depois,
          o texto mudaria de tamanho na tela e empurraria o resto. -->
-    <link rel="preload" href="%PUBLIC_URL%/fonts/sofia-sans-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="%PUBLIC_URL%/fonts/sofia-sans-condensed-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="%PUBLIC_URL%/fonts/stylesheet.css" />
+    <link rel="preload" href="/fonts/sofia-sans-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/sofia-sans-condensed-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/fonts/stylesheet.css" />
     <!-- Foto da abertura, a maior coisa da tela inicial: pedida já, sem esperar
          o JavaScript. Só na inicial (scripts/paginas.js tira das outras). -->
-    <link rel="preload" as="image" href="%PUBLIC_URL%/grupo-1280.jpg" imagesrcset="%PUBLIC_URL%/grupo-700.jpg 700w, %PUBLIC_URL%/grupo-1280.jpg 1280w" imagesizes="(max-width: 900px) calc(100vw - 2rem), 538px" data-so-inicio />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="preload" as="image" href="/grupo-1280.jpg" imagesrcset="/grupo-700.jpg 700w, /grupo-1280.jpg 1280w" imagesizes="(max-width: 900px) calc(100vw - 2rem), 538px" data-so-inicio />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
     <title>PET Engenharia de Computação · Ufes</title>
   </head>
   <body>
-    <noscript>Ative o JavaScript para ver o site.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <div id="root"><!--app--></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

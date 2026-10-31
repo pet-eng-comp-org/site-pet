@@ -29,8 +29,8 @@ const Hero = () => {
         </div>
         <img
           className="hero-foto"
-          src={`${process.env.PUBLIC_URL}/grupo-1280.jpg`}
-          srcSet={`${process.env.PUBLIC_URL}/grupo-700.jpg 700w, ${process.env.PUBLIC_URL}/grupo-1280.jpg 1280w`}
+          src={`/grupo-1280.jpg`}
+          srcSet={`/grupo-700.jpg 700w, /grupo-1280.jpg 1280w`}
           sizes={TAMANHO_FOTO}
           alt="Petianos reunidos no DiaPET 2020"
           width="1280"

@@ -14,7 +14,12 @@ const ordenar = (petianos) => {
 const Team = ({ petianos, projetos }) => (
   <section className="green-bg equipe">
     <div className="equipe-conteudo">
-      <h2>Petianos atuais</h2>
+      {/* A contagem fica no título da equipe, que chega junto com ela: no
+          texto de cima, ela empurrava o parágrafo ao chegar. */}
+      <h2>
+        Hoje somos {petianos.filter((p) => !p.tutor).length} alunos e um
+        professor tutor
+      </h2>
       <div className="equipe-grade">
         {ordenar(petianos).map((participant) => (
           <Participant
