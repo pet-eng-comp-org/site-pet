@@ -12,21 +12,22 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem max(var(--margem), calc((100% - 1140px) / 2));
+  padding: 0.375rem max(var(--margem), calc((100% - 1140px) / 2));
   background: #fff;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-/* 48 px de logo deixam o cabeçalho com 64 px: a marca legível sem tirar
-   da página o espaço que ela precisa no celular. */
+/* 120 px de largura, o mínimo do guia da identidade para o logo sem "UFES"
+   ("Tamanho mínimo", no guia do Figma); com 52 px de altura, o cabeçalho continua com
+   64 px: a marca legível sem tirar da página o espaço do celular. */
 .barra-marca {
   display: block;
   margin-right: 1rem;
 }
 
 .logo-nav {
-  width: 111px;
-  height: 48px;
+  width: 120px;
+  height: 52px;
   display: block;
 }
 
