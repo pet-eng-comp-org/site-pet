@@ -96,35 +96,43 @@ const fotoDoProjeto = (c) =>
     : null;
 
 const atributo = (texto) =>
-  String(texto).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  String(texto)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 
 // O JSON vai dentro de <script>: "<" escapado não fecha a tag antes da hora.
 const jsonNoHtml = (valor) => JSON.stringify(valor).replace(/</g, "\\u003c");
 
+// Toda troca usa função, e não texto: num texto de substituição o JavaScript
+// interpreta $&, $', $` e $1, e um "R$1.000" ou um "$'" vindo da API
+// quebraria a página ou abriria uma tag.
 const montar = ({ url, titulo, descricao, imagem, indexar, conteudo, dados }) => {
-  let html = modelo.replace("<!--app-->", conteudo);
+  let html = modelo.replace("<!--app-->", () => conteudo);
   if (url !== "/") html = html.replace(/<link[^>]*data-so-inicio[^>]*>/, "");
   if (titulo) {
     const completo = `${titulo} · PET Eng Comp Ufes`;
     html = html
-      .replace(/<title>[^<]*<\/title>/, `<title>${atributo(completo)}</title>`)
-      .replace(/(property="og:title" content=")[^"]*/, `$1${atributo(completo)}`);
+      .replace(/<title>[^<]*<\/title>/, () => `<title>${atributo(completo)}</title>`)
+      .replace(/(property="og:title" content=")[^"]*/, (_, a) => a + atributo(completo));
   }
-  html = html.replace(/(property="og:url" content=")[^"]*/, `$1${SITE}${url}`);
+  html = html.replace(/(property="og:url" content=")[^"]*/, (_, a) => a + atributo(SITE + url));
   if (descricao)
     html = html.replace(
       /((?:name="description"|property="og:description")\s+content=")[^"]*/g,
-      `$1${atributo(descricao)}`
+      (_, a) => a + atributo(descricao)
     );
   if (imagem)
     html = html
-      .replace(/(property="og:image" content=")[^"]*/, `$1${atributo(imagem)}`)
+      .replace(/(property="og:image" content=")[^"]*/, (_, a) => a + atributo(imagem))
       .replace(/\s*<meta property="og:image:(width|height)"[^>]*>/g, "");
   if (!indexar) html = html.replace("<head>", '<head><meta name="robots" content="noindex" />');
   if (dados)
     html = html.replace(
       '<script type="module"',
-      `<script id="dados-iniciais" type="application/json">${jsonNoHtml(dados)}</script>\n    <script type="module"`
+      () => `<script id="dados-iniciais" type="application/json">${jsonNoHtml(dados)}</script>\n    <script type="module"`
     );
   return html;
 };
