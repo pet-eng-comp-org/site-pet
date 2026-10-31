@@ -46,3 +46,35 @@
 .aviso-selecao .botao-principal {
   margin-top: 1.25rem;
 }
+
+/* Tela larga: o texto fica na medida de leitura, à esquerda, e o aviso
+   de inscrição ocupa a coluna da direita, sempre à vista enquanto a pessoa
+   lê. A coluna do aviso tem pelo menos 20rem, para ele não virar uma tira
+   estreita perto de 992 px. No celular, o aviso continua logo abaixo do
+   título, que é onde quem chega procura primeiro. */
+@media (min-width: 992px) {
+  .faca-parte {
+    display: grid;
+    grid-template-columns: minmax(0, 36rem) minmax(20rem, 1fr);
+    column-gap: 3rem;
+    align-items: start;
+  }
+
+  .faca-parte > h1 {
+    grid-column: 1 / -1;
+  }
+
+  .faca-parte > .aviso-selecao {
+    grid-column: 2;
+    grid-row: 2;
+    position: sticky;
+    top: 6rem;
+    max-width: none;
+    margin-bottom: 0;
+  }
+
+  .faca-parte-texto {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
