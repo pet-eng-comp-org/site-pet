@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/subscription",
+      "destination": "/inscricoes",
+      "type": 301
+    }
+  ],
   "rewrites": [
     {
       "source": "/projetos/:projeto",
