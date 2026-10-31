@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Project from "./Project/Project";
 import "./Projects.css";
-import api from "../../services/api";
+import useApi from "../../services/useApi";
 import goUp from "../../utils/goUp";
 
 import { AvisoDeFalha } from "../CargaFalhou/CargaFalhou";
@@ -27,8 +27,9 @@ const posicaoGuardada = () => {
 
 const Projects = () => {
   useTitulo("Projetos");
-  const [comissions, setComissions] = useState();
-  const [falhou, setFalhou] = useState(false);
+  const resposta = useApi("api/comissions");
+  const comissions = resposta.data?.comissions;
+  const falhou = Boolean(resposta.falhou || resposta.status);
   const history = useHistory();
   const location = useLocation();
   const voltando = history.action === "POP" || location.state?.voltar;
@@ -39,17 +40,8 @@ const Projects = () => {
   }, [comissions, voltando]);
 
   useEffect(() => {
-    goUp();
-    const getComissions = async () => {
-      try {
-        const response = await api.get("api/comissions");
-        setComissions([...response.data.comissions]);
-      } catch (err) {
-        setFalhou(true);
-      }
-    };
-    getComissions();
-  }, []);
+    if (!voltando) goUp();
+  }, [voltando]);
 
   return (
     <div className="pagina">

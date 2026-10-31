@@ -2,22 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Nav.css";
 import Icone from "../Icone/Icone";
 import logoPet from "../../assets/logo_pet.svg";
-import api from "../../services/api";
+import useApi from "../../services/useApi";
 import { Link, NavLink, useHistory, useLocation } from "react-router-dom";
 
-// Aviso no topo de todas as páginas enquanto a seleção estiver aberta.
-const fimDaSelecaoAberta = async () => {
-  try {
-    const { data } = await api.get("api/selection/openSelection");
-    const s = data.selection;
-    const agora = Date.now();
-    if (s && agora > Date.parse(s.dateBegin) && agora < Date.parse(s.dateEnd))
-      return new Date(s.dateEnd).toLocaleDateString("pt-BR", {
-        day: "numeric",
-        month: "long",
-        timeZone: "America/Sao_Paulo",
-      });
-  } catch (err) {}
+// Aviso em todas as páginas enquanto a seleção estiver aberta: o último dia,
+// ou null.
+const fimDaSelecaoAberta = (s) => {
+  const agora = Date.now();
+  if (s && agora > Date.parse(s.dateBegin) && agora < Date.parse(s.dateEnd))
+    return new Date(s.dateEnd).toLocaleDateString("pt-BR", {
+      day: "numeric",
+      month: "long",
+      timeZone: "America/Sao_Paulo",
+    });
   return null;
 };
 
@@ -32,8 +29,11 @@ const paginas = [
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
-  const [fimSelecao, setFimSelecao] = useState();
+  const fimSelecao = fimDaSelecaoAberta(
+    useApi("api/selection/openSelection").data?.selection
+  );
+  const [fechouAviso, setFechouAviso] = useState(false);
+  const showMessage = Boolean(fimSelecao) && !fechouAviso;
   // Lido depois de montar, e de novo a cada troca de página (entrar e sair
   // trocam de página): o HTML pronto das páginas é o de quem não entrou.
   const [logado, setLogado] = useState(false);
@@ -41,12 +41,6 @@ function Nav() {
   useEffect(() => setLogado(Boolean(localStorage.getItem("LOGINPET_TOKEN"))), [pathname]);
   const history = useHistory();
 
-  useEffect(() => {
-    fimDaSelecaoAberta().then((fim) => {
-      setFimSelecao(fim);
-      setShowMessage(Boolean(fim));
-    });
-  }, []);
 
   const toggleCollapse = () => {
     setIsOpen(!isOpen);
@@ -111,7 +105,7 @@ function Nav() {
 
   // Fechar a faixa leva o foco ao conteúdo, e não ao começo da página.
   const fecharFaixa = () => {
-    setShowMessage(false);
+    setFechouAviso(true);
     document.querySelector("main").focus({ preventScroll: true });
   };
 
