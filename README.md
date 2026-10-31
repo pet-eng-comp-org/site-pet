@@ -5,7 +5,7 @@ Site do PET (Programa de Educação Tutorial) da Engenharia de Computação — 
 ## Estrutura
 
 - `backend/` — API REST (Node 18 + Express + Mongoose, MongoDB Atlas)
-- `frontend/` — React com Vite; o build gera o HTML de cada página já com o texto (`scripts/paginas.js`), servido pelo `serve`
+- `frontend/` — React com Vite; em produção, `server/servidor.js` gera cada página a cada visita, já com os dados da API
 - `docker-compose.yml` — composição local (builda a partir do código)
 - `docker-compose.prod.yml` — a stack de produção: o Portainer aplica o que estiver aqui
 - `.github/workflows/build-and-push.yml` — CI: builda e publica imagens no GHCR
