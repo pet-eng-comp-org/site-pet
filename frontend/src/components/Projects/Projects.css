@@ -62,7 +62,7 @@
 }
 
 .App .projeto h2 {
-  font-size: 1.35rem;
+  font-size: var(--titulo-cartao);
   font-weight: 700;
   margin-bottom: 0.5rem;
 }

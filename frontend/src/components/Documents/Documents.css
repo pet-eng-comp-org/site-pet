@@ -15,7 +15,7 @@
 }
 
 .App .grupo-documentos h2 {
-  font-size: 1.35rem;
+  font-size: var(--titulo-cartao);
   margin-bottom: 0.75rem;
 }
 
@@ -45,6 +45,6 @@
 
 .grupo-documentos .icone-svg {
   color: #186a6c;
-  font-size: 1.1rem;
+  font-size: var(--texto);
 }
 

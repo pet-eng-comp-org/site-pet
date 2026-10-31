@@ -84,23 +84,25 @@ function Nav() {
 
   return (
     <header className="topo" ref={topo}>
-      <div
-        className="message"
-        style={{ display: showMessage ? "flex" : "none" }}
-      >
-        <p style={{ margin: 0 }}>
-          Inscrições abertas para o PET até {fimSelecao}.{" "}
-          <Link to="/inscricoes">Saiba como participar</Link>
-        </p>
-        <button
-          type="button"
-          className="message-fechar"
-          onClick={() => setShowMessage(false)}
-          aria-label="Fechar aviso"
-        >
-          <Icone nome="fechar" />
-        </button>
-      </div>
+      {/* Fixo no pé da tela, por cima da página: ele só chega depois da
+          API, e no topo empurrava a página inteira para baixo. No Faça parte
+          não aparece, que lá o aviso já está no conteúdo. */}
+      {showMessage && pathname !== "/inscricoes" && (
+        <div className="message" role="region" aria-label="Inscrições abertas">
+          <p>
+            Inscrições abertas até {fimSelecao}.{" "}
+            <Link to="/inscricoes">Saiba como participar</Link>
+          </p>
+          <button
+            type="button"
+            className="message-fechar"
+            onClick={() => setShowMessage(false)}
+            aria-label="Fechar aviso"
+          >
+            <Icone nome="fechar" />
+          </button>
+        </div>
+      )}
 
       <nav className="barra" aria-label="Principal">
         <Link to="/" onClick={fecharMenu} className="barra-marca">
