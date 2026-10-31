@@ -116,6 +116,11 @@
   background: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%231b3f3f' stroke-width='2' stroke-linecap='round' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") center / 100% no-repeat;
 }
 
+/* Menu aberto: o ícone vira um X, para quem vê saber como fechar. */
+.barra-menu-icone.aberto {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%231b3f3f' stroke-width='2' stroke-linecap='round' d='M8 8l16 16M24 8L8 24'/%3E%3C/svg%3E");
+}
+
 /* O mesmo contorno de foco dos links: depois do Esc, quem usa teclado vê
    que o foco voltou ao botão. */
 .barra-menu:focus-visible {

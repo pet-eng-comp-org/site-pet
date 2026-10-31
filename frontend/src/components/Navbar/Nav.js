@@ -48,8 +48,10 @@ function Nav() {
     setIsOpen(!isOpen);
   };
 
-  // Esc fecha o menu aberto e devolve o foco ao botão que o abriu.
+  // Esc fecha o menu aberto e devolve o foco ao botão que o abriu; tocar
+  // fora do topo também fecha.
   const botaoMenu = useRef();
+  const topo = useRef();
   useEffect(() => {
     if (!isOpen) return;
     const fechaComEsc = (e) => {
@@ -57,8 +59,15 @@ function Nav() {
       setIsOpen(false);
       botaoMenu.current.focus();
     };
+    const fechaAoTocarFora = (e) => {
+      if (!topo.current.contains(e.target)) setIsOpen(false);
+    };
     document.addEventListener("keydown", fechaComEsc);
-    return () => document.removeEventListener("keydown", fechaComEsc);
+    document.addEventListener("pointerdown", fechaAoTocarFora);
+    return () => {
+      document.removeEventListener("keydown", fechaComEsc);
+      document.removeEventListener("pointerdown", fechaAoTocarFora);
+    };
   }, [isOpen]);
 
   // No celular, escolher uma página fecha o menu, que senão cobre o título.
@@ -70,7 +79,7 @@ function Nav() {
   };
 
   return (
-    <header className="topo">
+    <header className="topo" ref={topo}>
       <div
         className="message"
         style={{ display: showMessage ? "flex" : "none" }}
@@ -108,7 +117,7 @@ function Nav() {
           aria-expanded={isOpen}
           aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
         >
-          <span className="barra-menu-icone" />
+          <span className={`barra-menu-icone ${isOpen ? "aberto" : ""}`} />
         </button>
 
         <div

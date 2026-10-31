@@ -59,7 +59,10 @@ const ContactPage = () => {
     setErroCampo(erros);
     const primeiro = Object.keys(erros)[0];
     if (primeiro) {
-      document.getElementById(`contato-${primeiro}`).focus();
+      // Rótulo e campo no meio da tela: rolando só até o campo, o Safari o
+      // deixava colado no topo fixo, com o rótulo escondido atrás dele.
+      document.getElementById(`contato-${primeiro}`).focus({ preventScroll: true });
+      document.querySelector(`label[for="contato-${primeiro}"]`).scrollIntoView({ block: "center" });
       return;
     }
     setLoading(true);
@@ -77,7 +80,7 @@ const ContactPage = () => {
         setErroGeral(
           typeof erro === "string"
             ? erro
-            : "Não conseguimos enviar agora. Confira a sua conexão e tente de novo."
+            : "Não conseguimos enviar agora. Tente de novo em alguns minutos."
         );
     }
     setLoading(false);

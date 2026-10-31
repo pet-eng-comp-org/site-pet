@@ -3,7 +3,7 @@ import Team from "./Team/Team";
 import goUp from "../../utils/goUp";
 import api from "../../services/api";
 import "./About.css";
-import CargaFalhou from "../CargaFalhou/CargaFalhou";
+import { AvisoDeFalha } from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
 import useTitulo from "../../utils/useTitulo";
 
@@ -34,9 +34,7 @@ const About = () => {
       .catch(() => {});
   }, []);
 
-  if (falhou) return <CargaFalhou titulo="Quem somos" />;
-
-  if (!petianos) {
+  if (!petianos && !falhou) {
     return (
       <div className="divloader">
         <Loader />
@@ -44,7 +42,8 @@ const About = () => {
     );
   }
 
-  const alunos = petianos.filter((p) => !p.tutor).length;
+  // Com a API fora, o texto fixo continua; só a contagem e a equipe faltam.
+  const alunos = petianos && petianos.filter((p) => !p.tutor).length;
 
   return (
     <>
@@ -52,7 +51,8 @@ const About = () => {
         <h1>Quem somos</h1>
         <p className="pagina-intro">
           O PET Engenharia de Computação é um dos grupos PET originais da Ufes,
-          criado em 1993. Hoje somos {alunos} alunos e um professor tutor.
+          criado em 1993.
+          {petianos && ` Hoje somos ${alunos} alunos e um professor tutor.`}
         </p>
         <p className="pagina-intro">
           O{" "}
@@ -64,8 +64,9 @@ const About = () => {
           graduação que demonstrem potencial, interesse e habilidades
           destacadas. Na Ufes são 13 grupos PET.
         </p>
+        {falhou && <AvisoDeFalha />}
       </div>
-      <Team petianos={petianos} projetos={projetos} />
+      {petianos && <Team petianos={petianos} projetos={projetos} />}
     </>
   );
 };
