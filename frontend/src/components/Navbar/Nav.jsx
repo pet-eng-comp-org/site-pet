@@ -155,8 +155,8 @@ function Nav() {
           <img
             alt="PET Engenharia de Computação, página inicial"
             src={logoPet}
-            width="111"
-            height="48"
+            width="120"
+            height="52"
             className="logo-nav"
           />
         </Link>
