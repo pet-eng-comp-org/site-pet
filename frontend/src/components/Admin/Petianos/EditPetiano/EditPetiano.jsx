@@ -188,7 +188,7 @@ const EditPetiano = ({ isOpen, toggle, getPetianos, idPetiano }) => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (petiano.tags.length < 1) {
+    if (!petiano.tags?.length) {
       toast.error("Insira pelo menos 1 comissão.");
       return null;
     }
@@ -348,7 +348,7 @@ const EditPetiano = ({ isOpen, toggle, getPetianos, idPetiano }) => {
               <MDBCol md="12">
                 <label htmlFor="idescription">
                   Descrição{" "}
-                  <small>(restam {160 - petiano?.description.length})</small>:
+                  <small>(restam {160 - (petiano?.description || "").length})</small>:
                 </label>
                 <br />
                 <textarea
