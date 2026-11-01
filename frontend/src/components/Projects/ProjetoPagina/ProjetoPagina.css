@@ -51,8 +51,8 @@
   min-height: 44px;
   padding: 0 1rem;
   border-radius: 999px;
-  border: 1px solid #186a6c;
-  color: #186a6c;
+  border: 1px solid var(--cor-acao);
+  color: var(--cor-acao);
   font-weight: 600;
 }
 
@@ -79,7 +79,7 @@
   height: auto;
   aspect-ratio: var(--proporcao);
   border-radius: 16px;
-  background: #f0e4d4;
+  background: var(--cor-superficie-suave);
 }
 
 /* No celular, uma foto por linha, na largura toda. */
@@ -101,7 +101,7 @@
 
 .projeto-tags a:hover,
 .projeto-tags a:focus {
-  background: #186a6c;
+  background: var(--cor-acao-fundo);
   color: #fff;
 }
 

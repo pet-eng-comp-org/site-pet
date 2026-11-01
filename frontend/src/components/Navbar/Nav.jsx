@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Nav.css";
 import Icone from "../Icone/Icone";
 import logoPet from "../../assets/logo_pet.svg";
+import logoPetEscuro from "../../assets/logo_pet_escuro.svg";
 import useApi from "../../services/useApi";
 import { Link, NavLink, useHistory, useLocation } from "react-router-dom";
 
@@ -146,13 +147,18 @@ function Nav() {
 
       <nav className="barra" aria-label="Principal">
         <Link to="/" onClick={fecharMenu} className="barra-marca">
-          <img
-            alt="PET Engenharia de Computação, página inicial"
-            src={logoPet}
-            width="120"
-            height="52"
-            className="logo-nav"
-          />
+          {/* No modo escuro, a versão do logo para fundo escuro, do pacote da
+              identidade (logo-completo-sem-ufes-principal-fundo-tinta). */}
+          <picture>
+            <source srcSet={logoPetEscuro} media="(prefers-color-scheme: dark)" />
+            <img
+              alt="PET Engenharia de Computação, página inicial"
+              src={logoPet}
+              width="120"
+              height="52"
+              className="logo-nav"
+            />
+          </picture>
         </Link>
         <button
           type="button"

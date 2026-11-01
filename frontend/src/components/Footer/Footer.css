@@ -1,5 +1,5 @@
 .rodape {
-  background-color: #1b3f3f;
+  background-color: var(--cor-rodape);
   color: #fff;
   font-size: 0.9rem;
 }
