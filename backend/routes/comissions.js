@@ -31,6 +31,11 @@ router.patch(
   verify,
   comissionController.removePhoto
 );
+router.patch(
+  "/descreverFoto/:comissionId",
+  verify,
+  comissionController.descreverFoto
+);
 // A primeira foto é o ícone do cartão; as outras, a galeria, nessa ordem.
 router.patch(
   "/ordenarFotos/:comissionId",

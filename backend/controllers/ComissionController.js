@@ -29,7 +29,7 @@ const medidasDasFotos = async (comissions) => {
     fotos
       .map((id) => porId.get(String(id)))
       .filter((f) => f && f.width)
-      .map((f) => ({ _id: f._id, width: f.width, height: f.height }));
+      .map((f) => ({ _id: f._id, width: f.width, height: f.height, alt: f.alt || "" }));
 };
 
 module.exports = {
@@ -155,6 +155,19 @@ module.exports = {
     } catch (err) {
       return response.status(400).json({ message: err });
     }
+  },
+
+  // O que a foto mostra, para quem não a vê. Só de foto desta comissão.
+  async descreverFoto(request, response) {
+    const comission = await Comission.findOne({ _id: request.params.comissionId });
+    if (!comission) return response.status(404).send("Comission not found!");
+    const { photoId } = request.body;
+    const alt = String(request.body.alt ?? "").trim();
+    if (!comission.photos.map(String).includes(String(photoId)))
+      return response.status(400).send("A foto não é desta comissão.");
+    if (alt.length > 300) return response.status(400).send("A descrição tem no máximo 300 caracteres.");
+    await File.updateOne({ _id: photoId }, { alt });
+    return response.json({ photoId, alt });
   },
 
   // Nova ordem das fotos: as mesmas, só em outra ordem. A primeira vira o

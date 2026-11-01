@@ -142,6 +142,7 @@ describe("rotas do painel", () => {
     ["PATCH", `/api/comissions/addPhoto/${ID}`],
     ["PATCH", `/api/comissions/removePhoto/${ID}`],
     ["PATCH", `/api/comissions/ordenarFotos/${ID}`],
+    ["PATCH", `/api/comissions/descreverFoto/${ID}`],
     ["DELETE", `/api/comissions/${ID}`],
     ["POST", "/api/documents/"],
     ["PATCH", `/api/documents/addFile/${ID}`],
@@ -385,5 +386,23 @@ describe("imagens", () => {
     assert.equal((await ordenar([...nova, String(new mongoose.Types.ObjectId())])).status, 400, "foto a mais");
     assert.equal((await ordenar([nova[0], nova[0], nova[1]])).status, 400, "foto repetida");
     await conexao.db.collection("comissions").deleteOne({ _id: insertedId });
+  });
+
+  // Quem não vê a foto ouve a descrição dela; o site recebe junto das medidas.
+  it("descreve a foto da comissao e manda a descricao junto das medidas", async () => {
+    const auth = { authorization: `Bearer ${await entra()}`, "content-type": "application/json" };
+    const foto = await conexao.db.collection("files").insertOne({ name: "f", size: 1, key: "f.webp", width: 800, height: 600 });
+    const outra = new mongoose.Types.ObjectId();
+    const { insertedId } = await conexao.db.collection("comissions").insertOne({ title: "Alt", description: "Descricao", photos: [foto.insertedId], tags: [] });
+    const descrever = (photoId, alt) =>
+      api("PATCH", `/api/comissions/descreverFoto/${insertedId}`, { headers: auth, corpo: JSON.stringify({ photoId, alt }) });
+
+    assert.equal((await descrever(String(foto.insertedId), "  Equipes no laboratório  ")).status, 200);
+    const { comissions } = await (await api("GET", "/api/comissions/")).json();
+    assert.equal(comissions.find((c) => c._id === String(insertedId)).medidas[0].alt, "Equipes no laboratório");
+    assert.equal((await descrever(String(outra), "x")).status, 400, "foto de outra comissão");
+    assert.equal((await descrever(String(foto.insertedId), "x".repeat(301))).status, 400, "longa demais");
+    await conexao.db.collection("comissions").deleteOne({ _id: insertedId });
+    await conexao.db.collection("files").deleteOne({ _id: foto.insertedId });
   });
 });
