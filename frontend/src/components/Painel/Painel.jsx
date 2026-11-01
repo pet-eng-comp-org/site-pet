@@ -56,7 +56,7 @@ function TrocarSenha({ aoFechar }) {
         <Campo id="senha-repetida" rotulo="Senha nova, de novo" erro={erros.repetida}>
           <input type="password" autoComplete="new-password" value={f.repetida} onChange={muda("repetida")} />
         </Campo>
-        <Acoes erro={erroGeral} enviando={enviando} rotulo="Trocar senha" aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo="Trocar senha" />
       </form>
     </Janela>
   );
