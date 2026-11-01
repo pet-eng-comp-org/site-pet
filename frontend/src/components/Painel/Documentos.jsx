@@ -122,7 +122,7 @@ function FormGrupo({ grupo, aoFechar, aoSalvar }) {
         <Campo id="grupo-titulo" rotulo="Nome do grupo" dica="Por exemplo, “Editais de seleção”." erro={erros.titulo}>
           <input value={titulo} maxLength="30" onChange={(e) => setTitulo(e.target.value)} />
         </Campo>
-        <Acoes erro={erroGeral} enviando={enviando} rotulo={grupo ? "Renomear" : "Criar grupo"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={grupo ? "Renomear" : "Criar grupo"} />
       </form>
     </Janela>
   );
@@ -173,7 +173,7 @@ function FormArquivo({ grupo, aoFechar, aoSalvar }) {
         <Campo id="arquivo-nome" rotulo="Nome no site" dica="Por exemplo, “Edital nº 018/2026”. O novo entra no topo do grupo." erro={erros.nome}>
           <input value={nome} maxLength="120" onChange={(e) => setNome(e.target.value)} />
         </Campo>
-        <Acoes erro={erroGeral} enviando={enviando} rotulo="Adicionar arquivo" aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo="Adicionar arquivo" />
       </form>
     </Janela>
   );

@@ -143,7 +143,7 @@ function FormNoticia({ noticia, aoFechar, aoSalvar }) {
             />
           </Campo>
         </div>
-        <Acoes erro={erroGeral} enviando={enviando} rotulo={nova ? "Publicar notícia" : "Salvar alterações"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={nova ? "Publicar notícia" : "Salvar alterações"} />
       </form>
     </Janela>
   );

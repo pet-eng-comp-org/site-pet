@@ -176,7 +176,7 @@ function FormSelecao({ selecao, aoFechar, aoSalvar }) {
         <Campo id="selecao-formLink" rotulo="Link do formulário de inscrição" dica="O botão “Inscreva-se” do site leva para ele." erro={erros.formLink}>
           <input type="url" value={f.formLink} onChange={muda("formLink")} placeholder="https://forms.gle/…" />
         </Campo>
-        <Acoes erro={erroGeral} enviando={enviando} rotulo={nova ? "Criar seleção" : "Salvar alterações"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={nova ? "Criar seleção" : "Salvar alterações"} />
       </form>
     </Janela>
   );
