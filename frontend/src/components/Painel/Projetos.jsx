@@ -192,6 +192,14 @@ function FormProjeto({ projeto, aoFechar, aoSalvar }) {
 function Descricao({ id, rotulo, atual, aoSalvar }) {
   const [texto, setTexto] = useState(atual);
   const [erro, setErro] = useState("");
+  const avisar = useAvisar();
+  // Fechar a janela salva o campo (ui.jsx, pedirFechar); se a gravação falha
+  // com a janela já fechada, o erro vai para o aviso do painel.
+  const montado = useRef(true);
+  useEffect(() => {
+    montado.current = true;
+    return () => (montado.current = false);
+  }, []);
   useEffect(() => setTexto(atual), [atual]);
   const salvar = async () => {
     if (texto.trim() === atual) return;
@@ -199,7 +207,8 @@ function Descricao({ id, rotulo, atual, aoSalvar }) {
     try {
       await aoSalvar(texto.trim());
     } catch (err) {
-      setErro(erroDe(err));
+      if (montado.current) setErro(erroDe(err));
+      else avisar(`A descrição da ${rotulo} não foi salva: ${erroDe(err)}`, "erro");
     }
   };
   return (
