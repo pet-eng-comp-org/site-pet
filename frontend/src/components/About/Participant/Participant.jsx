@@ -1,6 +1,7 @@
 import React from "react";
 import Icone from "../../Icone/Icone";
 import slug from "../../../utils/slug";
+import linkDaRede from "../../../utils/redes";
 import { Link } from "react-router-dom";
 import "./Participant.css";
 
@@ -41,7 +42,7 @@ const Participant = ({ participant, projetos }) => {
         <div className="petiano-redes">
           {participant.socialMidia.map((icon, index) => (
             <a
-              href={icon.link}
+              href={linkDaRede(icon)}
               key={index}
               target="_blank"
               rel="noopener noreferrer"
