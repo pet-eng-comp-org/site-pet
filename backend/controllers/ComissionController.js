@@ -157,6 +157,25 @@ module.exports = {
     }
   },
 
+  // Nova ordem das fotos: as mesmas, só em outra ordem. A primeira vira o
+  // ícone do cartão em Projetos; a primeira deitada, a foto da prévia do link.
+  async ordenarFotos(request, response) {
+    const comission = await Comission.findOne({ _id: request.params.comissionId });
+    if (!comission) return response.status(404).send("Comission not found!");
+
+    const atuais = comission.photos.map(String);
+    const novas = Array.isArray(request.body.photos) ? request.body.photos.map(String) : [];
+    const mesmas =
+      novas.length === atuais.length &&
+      new Set(novas).size === novas.length &&
+      novas.every((id) => atuais.includes(id));
+    if (!mesmas)
+      return response.status(400).send("A nova ordem precisa ter as mesmas fotos.");
+
+    await Comission.updateOne({ _id: comission._id }, { photos: novas });
+    return response.json({ photos: novas });
+  },
+
   async delete(request, response) {
     try {
       const removedComission = await Comission.findOneAndDelete({

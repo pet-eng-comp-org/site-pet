@@ -153,7 +153,8 @@ const montar = ({ url, titulo, descricao, imagem, indexar, conteudo, dados }) =>
 };
 
 const gerarPagina = async (url) => {
-  const pagina = paginas[url];
+  // Cada seção do painel tem endereço próprio; todas chegam vazias.
+  const pagina = paginas[url] || (url.startsWith("/admin/") ? paginas["/admin"] : undefined);
   if (pagina?.casca)
     return { status: 200, html: montar({ url, titulo: pagina.titulo, conteudo: "" }) };
 

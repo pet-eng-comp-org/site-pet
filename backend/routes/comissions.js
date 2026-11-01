@@ -31,6 +31,12 @@ router.patch(
   verify,
   comissionController.removePhoto
 );
+// A primeira foto é o ícone do cartão; as outras, a galeria, nessa ordem.
+router.patch(
+  "/ordenarFotos/:comissionId",
+  verify,
+  comissionController.ordenarFotos
+);
 router.delete("/:comissionId", verify, comissionController.delete);
 
 module.exports = router;

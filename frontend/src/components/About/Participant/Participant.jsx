@@ -27,12 +27,17 @@ const Participant = ({ participant, projetos }) => {
   return (
     <div className="petiano">
       <div className="petiano-lado">
-        <img
-          className="petiano-foto"
-          src={`${import.meta.env.VITE_API_URL}api/file/getProfilePhoto/${participant.profilePhoto._id}`}
-          alt=""
-          loading="lazy"
-        />
+        {/* Cadastro cuja foto não subiu fica sem ela, e não derruba a página. */}
+        {participant.profilePhoto ? (
+          <img
+            className="petiano-foto"
+            src={`${import.meta.env.VITE_API_URL}api/file/getProfilePhoto/${participant.profilePhoto._id}`}
+            alt=""
+            loading="lazy"
+          />
+        ) : (
+          <span className="petiano-foto" aria-hidden="true" />
+        )}
         <div className="petiano-redes">
           {participant.socialMidia.map((icon, index) => (
             <a
