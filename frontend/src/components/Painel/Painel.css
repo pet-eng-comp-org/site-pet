@@ -521,6 +521,21 @@ textarea.form-control {
   font-weight: 600;
 }
 
+.painel-fotos-descricao {
+  margin-bottom: 0.5rem;
+}
+
+.painel-fotos-descricao label {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.painel-fotos-descricao textarea {
+  font-size: 0.9375rem;
+}
+
 .painel-fotos-acoes {
   display: flex;
   flex-wrap: wrap;
