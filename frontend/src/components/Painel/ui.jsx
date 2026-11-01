@@ -225,11 +225,22 @@ export const useEnvio = ({ validar, enviar, prefixo, aoTerminar, sucesso }) => {
 
 // Erro de quem está numa janela aparece dentro dela, junto dos botões: um
 // aviso flutuante cobria parte da janela no celular.
-export const ErroDaJanela = ({ erro }) => (
-  <p className="janela-erro" role="alert">
-    {erro}
-  </p>
-);
+// Com erro, o foco vai à mensagem: o botão que enviou fica desligado enquanto
+// salva e o foco caía fora da janela.
+export const ErroDaJanela = ({ erro }) => {
+  const ref = useRef();
+  useEffect(() => {
+    if (!erro) return;
+    ref.current.focus({ preventScroll: true });
+    // A mensagem e os botões logo abaixo dela à vista, para tentar de novo.
+    (ref.current.nextElementSibling || ref.current).scrollIntoView({ block: "end" });
+  }, [erro]);
+  return (
+    <p className="janela-erro" role="alert" tabIndex={-1} ref={ref}>
+      {erro}
+    </p>
+  );
+};
 
 export const Acoes = ({ enviando, rotulo, aoCancelar, erro }) => (
   <>

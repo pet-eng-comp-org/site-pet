@@ -355,6 +355,11 @@ button.botao-link {
 
 .janela-erro {
   color: #b3261e;
+  scroll-margin: 1rem;
+}
+
+.janela-erro:focus {
+  outline: none;
 }
 
 .janela-erro:empty,
@@ -363,6 +368,7 @@ button.botao-link {
 }
 
 .janela-acoes {
+  scroll-margin-bottom: 1.5rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
