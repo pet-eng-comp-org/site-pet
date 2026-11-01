@@ -20,8 +20,8 @@ body {
   font-size: var(--texto);
   font-weight: 400;
   line-height: 1.5;
-  color: #1b3f3f;
-  background-color: #fff2e1;
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -58,7 +58,7 @@ h3 {
 /* Link sem sublinhado por padrão, como era com o Bootstrap: quem quer
    sublinhado (.link-texto, .botao-link) diz isso. */
 a {
-  color: #186a6c;
+  color: var(--cor-acao);
   text-decoration: none;
 }
 
@@ -83,7 +83,7 @@ label {
 /* Foco por teclado com um padrão só: 3 px na cor do site, afastado do
    elemento. Sobre fundo escuro (rodapé, faixas verdes), em branco. */
 :focus-visible {
-  outline: 3px solid #186a6c;
+  outline: 3px solid var(--cor-acao);
   outline-offset: 3px;
 }
 
@@ -107,33 +107,84 @@ label {
   font-size: var(--texto);
   font-weight: 400;
   line-height: 1.5;
-  color: #1b3f3f;
-  background: #fff;
-  border: 1px solid #7a8a8a;
+  color: var(--cor-texto);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-campo);
   border-radius: 4px;
 }
 
 /* Foco visível: com o tema antigo, o campo focado não mudava em nada. */
 .form-control:focus {
-  border-color: #186a6c;
-  outline: 3px solid #186a6c;
+  border-color: var(--cor-acao);
+  outline: 3px solid var(--cor-acao);
   outline-offset: 0;
 }
 
 .form-control.is-invalid {
-  border-color: #b3261e;
+  border-color: var(--cor-erro);
 }
 
 .alerta-erro {
   padding: 0.75rem 1.25rem;
-  color: #721c24;
-  background: #f8d7da;
-  border: 1px solid #f5c6cb;
+  color: var(--cor-alerta-texto);
+  background: var(--cor-alerta-fundo);
+  border: 1px solid var(--cor-alerta-borda);
   border-radius: 4px;
 }
 
 /* Margem lateral do conteúdo: 16 px no celular e 32 px do tablet em diante,
    até a coluna de 1140 px ficar com margem maior que isso. */
+/* Cores por papel. No claro, as da identidade; no escuro (preferência do
+   aparelho), o fundo vira a tinta e o texto, o creme. O verde da marca fica
+   nos botões e nas faixas; em texto e borda sobre o escuro, um verde claro,
+   para ler bem (contraste de 4,5:1 ou mais). */
+:root {
+  color-scheme: light dark;
+  --cor-fundo: #fff2e1;
+  --cor-superficie: #fff;
+  --cor-superficie-suave: #f0e4d4;
+  --cor-hover: #e6f0ef;
+  --cor-texto: #1b3f3f;
+  --cor-texto-suave: #4b6262;
+  --cor-acao: #186a6c;
+  --cor-acao-fundo: #186a6c;
+  --cor-acao-forte: #1b3f3f;
+  --cor-faixa-verde: #186a6c;
+  --cor-rodape: #1b3f3f;
+  --cor-linha: #e6d8c4;
+  --cor-borda-campo: #7a8a8a;
+  --cor-erro: #b3261e;
+  --cor-ok: #1e6b3a;
+  --cor-ok-fundo: #e3f1ec;
+  --cor-alerta-fundo: #f8d7da;
+  --cor-alerta-borda: #f5c6cb;
+  --cor-alerta-texto: #721c24;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cor-fundo: #0f2424;
+    --cor-superficie: #183636;
+    --cor-superficie-suave: #214343;
+    --cor-hover: #214343;
+    --cor-texto: #eef0e8;
+    --cor-texto-suave: #b4c4c1;
+    --cor-acao: #7fd3d5;
+    --cor-acao-fundo: #1d7a7c;
+    --cor-acao-forte: #239294;
+    --cor-faixa-verde: #154f51;
+    --cor-rodape: #0a1a1a;
+    --cor-linha: #2c5050;
+    --cor-borda-campo: #8ea1a0;
+    --cor-erro: #ff9b8f;
+    --cor-ok: #8ad9a2;
+    --cor-ok-fundo: #173d2a;
+    --cor-alerta-fundo: #3d1715;
+    --cor-alerta-borda: #6b2a26;
+    --cor-alerta-texto: #ffb4ab;
+  }
+}
+
 :root {
   --margem: 1rem;
   /* Escala de texto, num lugar só. Um tamanho para todo texto corrido; os
@@ -177,8 +228,8 @@ html {
   display: flex;
   flex-direction: column;
   text-align: left;
-  color: #1b3f3f;
-  background-color: #fff2e1;
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
 }
 
 .ft-normal {
@@ -213,7 +264,7 @@ html {
 .App h1 {
   font-family: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
   font-weight: 800;
-  color: #186a6c;
+  color: var(--cor-acao);
 }
 
 /* Página interna: mesma largura do cabeçalho e do rodapé, título em tinta
@@ -229,7 +280,7 @@ html {
 .App .pagina h1 {
   font-size: 3rem;
   line-height: 1.1;
-  color: #1b3f3f;
+  color: var(--cor-texto);
   margin-bottom: 1rem;
 }
 
@@ -237,7 +288,7 @@ html {
 .pagina h2 {
   font-size: var(--titulo-secao);
   font-weight: 700;
-  color: #1b3f3f;
+  color: var(--cor-texto);
 }
 
 .pagina-intro {
@@ -247,14 +298,14 @@ html {
 }
 
 .link-texto {
-  color: #186a6c;
+  color: var(--cor-acao);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .link-texto:hover,
 .link-texto:focus {
-  color: #1b3f3f;
+  color: var(--cor-texto);
 }
 
 @media (max-width: 900px) {
@@ -275,7 +326,7 @@ html {
   border: 0;
   border-radius: 8px;
   cursor: pointer;
-  background: #186a6c;
+  background: var(--cor-acao-fundo);
   color: #fff;
   font-weight: 600;
   font-size: var(--texto);
@@ -283,7 +334,7 @@ html {
 
 .botao-principal:hover,
 .botao-principal:focus {
-  background: #1b3f3f;
+  background: var(--cor-acao-forte);
   color: #fff;
 }
 
@@ -296,7 +347,7 @@ html {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
-  color: #186a6c;
+  color: var(--cor-acao);
   font-weight: 600;
   font-size: var(--texto);
   text-decoration: underline;
@@ -305,7 +356,7 @@ html {
 
 .botao-link:hover,
 .botao-link:focus {
-  color: #1b3f3f;
+  color: var(--cor-texto);
 }
 
 
@@ -314,7 +365,7 @@ a {
 }
 
 .green-bg {
-  background: #186a6c;
+  background: var(--cor-faixa-verde);
   display: block;
 }
 
@@ -324,12 +375,12 @@ a {
 
 
 .was-validated .form-control:valid {
-  border-color: #1e6b3a;
-  color: #1e6b3a;
+  border-color: var(--cor-ok);
+  color: var(--cor-ok);
   background-image: none;
 }
 .was-validated .form-control:valid:focus {
-  border-color: #1e6b3a;
+  border-color: var(--cor-ok);
 }
 
 /* Botões do mdbreact nas cores da identidade visual do PET: ação em verde-escuro,
@@ -337,7 +388,7 @@ a {
 .btn-default,
 .btn-primary,
 .btn-indigo {
-  background-color: #186a6c !important;
+  background-color: var(--cor-acao-fundo) !important;
   color: #fff !important;
 }
 .btn-default:hover,
@@ -346,13 +397,13 @@ a {
 .btn-primary:focus,
 .btn-indigo:hover,
 .btn-indigo:focus {
-  background-color: #1b3f3f !important;
+  background-color: var(--cor-rodape) !important;
 }
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
   background-color: #ff9a5b !important;
-  color: #1b3f3f !important;
+  color: var(--cor-texto) !important;
 }
 
 .App > .rodape {

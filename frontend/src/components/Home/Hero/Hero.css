@@ -1,5 +1,5 @@
 .hero {
-  background: #fff2e1;
+  background: var(--cor-fundo);
   padding: 4rem var(--margem) 5rem;
 }
 
@@ -13,7 +13,7 @@
 }
 
 .hero-sobretitulo {
-  color: #186a6c;
+  color: var(--cor-acao);
   font-weight: 600;
   font-size: 1rem;
   margin-bottom: 0.75rem;
@@ -22,7 +22,7 @@
 .App .hero h1 {
   font-size: 3.5rem;
   line-height: 1.05;
-  color: #1b3f3f;
+  color: var(--cor-texto);
   margin-bottom: 1.25rem;
 }
 

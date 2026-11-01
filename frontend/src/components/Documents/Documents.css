@@ -9,7 +9,7 @@
 .grupo-documentos {
   break-inside: avoid;
   margin-bottom: 1.5rem;
-  background: #fff;
+  background: var(--cor-superficie);
   border-radius: 16px;
   padding: 1.5rem 1.5rem 1rem;
 }
@@ -26,7 +26,7 @@
 }
 
 .grupo-documentos li + li {
-  border-top: 1px solid #f0e4d4;
+  border-top: 1px solid var(--cor-superficie-suave);
 }
 
 .grupo-documentos a {
@@ -34,17 +34,17 @@
   align-items: center;
   gap: 0.75rem;
   min-height: 44px;
-  color: #1b3f3f;
+  color: var(--cor-texto);
 }
 
 .grupo-documentos a:hover,
 .grupo-documentos a:focus {
-  color: #186a6c;
+  color: var(--cor-acao);
   text-decoration: underline;
 }
 
 .grupo-documentos .icone-svg {
-  color: #186a6c;
+  color: var(--cor-acao);
   font-size: var(--texto);
 }
 
