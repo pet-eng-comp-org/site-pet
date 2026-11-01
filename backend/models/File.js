@@ -16,6 +16,8 @@ const fileSchema = new mongoose.Schema({
   // Medidas da imagem, para o site reservar o espaço certo antes de ela chegar.
   width: Number,
   height: Number,
+  // O que a foto mostra, para quem não a vê (leitor de tela).
+  alt: { type: String, maxlength: 300 },
   createdAt: {
     type: Date,
     default: Date.now,

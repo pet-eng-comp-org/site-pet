@@ -139,8 +139,8 @@ function ProjetoPagina() {
         <div className="projeto-fotos">
           {linhas(
             fotos.map((id) => {
-              const { width, height } = medidas(comission, id);
-              return { id, width, proporcao: width / height };
+              const { width, height, alt } = medidas(comission, id);
+              return { id, width, alt, proporcao: width / height };
             })
           ).map((linha, n) => {
             const soma = linha.reduce((s, f) => s + f.proporcao, 0);
@@ -154,7 +154,7 @@ function ProjetoPagina() {
                     src={foto(f.id)}
                     srcSet={srcSet(f.id, f.width)}
                     sizes={tamanho(f.proporcao / soma, linha.length)}
-                    alt=""
+                    alt={f.alt || ""}
                     loading={primeira ? "eager" : "lazy"}
                     fetchpriority={primeira ? "high" : undefined}
                     style={{ "--proporcao": f.proporcao }}
