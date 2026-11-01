@@ -187,6 +187,40 @@ function FormProjeto({ projeto, aoFechar, aoSalvar }) {
   );
 }
 
+// O que a foto mostra, para quem usa leitor de tela. O ícone não precisa:
+// ele é decorativo no cartão. Salva ao sair do campo, se mudou.
+function Descricao({ id, rotulo, atual, aoSalvar }) {
+  const [texto, setTexto] = useState(atual);
+  const [erro, setErro] = useState("");
+  useEffect(() => setTexto(atual), [atual]);
+  const salvar = async () => {
+    if (texto.trim() === atual) return;
+    setErro("");
+    try {
+      await aoSalvar(texto.trim());
+    } catch (err) {
+      setErro(erroDe(err));
+    }
+  };
+  return (
+    <div className="painel-fotos-descricao">
+      <label htmlFor={`alt-${id}`}>O que a {rotulo} mostra</label>
+      <textarea
+        id={`alt-${id}`}
+        className="form-control"
+        rows="2"
+        maxLength="300"
+        value={texto}
+        placeholder="Por exemplo: equipes de três pessoas programando no laboratório"
+        onChange={(e) => setTexto(e.target.value)}
+        onBlur={salvar}
+        aria-describedby={erro ? `alt-${id}-erro` : undefined}
+      />
+      {erro && <p className="campo-erro" id={`alt-${id}-erro`}>{erro}</p>}
+    </div>
+  );
+}
+
 // As fotos são salvas na hora: enviar, tirar e mudar de lugar.
 function Fotos({ projeto, aoFechar, aoMudar }) {
   const [ocupado, setOcupado] = useState(false);
@@ -247,13 +281,27 @@ function Fotos({ projeto, aoFechar, aoMudar }) {
     <Janela titulo={`Fotos de ${projeto.title}`} aberta aoFechar={aoFechar} larga focoNoTitulo>
       <p>
         A primeira é o <strong>ícone</strong> do cartão em Projetos (quadrada, de preferência). As outras formam a galeria,
-        nessa ordem; a primeira deitada também aparece quando alguém compartilha o link do projeto. As mudanças valem na hora.
+        nessa ordem; a primeira deitada também aparece quando alguém compartilha o link do projeto. Escreva em cada uma o
+        que ela mostra, para quem usa leitor de tela. As mudanças valem na hora.
       </p>
       <ol className="painel-fotos" aria-busy={ocupado} ref={lista}>
         {projeto.photos.map((id, i) => (
           <li key={id} data-foto={id}>
             <img src={foto(id)} alt="" loading="lazy" />
             <span className="painel-fotos-papel">{i === 0 ? "Ícone" : `Foto ${i}`}</span>
+            {i > 0 && (
+              <Descricao
+                projeto={projeto}
+                id={id}
+                rotulo={papel(i)}
+                atual={(projeto.medidas || []).find((m) => m._id === id)?.alt || ""}
+                aoSalvar={async (alt) => {
+                  await painel.patch(`api/comissions/descreverFoto/${projeto._id}`, { photoId: id, alt });
+                  await aoMudar();
+                  setAnuncio(`Descrição da ${papel(i)} salva.`);
+                }}
+              />
+            )}
             <div className="painel-fotos-acoes">
               {i > 0 && (
                 <button type="button" className="botao-secundario" data-acao="antes" onClick={() => mover(i, i - 1, "antes")}>
