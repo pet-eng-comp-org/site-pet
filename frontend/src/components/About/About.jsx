@@ -24,42 +24,23 @@ const About = () => {
 
   return (
     <>
-      <div className="pagina sobre">
+      <div className="pagina coluna-leitura">
         <h1>Quem somos</h1>
-        <div className="sobre-texto">
-          <p className="pagina-intro">
-            O PET Engenharia de Computação é um dos grupos PET originais da Ufes,
-            criado em 1993.
-          </p>
-          <p className="pagina-intro">
-            O{" "}
-            <a className="link-texto" href="https://www.gov.br/mec/pt-br/pet">
-              Programa de Educação Tutorial
-            </a>{" "}
-            foi criado pela CAPES em 1979, com o nome de Programa Especial de
-            Treinamento, e desde 1999 é gerido pela SESu. É destinado a alunos de
-            graduação que demonstrem potencial, interesse e habilidades
-            destacadas. Na Ufes são 13 grupos PET.
-          </p>
-          {falhou && <AvisoDeFalha />}
-        </div>
-        {/* Os números que o texto cita, em destaque, na coluna que ficava
-            vazia na tela larga (até a foto do grupo ocupar o lugar). Só na
-            tela larga, e fora do leitor de tela: repetem o texto. */}
-        <dl className="sobre-numeros" aria-hidden="true">
-          <div>
-            <dt>1993</dt>
-            <dd>ano em que o grupo foi criado</dd>
-          </div>
-          <div>
-            <dt>13</dt>
-            <dd>grupos PET na Ufes</dd>
-          </div>
-          <div>
-            <dt>1979</dt>
-            <dd>ano em que o programa começou, na CAPES</dd>
-          </div>
-        </dl>
+        <p className="pagina-intro">
+          O PET Engenharia de Computação é um dos grupos PET originais da Ufes,
+          criado em 1993.
+        </p>
+        <p className="pagina-intro">
+          O{" "}
+          <a className="link-texto" href="https://www.gov.br/mec/pt-br/pet">
+            Programa de Educação Tutorial
+          </a>{" "}
+          foi criado pela CAPES em 1979, com o nome de Programa Especial de
+          Treinamento, e desde 1999 é gerido pela SESu. É destinado a alunos de
+          graduação que demonstrem potencial, interesse e habilidades
+          destacadas. Na Ufes são 13 grupos PET.
+        </p>
+        {falhou && <AvisoDeFalha />}
       </div>
       {!petianos && !falhou && (
         <div className="carregando-dados">

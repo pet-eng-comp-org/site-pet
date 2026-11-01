@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Contact.css";
 import api from "../../services/api";
 import goUp from "../../utils/goUp";
@@ -35,6 +35,12 @@ const ContactPage = () => {
   // Erro de um campo aparece ao lado dele; o resto (rede, limite), acima do botão.
   const [erroCampo, setErroCampo] = useState({});
   const [erroGeral, setErroGeral] = useState("");
+  // Com erro no envio, o foco vai ao aviso: o botão fica desligado enquanto
+  // envia, e o foco caía no começo da página.
+  const erroRef = useRef();
+  useEffect(() => {
+    if (erroGeral) erroRef.current?.focus();
+  }, [erroGeral]);
 
   useEffect(() => {
     goUp();
@@ -80,7 +86,7 @@ const ContactPage = () => {
         setErroGeral(
           typeof erro === "string"
             ? erro
-            : "Não conseguimos enviar agora. Tente de novo em alguns minutos."
+            : "Não conseguimos enviar agora. Tente de novo em alguns minutos ou escreva para petengcomp.ufes@gmail.com."
         );
     }
     setLoading(false);
@@ -172,8 +178,14 @@ const ContactPage = () => {
             <p className="contato-contador">{message.length} de 5000 caracteres</p>
           )}
 
+          {/* Sem JavaScript, o formulário não envia: diz como falar com a gente. */}
+          <p className="alerta-erro contato-sem-js">
+            Para enviar pelo formulário, o navegador precisa de JavaScript. Escreva para
+            petengcomp.ufes@gmail.com.
+          </p>
+
           {erroGeral && (
-            <p className="alerta-erro" role="alert">
+            <p className="alerta-erro" role="alert" tabIndex={-1} ref={erroRef}>
               {erroGeral}
             </p>
           )}

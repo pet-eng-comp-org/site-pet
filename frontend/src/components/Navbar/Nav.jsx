@@ -169,7 +169,15 @@ function Nav() {
           aria-expanded={isOpen}
           aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
         >
-          <span className={`barra-menu-icone ${isOpen ? "aberto" : ""}`} />
+          {/* Desenhado com a cor do texto: muda junto no modo escuro. */}
+          <svg className="barra-menu-icone" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <path
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              d={isOpen ? "M8 8l16 16M24 8L8 24" : "M4 8h24M4 16h24M4 24h24"}
+            />
+          </svg>
         </button>
 
         <div

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useTitulo from "../../utils/useTitulo";
 import slug from "../../utils/slug";
+import linkDaRede from "../../utils/redes";
 import Icone from "../Icone/Icone";
 import { painel } from "./painelApi";
 import {
@@ -36,22 +37,6 @@ const formatarTelefone = (t) => {
   if (d.length === 11) return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
   if (d.length === 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
   return t;
-};
-
-// "@usuario" vira o link do perfil; link sem protocolo ganha https://.
-const PERFIS = {
-  instagram: "https://instagram.com/",
-  linkedin: "https://linkedin.com/in/",
-  youtube: "https://youtube.com/@",
-  twitter: "https://x.com/",
-  twitch: "https://twitch.tv/",
-  facebook: "https://facebook.com/",
-};
-const linkDaRede = ({ name, link }) => {
-  const t = link.trim();
-  if (/^@\w[\w.-]*$/.test(t)) return PERFIS[name] + t.slice(1);
-  if (/^https?:\/\//.test(t)) return t;
-  return t && !/\s/.test(t) && t.includes(".") ? `https://${t}` : t;
 };
 
 const fotoDe = (p) => p.profilePhoto && `${API}api/file/getProfilePhoto/${p.profilePhoto._id}`;

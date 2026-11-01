@@ -41,7 +41,7 @@ function Projetos() {
             {lista.map((p) => (
               <li key={p._id} className="painel-item">
                 {p.photos[0] ? (
-                  <img className="painel-foto" src={foto(p.photos[0])} alt="" width="56" height="56" loading="lazy" />
+                  <img className="painel-foto painel-foto-icone" src={foto(p.photos[0])} alt="" width="56" height="56" loading="lazy" />
                 ) : (
                   <span className="painel-foto painel-foto-vazia" aria-hidden="true" />
                 )}
@@ -281,7 +281,7 @@ function Fotos({ projeto, aoFechar, aoMudar }) {
     <Janela titulo={`Fotos de ${projeto.title}`} aberta aoFechar={aoFechar} larga focoNoTitulo>
       <p>
         A primeira é o <strong>ícone</strong> do cartão em Projetos (quadrada, de preferência). As outras formam a galeria,
-        nessa ordem; a primeira deitada também aparece quando alguém compartilha o link do projeto. Escreva em cada uma o
+        nessa ordem; a primeira que não está em pé também aparece quando alguém compartilha o link do projeto. Escreva em cada uma o
         que ela mostra, para quem usa leitor de tela. As mudanças valem na hora.
       </p>
       <ol className="painel-fotos" aria-busy={ocupado} ref={lista}>
