@@ -24,6 +24,7 @@ const traducoes = [
   [/finalized before/i, "Encerre a seleção antes de excluí-la."],
   [/Já existe uma seleção aberta/i, "Já existe uma seleção aberta. Encerre-a antes de criar outra."],
   [/Invalid Token|Access Denied/i, "Sua sessão expirou. Entre de novo."],
+  [/invalid old password/i, "A senha de agora não confere."],
 ];
 
 export const erroDe = (err) => {

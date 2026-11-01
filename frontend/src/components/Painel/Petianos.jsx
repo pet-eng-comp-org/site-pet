@@ -38,6 +38,22 @@ const formatarTelefone = (t) => {
   return t;
 };
 
+// "@usuario" vira o link do perfil; link sem protocolo ganha https://.
+const PERFIS = {
+  instagram: "https://instagram.com/",
+  linkedin: "https://linkedin.com/in/",
+  youtube: "https://youtube.com/@",
+  twitter: "https://x.com/",
+  twitch: "https://twitch.tv/",
+  facebook: "https://facebook.com/",
+};
+const linkDaRede = ({ name, link }) => {
+  const t = link.trim();
+  if (/^@\w[\w.-]*$/.test(t)) return PERFIS[name] + t.slice(1);
+  if (/^https?:\/\//.test(t)) return t;
+  return t && !/\s/.test(t) && t.includes(".") ? `https://${t}` : t;
+};
+
 const fotoDe = (p) => p.profilePhoto && `${API}api/file/getProfilePhoto/${p.profilePhoto._id}`;
 
 const ordenar = (lista) =>
@@ -152,6 +168,13 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
       .map((c) => c.title),
     redes: (petiano?.socialMidia || []).map(({ name, link }) => ({ name, link })),
   }));
+  // Etiquetas que não correspondem a nenhum projeto da lista (ou todas, se a
+  // lista não carregou) são mantidas como estão: salvar não apaga o que a
+  // tela não mostra.
+  const semCaixa = (petiano?.tags || []).filter(
+    (t) => !projetos.some((c) => chave(c.title) === chave(t.title))
+  );
+  const ativo = novo || petiano.active;
   const [foto, setFoto] = useState(null);
   const [previa, setPrevia] = useState(petiano && fotoDe(petiano));
   useEffect(() => () => foto && URL.revokeObjectURL(previa), [foto, previa]);
@@ -166,10 +189,16 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
     if (![10, 11].includes(soDigitos(f.phone).length)) e.phone = "Escreva o telefone com DDD, só números ou como (27) 99999-8888.";
     if (novo && f.password.length < 6) e.password = "A senha precisa de pelo menos 6 caracteres.";
     if (!f.startPet) e.startPet = "Escolha a data de entrada.";
+    // A descrição aparece em Quem somos: obrigatória para quem está no PET.
     const desc = f.description.trim().length;
-    if (desc < 6 || desc > 160) e.description = "Escreva de 6 a 160 caracteres.";
-    if (f.redes.some((r) => !/^https:\/\/\S+$/.test(r.link.trim())))
-      e.redes = "Cada rede precisa de um link que comece com https://.";
+    if (desc > 160 || (ativo && desc < 6)) e.description = "Escreva de 6 a 160 caracteres.";
+    f.redes.forEach((r, i) => {
+      if (!e.redes && !/^https?:\/\/\S+\.\S+$/.test(linkDaRede(r))) {
+        // A chave do campo vem antes: é nela que o foco cai.
+        e[`link-${i}`] = "Cole o link do perfil (https://…) ou o @usuário.";
+        e.redes = e[`link-${i}`];
+      }
+    });
     if (novo && !foto) e.foto = "Escolha uma foto: ela aparece em Quem somos.";
     return e;
   };
@@ -190,8 +219,8 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
         startPet: f.startPet,
         tutor: f.tutor,
         description: f.description.trim(),
-        tags: f.projetos.map((title) => ({ title })),
-        socialMidia: f.redes.map((r) => ({ name: r.name, link: r.link.trim() })),
+        tags: [...f.projetos.map((title) => ({ title })), ...semCaixa.map(({ title }) => ({ title }))],
+        socialMidia: f.redes.map((r) => ({ name: r.name, link: linkDaRede(r) })),
       };
       let id = petiano?._id;
       if (novo) id = (await painel.post("api/members", { ...corpo, password: f.password, active: true })).data;
@@ -228,7 +257,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
           </Campo>
         </div>
         <Campo id={id("memberName")} rotulo="Nome" erro={erros.memberName}>
-          <input value={f.memberName} onChange={muda("memberName")} autoComplete="off" />
+          <input value={f.memberName} onChange={muda("memberName")} autoComplete="off" data-foco-inicial />
         </Campo>
         <div className="painel-form-dupla">
           <Campo id={id("email")} rotulo="E-mail" dica="Também é o login no painel." erro={erros.email}>
@@ -239,7 +268,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
           </Campo>
         </div>
         {novo && (
-          <Campo id={id("password")} rotulo="Senha inicial" dica="Ao menos 6 caracteres. Passe para o petiano trocar depois." erro={erros.password}>
+          <Campo id={id("password")} rotulo="Senha inicial" dica="Ao menos 6 caracteres. A pessoa troca depois, em “Trocar minha senha”, no painel." erro={erros.password}>
             <input type="text" value={f.password} onChange={muda("password")} autoComplete="new-password" />
           </Campo>
         )}
@@ -254,7 +283,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
         <Campo
           id={id("description")}
           rotulo="Descrição"
-          dica={`Uma ou duas frases sobre a pessoa, em terceira pessoa. ${160 - f.description.length} caracteres restantes.`}
+          dica={`${ativo ? "Uma ou duas frases sobre a pessoa, em terceira pessoa; aparece em Quem somos." : "Opcional para egressos: não aparece no site."} ${160 - f.description.length} caracteres restantes.`}
           erro={erros.description}
         >
           <textarea rows="3" maxLength="160" value={f.description} onChange={muda("description")} />
@@ -262,6 +291,11 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
 
         <fieldset className="painel-grupo">
           <legend>Projetos de que participa</legend>
+          {!projetos.length && (
+            <p className="campo-dica">
+              A lista de projetos não carregou; os projetos de hoje ficam como estão.
+            </p>
+          )}
           <div className="painel-caixas">
             {projetos.map((c) => (
               <label key={c._id} className="painel-caixa">
@@ -283,6 +317,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
 
         <fieldset className="painel-grupo" aria-describedby={erros.redes ? id("redes-erro") : undefined}>
           <legend>Redes (até 3)</legend>
+          <p className="campo-dica">O link do perfil ou só o @usuário.</p>
           {f.redes.map((r, i) => (
             <div key={i} className="painel-linha-rede">
               <label className="sr-only" htmlFor={id(`rede-${i}`)}>Rede {i + 1}</label>
@@ -296,12 +331,12 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
                   <option key={v} value={v}>{n}</option>
                 ))}
               </select>
-              <label className="sr-only" htmlFor={id(i === 0 ? "redes" : `link-${i}`)}>Link da rede {i + 1}</label>
+              <label className="sr-only" htmlFor={id(`link-${i}`)}>Link ou @usuário da rede {i + 1}</label>
               <input
-                id={id(i === 0 ? "redes" : `link-${i}`)}
+                id={id(`link-${i}`)}
                 className="form-control"
-                type="url"
-                placeholder="https://"
+                aria-invalid={erros[`link-${i}`] ? "true" : undefined}
+                placeholder="https:// ou @usuário"
                 value={r.link}
                 onChange={(e) => setF({ ...f, redes: f.redes.map((x, j) => (j === i ? { ...x, link: e.target.value } : x)) })}
               />

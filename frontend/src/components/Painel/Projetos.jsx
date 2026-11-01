@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useTitulo from "../../utils/useTitulo";
 import slug from "../../utils/slug";
@@ -47,7 +47,11 @@ function Projetos() {
                 <div className="painel-item-texto">
                   <strong>{p.title}</strong>
                   <span>
-                    {Math.max(p.photos.length - 1, 0)} fotos na galeria ·{" "}
+                    {(() => {
+                      const n = Math.max(p.photos.length - 1, 0);
+                      return n === 1 ? "1 foto" : `${n} fotos`;
+                    })()}{" "}
+                    na galeria ·{" "}
                     <Link className="link-texto" to={`/projetos/${slug(p.title)}`}>
                       ver no site
                     </Link>
@@ -186,19 +190,37 @@ function FormProjeto({ projeto, aoFechar, aoSalvar }) {
 function Fotos({ projeto, aoFechar, aoMudar }) {
   const [ocupado, setOcupado] = useState(false);
   const [tirar, setTirar] = useState(null);
+  // Depois de mover ou tirar, o foco fica no mesmo botão (ou no vizinho), e
+  // o leitor de tela ouve o que mudou: o botão não some nem é desligado.
+  const [foco, setFoco] = useState(null);
+  const [anuncio, setAnuncio] = useState("");
+  const lista = useRef();
+  useEffect(() => {
+    if (!foco) return;
+    const alvo =
+      lista.current?.querySelector(`[data-foto="${foco.id}"] [data-acao="${foco.acao}"]`) ||
+      lista.current?.querySelector(`[data-foto="${foco.id}"] [data-acao]`) ||
+      document.getElementById("fotos-novas");
+    alvo?.focus();
+    setFoco(null);
+  }, [foco, projeto.photos]);
   const avisar = useAvisar();
   const fazer = async (acao, sucesso) => {
+    if (ocupado) return false;
     setOcupado(true);
     try {
       await acao();
       await aoMudar();
       if (sucesso) avisar(sucesso);
+      return true;
     } catch (err) {
       avisar(erroDe(err), "erro");
+      return false;
     } finally {
       setOcupado(false);
     }
   };
+  const papel = (i) => (i === 0 ? "ícone" : `foto ${i}`);
   const enviar = (arquivos) =>
     fazer(async () => {
       for (const arq of arquivos) {
@@ -207,37 +229,46 @@ function Fotos({ projeto, aoFechar, aoMudar }) {
         await painel.patch(`api/comissions/addPhoto/${projeto._id}`, dados);
       }
     }, arquivos.length > 1 ? `${arquivos.length} fotos enviadas.` : "Foto enviada.");
-  const mover = (de, para) => {
+  const mover = async (de, para, acao) => {
+    const id = projeto.photos[de];
     const ordem = [...projeto.photos];
     ordem.splice(para, 0, ordem.splice(de, 1)[0]);
-    return fazer(() => painel.patch(`api/comissions/ordenarFotos/${projeto._id}`, { photos: ordem }));
+    if (await fazer(() => painel.patch(`api/comissions/ordenarFotos/${projeto._id}`, { photos: ordem }))) {
+      setAnuncio(`Agora é ${papel(para)}.`);
+      setFoco({ id, acao });
+    }
   };
 
   return (
-    <Janela titulo={`Fotos de ${projeto.title}`} aberta aoFechar={aoFechar} larga>
+    <Janela titulo={`Fotos de ${projeto.title}`} aberta aoFechar={aoFechar} larga focoNoTitulo>
       <p>
         A primeira é o <strong>ícone</strong> do cartão em Projetos (quadrada, de preferência). As outras formam a galeria,
         nessa ordem; a primeira deitada também aparece quando alguém compartilha o link do projeto. As mudanças valem na hora.
       </p>
-      <ol className="painel-fotos" aria-busy={ocupado}>
+      <ol className="painel-fotos" aria-busy={ocupado} ref={lista}>
         {projeto.photos.map((id, i) => (
-          <li key={id}>
+          <li key={id} data-foto={id}>
             <img src={foto(id)} alt="" loading="lazy" />
             <span className="painel-fotos-papel">{i === 0 ? "Ícone" : `Foto ${i}`}</span>
             <div className="painel-fotos-acoes">
-              <button type="button" className="botao-secundario" disabled={ocupado || i === 0} onClick={() => mover(i, i - 1)}>
-                Antes<span className="sr-only"> ({i === 0 ? "ícone" : `foto ${i}`})</span>
-              </button>
-              <button type="button" className="botao-secundario" disabled={ocupado || i === projeto.photos.length - 1} onClick={() => mover(i, i + 1)}>
-                Depois<span className="sr-only"> ({i === 0 ? "ícone" : `foto ${i}`})</span>
-              </button>
-              <button type="button" className="botao-texto-perigo" disabled={ocupado} onClick={() => setTirar(id)}>
-                Tirar<span className="sr-only"> ({i === 0 ? "ícone" : `foto ${i}`})</span>
+              {i > 0 && (
+                <button type="button" className="botao-secundario" data-acao="antes" onClick={() => mover(i, i - 1, "antes")}>
+                  Antes<span className="sr-only"> ({papel(i)})</span>
+                </button>
+              )}
+              {i < projeto.photos.length - 1 && (
+                <button type="button" className="botao-secundario" data-acao="depois" onClick={() => mover(i, i + 1, "depois")}>
+                  Depois<span className="sr-only"> ({papel(i)})</span>
+                </button>
+              )}
+              <button type="button" className="botao-texto-perigo" data-acao="tirar" onClick={() => setTirar({ id, i })}>
+                Tirar<span className="sr-only"> ({papel(i)})</span>
               </button>
             </div>
           </li>
         ))}
       </ol>
+      <p className="sr-only" role="status">{anuncio}</p>
       <div className="campo">
         <label htmlFor="fotos-novas">{projeto.photos.length ? "Enviar mais fotos" : "Enviar o ícone e as fotos"}</label>
         <p className="campo-dica" id="fotos-dica">Pode escolher várias de uma vez; elas entram no fim, na ordem escolhida.</p>
@@ -256,7 +287,7 @@ function Fotos({ projeto, aoFechar, aoMudar }) {
           }}
         />
       </div>
-      {ocupado && <p role="status">Salvando…</p>}
+      {ocupado && <p>Salvando…</p>}
       <div className="janela-acoes">
         <button type="button" className="botao-principal" onClick={aoFechar}>
           Pronto
@@ -268,9 +299,12 @@ function Fotos({ projeto, aoFechar, aoMudar }) {
           texto="Ela sai do site e é apagada. Não dá para desfazer."
           acao="Tirar foto"
           aoFechar={() => setTirar(null)}
-          aoConfirmar={() =>
-            fazer(() => painel.patch(`api/comissions/removePhoto/${projeto._id}`, { photoId: tirar }), "Foto tirada.")
-          }
+          aoConfirmar={async () => {
+            // O foco vai para a foto que ocupa o lugar (ou para o envio).
+            const vizinha = projeto.photos[tirar.i + 1] || projeto.photos[tirar.i - 1];
+            if (await fazer(() => painel.patch(`api/comissions/removePhoto/${projeto._id}`, { photoId: tirar.id }), "Foto tirada."))
+              setFoco({ id: vizinha, acao: "tirar" });
+          }}
         />
       )}
     </Janela>
