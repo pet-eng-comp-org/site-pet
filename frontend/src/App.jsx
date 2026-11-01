@@ -11,7 +11,7 @@ import Home from "./components/Home/Home";
 import Nav from "./components/Navbar/Nav";
 import NaoEncontrada from "./components/NaoEncontrada/NaoEncontrada";
 import Loader from "./components/Loader/Loader";
-import Login from "./components/Admin/Login/Login";
+import Login from "./components/Login/Login";
 import isAuth from "./services/Auth";
 import {
   Switch,
@@ -22,7 +22,7 @@ import {
 
 // O painel só é baixado por quem entra nele, não por todo visitante. O login
 // é pequeno e fica no pacote, para a tela dele não pular ao abrir.
-const Admin = lazy(() => import("./components/Admin/Admin"));
+const Painel = lazy(() => import("./components/Painel/Painel"));
 
 // Ao trocar de página, o foco vai para o conteúdo novo: sem isso ele ficava
 // no link clicado (ou no body), e o leitor de tela não anunciava a página.
@@ -84,7 +84,7 @@ function App() {
             <Route path="/projetos/:projeto" exact sensitive component={ProjetoPagina} />
             <Route path="/login" exact sensitive component={Login} />
             <Route path="/contato" exact sensitive component={Contact} />
-            <AdminRoute path="/admin" exact sensitive component={Admin} />
+            <AdminRoute path="/admin" sensitive component={Painel} />
             <Route component={NaoEncontrada} />
           </Switch>
         </Suspense>

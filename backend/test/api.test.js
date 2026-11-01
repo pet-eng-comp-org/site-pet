@@ -141,6 +141,7 @@ describe("rotas do painel", () => {
     ["PATCH", `/api/comissions/removeProject/${ID}`],
     ["PATCH", `/api/comissions/addPhoto/${ID}`],
     ["PATCH", `/api/comissions/removePhoto/${ID}`],
+    ["PATCH", `/api/comissions/ordenarFotos/${ID}`],
     ["DELETE", `/api/comissions/${ID}`],
     ["POST", "/api/documents/"],
     ["PATCH", `/api/documents/addFile/${ID}`],
@@ -365,5 +366,24 @@ describe("imagens", () => {
       for (const f of await conexao.db.collection("files").find({ _id: { $in: photos } }).toArray())
         fs.rmSync(path.join(RAIZ, "uploads", "comissions", f.key), { force: true });
     }
+  });
+
+  // A primeira foto é o ícone do cartão: o painel muda a ordem sem reenviar.
+  it("muda a ordem das fotos da comissao, sem perder nem ganhar foto", async () => {
+    const auth = { authorization: `Bearer ${await entra()}`, "content-type": "application/json" };
+    const ids = [new mongoose.Types.ObjectId(), new mongoose.Types.ObjectId(), new mongoose.Types.ObjectId()];
+    const { insertedId } = await conexao.db.collection("comissions").insertOne({ title: "Ordem", description: "Descricao", photos: ids, tags: [] });
+    const ordenar = (photos) =>
+      api("PATCH", `/api/comissions/ordenarFotos/${insertedId}`, { headers: auth, corpo: JSON.stringify({ photos }) });
+
+    const nova = [ids[2], ids[0], ids[1]].map(String);
+    assert.equal((await ordenar(nova)).status, 200);
+    const salva = await conexao.db.collection("comissions").findOne({ _id: insertedId });
+    assert.deepEqual(salva.photos.map(String), nova);
+
+    assert.equal((await ordenar(nova.slice(1))).status, 400, "faltando foto");
+    assert.equal((await ordenar([...nova, String(new mongoose.Types.ObjectId())])).status, 400, "foto a mais");
+    assert.equal((await ordenar([nova[0], nova[0], nova[1]])).status, 400, "foto repetida");
+    await conexao.db.collection("comissions").deleteOne({ _id: insertedId });
   });
 });
