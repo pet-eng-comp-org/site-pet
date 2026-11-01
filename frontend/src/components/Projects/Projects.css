@@ -25,22 +25,22 @@
   padding: 1.75rem;
   border: 0;
   border-radius: 16px;
-  background: #fff;
-  color: #1b3f3f;
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
   text-decoration: none;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .projeto:hover,
 .projeto:focus-visible {
-  color: #1b3f3f;
+  color: var(--cor-texto);
   text-decoration: none;
   box-shadow: 0 16px 32px -20px rgba(27, 63, 63, 0.6);
   transform: translateY(-2px);
 }
 
 .projeto:focus-visible {
-  outline: 3px solid #186a6c;
+  outline: 3px solid var(--cor-acao);
   outline-offset: 3px;
 }
 
@@ -51,7 +51,7 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: #186a6c;
+  background: var(--cor-acao-fundo);
   margin-bottom: 1.25rem;
 }
 
@@ -74,7 +74,7 @@
 
 .projeto-mais {
   margin-top: auto;
-  color: #186a6c;
+  color: var(--cor-acao);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
