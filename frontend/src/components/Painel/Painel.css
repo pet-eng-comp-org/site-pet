@@ -185,6 +185,13 @@ button.botao-link {
   object-position: top;
 }
 
+/* O ícone do projeto é branco: no círculo verde, como no site. */
+.painel-foto-icone {
+  padding: 10px;
+  background: var(--cor-acao-fundo);
+  object-fit: contain;
+}
+
 .painel-foto-quadrada {
   border-radius: 8px;
   object-position: center;

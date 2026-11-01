@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" class="sem-js">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
@@ -31,6 +31,9 @@
     <link rel="preload" as="image" href="/grupo-1280.jpg" imagesrcset="/grupo-700.jpg 700w, /grupo-1280.jpg 1280w" imagesizes="(max-width: 900px) calc(100vw - 2rem), 538px" data-so-inicio />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
+    <!-- Com JavaScript, sai antes da primeira pintura: o menu do celular abre
+         pelo botão. Sem ele, a classe fica e os links ficam à vista. -->
+    <script>document.documentElement.classList.remove("sem-js")</script>
     <title>PET Engenharia de Computação · Ufes</title>
   </head>
   <body>

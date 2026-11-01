@@ -1,9 +1,18 @@
-/* Colunas em vez de grade: cada grupo tem um número de documentos e,
-   numa grade, o mais alto abriria um vazio ao lado do mais baixo. */
+/* Um grupo por linha, na largura toda, e os documentos dele em colunas:
+   em duas colunas de grupos, o mais alto abria um vazio ao lado do outro. */
 .documentos-grade {
-  columns: 2 420px;
-  column-gap: 1.5rem;
   margin-top: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .grupo-documentos ul {
+    columns: 3 16rem;
+    column-gap: 2rem;
+  }
+
+  .grupo-documentos li {
+    break-inside: avoid;
+  }
 }
 
 .grupo-documentos {
@@ -25,8 +34,8 @@
   margin: 0;
 }
 
-.grupo-documentos li + li {
-  border-top: 1px solid var(--cor-superficie-suave);
+.grupo-documentos li {
+  border-bottom: 1px solid var(--cor-superficie-suave);
 }
 
 .grupo-documentos a {
