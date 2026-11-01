@@ -3,28 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.4",
     "axios": "^0.19.2",
-    "bootstrap-css-only": "4.4.1",
-    "filesize": "6.0.1",
-    "lodash": "^4.17.21",
-    "mdbreact": "^4.25.3",
     "react": "^18.3.1",
-    "react-circular-progressbar": "^2.2.0",
-    "react-color": "^2.19.3",
     "react-dom": "^18.3.1",
-    "react-dropzone": "^11.2.0",
-    "react-icons": "^3.11.0",
-    "react-is": "^18.3.1",
     "react-router-dom": "^5.3.4",
-    "react-spinners": "^0.17.1",
-    "react-toastify": "^5.5.0",
-    "reactcss": "^1.2.3",
-    "styled-components": "^5.1.0"
+    "react-spinners": "^0.17.1"
   },
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/sem-google-fonts.js",
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir build-ssr",
     "start": "node server/servidor.js"
   },

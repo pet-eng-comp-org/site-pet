@@ -161,3 +161,8 @@
     padding-top: 10px;
   }
 }
+
+span.petiano-foto {
+  display: block;
+  background: rgba(255, 255, 255, 0.15);
+}
