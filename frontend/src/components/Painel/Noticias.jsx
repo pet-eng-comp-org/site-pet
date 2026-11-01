@@ -18,7 +18,7 @@ function Noticias() {
   return (
     <section aria-labelledby="titulo-secao">
       <div className="painel-cabecalho">
-        <h2 id="titulo-secao">Notícias</h2>
+        <h2 id="titulo-secao" tabIndex={-1}>Notícias</h2>
         <button type="button" className="botao-principal" onClick={() => setAberto({ tipo: "nova" })}>
           Publicar notícia
         </button>
@@ -86,7 +86,7 @@ function FormNoticia({ noticia, aoFechar, aoSalvar }) {
   useEffect(() => () => arquivo && URL.revokeObjectURL(previa), [arquivo, previa]);
   const muda = (campo) => (e) => setF({ ...f, [campo]: e.target.value });
 
-  const { erros, enviando, aoEnviar } = useEnvio({
+  const { erros, enviando, aoEnviar, erroGeral } = useEnvio({
     prefixo: "noticia",
     validar: () => {
       const e = {};
@@ -143,7 +143,7 @@ function FormNoticia({ noticia, aoFechar, aoSalvar }) {
             />
           </Campo>
         </div>
-        <Acoes enviando={enviando} rotulo={nova ? "Publicar notícia" : "Salvar alterações"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={nova ? "Publicar notícia" : "Salvar alterações"} aoCancelar={aoFechar} />
       </form>
     </Janela>
   );

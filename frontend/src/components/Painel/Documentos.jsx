@@ -16,7 +16,7 @@ function Documentos() {
   return (
     <section aria-labelledby="titulo-secao">
       <div className="painel-cabecalho">
-        <h2 id="titulo-secao">Documentos</h2>
+        <h2 id="titulo-secao" tabIndex={-1}>Documentos</h2>
         <button type="button" className="botao-principal" onClick={() => setAberto({ tipo: "grupo" })}>
           Criar grupo
         </button>
@@ -100,7 +100,7 @@ function Documentos() {
 
 function FormGrupo({ grupo, aoFechar, aoSalvar }) {
   const [titulo, setTitulo] = useState(grupo?.title || "");
-  const { erros, enviando, aoEnviar } = useEnvio({
+  const { erros, enviando, aoEnviar, erroGeral } = useEnvio({
     prefixo: "grupo",
     validar: () => {
       const n = titulo.trim().length;
@@ -122,7 +122,7 @@ function FormGrupo({ grupo, aoFechar, aoSalvar }) {
         <Campo id="grupo-titulo" rotulo="Nome do grupo" dica="Por exemplo, “Editais de seleção”." erro={erros.titulo}>
           <input value={titulo} maxLength="30" onChange={(e) => setTitulo(e.target.value)} />
         </Campo>
-        <Acoes enviando={enviando} rotulo={grupo ? "Renomear" : "Criar grupo"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={grupo ? "Renomear" : "Criar grupo"} aoCancelar={aoFechar} />
       </form>
     </Janela>
   );
@@ -135,7 +135,7 @@ const nomeDoArquivo = (arq) => arq.name.replace(/\.pdf$/i, "").replace(/[-_]+/g,
 function FormArquivo({ grupo, aoFechar, aoSalvar }) {
   const [arquivo, setArquivo] = useState(null);
   const [nome, setNome] = useState("");
-  const { erros, enviando, aoEnviar } = useEnvio({
+  const { erros, enviando, aoEnviar, erroGeral } = useEnvio({
     prefixo: "arquivo",
     validar: () => {
       const e = {};
@@ -173,7 +173,7 @@ function FormArquivo({ grupo, aoFechar, aoSalvar }) {
         <Campo id="arquivo-nome" rotulo="Nome no site" dica="Por exemplo, “Edital nº 018/2026”. O novo entra no topo do grupo." erro={erros.nome}>
           <input value={nome} maxLength="120" onChange={(e) => setNome(e.target.value)} />
         </Campo>
-        <Acoes enviando={enviando} rotulo="Adicionar arquivo" aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo="Adicionar arquivo" aoCancelar={aoFechar} />
       </form>
     </Janela>
   );

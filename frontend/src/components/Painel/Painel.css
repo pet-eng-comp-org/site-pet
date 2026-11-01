@@ -345,6 +345,23 @@ button.botao-link {
   height: 1.1rem;
 }
 
+/* Erro e confirmação dentro da janela, junto dos botões. Vazios, não ocupam
+   espaço, mas existem desde o começo, para o leitor de tela anunciar. */
+.janela-erro,
+.janela-status {
+  margin: 1rem 0 0;
+  font-weight: 600;
+}
+
+.janela-erro {
+  color: #b3261e;
+}
+
+.janela-erro:empty,
+.janela-status:empty {
+  margin: 0;
+}
+
 .janela-acoes {
   display: flex;
   flex-wrap: wrap;
@@ -525,15 +542,12 @@ textarea.form-control {
   flex-direction: column;
   gap: 0.5rem;
   width: min(100% - 2rem, 26rem);
+  /* Vazio, o contêiner não pega clique; só os avisos. */
+  pointer-events: none;
 }
 
-/* No celular, os avisos ficam no alto, para não cobrir os botões de uma
-   janela aberta. */
-@media (max-width: 767.98px) {
-  .painel-avisos {
-    top: 1rem;
-    bottom: auto;
-  }
+.painel-aviso {
+  pointer-events: auto;
 }
 
 .janela h2:focus {

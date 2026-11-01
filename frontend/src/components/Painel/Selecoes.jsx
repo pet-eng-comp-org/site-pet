@@ -38,7 +38,7 @@ function Selecoes() {
   return (
     <section aria-labelledby="titulo-secao">
       <div className="painel-cabecalho">
-        <h2 id="titulo-secao">Seleções</h2>
+        <h2 id="titulo-secao" tabIndex={-1}>Seleções</h2>
         <button
           type="button"
           className="botao-principal"
@@ -132,7 +132,7 @@ function FormSelecao({ selecao, aoFechar, aoSalvar }) {
     formLink: selecao?.formLink || "",
   });
   const muda = (campo) => (e) => setF({ ...f, [campo]: e.target.value });
-  const { erros, enviando, aoEnviar } = useEnvio({
+  const { erros, enviando, aoEnviar, erroGeral } = useEnvio({
     prefixo: "selecao",
     validar: () => {
       const e = {};
@@ -176,7 +176,7 @@ function FormSelecao({ selecao, aoFechar, aoSalvar }) {
         <Campo id="selecao-formLink" rotulo="Link do formulário de inscrição" dica="O botão “Inscreva-se” do site leva para ele." erro={erros.formLink}>
           <input type="url" value={f.formLink} onChange={muda("formLink")} placeholder="https://forms.gle/…" />
         </Campo>
-        <Acoes enviando={enviando} rotulo={nova ? "Criar seleção" : "Salvar alterações"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={nova ? "Criar seleção" : "Salvar alterações"} aoCancelar={aoFechar} />
       </form>
     </Janela>
   );

@@ -9,6 +9,7 @@ import {
   Campo,
   Carregando,
   Confirmar,
+  ErroDaJanela,
   Janela,
   useAvisar,
   useEnvio,
@@ -29,7 +30,7 @@ function Projetos() {
   return (
     <section aria-labelledby="titulo-secao">
       <div className="painel-cabecalho">
-        <h2 id="titulo-secao">Projetos</h2>
+        <h2 id="titulo-secao" tabIndex={-1}>Projetos</h2>
         <button type="button" className="botao-principal" onClick={() => setAberto({ tipo: "novo" })}>
           Cadastrar projeto
         </button>
@@ -118,7 +119,7 @@ function FormProjeto({ projeto, aoFechar, aoSalvar }) {
     setF({ ...f, etiquetas: f.etiquetas.map((x, j) => (j === i ? { ...x, [campo]: e.target.value } : x)) });
   let criado;
 
-  const { erros, enviando, aoEnviar } = useEnvio({
+  const { erros, enviando, aoEnviar, erroGeral } = useEnvio({
     prefixo: "projeto",
     validar: () => {
       const e = {};
@@ -180,7 +181,7 @@ function FormProjeto({ projeto, aoFechar, aoSalvar }) {
             Adicionar link ou ferramenta
           </button>
         </fieldset>
-        <Acoes enviando={enviando} rotulo={novo ? "Cadastrar e enviar fotos" : "Salvar alterações"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={novo ? "Cadastrar e enviar fotos" : "Salvar alterações"} aoCancelar={aoFechar} />
       </form>
     </Janela>
   );
@@ -204,17 +205,20 @@ function Fotos({ projeto, aoFechar, aoMudar }) {
     alvo?.focus();
     setFoco(null);
   }, [foco, projeto.photos]);
-  const avisar = useAvisar();
+  // Erro e confirmação ficam dentro da janela (o aviso flutuante cobria
+  // parte dela no celular); a confirmação é anunciada pelo role=status.
+  const [erro, setErro] = useState("");
   const fazer = async (acao, sucesso) => {
     if (ocupado) return false;
     setOcupado(true);
+    setErro("");
     try {
       await acao();
       await aoMudar();
-      if (sucesso) avisar(sucesso);
+      if (sucesso) setAnuncio(sucesso);
       return true;
     } catch (err) {
-      avisar(erroDe(err), "erro");
+      setErro(erroDe(err));
       return false;
     } finally {
       setOcupado(false);
@@ -268,7 +272,7 @@ function Fotos({ projeto, aoFechar, aoMudar }) {
           </li>
         ))}
       </ol>
-      <p className="sr-only" role="status">{anuncio}</p>
+      <p className="janela-status" role="status">{anuncio}</p>
       <div className="campo">
         <label htmlFor="fotos-novas">{projeto.photos.length ? "Enviar mais fotos" : "Enviar o ícone e as fotos"}</label>
         <p className="campo-dica" id="fotos-dica">Pode escolher várias de uma vez; elas entram no fim, na ordem escolhida.</p>
@@ -288,6 +292,7 @@ function Fotos({ projeto, aoFechar, aoMudar }) {
         />
       </div>
       {ocupado && <p>Salvando…</p>}
+      <ErroDaJanela erro={erro} />
       <div className="janela-acoes">
         <button type="button" className="botao-principal" onClick={aoFechar}>
           Pronto
