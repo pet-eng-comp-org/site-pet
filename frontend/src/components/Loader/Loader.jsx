@@ -25,7 +25,7 @@ class Loader extends React.Component {
         <PropagateLoader
           cssOverride={override}
           size={15}
-          color={this.props.color ? this.props.color : "#186a6c"}
+          color={this.props.color || "var(--cor-acao)"}
           loading={this.state.loading}
         />
       </div>
