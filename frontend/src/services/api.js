@@ -15,9 +15,10 @@ api.interceptors.response.use(
       localStorage.removeItem("LOGINPET_TOKEN");
       sessionStorage.setItem("sessaoExpirou", "1");
       window.location.assign("/login");
-    } else {
-      return Promise.reject(error);
     }
+    // Rejeita também na sessão expirada: quem chamou não segue achando que
+    // deu certo enquanto a página troca.
+    return Promise.reject(error);
   }
 );
 

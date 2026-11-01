@@ -63,7 +63,9 @@ const projectsValidation = (data) => {
 const membersValidation = (data, edit) => {
   const schema = Joi.object({
     memberName: Joi.string().min(2).required(),
-    description: Joi.string().min(6).required(),
+    // Vazia só para egresso, que não aparece no site; o painel exige 6 a 160
+    // caracteres para quem está no PET.
+    description: Joi.string().allow("").max(160).required(),
     password: edit ? Joi.string() : Joi.string().min(6).required(),
     email: Joi.string().min(6).email().required(),
     phone: Joi.string().min(11).max(15).required(),
