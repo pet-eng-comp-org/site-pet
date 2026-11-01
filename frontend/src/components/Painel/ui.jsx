@@ -64,6 +64,19 @@ export const ComAvisos = ({ children }) => {
 
 // ---- Janela ------------------------------------------------------------------
 
+// Fechar pela pessoa (Esc, X, Cancelar) passa por aqui: com algo mudado no
+// formulário, pergunta antes de descartar. Fechar depois de salvar não passa.
+const FecharJanela = createContext(null);
+
+// O estado dos campos de um formulário, para saber se algo mudou desde que a
+// pessoa começou a mexer nele (voltar ao texto original conta como sem mudança).
+const estadoDosCampos = (form) =>
+  JSON.stringify(
+    [...form.elements].map((el) =>
+      el.type === "file" ? el.files.length : el.type === "checkbox" || el.type === "radio" ? el.checked : el.value
+    )
+  );
+
 // O <dialog> do navegador: prende o foco dentro dele, fecha com Esc e devolve
 // o foco ao botão que o abriu.
 // O foco ao abrir vai ao elemento marcado com data-foco-inicial; sem ele, ao
@@ -72,6 +85,19 @@ export const ComAvisos = ({ children }) => {
 export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo }) => {
   const ref = useRef();
   const idTitulo = useId();
+  // Retrato de cada formulário antes do primeiro toque nele; ao fechar, se
+  // algum mudou, a pergunta "Descartar as alterações?".
+  const retratos = useRef(new Map());
+  const [perguntando, setPerguntando] = useState(false);
+  const retratar = (e) => {
+    const form = e.target.closest?.("form");
+    if (form && ref.current.contains(form) && !retratos.current.has(form))
+      retratos.current.set(form, estadoDosCampos(form));
+  };
+  const mudou = () =>
+    [...retratos.current].some(([form, antes]) => form.isConnected && estadoDosCampos(form) !== antes);
+  const pedirFechar = () => (mudou() ? setPerguntando(true) : aoFechar());
+
   useEffect(() => {
     const d = ref.current;
     if (aberta && !d.open) {
@@ -86,6 +112,7 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
           d.querySelector(".janela-acoes button");
       primeiro?.focus();
       return () => {
+        retratos.current.clear();
         if (d.open) d.close();
         if (quemAbriu?.isConnected) quemAbriu.focus();
       };
@@ -106,21 +133,33 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
         if (e.key !== "Escape") return;
         e.preventDefault();
         e.stopPropagation();
-        aoFechar();
+        pedirFechar();
       }}
+      onFocusCapture={retratar}
+      onPointerDownCapture={retratar}
     >
       {aberta && (
-        <>
+        <FecharJanela.Provider value={pedirFechar}>
           <div className="janela-topo">
             <h2 id={idTitulo} tabIndex={-1}>
               {titulo}
             </h2>
-            <button type="button" className="janela-fechar" onClick={aoFechar} aria-label="Fechar">
+            <button type="button" className="janela-fechar" onClick={pedirFechar} aria-label="Fechar">
               <Icone nome="fechar" />
             </button>
           </div>
           {children}
-        </>
+          {perguntando && (
+            <Confirmar
+              titulo="Descartar as alterações?"
+              texto="O que você mudou nesta janela ainda não foi salvo."
+              acao="Descartar"
+              cancelar="Continuar editando"
+              aoConfirmar={aoFechar}
+              aoFechar={() => setPerguntando(false)}
+            />
+          )}
+        </FecharJanela.Provider>
       )}
     </dialog>
   );
@@ -128,7 +167,7 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
 
 // Pergunta antes de algo que não volta atrás. O botão diz o que acontece
 // ("Excluir notícia"), nunca só "Sim".
-export const Confirmar = ({ titulo, texto, acao, perigo = true, aoConfirmar, aoFechar }) => {
+export const Confirmar = ({ titulo, texto, acao, cancelar = "Cancelar", perigo = true, aoConfirmar, aoFechar }) => {
   const [enviando, setEnviando] = useState(false);
   const [erro, setErro] = useState("");
   const confirmar = async () => {
@@ -149,7 +188,7 @@ export const Confirmar = ({ titulo, texto, acao, perigo = true, aoConfirmar, aoF
       <ErroDaJanela erro={erro} />
       <div className="janela-acoes">
         <button type="button" className="botao-link" onClick={aoFechar}>
-          Cancelar
+          {cancelar}
         </button>
         <button
           type="button"
@@ -242,19 +281,23 @@ export const ErroDaJanela = ({ erro }) => {
   );
 };
 
-export const Acoes = ({ enviando, rotulo, aoCancelar, erro }) => (
-  <>
-    <ErroDaJanela erro={erro} />
-    <div className="janela-acoes">
-      <button type="button" className="botao-link" onClick={aoCancelar}>
-        Cancelar
-      </button>
-      <button type="submit" className="botao-principal" disabled={enviando}>
-        {enviando ? "Salvando…" : rotulo}
-      </button>
-    </div>
-  </>
-);
+// O Cancelar fecha a janela como o Esc e o X: perguntando antes, se algo mudou.
+export const Acoes = ({ enviando, rotulo, erro }) => {
+  const fechar = useContext(FecharJanela);
+  return (
+    <>
+      <ErroDaJanela erro={erro} />
+      <div className="janela-acoes">
+        <button type="button" className="botao-link" onClick={fechar}>
+          Cancelar
+        </button>
+        <button type="submit" className="botao-principal" disabled={enviando}>
+          {enviando ? "Salvando…" : rotulo}
+        </button>
+      </div>
+    </>
+  );
+};
 
 // ---- Dados -------------------------------------------------------------------
 

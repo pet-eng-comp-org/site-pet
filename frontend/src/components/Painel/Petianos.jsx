@@ -346,7 +346,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
           )}
         </fieldset>
 
-        <Acoes erro={erroGeral} enviando={enviando} rotulo={novo ? "Cadastrar petiano" : "Salvar alterações"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={novo ? "Cadastrar petiano" : "Salvar alterações"} />
       </form>
     </Janela>
   );
@@ -372,7 +372,7 @@ function Saida({ petiano, aoFechar, aoSalvar }) {
         <Campo id="saida-data" rotulo="Data de saída" erro={erros.data}>
           <input type="date" value={data} max={hoje} onChange={(e) => setData(e.target.value)} />
         </Campo>
-        <Acoes erro={erroGeral} enviando={enviando} rotulo="Registrar saída" aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo="Registrar saída" />
       </form>
     </Janela>
   );
