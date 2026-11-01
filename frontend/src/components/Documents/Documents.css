@@ -43,6 +43,7 @@
   align-items: center;
   gap: 0.75rem;
   min-height: 44px;
+  padding-block: 0.25rem;
   color: var(--cor-texto);
 }
 
@@ -53,6 +54,8 @@
 }
 
 .grupo-documentos .icone-svg {
+  /* Nome em duas linhas não espreme o ícone. */
+  flex-shrink: 0;
   color: var(--cor-acao);
   font-size: var(--texto);
 }

@@ -7,13 +7,15 @@
 @media (min-width: 568px) {
   .petiano {
     grid-template-columns: 140px 1fr;
-    /* A foto ocupa 140 px; o que sobrar fica na descrição, não entre nome e data. */
-    grid-template-rows: auto auto auto 1fr;
+    /* A foto ocupa 140 px; o que sobrar de altura fica numa linha vazia no
+       fim, e não entre a descrição e as etiquetas. */
+    grid-template-rows: auto auto auto auto 1fr;
     grid-template-areas:
       "PH NM"
       "PH SP"
       "PH DP"
-      "PH TG";
+      "PH TG"
+      "PH .";
   }
 }
 
