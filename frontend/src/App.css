@@ -300,12 +300,12 @@ html {
 /* Página de texto, sem nada ao lado: uma coluna de leitura no centro, em vez
    do texto à esquerda com meia tela vazia (Quem somos, página de projeto). */
 .coluna-leitura {
-  max-width: 38rem;
+  max-width: 36rem;
   margin-inline: auto;
 }
 
 .pagina.coluna-leitura {
-  max-width: calc(38rem + 2 * var(--margem));
+  max-width: calc(36rem + 2 * var(--margem));
 }
 
 /* Na coluna, o texto ocupa a largura dela (a medida já é a de leitura). */
