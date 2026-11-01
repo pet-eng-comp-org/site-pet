@@ -43,9 +43,20 @@
   margin-top: 1.5rem;
 }
 
-/* Ferramenta é rótulo, com ou sem link: o mesmo contorno nos dois casos. */
-.projeto-tags a,
+/* Ferramenta com link é uma pílula com contorno, que se toca; sem link, só
+   um rótulo, sem cara de botão. */
 .projeto-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  background: var(--cor-superficie-suave);
+  color: var(--cor-texto);
+  font-weight: 600;
+}
+
+.projeto-tags a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;

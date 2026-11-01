@@ -66,3 +66,11 @@
   font-size: 0.9rem;
   margin: -0.85rem 0 1.25rem;
 }
+
+.contato-sem-js {
+  display: none;
+}
+
+.sem-js .contato-sem-js {
+  display: block;
+}

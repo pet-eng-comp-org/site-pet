@@ -72,7 +72,7 @@ function ProjetoPagina() {
     goUp();
   }, [projeto]);
 
-  useTitulo(comission?.title || "Projetos");
+  useTitulo(comission === null ? "Página não encontrada" : comission?.title || "Projetos");
 
   if (comission === undefined)
     return (
@@ -94,46 +94,50 @@ function ProjetoPagina() {
 
   return (
     <div className="pagina">
-      <Link
-        className="projeto-voltar link-texto"
-        to={{ pathname: "/projetos", state: { voltar: true } }}
-      >
-        <span>Todos os projetos</span>
-      </Link>
-      <h1>{comission.title}</h1>
-      <p className="pagina-intro projeto-descricao">{comission.description}</p>
+      {/* O texto numa coluna de leitura, centrada; a galeria, embaixo, na
+          largura toda. Alinhado à esquerda, sobrava meia tela vazia. */}
+      <div className="coluna-leitura">
+        <Link
+          className="projeto-voltar link-texto"
+          to={{ pathname: "/projetos", state: { voltar: true } }}
+        >
+          <span>Todos os projetos</span>
+        </Link>
+        <h1>{comission.title}</h1>
+        <p className="pagina-intro projeto-descricao">{comission.description}</p>
 
-      {canais.length > 0 && (
-        <div className="projeto-acoes">
-          {canais.map((tag) => (
-            <a
-              key={tag._id}
-              className={/^site\b/i.test(tag.title.trim()) ? "botao-principal" : "botao-link"}
-              href={tag.link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {tag.title.trim()}
-            </a>
-          ))}
-        </div>
-      )}
+        {canais.length > 0 && (
+          <div className="projeto-acoes">
+            {canais.map((tag) => (
+              <a
+                key={tag._id}
+                className={/^site\b/i.test(tag.title.trim()) ? "botao-principal" : "botao-link"}
+                href={tag.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {tag.title.trim()}
+              </a>
+            ))}
+          </div>
+        )}
 
-      {ferramentas.length > 0 && (
-        <ul className="projeto-tags" aria-label="Ferramentas">
-          {ferramentas.map((tag) => (
-            <li key={tag._id}>
-              {tag.link ? (
-                <a href={tag.link} target="_blank" rel="noopener noreferrer">
-                  {tag.title.trim()}
-                </a>
-              ) : (
-                <span>{tag.title.trim()}</span>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+        {ferramentas.length > 0 && (
+          <ul className="projeto-tags" aria-label="Ferramentas">
+            {ferramentas.map((tag) => (
+              <li key={tag._id}>
+                {tag.link ? (
+                  <a href={tag.link} target="_blank" rel="noopener noreferrer">
+                    {tag.title.trim()}
+                  </a>
+                ) : (
+                  <span>{tag.title.trim()}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       {fotos.length > 0 && (
         <div className="projeto-fotos">

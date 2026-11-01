@@ -13,13 +13,23 @@ function Project({ title, description, icon, onClick }) {
     : "";
 
   return (
-    <Link className="projeto" to={`/projetos/${slug(title)}`} onClick={onClick}>
+    // O nome do link é o título; a frase vem como descrição. Antes o leitor
+    // de tela lia o cartão inteiro como nome, com 150 caracteres.
+    <Link
+      className="projeto"
+      to={`/projetos/${slug(title)}`}
+      onClick={onClick}
+      aria-labelledby={`projeto-${slug(title)}`}
+      aria-describedby={`projeto-${slug(title)}-frase`}
+    >
       <span className="projeto-icone">
         {src && <img src={src} alt="" loading="lazy" />}
       </span>
-      <h2>{title}</h2>
-      <p>{primeiraFrase(description)}</p>
-      <span className="projeto-mais">Saiba mais</span>
+      <h2 id={`projeto-${slug(title)}`}>{title}</h2>
+      <p id={`projeto-${slug(title)}-frase`}>{primeiraFrase(description)}</p>
+      <span className="projeto-mais" aria-hidden="true">
+        Saiba mais
+      </span>
     </Link>
   );
 }

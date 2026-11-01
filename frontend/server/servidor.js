@@ -95,17 +95,23 @@ const paginas = {
 };
 
 // A primeira frase da descrição do projeto, para a prévia do link.
-const primeiraFrase = (texto) =>
-  (texto.match(/^.*?[.!?](\s|$)/s)?.[0] || texto).trim().slice(0, 200);
+// Passando de 200 caracteres, corta no fim de uma palavra, com reticências:
+// cortada no meio, "Tutorial" virava "Tutoria" e parecia erro.
+const primeiraFrase = (texto) => {
+  const frase = (texto.match(/^.*?[.!?](\s|$)/s)?.[0] || texto).trim();
+  if (frase.length <= 200) return frase;
+  return `${frase.slice(0, 200).replace(/\s+\S*$/, "").replace(/[\s,;:]+$/, "")}…`;
+};
 
-// A primeira foto deitada da galeria: a prévia do link é larga, e foto em pé
-// sai cortada. Sem nenhuma, fica a imagem padrão do site.
+// A primeira foto deitada ou quadrada da galeria: a prévia do link é larga, e
+// foto em pé sai cortada. Sem nenhuma, fica a imagem padrão do site. A ordem
+// das fotos se muda no painel.
 const fotoDoProjeto = (c) => {
   const deitada = c.photos
     .slice(1)
     .find((id) => {
       const m = (c.medidas || []).find((f) => f._id === id);
-      return m && m.width >= 1.2 * m.height;
+      return m && m.width >= m.height;
     });
   return deitada ? `${API}api/file/getComissionPhoto/${deitada}?largura=800` : null;
 };

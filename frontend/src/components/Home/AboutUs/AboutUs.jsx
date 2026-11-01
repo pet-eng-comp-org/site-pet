@@ -17,7 +17,7 @@ const AboutUs = () => {
           <a href="https://www.gov.br/mec/pt-br/pet">Saiba mais no site do MEC</a>.
         </p>
         <div className="about-us-fotos">
-          <img alt="Petianos na JACEE" src={imagemNos2} loading="lazy" />
+          <img alt="Palestra no auditório durante a JACEE, a Jornada de Atualização em Computação, Elétrica e Eletrônica" src={imagemNos2} loading="lazy" />
           <img alt="Participantes do Topcom" src={imagemNos3} loading="lazy" />
         </div>
         <p>
