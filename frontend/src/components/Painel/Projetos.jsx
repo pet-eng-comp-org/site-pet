@@ -181,7 +181,7 @@ function FormProjeto({ projeto, aoFechar, aoSalvar }) {
             Adicionar link ou ferramenta
           </button>
         </fieldset>
-        <Acoes erro={erroGeral} enviando={enviando} rotulo={novo ? "Cadastrar e enviar fotos" : "Salvar alterações"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={novo ? "Cadastrar e enviar fotos" : "Salvar alterações"} />
       </form>
     </Janela>
   );
