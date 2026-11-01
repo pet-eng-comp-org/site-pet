@@ -64,6 +64,7 @@
 
 .painel-subtitulo {
   font-size: var(--titulo-cartao);
+  font-weight: 600;
   margin: 1.5rem 0 0.75rem;
 }
 
@@ -251,6 +252,7 @@ button.botao-link {
 /* Documentos: um cartão por grupo, como na página pública. */
 .painel-grupos {
   display: grid;
+  align-items: start;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 30rem), 1fr));
   gap: 1.5rem;
 }
@@ -523,6 +525,19 @@ textarea.form-control {
   flex-direction: column;
   gap: 0.5rem;
   width: min(100% - 2rem, 26rem);
+}
+
+/* No celular, os avisos ficam no alto, para não cobrir os botões de uma
+   janela aberta. */
+@media (max-width: 767.98px) {
+  .painel-avisos {
+    top: 1rem;
+    bottom: auto;
+  }
+}
+
+.janela h2:focus {
+  outline: none;
 }
 
 .painel-aviso {

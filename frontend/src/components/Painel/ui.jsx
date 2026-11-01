@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -26,13 +27,15 @@ export const ComAvisos = ({ children }) => {
   }, []);
 
   // Popover: fica na camada de cima, acima de uma janela aberta (que deixa o
-  // resto da página inerte). Reaberto a cada aviso, para ficar por cima.
+  // resto da página inerte). Fica sempre aberto, para o leitor de tela já
+  // conhecer as regiões antes do primeiro aviso, e é reaberto a cada aviso,
+  // para ficar acima de uma janela aberta depois.
   const ref = useRef();
   useEffect(() => {
     const el = ref.current;
     if (!el?.showPopover) return;
     if (el.matches(":popover-open")) el.hidePopover();
-    if (avisos.length) el.showPopover();
+    el.showPopover();
   }, [avisos]);
 
   return (
@@ -63,8 +66,12 @@ export const ComAvisos = ({ children }) => {
 
 // O <dialog> do navegador: prende o foco dentro dele, fecha com Esc e devolve
 // o foco ao botão que o abriu.
-export const Janela = ({ titulo, aberta, aoFechar, children, larga }) => {
+// O foco ao abrir vai ao elemento marcado com data-foco-inicial; sem ele, ao
+// primeiro campo ou, numa pergunta, ao "Cancelar"; com focoNoTitulo, ao título
+// (janela que não começa por um campo, como a de fotos).
+export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo }) => {
   const ref = useRef();
+  const idTitulo = useId();
   useEffect(() => {
     const d = ref.current;
     if (aberta && !d.open) {
@@ -72,8 +79,11 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga }) => {
       // "Cancelar"), e não ao X. Ao fechar, volta ao botão que abriu.
       const quemAbriu = document.activeElement;
       d.showModal();
-      const primeiro =
-        d.querySelector("input, select, textarea") || d.querySelector(".janela-acoes button");
+      const primeiro = focoNoTitulo
+        ? d.querySelector("h2")
+        : d.querySelector("[data-foco-inicial]") ||
+          d.querySelector("input, select, textarea") ||
+          d.querySelector(".janela-acoes button");
       primeiro?.focus();
       return () => {
         if (d.open) d.close();
@@ -87,17 +97,24 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga }) => {
     <dialog
       ref={ref}
       className={`janela ${larga ? "janela-larga" : ""}`}
-      aria-labelledby="janela-titulo"
+      aria-labelledby={idTitulo}
       onClose={aoFechar}
-      onCancel={(e) => {
+      // O Esc fecha só esta janela: sem isto, com uma pergunta aberta dentro
+      // de outra janela, o navegador fechava as duas.
+      onCancel={(e) => e.preventDefault()}
+      onKeyDown={(e) => {
+        if (e.key !== "Escape") return;
         e.preventDefault();
+        e.stopPropagation();
         aoFechar();
       }}
     >
       {aberta && (
         <>
           <div className="janela-topo">
-            <h2 id="janela-titulo">{titulo}</h2>
+            <h2 id={idTitulo} tabIndex={-1}>
+              {titulo}
+            </h2>
             <button type="button" className="janela-fechar" onClick={aoFechar} aria-label="Fechar">
               <Icone nome="fechar" />
             </button>
@@ -230,7 +247,13 @@ export const useLista = (caminho, extrair) => {
   useEffect(() => {
     recarregar();
   }, [recarregar]);
-  return { ...estado, recarregar };
+  // Depois de uma falha, "Tentar de novo" mostra o carregando: sem isso, a
+  // mesma mensagem voltava e o botão parecia não fazer nada.
+  const tentarDeNovo = () => {
+    setEstado({ carregando: true });
+    recarregar();
+  };
+  return { ...estado, recarregar, tentarDeNovo };
 };
 
 export const Carregando = ({ estado, children }) => {
@@ -239,7 +262,7 @@ export const Carregando = ({ estado, children }) => {
     return (
       <p className="alerta-erro" role="alert">
         {estado.erro}{" "}
-        <button type="button" className="botao-link" onClick={estado.recarregar}>
+        <button type="button" className="botao-link" onClick={estado.tentarDeNovo}>
           Tentar de novo
         </button>
       </p>
