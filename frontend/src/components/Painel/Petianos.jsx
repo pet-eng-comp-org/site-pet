@@ -72,7 +72,7 @@ function Petianos() {
   return (
     <section aria-labelledby="titulo-secao">
       <div className="painel-cabecalho">
-        <h2 id="titulo-secao">Petianos</h2>
+        <h2 id="titulo-secao" tabIndex={-1}>Petianos</h2>
         <button type="button" className="botao-principal" onClick={() => setAberto({ tipo: "novo" })}>
           Cadastrar petiano
         </button>
@@ -125,7 +125,15 @@ function Petianos() {
         }}
       </Carregando>
 
-      {(aberto?.tipo === "novo" || aberto?.tipo === "editar") && (
+      {/* O formulário só monta com a lista de projetos resolvida: as caixas
+          marcadas saem dela, e montado antes elas ficavam vazias e salvar
+          apagava os projetos da pessoa. */}
+      {(aberto?.tipo === "novo" || aberto?.tipo === "editar") && projetos.carregando && (
+        <Janela titulo={aberto.petiano ? `Editar ${aberto.petiano.memberName}` : "Cadastrar petiano"} aberta aoFechar={fechar}>
+          <p role="status">Carregando os projetos…</p>
+        </Janela>
+      )}
+      {(aberto?.tipo === "novo" || aberto?.tipo === "editar") && !projetos.carregando && (
         <FormPetiano
           petiano={aberto.petiano}
           projetos={projetos.dados || []}
@@ -203,7 +211,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
     return e;
   };
 
-  const { erros, enviando, aoEnviar } = useEnvio({
+  const { erros, enviando, aoEnviar, erroGeral } = useEnvio({
     prefixo: "petiano",
     validar,
     sucesso: novo ? `Cadastro de ${f.memberName.trim()} criado.` : "Alterações salvas.",
@@ -353,7 +361,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
           )}
         </fieldset>
 
-        <Acoes enviando={enviando} rotulo={novo ? "Cadastrar petiano" : "Salvar alterações"} aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo={novo ? "Cadastrar petiano" : "Salvar alterações"} aoCancelar={aoFechar} />
       </form>
     </Janela>
   );
@@ -362,7 +370,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
 function Saida({ petiano, aoFechar, aoSalvar }) {
   const hoje = new Date().toISOString().slice(0, 10);
   const [data, setData] = useState(hoje);
-  const { erros, enviando, aoEnviar } = useEnvio({
+  const { erros, enviando, aoEnviar, erroGeral } = useEnvio({
     prefixo: "saida",
     validar: () => (data ? {} : { data: "Escolha a data de saída." }),
     sucesso: `${petiano.memberName} passou para os egressos.`,
@@ -379,7 +387,7 @@ function Saida({ petiano, aoFechar, aoSalvar }) {
         <Campo id="saida-data" rotulo="Data de saída" erro={erros.data}>
           <input type="date" value={data} max={hoje} onChange={(e) => setData(e.target.value)} />
         </Campo>
-        <Acoes enviando={enviando} rotulo="Registrar saída" aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo="Registrar saída" aoCancelar={aoFechar} />
       </form>
     </Janela>
   );

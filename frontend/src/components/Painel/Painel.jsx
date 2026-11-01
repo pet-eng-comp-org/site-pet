@@ -25,7 +25,7 @@ const secoes = [
 function TrocarSenha({ aoFechar }) {
   const [f, setF] = useState({ atual: "", nova: "", repetida: "" });
   const muda = (c) => (e) => setF({ ...f, [c]: e.target.value });
-  const { erros, enviando, aoEnviar } = useEnvio({
+  const { erros, enviando, aoEnviar, erroGeral } = useEnvio({
     prefixo: "senha",
     validar: () => {
       const e = {};
@@ -56,7 +56,7 @@ function TrocarSenha({ aoFechar }) {
         <Campo id="senha-repetida" rotulo="Senha nova, de novo" erro={erros.repetida}>
           <input type="password" autoComplete="new-password" value={f.repetida} onChange={muda("repetida")} />
         </Campo>
-        <Acoes enviando={enviando} rotulo="Trocar senha" aoCancelar={aoFechar} />
+        <Acoes erro={erroGeral} enviando={enviando} rotulo="Trocar senha" aoCancelar={aoFechar} />
       </form>
     </Janela>
   );

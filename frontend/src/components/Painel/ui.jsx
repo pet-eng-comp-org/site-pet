@@ -130,14 +130,15 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
 // ("Excluir notícia"), nunca só "Sim".
 export const Confirmar = ({ titulo, texto, acao, perigo = true, aoConfirmar, aoFechar }) => {
   const [enviando, setEnviando] = useState(false);
-  const avisar = useAvisar();
+  const [erro, setErro] = useState("");
   const confirmar = async () => {
     setEnviando(true);
+    setErro("");
     try {
       await aoConfirmar();
       aoFechar();
     } catch (err) {
-      avisar(erroDe(err), "erro");
+      setErro(erroDe(err));
     } finally {
       setEnviando(false);
     }
@@ -145,6 +146,7 @@ export const Confirmar = ({ titulo, texto, acao, perigo = true, aoConfirmar, aoF
   return (
     <Janela titulo={titulo} aberta aoFechar={aoFechar}>
       <p>{texto}</p>
+      <ErroDaJanela erro={erro} />
       <div className="janela-acoes">
         <button type="button" className="botao-link" onClick={aoFechar}>
           Cancelar
@@ -194,10 +196,12 @@ export const Campo = ({ id, rotulo, dica, erro, children }) => (
 export const useEnvio = ({ validar, enviar, prefixo, aoTerminar, sucesso }) => {
   const [erros, setErros] = useState({});
   const [enviando, setEnviando] = useState(false);
+  const [erroGeral, setErroGeral] = useState("");
   const avisar = useAvisar();
 
   const aoEnviar = async (e) => {
     e.preventDefault();
+    setErroGeral("");
     const achados = validar();
     setErros(achados);
     const primeiro = Object.keys(achados)[0];
@@ -211,23 +215,34 @@ export const useEnvio = ({ validar, enviar, prefixo, aoTerminar, sucesso }) => {
       avisar(sucesso);
       aoTerminar();
     } catch (err) {
-      avisar(erroDe(err), "erro");
+      setErroGeral(erroDe(err));
     } finally {
       setEnviando(false);
     }
   };
-  return { erros, enviando, aoEnviar };
+  return { erros, enviando, aoEnviar, erroGeral };
 };
 
-export const Acoes = ({ enviando, rotulo, aoCancelar }) => (
-  <div className="janela-acoes">
-    <button type="button" className="botao-link" onClick={aoCancelar}>
-      Cancelar
-    </button>
-    <button type="submit" className="botao-principal" disabled={enviando}>
-      {enviando ? "Salvando…" : rotulo}
-    </button>
-  </div>
+// Erro de quem está numa janela aparece dentro dela, junto dos botões: um
+// aviso flutuante cobria parte da janela no celular.
+export const ErroDaJanela = ({ erro }) => (
+  <p className="janela-erro" role="alert">
+    {erro}
+  </p>
+);
+
+export const Acoes = ({ enviando, rotulo, aoCancelar, erro }) => (
+  <>
+    <ErroDaJanela erro={erro} />
+    <div className="janela-acoes">
+      <button type="button" className="botao-link" onClick={aoCancelar}>
+        Cancelar
+      </button>
+      <button type="submit" className="botao-principal" disabled={enviando}>
+        {enviando ? "Salvando…" : rotulo}
+      </button>
+    </div>
+  </>
 );
 
 // ---- Dados -------------------------------------------------------------------
@@ -250,6 +265,8 @@ export const useLista = (caminho, extrair) => {
   // Depois de uma falha, "Tentar de novo" mostra o carregando: sem isso, a
   // mesma mensagem voltava e o botão parecia não fazer nada.
   const tentarDeNovo = () => {
+    // O botão some: o foco vai ao título da seção, e não ao começo da página.
+    document.getElementById("titulo-secao")?.focus();
     setEstado({ carregando: true });
     recarregar();
   };
