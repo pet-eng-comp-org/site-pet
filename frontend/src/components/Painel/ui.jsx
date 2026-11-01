@@ -96,7 +96,14 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
   };
   const mudou = () =>
     [...retratos.current].some(([form, antes]) => form.isConnected && estadoDosCampos(form) !== antes);
-  const pedirFechar = () => (mudou() ? setPerguntando(true) : aoFechar());
+  const pedirFechar = () => {
+    // Campo fora de formulário se salva ao perder o foco (a descrição de cada
+    // foto): tira o foco antes de fechar, senão o Esc fechava sem salvar.
+    const ativo = document.activeElement;
+    if (ref.current.contains(ativo) && !ativo.closest("form")) ativo.blur();
+    if (mudou()) setPerguntando(true);
+    else aoFechar();
+  };
 
   useEffect(() => {
     const d = ref.current;
