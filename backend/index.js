@@ -5,7 +5,7 @@ const express = require("express");
 // abaixo e vira 500.
 require("express-async-errors");
 const mongoose = require("mongoose");
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 const cors = require("cors");
 
 const app = express();
