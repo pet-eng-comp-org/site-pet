@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - infra/docker-node18
   # Em pull request os testes rodam e as imagens sao construidas sem publicar.
   pull_request:
   workflow_dispatch:
@@ -40,7 +39,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          # A versao da imagem (Dockerfile: node:18-alpine).
+          # A versao da imagem (backend/Dockerfile: node:24-alpine).
           node-version: 24
           cache: npm
           cache-dependency-path: backend/package-lock.json
