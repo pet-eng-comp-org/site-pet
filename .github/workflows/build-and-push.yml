@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - infra/docker-node18
   # Em pull request os testes rodam e as imagens sao construidas sem publicar.
   pull_request:
   workflow_dispatch:
