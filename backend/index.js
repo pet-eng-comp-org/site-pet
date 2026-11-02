@@ -1,9 +1,7 @@
+// O Express 5 leva o erro de funcao async ao handler do fim deste arquivo, que
+// responde 500. No 4, a promise rejeitada derrubava o processo (um GET
+// /api/login/ sem cabecalho bastava).
 const express = require("express");
-// Express 4 nao captura erro de funcao async: a promise rejeitada virava
-// unhandledRejection e o Node encerrava o processo. Um GET /api/login/ sem
-// cabecalho bastava para derrubar a API. Com isto, o erro chega ao handler
-// abaixo e vira 500.
-require("express-async-errors");
 const mongoose = require("mongoose");
 require("dotenv").config({ quiet: true });
 const cors = require("cors");
@@ -64,6 +62,12 @@ setInterval(async () => {
 app.set("trust proxy", 1);
 
 app.use(express.json());
+// No Express 5, pedido sem corpo deixa req.body undefined (no 4 era {}): sem
+// isto, um POST vazio viraria 500 em vez do 400 da validação.
+app.use((req, res, next) => {
+  req.body ??= {};
+  next();
+});
 app.use(cors());
 
 app.get("/health", (req, res) =>
