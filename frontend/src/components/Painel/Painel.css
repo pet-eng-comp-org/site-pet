@@ -30,18 +30,18 @@
   align-items: center;
   min-height: 44px;
   padding: 0 1rem;
-  border-radius: 999px;
+  border-radius: var(--raio-capsula);
   color: var(--cor-texto);
   font-weight: 600;
 }
 
 .painel-secoes a:hover {
-  background: var(--cor-superficie-suave);
+  background: var(--cor-preenchimento);
 }
 
 .painel-secoes a.ativa {
   background: var(--cor-acao-fundo);
-  color: #fff;
+  color: var(--cor-texto-sobre-acao);
 }
 
 .painel-cabecalho {
@@ -92,32 +92,33 @@ button.botao-link {
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  padding: 0 1rem;
-  border-radius: 8px;
+  padding: 0 1.25rem;
+  border-radius: var(--raio-capsula);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
 }
 
+/* Botão tingido do kit: preenchimento cinza translúcido, texto na cor de ação. */
 .botao-secundario {
-  background: var(--cor-superficie);
-  border: 1px solid var(--cor-acao);
+  background: var(--cor-preenchimento);
+  border: 0;
   color: var(--cor-acao);
 }
 
 .botao-secundario:hover {
-  background: var(--cor-hover);
+  filter: brightness(0.92);
 }
 
-/* Vermelho com 6,4:1 sobre o branco. */
+/* Destrutivo cheio: 6,9:1 no claro e 5,6:1 no escuro. */
 .botao-perigo {
-  background: #b3261e;
+  background: var(--cor-erro);
   border: 0;
-  color: #fff;
+  color: var(--cor-texto-sobre-erro);
 }
 
 .botao-perigo:hover {
-  background: #8c1d18;
+  filter: brightness(0.9);
 }
 
 .botao-texto-perigo {
@@ -193,7 +194,7 @@ button.botao-link {
 }
 
 .painel-foto-quadrada {
-  border-radius: 8px;
+  border-radius: 12px;
   object-position: center;
 }
 
@@ -266,7 +267,7 @@ button.botao-link {
 
 .painel-cartao {
   padding: 1.25rem 1.5rem 1.5rem;
-  border-radius: 16px;
+  border-radius: var(--raio-cartao);
   background: var(--cor-superficie);
 }
 
@@ -306,10 +307,11 @@ button.botao-link {
   max-height: calc(100% - 2rem);
   padding: 1.5rem;
   border: 0;
-  border-radius: 16px;
-  background: var(--cor-superficie);
+  border-radius: var(--raio-folha);
+  background: var(--cor-folha);
   color: var(--cor-texto);
-  box-shadow: 0 10px 40px rgba(27, 63, 63, 0.3);
+  /* Folha (sheet) do kit: raio 32 e esta sombra. */
+  box-shadow: 0 15px 37.5px rgba(0, 0, 0, 0.18);
   /* Rolar até o fim da janela não passa a rolar a página atrás. */
   overscroll-behavior: contain;
 }
@@ -324,7 +326,7 @@ html:has(.janela[open]) {
 }
 
 .janela::backdrop {
-  background: rgba(27, 63, 63, 0.55);
+  background: var(--cor-sobreposicao);
 }
 
 .janela-topo {
@@ -348,9 +350,10 @@ html:has(.janela[open]) {
   width: 44px;
   height: 44px;
   margin: -0.25rem -0.5rem 0 0;
-  background: none;
+  /* Botão redondo, como o X das folhas do kit. */
+  background: var(--cor-preenchimento);
   border: 0;
-  border-radius: 8px;
+  border-radius: 50%;
   color: var(--cor-texto);
   cursor: pointer;
 }
@@ -458,7 +461,7 @@ textarea.form-control {
 .painel-form-foto .painel-previa-larga {
   width: 160px;
   height: 90px;
-  border-radius: 8px;
+  border-radius: 12px;
   object-position: center;
 }
 
@@ -525,7 +528,7 @@ textarea.form-control {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 12px;
   background: var(--cor-superficie-suave);
 }
 
@@ -599,11 +602,12 @@ textarea.form-control {
   border-radius: 12px;
   background: var(--cor-rodape);
   color: #fff;
-  box-shadow: 0 6px 20px rgba(27, 63, 63, 0.3);
+  box-shadow: 0 15px 37.5px rgba(0, 0, 0, 0.18);
 }
 
 .painel-aviso-erro {
-  background: #b3261e;
+  background: var(--cor-erro);
+  color: var(--cor-texto-sobre-erro);
 }
 
 .painel-aviso button {
@@ -616,7 +620,7 @@ textarea.form-control {
   margin: -0.5rem -0.5rem -0.5rem 0;
   background: none;
   border: 0;
-  color: #fff;
+  color: inherit;
   cursor: pointer;
 }
 

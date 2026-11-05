@@ -13,8 +13,26 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.4375rem max(var(--margem), calc((100% - 1140px) / 2));
+  /* Liquid Glass: a barra é a camada de controles e flutua sobre o conteúdo,
+     que aparece borrado por baixo ao rolar. Sem suporte ao filtro, fica sólida. */
   background: var(--cor-superficie);
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-bottom: 0.5px solid var(--cor-separador);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .barra {
+    background: var(--vidro-fundo);
+    -webkit-backdrop-filter: var(--vidro-filtro);
+    backdrop-filter: var(--vidro-filtro);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .barra {
+    background: var(--cor-superficie);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 /* 120 px de largura, o mínimo do guia da identidade para o logo sem "UFES"

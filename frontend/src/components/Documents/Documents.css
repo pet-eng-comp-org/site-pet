@@ -19,7 +19,7 @@
   break-inside: avoid;
   margin-bottom: 1.5rem;
   background: var(--cor-superficie);
-  border-radius: 16px;
+  border-radius: var(--raio-cartao);
   padding: 1.5rem 1.5rem 1rem;
 }
 
