@@ -43,11 +43,47 @@
 
 .petiano-foto {
   grid-area: PH;
+  position: relative;
   width: 140px;
   height: 140px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* Na foto dupla, "cover" num círculo mostra só a metade de cima (a de sempre);
+   a cópia com a metade de baixo (a descontraída) aparece por cima dela. */
+.petiano-foto img {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: top;
-  border-radius: 50%;
+}
+
+.petiano-foto .petiano-foto-descontraida {
+  position: absolute;
+  inset: 0;
+  object-position: bottom;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* No celular o toque alterna (classe "virada"); o :hover lá grudaria depois do
+   toque e a foto não voltaria. */
+.petiano-foto-dupla.virada .petiano-foto-descontraida {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .petiano-foto-dupla:hover .petiano-foto-descontraida {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petiano-foto .petiano-foto-descontraida {
+    transition: none;
+  }
 }
 
 .petiano-redes {
