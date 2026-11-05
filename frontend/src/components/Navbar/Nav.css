@@ -22,6 +22,7 @@
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .barra {
     background: var(--vidro-fundo);
+    box-shadow: var(--vidro-brilho);
     -webkit-backdrop-filter: var(--vidro-filtro);
     backdrop-filter: var(--vidro-filtro);
   }
@@ -72,14 +73,19 @@
   text-decoration: none;
 }
 
+/* Sobre o vidro, o texto fica sempre na cor do texto (o verde cairia a 3:1
+   com uma foto escura atrás): o estado aparece pelo sublinhado. */
 .barra-link:hover,
 .barra-link:focus {
-  color: var(--cor-acao);
+  text-decoration: underline;
+  text-decoration-color: var(--cor-acao);
+  text-underline-offset: 6px;
 }
 
 .active-link {
-  color: var(--cor-acao);
+  font-weight: 600;
   text-decoration: underline;
+  text-decoration-color: var(--cor-acao);
   text-decoration-thickness: 2px;
   text-underline-offset: 6px;
 }
