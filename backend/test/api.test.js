@@ -405,4 +405,29 @@ describe("imagens", () => {
     await conexao.db.collection("comissions").deleteOne({ _id: insertedId });
     await conexao.db.collection("files").deleteOne({ _id: foto.insertedId });
   });
+  // O painel monta a foto do petiano com a descontraída embaixo (280 x 560);
+  // o limite do servidor não pode cortar a metade de cada uma.
+  it("foto dupla de petiano chega inteira, e uma maior encolhe para 280 x 560", async () => {
+    const auth = { authorization: `Bearer ${await entra()}` };
+    const { members } = await (await api("GET", "/api/members/")).json();
+    const { _id } = members.find((m) => m.memberName === "Membro Teste");
+    const envia = async (rota, largura) => {
+      const png = await sharp({ create: { width: largura, height: largura * 2, channels: 3, background: "#186a6c" } })
+        .png()
+        .toBuffer();
+      const corpo = new FormData();
+      corpo.append("profilePhoto", new Blob([png], { type: "image/png" }), "foto.png");
+      const r = await fetch(`${BASE}/api/members/${rota}/${_id}`, { method: "PATCH", headers: auth, body: corpo });
+      assert.equal(r.status, 200, await r.clone().text());
+      const membro = (await (await api("GET", "/api/members/")).json()).members.find((m) => m._id === _id);
+      const arquivo = path.join(RAIZ, "uploads", "members", membro.profilePhoto.key);
+      const { width, height } = await sharp(arquivo).metadata();
+      return [width, height, arquivo];
+    };
+    const [w1, h1] = await envia("firstProfilePhoto", 280);
+    assert.deepEqual([w1, h1], [280, 560]);
+    const [w2, h2, arquivo] = await envia("updateProfilePhoto", 1000);
+    assert.deepEqual([w2, h2], [280, 560]);
+    fs.rmSync(arquivo, { force: true });
+  });
 });
