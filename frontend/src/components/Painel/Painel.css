@@ -41,7 +41,7 @@
 
 .painel-secoes a.ativa {
   background: var(--cor-acao-fundo);
-  color: #fff;
+  color: var(--cor-texto-sobre-acao);
 }
 
 .painel-cabecalho {
@@ -92,16 +92,17 @@ button.botao-link {
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  padding: 0 1rem;
-  border-radius: 8px;
+  padding: 0 1.25rem;
+  border-radius: var(--raio-capsula);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
 }
 
+/* Botão tingido do kit: preenchimento cinza translúcido, texto na cor de ação. */
 .botao-secundario {
-  background: var(--cor-superficie);
-  border: 1px solid var(--cor-acao);
+  background: var(--cor-preenchimento);
+  border: 0;
   color: var(--cor-acao);
 }
 
@@ -109,15 +110,15 @@ button.botao-link {
   background: var(--cor-hover);
 }
 
-/* Vermelho com 6,4:1 sobre o branco. */
+/* Destrutivo cheio: 6,9:1 no claro e 5,6:1 no escuro. */
 .botao-perigo {
-  background: #b3261e;
+  background: var(--cor-erro);
   border: 0;
-  color: #fff;
+  color: var(--cor-texto-sobre-erro);
 }
 
 .botao-perigo:hover {
-  background: #8c1d18;
+  filter: brightness(0.9);
 }
 
 .botao-texto-perigo {
@@ -266,7 +267,7 @@ button.botao-link {
 
 .painel-cartao {
   padding: 1.25rem 1.5rem 1.5rem;
-  border-radius: 16px;
+  border-radius: var(--raio-cartao);
   background: var(--cor-superficie);
 }
 
@@ -306,10 +307,11 @@ button.botao-link {
   max-height: calc(100% - 2rem);
   padding: 1.5rem;
   border: 0;
-  border-radius: 16px;
-  background: var(--cor-superficie);
+  border-radius: var(--raio-folha);
+  background: var(--cor-fundo);
   color: var(--cor-texto);
-  box-shadow: 0 10px 40px rgba(27, 63, 63, 0.3);
+  /* Folha (sheet) do kit: raio 32 e esta sombra. */
+  box-shadow: 0 15px 37.5px rgba(0, 0, 0, 0.18);
 }
 
 .janela-larga {
@@ -317,7 +319,7 @@ button.botao-link {
 }
 
 .janela::backdrop {
-  background: rgba(27, 63, 63, 0.55);
+  background: var(--cor-sobreposicao);
 }
 
 .janela-topo {
@@ -341,9 +343,10 @@ button.botao-link {
   width: 44px;
   height: 44px;
   margin: -0.25rem -0.5rem 0 0;
-  background: none;
+  /* Botão redondo de vidro, como o X das folhas do kit. */
+  background: var(--cor-preenchimento);
   border: 0;
-  border-radius: 8px;
+  border-radius: 50%;
   color: var(--cor-texto);
   cursor: pointer;
 }

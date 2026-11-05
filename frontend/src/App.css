@@ -110,7 +110,7 @@ label {
   color: var(--cor-texto);
   background: var(--cor-superficie);
   border: 1px solid var(--cor-borda-campo);
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 /* Foco visível: com o tema antigo, o campo focado não mudava em nada. */
@@ -129,59 +129,82 @@ label {
   color: var(--cor-alerta-texto);
   background: var(--cor-alerta-fundo);
   border: 1px solid var(--cor-alerta-borda);
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 /* Margem lateral do conteúdo: 16 px no celular e 32 px do tablet em diante,
    até a coluna de 1140 px ficar com margem maior que isso. */
-/* Cores por papel. No claro, as da identidade; no escuro (preferência do
-   aparelho), o fundo vira a tinta e o texto, o creme. O verde da marca fica
-   nos botões e nas faixas; em texto e borda sobre o escuro, um verde claro,
-   para ler bem (contraste de 4,5:1 ou mais). */
+/* Cores por função, no padrão dos kits da Apple (Figma da identidade, página
+   "Sistema (padrão Apple)"): fundo agrupado cinza com cartões brancos, texto
+   em tinta, separadores neutros e uma única cor de ação, o verde do PET, no
+   papel que o azul tem na Apple. No escuro, os valores do kit. */
 :root {
   color-scheme: light dark;
-  --cor-fundo: #fff2e1;
+  --cor-fundo: #f2f2f7;
   --cor-superficie: #fff;
-  --cor-superficie-suave: #f0e4d4;
-  --cor-hover: #e6f0ef;
+  --cor-superficie-suave: #f2f2f7;
+  --cor-hover: rgba(118, 118, 128, 0.12);
   --cor-texto: #1b3f3f;
-  --cor-texto-suave: #4b6262;
+  --cor-texto-suave: rgba(60, 60, 67, 0.75);
+  --cor-texto-dica: rgba(60, 60, 67, 0.55);
   --cor-acao: #186a6c;
   --cor-acao-fundo: #186a6c;
   --cor-acao-forte: #1b3f3f;
+  --cor-texto-sobre-acao: #fff;
+  --cor-texto-sobre-erro: #fff;
+  --cor-preenchimento: rgba(120, 120, 128, 0.16);
   --cor-faixa-verde: #186a6c;
   --cor-rodape: #1b3f3f;
-  --cor-linha: #e6d8c4;
-  --cor-borda-campo: #7a8a8a;
-  --cor-erro: #b3261e;
+  --cor-linha: #c6c6c8;
+  --cor-separador: rgba(0, 0, 0, 0.12);
+  --cor-borda-campo: #8e8e93;
+  --cor-erro: #a3321f;
+  --cor-erro-fundo: rgba(163, 50, 31, 0.12);
   --cor-ok: #1e6b3a;
   --cor-ok-fundo: #e3f1ec;
   --cor-alerta-fundo: #f8d7da;
   --cor-alerta-borda: #f5c6cb;
   --cor-alerta-texto: #721c24;
+  --cor-sobreposicao: rgba(0, 0, 0, 0.2);
+  /* Liquid Glass, só na camada de controles (barra do topo, botões de janela):
+     frost 16 e opacidade 25 do kit. */
+  --vidro-fundo: rgba(255, 255, 255, 0.72);
+  --vidro-filtro: blur(16px) saturate(180%);
+  --raio-capsula: 999px;
+  --raio-cartao: 20px;
+  --raio-grupo: 26px;
+  --raio-folha: 32px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --cor-fundo: #0f2424;
-    --cor-superficie: #183636;
-    --cor-superficie-suave: #214343;
-    --cor-hover: #214343;
-    --cor-texto: #eef0e8;
-    --cor-texto-suave: #b4c4c1;
-    --cor-acao: #7fd3d5;
-    --cor-acao-fundo: #1d7a7c;
-    --cor-acao-forte: #239294;
+    --cor-fundo: #000;
+    --cor-superficie: #1c1c1e;
+    --cor-superficie-suave: #2c2c2e;
+    --cor-hover: rgba(118, 118, 128, 0.24);
+    --cor-texto: #fff;
+    --cor-texto-suave: rgba(235, 235, 245, 0.7);
+    --cor-texto-dica: rgba(235, 235, 245, 0.5);
+    --cor-acao: #56c4c6;
+    --cor-acao-fundo: #56c4c6;
+    --cor-acao-forte: #8fd9da;
+    --cor-texto-sobre-acao: #1b3f3f;
+  --cor-texto-sobre-erro: #1c1c1e;
+    --cor-preenchimento: rgba(120, 120, 128, 0.32);
     --cor-faixa-verde: #154f51;
-    --cor-rodape: #0a1a1a;
-    --cor-linha: #2c5050;
-    --cor-borda-campo: #8ea1a0;
-    --cor-erro: #ff9b8f;
-    --cor-ok: #8ad9a2;
+    --cor-rodape: #1c1c1e;
+    --cor-linha: #38383a;
+    --cor-separador: rgba(255, 255, 255, 0.17);
+    --cor-borda-campo: #8e8e93;
+    --cor-erro: #ff6b5e;
+    --cor-erro-fundo: rgba(255, 107, 94, 0.16);
+    --cor-ok: #4cd471;
     --cor-ok-fundo: #173d2a;
     --cor-alerta-fundo: #3d1715;
     --cor-alerta-borda: #6b2a26;
     --cor-alerta-texto: #ffb4ab;
+    --cor-sobreposicao: rgba(0, 0, 0, 0.48);
+    --vidro-fundo: rgba(28, 28, 30, 0.72);
   }
 }
 
@@ -340,10 +363,10 @@ html {
   min-height: 48px;
   padding: 0 1.5rem;
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--raio-capsula);
   cursor: pointer;
   background: var(--cor-acao-fundo);
-  color: #fff;
+  color: var(--cor-texto-sobre-acao);
   font-weight: 600;
   font-size: var(--texto);
 }
@@ -351,7 +374,7 @@ html {
 .botao-principal:hover,
 .botao-principal:focus {
   background: var(--cor-acao-forte);
-  color: #fff;
+  color: var(--cor-texto-sobre-acao);
 }
 
 .botao-principal:disabled {
