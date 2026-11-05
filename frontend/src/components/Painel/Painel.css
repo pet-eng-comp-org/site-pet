@@ -30,7 +30,7 @@
   align-items: center;
   min-height: 44px;
   padding: 0 1rem;
-  border-radius: 999px;
+  border-radius: var(--raio-capsula);
   color: var(--cor-texto);
   font-weight: 600;
 }
@@ -107,7 +107,7 @@ button.botao-link {
 }
 
 .botao-secundario:hover {
-  background: var(--cor-hover);
+  filter: brightness(0.92);
 }
 
 /* Destrutivo cheio: 6,9:1 no claro e 5,6:1 no escuro. */
@@ -194,7 +194,7 @@ button.botao-link {
 }
 
 .painel-foto-quadrada {
-  border-radius: 8px;
+  border-radius: 12px;
   object-position: center;
 }
 
@@ -308,7 +308,7 @@ button.botao-link {
   padding: 1.5rem;
   border: 0;
   border-radius: var(--raio-folha);
-  background: var(--cor-fundo);
+  background: var(--cor-folha);
   color: var(--cor-texto);
   /* Folha (sheet) do kit: raio 32 e esta sombra. */
   box-shadow: 0 15px 37.5px rgba(0, 0, 0, 0.18);
@@ -454,7 +454,7 @@ textarea.form-control {
 .painel-form-foto .painel-previa-larga {
   width: 160px;
   height: 90px;
-  border-radius: 8px;
+  border-radius: 12px;
   object-position: center;
 }
 
@@ -521,7 +521,7 @@ textarea.form-control {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 12px;
   background: var(--cor-superficie-suave);
 }
 

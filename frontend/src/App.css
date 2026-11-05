@@ -142,11 +142,10 @@ label {
   color-scheme: light dark;
   --cor-fundo: #f2f2f7;
   --cor-superficie: #fff;
-  --cor-superficie-suave: #f2f2f7;
+  --cor-superficie-suave: #e5e5ea;
   --cor-hover: rgba(118, 118, 128, 0.12);
   --cor-texto: #1b3f3f;
   --cor-texto-suave: rgba(60, 60, 67, 0.75);
-  --cor-texto-dica: rgba(60, 60, 67, 0.55);
   --cor-acao: #186a6c;
   --cor-acao-fundo: #186a6c;
   --cor-acao-forte: #1b3f3f;
@@ -159,20 +158,21 @@ label {
   --cor-separador: rgba(0, 0, 0, 0.12);
   --cor-borda-campo: #8e8e93;
   --cor-erro: #a3321f;
-  --cor-erro-fundo: rgba(163, 50, 31, 0.12);
   --cor-ok: #1e6b3a;
   --cor-ok-fundo: #e3f1ec;
   --cor-alerta-fundo: #f8d7da;
   --cor-alerta-borda: #f5c6cb;
   --cor-alerta-texto: #721c24;
   --cor-sobreposicao: rgba(0, 0, 0, 0.2);
+  /* Folha (janela): o fundo agrupado; no escuro, o fundo elevado do kit, que
+     se destaca do preto. */
+  --cor-folha: #f2f2f7;
   /* Liquid Glass, só na camada de controles (barra do topo, botões de janela):
      frost 16 e opacidade 25 do kit. */
   --vidro-fundo: rgba(255, 255, 255, 0.72);
   --vidro-filtro: blur(16px) saturate(180%);
   --raio-capsula: 999px;
   --raio-cartao: 20px;
-  --raio-grupo: 26px;
   --raio-folha: 32px;
 }
 
@@ -184,12 +184,14 @@ label {
     --cor-hover: rgba(118, 118, 128, 0.24);
     --cor-texto: #fff;
     --cor-texto-suave: rgba(235, 235, 245, 0.7);
-    --cor-texto-dica: rgba(235, 235, 245, 0.5);
     --cor-acao: #56c4c6;
-    --cor-acao-fundo: #56c4c6;
-    --cor-acao-forte: #8fd9da;
-    --cor-texto-sobre-acao: #1b3f3f;
-  --cor-texto-sobre-erro: #1c1c1e;
+    /* Fundo de ação que leva conteúdo branco (botão, aba ativa, ícone de
+       projeto): o verde médio, 5,1:1 com o branco. O verde-claro fica para
+       texto e borda. */
+    --cor-acao-fundo: #1d7a7c;
+    --cor-acao-forte: #239294;
+    --cor-texto-sobre-acao: #fff;
+    --cor-texto-sobre-erro: #1c1c1e;
     --cor-preenchimento: rgba(120, 120, 128, 0.32);
     --cor-faixa-verde: #154f51;
     --cor-rodape: #1c1c1e;
@@ -197,13 +199,13 @@ label {
     --cor-separador: rgba(255, 255, 255, 0.17);
     --cor-borda-campo: #8e8e93;
     --cor-erro: #ff6b5e;
-    --cor-erro-fundo: rgba(255, 107, 94, 0.16);
     --cor-ok: #4cd471;
     --cor-ok-fundo: #173d2a;
     --cor-alerta-fundo: #3d1715;
     --cor-alerta-borda: #6b2a26;
     --cor-alerta-texto: #ffb4ab;
     --cor-sobreposicao: rgba(0, 0, 0, 0.48);
+    --cor-folha: #1c1c1e;
     --vidro-fundo: rgba(28, 28, 30, 0.72);
   }
 }
