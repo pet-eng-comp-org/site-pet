@@ -36,7 +36,7 @@
 }
 
 .painel-secoes a:hover {
-  background: var(--cor-superficie-suave);
+  background: var(--cor-preenchimento);
 }
 
 .painel-secoes a.ativa {
@@ -350,7 +350,7 @@ html:has(.janela[open]) {
   width: 44px;
   height: 44px;
   margin: -0.25rem -0.5rem 0 0;
-  /* Botão redondo de vidro, como o X das folhas do kit. */
+  /* Botão redondo, como o X das folhas do kit. */
   background: var(--cor-preenchimento);
   border: 0;
   border-radius: 50%;
@@ -602,11 +602,12 @@ textarea.form-control {
   border-radius: 12px;
   background: var(--cor-rodape);
   color: #fff;
-  box-shadow: 0 6px 20px rgba(27, 63, 63, 0.3);
+  box-shadow: 0 15px 37.5px rgba(0, 0, 0, 0.18);
 }
 
 .painel-aviso-erro {
-  background: #b3261e;
+  background: var(--cor-erro);
+  color: var(--cor-texto-sobre-erro);
 }
 
 .painel-aviso button {
@@ -619,7 +620,7 @@ textarea.form-control {
   margin: -0.5rem -0.5rem -0.5rem 0;
   background: none;
   border: 0;
-  color: #fff;
+  color: inherit;
   cursor: pointer;
 }
 

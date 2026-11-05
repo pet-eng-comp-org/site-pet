@@ -167,9 +167,11 @@ label {
   /* Folha (janela): o fundo agrupado; no escuro, o fundo elevado do kit, que
      se destaca do preto. */
   --cor-folha: #f2f2f7;
-  /* Liquid Glass, só na camada de controles (barra do topo, botões de janela):
-     frost 16 e opacidade 25 do kit. */
-  --vidro-fundo: rgba(255, 255, 255, 0.72);
+  /* Liquid Glass, só na camada de controles (a barra do topo): o frost 16 do
+     kit, com o fundo a 90% para o link colorido manter 4,5:1 sobre qualquer
+     foto que passe por baixo. O Safari não tem prefers-reduced-transparency:
+     a opacidade alta é o que garante a leitura. */
+  --vidro-fundo: rgba(255, 255, 255, 0.9);
   --vidro-filtro: blur(16px) saturate(180%);
   --raio-capsula: 999px;
   --raio-cartao: 20px;
@@ -206,7 +208,7 @@ label {
     --cor-alerta-texto: #ffb4ab;
     --cor-sobreposicao: rgba(0, 0, 0, 0.48);
     --cor-folha: #1c1c1e;
-    --vidro-fundo: rgba(28, 28, 30, 0.72);
+    --vidro-fundo: rgba(28, 28, 30, 0.9);
   }
 }
 
