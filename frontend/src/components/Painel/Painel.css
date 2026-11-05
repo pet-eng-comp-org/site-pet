@@ -312,6 +312,13 @@ button.botao-link {
   color: var(--cor-texto);
   /* Folha (sheet) do kit: raio 32 e esta sombra. */
   box-shadow: 0 15px 37.5px rgba(0, 0, 0, 0.18);
+  /* Rolar até o fim da janela não passa a rolar a página atrás. */
+  overscroll-behavior: contain;
+}
+
+/* Com uma janela aberta, só ela rola: a página de fundo fica parada. */
+html:has(.janela[open]) {
+  overflow: hidden;
 }
 
 .janela-larga {
@@ -618,4 +625,20 @@ textarea.form-control {
 
 .painel-aviso .icone-svg {
   height: 1rem;
+}
+
+/* Foto e foto descontraída, uma embaixo da outra. */
+.painel-form-fotos {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.painel-form-foto-campo {
+  flex: 1;
+}
+
+.painel-form-foto-campo .botao-texto-perigo {
+  margin-top: 0.25rem;
+  padding-left: 0;
 }

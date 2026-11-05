@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Icone from "../../Icone/Icone";
+import { ehDupla } from "../../../utils/fotoDupla";
 import slug from "../../../utils/slug";
 import linkDaRede from "../../../utils/redes";
 import { Link } from "react-router-dom";
@@ -20,6 +21,30 @@ const desde = (participant) => {
   return `${participant.tutor ? "Tutor" : "No PET"} desde ${mes}`;
 };
 
+// Foto dupla (ver utils/fotoDupla): a de cima fica à mostra e a descontraída
+// aparece com o mouse em cima ou, no celular, com um toque.
+const Foto = ({ src }) => {
+  const [dupla, setDupla] = useState(false);
+  const [virada, setVirada] = useState(false);
+  const img = useRef(null);
+  const medir = () => {
+    const { complete, naturalWidth, naturalHeight } = img.current;
+    if (complete && naturalWidth) setDupla(ehDupla(naturalWidth, naturalHeight));
+  };
+  // A página vem pronta do servidor: a foto pode ter carregado antes do React
+  // chegar, e aí o onLoad não dispara.
+  useEffect(medir, [src]);
+  return (
+    <span
+      className={`petiano-foto${dupla ? " petiano-foto-dupla" : ""}${virada ? " virada" : ""}`}
+      onPointerUp={(e) => dupla && e.pointerType !== "mouse" && setVirada(!virada)}
+    >
+      <img ref={img} src={src} alt="" loading="lazy" onLoad={medir} />
+      {dupla && <img className="petiano-foto-descontraida" src={src} alt="" />}
+    </span>
+  );
+};
+
 const Participant = ({ participant, projetos }) => {
   // A etiqueta mostra o nome do projeto como está na página Projetos e leva a ele.
   const projetoDa = (tag) =>
@@ -30,11 +55,8 @@ const Participant = ({ participant, projetos }) => {
       <div className="petiano-lado">
         {/* Cadastro cuja foto não subiu fica sem ela, e não derruba a página. */}
         {participant.profilePhoto ? (
-          <img
-            className="petiano-foto"
-            src={`${import.meta.env.VITE_API_URL}api/file/getProfilePhoto/${participant.profilePhoto._id}`}
-            alt=""
-            loading="lazy"
+          <Foto
+            src={`${import.meta.env.VITE_API_URL}api/file/getProfilePhoto/${participant.profilePhoto._id}?v=${participant.profilePhoto.key}`}
           />
         ) : (
           <span className="petiano-foto" aria-hidden="true" />
