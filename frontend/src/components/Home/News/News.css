@@ -25,7 +25,7 @@
   display: flex;
   flex-direction: column;
   background: var(--cor-fundo);
-  border-radius: 16px;
+  border-radius: var(--raio-cartao);
   overflow: hidden;
 }
 
