@@ -5,7 +5,9 @@ const sharp = require("sharp");
 // Foto enviada pelo painel vira WebP no tamanho em que o site a mostra (o dobro,
 // para tela de alta densidade). Uma foto de celular tem 3 a 5 MB; no site, um
 // círculo de 140 px. SVG também vira imagem, e com isso não leva script junto.
-const maiorLado = { members: 480, news: 1200, comissions: 1600 };
+// A foto do petiano pode ser dupla (280 × 560, a descontraída embaixo): o
+// limite de 560 deixa cada metade com 280 px.
+const maiorLado = { members: 560, news: 1200, comissions: 1600 };
 
 const otimizaImagem = (pasta) => async (req, res, next) => {
   if (!req.file) return next();

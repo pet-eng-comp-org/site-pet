@@ -3,6 +3,8 @@ import useTitulo from "../../utils/useTitulo";
 import slug from "../../utils/slug";
 import linkDaRede from "../../utils/redes";
 import Icone from "../Icone/Icone";
+import { fotoEhDupla, montarFoto } from "../../utils/fotoDupla";
+import { digitarCelular, formatarCelular } from "../../utils/celular";
 import { painel } from "./painelApi";
 import {
   API,
@@ -31,15 +33,23 @@ const REDES = [
 const chave = (t) => slug(t).replace(/pet/g, "").replace(/-/g, "").replace(/s$/, "");
 
 const soDigitos = (t) => t.replace(/\D/g, "");
-// 27999998888 -> (27) 99999-8888
-const formatarTelefone = (t) => {
-  const d = soDigitos(t);
-  if (d.length === 11) return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
-  if (d.length === 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
-  return t;
-};
 
-const fotoDe = (p) => p.profilePhoto && `${API}api/file/getProfilePhoto/${p.profilePhoto._id}`;
+// A troca de foto mantém o _id do arquivo e muda a key: com ela no endereço, o
+// navegador não reaproveita a imagem antiga.
+const fotoDe = (p) =>
+  p.profilePhoto && `${API}api/file/getProfilePhoto/${p.profilePhoto._id}?v=${p.profilePhoto.key}`;
+
+// Endereço para mostrar o arquivo escolhido, liberado quando ele muda.
+const useObjectUrl = (arquivo) => {
+  const [url, setUrl] = useState(null);
+  useEffect(() => {
+    if (!arquivo) return setUrl(null);
+    const u = URL.createObjectURL(arquivo);
+    setUrl(u);
+    return () => URL.revokeObjectURL(u);
+  }, [arquivo]);
+  return url;
+};
 
 const ordenar = (lista) =>
   [...lista].sort(
@@ -168,9 +178,22 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
     (t) => !projetos.some((c) => chave(c.title) === chave(t.title))
   );
   const ativo = novo || petiano.active;
+  // A foto é dupla quando tem a descontraída embaixo (utils/fotoDupla): o
+  // painel recebe as duas em separado e monta o arquivo único na hora de salvar.
+  const atual = petiano && fotoDe(petiano);
+  const [atualDupla, setAtualDupla] = useState(false);
+  useEffect(() => {
+    if (atual) fotoEhDupla(atual).then(setAtualDupla, () => {});
+  }, [atual]);
   const [foto, setFoto] = useState(null);
-  const [previa, setPrevia] = useState(petiano && fotoDe(petiano));
-  useEffect(() => () => foto && URL.revokeObjectURL(previa), [foto, previa]);
+  const [descontraida, setDescontraida] = useState(null);
+  const [semDescontraida, setSemDescontraida] = useState(false);
+  // Muda ao tirar a foto descontraída: recria o campo de arquivo, que senão
+  // guardaria o arquivo e não avisaria se o mesmo fosse escolhido de novo.
+  const [campoDescontraida, setCampoDescontraida] = useState(0);
+  const previaFoto = useObjectUrl(foto);
+  const previaDescontraida = useObjectUrl(descontraida);
+  const temDescontraida = descontraida || (atualDupla && !semDescontraida);
   const muda = (campo) => (e) =>
     setF({ ...f, [campo]: e.target.type === "checkbox" ? e.target.checked : e.target.value });
   const avisar = useAvisar();
@@ -179,7 +202,8 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
     const e = {};
     if (f.memberName.trim().length < 2) e.memberName = "Escreva o nome completo.";
     if (!/^\S+@\S+\.\S+$/.test(f.email.trim())) e.email = "Escreva um e-mail válido.";
-    if (![10, 11].includes(soDigitos(f.phone).length)) e.phone = "Escreva o telefone com DDD, só números ou como (27) 99999-8888.";
+    // Celular: o contato é pelo WhatsApp, então o fixo não serve.
+    if (!/^\d\d9\d{8}$/.test(soDigitos(f.phone))) e.phone = "Escreva o celular com DDD, 11 números, como (27) 99999-8888.";
     if (novo && f.password.length < 6) e.password = "A senha precisa de pelo menos 6 caracteres.";
     if (!f.startPet) e.startPet = "Escolha a data de entrada.";
     // A descrição aparece em Quem somos: obrigatória para quem está no PET.
@@ -192,7 +216,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
         e.redes = e[`link-${i}`];
       }
     });
-    if (novo && !foto) e.foto = "Escolha uma foto: ela aparece em Quem somos.";
+    if (!foto && !atual && (novo || descontraida)) e.foto = "Escolha uma foto: ela aparece em Quem somos.";
     return e;
   };
 
@@ -208,7 +232,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
       const corpo = {
         memberName: f.memberName.trim(),
         email: f.email.trim(),
-        phone: formatarTelefone(f.phone),
+        phone: formatarCelular(f.phone),
         startPet: f.startPet,
         tutor: f.tutor,
         description: f.description.trim(),
@@ -218,11 +242,20 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
       let id = petiano?._id;
       if (novo) id = (await painel.post("api/members", { ...corpo, password: f.password, active: true })).data;
       else await painel.put(`api/members/${id}`, corpo);
-      if (foto) {
+      if (foto || descontraida || semDescontraida) {
+        // A parte que não mudou sai da foto atual, medida de novo aqui: a
+        // medição da tela pode não ter terminado, e errar apagaria a descontraída.
         const dados = new FormData();
-        dados.append("profilePhoto", foto);
         try {
-          await painel.patch(`api/members/${novo ? "firstProfilePhoto" : "updateProfilePhoto"}/${id}`, dados);
+          const dupla = atual ? await fotoEhDupla(atual) : false;
+          dados.append(
+            "profilePhoto",
+            await montarFoto(
+              foto || { url: atual, metade: dupla && "cima" },
+              (descontraida || (dupla && !semDescontraida && { url: atual, metade: "baixo" })) || null
+            )
+          );
+          await painel.patch(`api/members/${atual ? "updateProfilePhoto" : "firstProfilePhoto"}/${id}`, dados);
         } catch (err) {
           // O cadastro ficou; só a foto não foi.
           avisar("O petiano foi salvo, mas a foto não foi enviada. Abra “Editar” e envie de novo.", "erro");
@@ -235,19 +268,50 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
   return (
     <Janela titulo={novo ? "Cadastrar petiano" : `Editar ${petiano.memberName}`} aberta aoFechar={aoFechar} larga>
       <form onSubmit={aoEnviar} noValidate className="painel-form">
-        <div className="painel-form-foto">
-          {previa ? <img src={previa} alt="" width="96" height="96" /> : <span className="painel-foto-vazia" aria-hidden="true" />}
-          <Campo id={id("foto")} rotulo={novo ? "Foto" : "Trocar a foto"} dica="Rosto bem visível; ela aparece redonda, com 140 px." erro={erros.foto}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const arq = e.target.files[0];
-                setFoto(arq || null);
-                setPrevia(arq ? URL.createObjectURL(arq) : petiano && fotoDe(petiano));
-              }}
-            />
-          </Campo>
+        <div className="painel-form-fotos">
+          <div className="painel-form-foto">
+            {previaFoto || atual ? (
+              <img src={previaFoto || atual} alt="" width="96" height="96" />
+            ) : (
+              <span className="painel-foto-vazia" aria-hidden="true" />
+            )}
+            <Campo id={id("foto")} rotulo={atual ? "Trocar a foto" : "Foto"} dica="Rosto bem visível; ela aparece redonda." erro={erros.foto}>
+              <input type="file" accept="image/*" onChange={(e) => setFoto(e.target.files[0] || null)} />
+            </Campo>
+          </div>
+          <div className="painel-form-foto">
+            {temDescontraida ? (
+              <img src={previaDescontraida || atual} alt="" width="96" height="96" style={descontraida ? undefined : { objectPosition: "bottom" }} />
+            ) : (
+              <span className="painel-foto-vazia" aria-hidden="true" />
+            )}
+            <div className="painel-form-foto-campo">
+              <Campo id={id("descontraida")} rotulo="Foto descontraída (opcional)" dica="Aparece quando passam o mouse ou tocam na foto.">
+                <input
+                  key={campoDescontraida}
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    setDescontraida(e.target.files[0] || null);
+                    setSemDescontraida(false);
+                  }}
+                />
+              </Campo>
+              {temDescontraida && (
+                <button
+                  type="button"
+                  className="botao-texto-perigo"
+                  onClick={() => {
+                    setDescontraida(null);
+                    setSemDescontraida(true);
+                    setCampoDescontraida(campoDescontraida + 1);
+                  }}
+                >
+                  Tirar esta foto
+                </button>
+              )}
+            </div>
+          </div>
         </div>
         <Campo id={id("memberName")} rotulo="Nome" erro={erros.memberName}>
           <input value={f.memberName} onChange={muda("memberName")} autoComplete="off" data-foco-inicial />
@@ -256,8 +320,15 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
           <Campo id={id("email")} rotulo="E-mail" dica="Também é o login no painel." erro={erros.email}>
             <input type="email" value={f.email} onChange={muda("email")} autoComplete="off" />
           </Campo>
-          <Campo id={id("phone")} rotulo="Telefone" erro={erros.phone}>
-            <input type="tel" inputMode="tel" value={f.phone} onChange={muda("phone")} autoComplete="off" />
+          <Campo id={id("phone")} rotulo="Celular" erro={erros.phone}>
+            <input
+              type="tel"
+              inputMode="tel"
+              value={f.phone}
+              onChange={(e) => digitarCelular(e, f.phone, (phone) => setF({ ...f, phone }))}
+              placeholder="(27) 99999-8888"
+              autoComplete="off"
+            />
           </Campo>
         </div>
         {novo && (
