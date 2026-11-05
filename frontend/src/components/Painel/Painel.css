@@ -616,3 +616,19 @@ textarea.form-control {
 .painel-aviso .icone-svg {
   height: 1rem;
 }
+
+/* Foto e foto descontraída, uma embaixo da outra. */
+.painel-form-fotos {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.painel-form-foto-campo {
+  flex: 1;
+}
+
+.painel-form-foto-campo .botao-texto-perigo {
+  margin-top: 0.25rem;
+  padding-left: 0;
+}
