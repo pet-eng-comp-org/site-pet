@@ -310,6 +310,13 @@ button.botao-link {
   background: var(--cor-superficie);
   color: var(--cor-texto);
   box-shadow: 0 10px 40px rgba(27, 63, 63, 0.3);
+  /* Rolar até o fim da janela não passa a rolar a página atrás. */
+  overscroll-behavior: contain;
+}
+
+/* Com uma janela aberta, só ela rola: a página de fundo fica parada. */
+html:has(.janela[open]) {
+  overflow: hidden;
 }
 
 .janela-larga {

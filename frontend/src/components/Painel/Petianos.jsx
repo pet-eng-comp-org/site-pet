@@ -4,6 +4,7 @@ import slug from "../../utils/slug";
 import linkDaRede from "../../utils/redes";
 import Icone from "../Icone/Icone";
 import { fotoEhDupla, montarFoto } from "../../utils/fotoDupla";
+import { digitarCelular, formatarCelular } from "../../utils/celular";
 import { painel } from "./painelApi";
 import {
   API,
@@ -32,12 +33,6 @@ const REDES = [
 const chave = (t) => slug(t).replace(/pet/g, "").replace(/-/g, "").replace(/s$/, "");
 
 const soDigitos = (t) => t.replace(/\D/g, "");
-// 27999998888 -> (27) 99999-8888
-const formatarTelefone = (t) => {
-  const d = soDigitos(t);
-  if (d.length === 11) return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
-  return t;
-};
 
 // A troca de foto mantém o _id do arquivo e muda a key: com ela no endereço, o
 // navegador não reaproveita a imagem antiga.
@@ -208,7 +203,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
     if (f.memberName.trim().length < 2) e.memberName = "Escreva o nome completo.";
     if (!/^\S+@\S+\.\S+$/.test(f.email.trim())) e.email = "Escreva um e-mail válido.";
     // Celular: o contato é pelo WhatsApp, então o fixo não serve.
-    if (!/^\d\d9\d{8}$/.test(soDigitos(f.phone))) e.phone = "Escreva o celular com DDD, só números ou como (27) 99999-8888.";
+    if (!/^\d\d9\d{8}$/.test(soDigitos(f.phone))) e.phone = "Escreva o celular com DDD, 11 números, como (27) 99999-8888.";
     if (novo && f.password.length < 6) e.password = "A senha precisa de pelo menos 6 caracteres.";
     if (!f.startPet) e.startPet = "Escolha a data de entrada.";
     // A descrição aparece em Quem somos: obrigatória para quem está no PET.
@@ -237,7 +232,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
       const corpo = {
         memberName: f.memberName.trim(),
         email: f.email.trim(),
-        phone: formatarTelefone(f.phone),
+        phone: formatarCelular(f.phone),
         startPet: f.startPet,
         tutor: f.tutor,
         description: f.description.trim(),
@@ -326,7 +321,14 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }) {
             <input type="email" value={f.email} onChange={muda("email")} autoComplete="off" />
           </Campo>
           <Campo id={id("phone")} rotulo="Celular" erro={erros.phone}>
-            <input type="tel" inputMode="tel" value={f.phone} onChange={muda("phone")} autoComplete="off" />
+            <input
+              type="tel"
+              inputMode="tel"
+              value={f.phone}
+              onChange={(e) => digitarCelular(e, f.phone, (phone) => setF({ ...f, phone }))}
+              placeholder="(27) 99999-8888"
+              autoComplete="off"
+            />
           </Campo>
         </div>
         {novo && (
