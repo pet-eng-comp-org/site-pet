@@ -3,13 +3,15 @@
   padding: 4rem var(--margem) 5rem;
 }
 
+/* Como os blocos da página inicial do apple.com: texto centralizado, os
+   dois botões lado a lado embaixo dele e a foto abaixo, na largura de 980 px
+   do conteúdo de lá. */
 .hero-conteudo {
-  max-width: 1140px;
+  max-width: 980px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  gap: 3rem;
+  text-align: center;
 }
 
 .hero-sobretitulo {
@@ -29,15 +31,16 @@
 .hero-descricao {
   font-size: var(--texto-abertura);
   line-height: 1.55;
-  max-width: 32rem;
-  margin-bottom: 2rem;
+  max-width: 36rem;
+  margin: 0 auto 1.5rem;
 }
 
+/* 17 px entre os botões, como lá. */
 .hero-acoes {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 1.5rem;
+  justify-content: center;
+  gap: 17px;
 }
 
 .hero-foto {
@@ -53,8 +56,11 @@
   }
 
   .hero-conteudo {
-    grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .hero-acoes {
+    gap: 14px;
   }
 
   .App .hero h1 {
