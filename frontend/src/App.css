@@ -155,7 +155,7 @@ label {
   --cor-faixa-verde: #186a6c;
   --cor-rodape: #1b3f3f;
   --cor-linha: #c6c6c8;
-  --cor-separador: rgba(0, 0, 0, 0.12);
+  --cor-separador: rgba(0, 0, 0, 0.16);
   --cor-borda-campo: #8e8e93;
   --cor-erro: #a3321f;
   --cor-ok: #1e6b3a;
@@ -167,14 +167,14 @@ label {
   /* Folha (janela): o fundo agrupado; no escuro, o fundo elevado do kit, que
      se destaca do preto. */
   --cor-folha: #f2f2f7;
-  /* Liquid Glass, só na camada de controles (a barra do topo): o frost 16 do
-     kit e o brilho nas bordas. A 70%, o texto da barra (tinta, ou branco no
-     escuro) fica acima de 5,4:1 até com preto puro atrás; por isso a barra
-     não usa texto verde. O Safari não tem prefers-reduced-transparency: a
+  /* Vidro da barra do topo: o mesmo material da barra do apple.com, medido
+     em 05/11/2026 (fundo #fafafc a 80%, saturate 180% e blur 20px, sem brilho
+     nas bordas e com linha de 1px a 16% embaixo). O Liquid Glass dos apps a
+     Apple não usa no site. A 80%, o texto da barra fica acima de 4,5:1 com
+     qualquer coisa atrás. O Safari não tem prefers-reduced-transparency: a
      leitura vem do contraste, não do ajuste do aparelho. */
-  --vidro-fundo: rgba(255, 255, 255, 0.7);
-  --vidro-brilho: inset 0 1px 0 rgba(255, 255, 255, 0.75), inset 0 -1px 0 rgba(255, 255, 255, 0.35);
-  --vidro-filtro: blur(16px) saturate(180%);
+  --vidro-fundo: rgba(250, 250, 252, 0.8);
+  --vidro-filtro: saturate(180%) blur(20px);
   --raio-capsula: 999px;
   --raio-cartao: 20px;
   --raio-folha: 32px;
@@ -200,7 +200,7 @@ label {
     --cor-faixa-verde: #154f51;
     --cor-rodape: #1c1c1e;
     --cor-linha: #38383a;
-    --cor-separador: rgba(255, 255, 255, 0.17);
+    --cor-separador: rgba(255, 255, 255, 0.16);
     --cor-borda-campo: #8e8e93;
     --cor-erro: #ff6b5e;
     --cor-ok: #4cd471;
@@ -210,8 +210,7 @@ label {
     --cor-alerta-texto: #ffb4ab;
     --cor-sobreposicao: rgba(0, 0, 0, 0.48);
     --cor-folha: #1c1c1e;
-    --vidro-fundo: rgba(28, 28, 30, 0.7);
-    --vidro-brilho: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+    --vidro-fundo: rgba(29, 29, 31, 0.8);
   }
 }
 
