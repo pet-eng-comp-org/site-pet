@@ -61,36 +61,37 @@
   list-style: none;
 }
 
-/* Toque de 44 px em toda largura, inclusive no iPad. */
+/* Toque de 44 px em toda largura, inclusive no iPad. Como no apple.com
+   (medido em 06/11/2026): o texto a 80% da cor, e inteiro sob o ponteiro;
+   sem sublinhado e sem marcar a página atual, que o título já diz (o
+   aria-current fica para o leitor de tela). */
 .barra-link {
   display: flex;
   align-items: center;
   min-height: 44px;
   padding: 0.5rem 0;
-  color: var(--cor-texto);
+  color: color-mix(in srgb, var(--cor-texto) 80%, transparent);
   font-weight: 500;
   text-decoration: none;
+  transition: color 0.2s;
 }
 
-/* Sobre o vidro, o texto fica sempre na cor do texto (o verde cairia a 3:1
-   com uma foto escura atrás). A página atual e o link sob o ponteiro ganham
-   um sublinhado de 1 px na cor do texto, como na barra das páginas do
-   apple.com. */
-.barra-link:hover,
-.barra-link:focus,
-.active-link {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
+.barra-link:hover {
+  color: var(--cor-texto);
 }
 
-.active-link {
-  font-weight: 600;
+/* Teclado: o contorno de foco do site, e não o sublinhado. */
+.barra-link:focus-visible {
+  color: var(--cor-texto);
+  outline: 2px solid var(--cor-acao);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* Celular: o menu abre na tela inteira, abaixo da barra, como o do
-   apple.com (medido em 06/11/2026): fundo sólido, letra de 28 px em peso 600,
-   um item a cada 46 px, e a página parada atrás (Nav.jsx). */
+   apple.com (medido em 06/11/2026): fundo sólido, sem o logo, texto a 48 px
+   da borda, letra de 28 px em peso 600, um item a cada 46 px logo abaixo da
+   barra, e a página parada atrás (Nav.jsx). */
 .barra {
   position: relative;
 }
@@ -106,6 +107,11 @@
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     border-bottom-color: transparent;
+  }
+
+  /* Some, mas guarda o lugar: o X não pula. */
+  .topo.menu-aberto .barra-marca {
+    visibility: hidden;
   }
 
   /* A faixa de inscrições cobriria o fim da lista. */
@@ -124,7 +130,7 @@
     height: calc(100dvh - 100%);
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 0.5rem var(--margem) calc(2rem + env(safe-area-inset-bottom));
+    padding: 0 48px calc(2rem + env(safe-area-inset-bottom));
     background: var(--menu-fundo);
   }
 
@@ -135,6 +141,7 @@
     line-height: 1.1;
     font-weight: 600;
     letter-spacing: 0.007em;
+    color: var(--cor-texto);
   }
 
   /* Os itens descem 8 px ao abrir, um logo depois do outro. */

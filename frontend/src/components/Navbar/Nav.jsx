@@ -113,17 +113,22 @@ function Nav() {
   // No celular, escolher uma página fecha o menu, que senão cobre o título.
   const fecharMenu = () => setIsOpen(false);
 
-  // Menu aberto: a página fica parada atrás dele, como no apple.com. A tela
-  // que passa de 768 px (iPad girado) mostra os links na barra e fecha o menu.
+  // Menu aberto: a página fica parada atrás dele, como no apple.com, e fora
+  // do alcance do Tab e do VoiceOver (inert), que senão andavam pelo que o
+  // menu cobre. A tela que passa de 768 px (iPad girado) mostra os links na
+  // barra e fecha o menu.
   useEffect(() => {
     if (!isOpen) return;
     const raiz = document.documentElement.style;
     raiz.overflow = "hidden";
+    const atras = [...document.querySelectorAll("main, footer")];
+    atras.forEach((e) => (e.inert = true));
     const largo = window.matchMedia("(min-width: 768px)");
     const fecharSeLargo = () => largo.matches && setIsOpen(false);
     largo.addEventListener("change", fecharSeLargo);
     return () => {
       raiz.overflow = "";
+      atras.forEach((e) => (e.inert = false));
       largo.removeEventListener("change", fecharSeLargo);
     };
   }, [isOpen]);
@@ -201,7 +206,6 @@ function Nav() {
                   to={to}
                   exact={to === "/"}
                   className="barra-link"
-                  activeClassName="active-link"
                   onClick={fecharMenu}
                 >
                   {rotulo}
@@ -215,7 +219,6 @@ function Nav() {
                 <NavLink
                   to="/admin"
                   className="barra-link"
-                  activeClassName="active-link"
                   onClick={fecharMenu}
                 >
                   Painel
