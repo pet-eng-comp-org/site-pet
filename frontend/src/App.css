@@ -175,6 +175,9 @@ label {
      leitura vem do contraste, não do ajuste do aparelho. */
   --vidro-fundo: rgba(250, 250, 252, 0.8);
   --vidro-filtro: saturate(180%) blur(20px);
+  /* O menu aberto no celular: a mesma cor do vidro, sólida, como no
+     apple.com (#fafafc no claro, #1d1d1f no escuro). */
+  --menu-fundo: #fafafc;
   --raio-capsula: 999px;
   --raio-cartao: 20px;
   --raio-folha: 32px;
@@ -211,6 +214,7 @@ label {
     --cor-sobreposicao: rgba(0, 0, 0, 0.48);
     --cor-folha: #1c1c1e;
     --vidro-fundo: rgba(29, 29, 31, 0.8);
+    --menu-fundo: #1d1d1f;
   }
 }
 

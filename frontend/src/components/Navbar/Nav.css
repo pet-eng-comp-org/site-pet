@@ -61,42 +61,103 @@
   list-style: none;
 }
 
-/* Toque de 44 px em toda largura, inclusive no iPad. */
+/* Toque de 44 px em toda largura, inclusive no iPad. Como no apple.com
+   (medido em 06/11/2026): o texto a 80% da cor, e inteiro sob o ponteiro;
+   sem sublinhado e sem marcar a página atual, que o título já diz (o
+   aria-current fica para o leitor de tela). */
 .barra-link {
   display: flex;
   align-items: center;
   min-height: 44px;
   padding: 0.5rem 0;
-  color: var(--cor-texto);
+  color: color-mix(in srgb, var(--cor-texto) 80%, transparent);
   font-weight: 500;
   text-decoration: none;
+  transition: color 0.2s;
 }
 
-/* Sobre o vidro, o texto fica sempre na cor do texto (o verde cairia a 3:1
-   com uma foto escura atrás): o estado aparece pelo sublinhado. */
-.barra-link:hover,
-.barra-link:focus {
-  text-decoration: underline;
-  text-decoration-color: var(--cor-acao);
-  text-underline-offset: 6px;
+.barra-link:hover {
+  color: var(--cor-texto);
 }
 
-.active-link {
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: var(--cor-acao);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 6px;
+/* Teclado: o contorno de foco do site, e não o sublinhado. */
+.barra-link:focus-visible {
+  color: var(--cor-texto);
+  outline: 2px solid var(--cor-acao);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
-/* Celular: o menu abre abaixo da barra, na largura toda. */
+/* Celular: o menu abre na tela inteira, abaixo da barra, como o do
+   apple.com (medido em 06/11/2026): fundo sólido, sem o logo, texto a 48 px
+   da borda, letra de 28 px em peso 600, um item a cada 46 px logo abaixo da
+   barra, e a página parada atrás (Nav.jsx). */
+.barra {
+  position: relative;
+}
+
 .barra-links {
   display: none;
   flex-basis: 100%;
 }
 
-.barra-links.aberto {
-  display: block;
+@media (max-width: 767.98px) {
+  .topo.menu-aberto .barra {
+    background: var(--menu-fundo);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom-color: transparent;
+  }
+
+  /* Some, mas guarda o lugar: o X não pula. */
+  .topo.menu-aberto .barra-marca {
+    visibility: hidden;
+  }
+
+  /* A faixa de inscrições cobriria o fim da lista. */
+  .topo.menu-aberto .message {
+    display: none;
+  }
+
+  .barra-links.aberto {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    /* A tela menos a barra: 100% aqui é a altura da barra. */
+    height: calc(100vh - 100%);
+    height: calc(100dvh - 100%);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 48px calc(2rem + env(safe-area-inset-bottom));
+    background: var(--menu-fundo);
+  }
+
+  .barra-links.aberto .barra-link {
+    min-height: 46px;
+    padding: 0;
+    font-size: 1.75rem;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: 0.007em;
+    color: var(--cor-texto);
+  }
+
+  /* Os itens descem 8 px ao abrir, um logo depois do outro. */
+  @media (prefers-reduced-motion: no-preference) {
+    .barra-links.aberto li {
+      animation: menu-entra 0.3s cubic-bezier(0.4, 0, 0.6, 1) both;
+      animation-delay: calc(var(--ordem) * 20ms);
+    }
+  }
+}
+
+@keyframes menu-entra {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 /* Sem JavaScript, o botão não abre nada: os links ficam à vista. */
