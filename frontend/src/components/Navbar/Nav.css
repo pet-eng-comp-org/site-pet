@@ -89,9 +89,12 @@
 }
 
 /* Celular: o menu abre na tela inteira, abaixo da barra, como o do
-   apple.com (medido em 06/11/2026): fundo sólido, sem o logo, texto a 48 px
-   da borda, letra de 28 px em peso 600, um item a cada 46 px logo abaixo da
-   barra, e a página parada atrás (Nav.jsx). */
+   apple.com (lido da página em 06/11/2026): fundo sólido, sem o logo, texto
+   a 48 px da borda, letra de 28 px em peso 600, um item a cada 46 px logo
+   abaixo da barra, e a página parada atrás (Nav.jsx). Os tempos também são
+   os de lá: o fundo desce em 0,24 s depois de 80 ms, o logo some em 0,24 s,
+   e os itens descem 8 px a partir de 0,2 s, um a cada 20 ms; ao fechar,
+   saem todos juntos e o fundo sobe. */
 .barra {
   position: relative;
 }
@@ -102,6 +105,15 @@
 }
 
 @media (max-width: 767.98px) {
+  .barra {
+    transition: background-color 0.24s cubic-bezier(0.4, 0, 0.6, 1) 80ms;
+  }
+
+  .barra-marca {
+    transition: opacity 0.24s cubic-bezier(0.4, 0, 0.6, 1) 80ms,
+      visibility 0.24s steps(1, start) 80ms;
+  }
+
   .topo.menu-aberto .barra {
     background: var(--menu-fundo);
     -webkit-backdrop-filter: none;
@@ -111,7 +123,9 @@
 
   /* Some, mas guarda o lugar: o X não pula. */
   .topo.menu-aberto .barra-marca {
+    opacity: 0;
     visibility: hidden;
+    transition: opacity 0.24s cubic-bezier(0.4, 0, 0.6, 1), visibility 0.24s steps(1);
   }
 
   /* A faixa de inscrições cobriria o fim da lista. */
@@ -119,22 +133,49 @@
     display: none;
   }
 
-  .barra-links.aberto {
+  /* Sempre na página, de altura zero e invisível quando fechado: assim dá
+     para animar a abertura e o fechamento. */
+  .barra-links {
     display: block;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
+    height: 0;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    padding: 0 48px;
+    background: var(--menu-fundo);
+    visibility: hidden;
+    transition: height 0.24s cubic-bezier(0.4, 0, 0.6, 1) 80ms,
+      visibility 0s linear 0.32s;
+  }
+
+  .barra-links.aberto {
     /* A tela menos a barra: 100% aqui é a altura da barra. */
     height: calc(100vh - 100%);
     height: calc(100dvh - 100%);
     overflow-y: auto;
-    overscroll-behavior: contain;
-    padding: 0 48px calc(2rem + env(safe-area-inset-bottom));
-    background: var(--menu-fundo);
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+    visibility: visible;
+    transition: height 0.24s cubic-bezier(0.4, 0, 0.6, 1) 80ms, visibility 0s;
   }
 
-  .barra-links.aberto .barra-link {
+  .barra-links li {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.16s cubic-bezier(0.4, 0, 0.6, 1),
+      transform 0.16s cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  .barra-links.aberto li {
+    opacity: 1;
+    transform: none;
+    transition-duration: 0.24s;
+    transition-delay: calc(0.2s + var(--ordem) * 20ms);
+  }
+
+  .barra-links .barra-link {
     min-height: 46px;
     padding: 0;
     font-size: 1.75rem;
@@ -144,19 +185,28 @@
     color: var(--cor-texto);
   }
 
-  /* Os itens descem 8 px ao abrir, um logo depois do outro. */
-  @media (prefers-reduced-motion: no-preference) {
-    .barra-links.aberto li {
-      animation: menu-entra 0.3s cubic-bezier(0.4, 0, 0.6, 1) both;
-      animation-delay: calc(var(--ordem) * 20ms);
-    }
+  /* Sem JavaScript, os links ficam à vista, sem o menu por cima. */
+  .sem-js .barra-links {
+    position: static;
+    height: auto;
+    visibility: visible;
+  }
+
+  .sem-js .barra-links li {
+    opacity: 1;
+    transform: none;
   }
 }
 
-@keyframes menu-entra {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
+@media (max-width: 767.98px) and (prefers-reduced-motion: reduce) {
+  .barra,
+  .barra-marca,
+  .topo.menu-aberto .barra-marca,
+  .barra-links,
+  .barra-links.aberto,
+  .barra-links li,
+  .barra-links.aberto li {
+    transition: none;
   }
 }
 
@@ -190,30 +240,38 @@
     padding-right: 0;
   }
 
-  .barra-menu {
-    display: none;
-  }
 }
 
-/* O ícone do menu, não a caixa do botão, encosta na margem do conteúdo;
-   a caixa tem a altura mínima de toque. */
+/* Botão de 48 px com o ícone de 18 px no meio, como no apple.com. O traço
+   termina 2 px antes da borda do desenho: a margem negativa (24 - 9 + 2)
+   faz ele terminar na margem do conteúdo, como o logo começa nela. */
 .barra-menu {
-  min-height: 44px;
-  /* O traço do ícone começa 3,75 px dentro do desenho: compensa para ele
-     terminar na margem do conteúdo, como o logo começa nela. */
-  margin-right: calc(-0.75rem - 3.75px);
-  padding: 0.25rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-right: -17px;
+  padding: 0;
   background: none;
   border: 0;
   border-radius: 4px;
+  color: var(--cor-texto);
   cursor: pointer;
 }
 
 .barra-menu-icone {
   display: block;
-  width: 30px;
-  height: 30px;
-  color: var(--cor-texto);
+  width: 18px;
+  height: 18px;
+}
+
+/* Depois da regra do botão, que o mostra: no computador os links estão na
+   barra. */
+@media (min-width: 768px) {
+  .barra-menu {
+    display: none;
+  }
 }
 
 /* O mesmo contorno de foco dos links: depois do Esc, quem usa teclado vê
