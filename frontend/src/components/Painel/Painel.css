@@ -53,6 +53,11 @@
   margin-bottom: 0.5rem;
 }
 
+.painel-conta {
+  display: flex;
+  gap: 1.5rem;
+}
+
 .painel .painel-cabecalho h2 {
   margin: 0;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import isAuth from "../../services/Auth";
 import api from "../../services/api";
 import useTitulo from "../../utils/useTitulo";
 
@@ -41,6 +42,9 @@ const Login = () => {
       );
     }
   }
+
+  // Quem já entrou e abre o login vai direto ao painel.
+  if (isAuth()) return <Redirect to="/admin" />;
 
   const invalido = errorMessage ? "is-invalid" : "";
 
