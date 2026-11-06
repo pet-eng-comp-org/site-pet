@@ -242,16 +242,16 @@
 
 }
 
-/* Botão de 48 px com o ícone de 18 px no meio, como no apple.com. O traço
-   termina 2 px antes da borda do desenho: a margem negativa (24 - 9 + 2)
-   faz ele terminar na margem do conteúdo, como o logo começa nela. */
+/* Botão de 48 px com o ícone de 18 px no meio, como no apple.com. A margem
+   negativa de 16 px (a margem do celular) leva a caixa até a borda da tela,
+   sem passar dela: o traço fica a 1 px da margem do conteúdo. */
 .barra-menu {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 48px;
   height: 48px;
-  margin-right: -17px;
+  margin-right: -16px;
   padding: 0;
   background: none;
   border: 0;

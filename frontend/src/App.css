@@ -148,7 +148,9 @@ label {
   --cor-texto-suave: rgba(60, 60, 67, 0.75);
   --cor-acao: #186a6c;
   --cor-acao-fundo: #186a6c;
-  --cor-acao-forte: #1b3f3f;
+  /* Hover dos botões: um tom só um pouco mais claro que o fundo de ação,
+     como no apple.com (#0071e3 vira #0076df), e 5,8:1 com o branco. */
+  --cor-acao-forte: #1a7072;
   --cor-texto-sobre-acao: #fff;
   --cor-texto-sobre-erro: #fff;
   --cor-preenchimento: rgba(120, 120, 128, 0.16);
@@ -370,12 +372,14 @@ html {
 }
 
 /* Botões como os do apple.com (lidos do CSS de lá em 06/11/2026): cápsula,
-   texto de 17 px em peso normal, 11 px por 21 px de folga com borda de 1 px
-   (44 px de altura). O principal é cheio; o secundário, ao lado dele, só tem
-   o contorno e enche ao passar o ponteiro. O apple.com encolhe para 36 px no
-   celular; aqui fica em 44, o mínimo de toque do guia da própria Apple. */
+   texto de 17 px em peso normal e 11 px por 21 px de folga contando a borda
+   de 1 px (44 px de altura). O principal é cheio; o de contorno, ao lado
+   dele, enche ao passar o ponteiro. No celular o apple.com usa 14 px e 36 px
+   de altura; aqui a altura fica em 44, o mínimo de toque do guia da própria
+   Apple, e só a tela estreita encolhe o texto, para o par caber numa linha.
+   (O .botao-secundario cinza é do painel, em Painel.css.) */
 .botao-principal,
-.botao-secundario {
+.botao-contorno {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -397,23 +401,25 @@ html {
   color: var(--cor-texto-sobre-acao);
 }
 
-.botao-secundario {
+.botao-contorno {
   background: transparent;
   border-color: var(--cor-acao);
   color: var(--cor-acao);
 }
 
 .botao-principal:hover,
-.botao-secundario:hover {
+.botao-contorno:hover {
   background: var(--cor-acao-forte);
   border-color: transparent;
   color: var(--cor-texto-sobre-acao);
 }
 
-.botao-principal:focus-visible,
-.botao-secundario:focus-visible {
-  outline: 2px solid var(--cor-acao);
-  outline-offset: 3px;
+@media (max-width: 389.98px) {
+  .botao-principal,
+  .botao-contorno {
+    padding: 10px 15px;
+    font-size: 0.9375rem;
+  }
 }
 
 .botao-principal:disabled {
