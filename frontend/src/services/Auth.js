@@ -6,7 +6,15 @@ function isAuth() {
   if (token == null) return null;
   try {
     const conteudo = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
-    return JSON.parse(atob(conteudo));
+    const sessao = JSON.parse(atob(conteudo));
+    // O token vale 24 h. Vencido, a sessão acabou: sem isto o menu seguia
+    // mostrando o Painel, e o painel abria para depois cair no login.
+    if (sessao.exp * 1000 <= Date.now()) {
+      localStorage.removeItem("LOGINPET_TOKEN");
+      sessionStorage.setItem("sessaoExpirou", "1");
+      return null;
+    }
+    return sessao;
   } catch (err) {
     return null;
   }
