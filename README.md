@@ -12,23 +12,19 @@ Site do PET (Programa de Educação Tutorial) da Engenharia de Computação — 
 
 ## Como rodar localmente
 
-Sem Docker:
+O site inteiro (banco, API e o mesmo servidor de produção), para testar antes de abrir a PR:
 
 ```bash
-# Backend (porta 3333)
-cd backend && npm install && npm start
+docker compose up --build -d
+```
 
-# Frontend (porta 5173); VITE_API_URL diz qual API usar
+Site em http://localhost:3000 e API em http://localhost:3333. O painel está em `/login`, com `admin@pet.local` e a senha `senha-local`: o banco começa só com essa conta (`dev/semente.js`) e guarda o que for cadastrado entre uma subida e outra. Para começar do zero, `docker compose down -v`.
+
+Para mexer no front com recarga automática, com a API acima no ar:
+
+```bash
 cd frontend && yarn install && VITE_API_URL=http://localhost:3333/ yarn dev
 ```
-
-Com Docker (builda a partir do código local):
-
-```bash
-docker compose up --build
-```
-
-Backend em http://localhost:3333 — Frontend em http://localhost:5173.
 
 ## Deploy
 
