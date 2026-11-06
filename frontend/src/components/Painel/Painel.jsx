@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, Redirect, Route, Switch } from "react-router-dom";
+import { NavLink, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import isAuth from "../../services/Auth";
 import { painel } from "./painelApi";
 import { Acoes, Campo, ComAvisos, Janela, useEnvio } from "./ui";
@@ -64,14 +64,25 @@ function TrocarSenha({ aoFechar }) {
 
 const Painel = () => {
   const [senha, setSenha] = useState(false);
+  const history = useHistory();
+  const sair = () => {
+    localStorage.removeItem("LOGINPET_TOKEN");
+    history.push("/");
+  };
   return (
     <ComAvisos>
       <div className="pagina painel">
         <div className="painel-cabecalho">
           <h1>Painel</h1>
-          <button type="button" className="botao-link" onClick={() => setSenha(true)}>
-            Trocar minha senha
-          </button>
+          {/* O que é da conta fica junto, aqui, e não no menu do site. */}
+          <div className="painel-conta">
+            <button type="button" className="botao-link" onClick={() => setSenha(true)}>
+              Trocar minha senha
+            </button>
+            <button type="button" className="botao-link" onClick={sair}>
+              Sair
+            </button>
+          </div>
         </div>
         {senha && <TrocarSenha aoFechar={() => setSenha(false)} />}
         <nav aria-label="Seções do painel">
