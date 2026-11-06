@@ -20,6 +20,60 @@ const fimDaSelecaoAberta = (s) => {
   return null;
 };
 
+// O ícone do menu: duas linhas que se juntam no meio e giram até virar o X,
+// com o desenho e o tempo do botão do apple.com (lido da página em
+// 06/11/2026: 18 px, traço de 1,2, 0,24 s). Cada linha: fechado e aberto.
+const LINHAS = [
+  ["baixo", "2 12, 16 12", "3.5 15, 15 3.5"],
+  ["cima", "2 5, 16 5", "3.5 3.5, 15 15"],
+];
+const MEIO = "2 9, 16 9";
+
+function IconeMenu({ aberto }) {
+  const svg = useRef();
+  const antes = useRef(aberto);
+  useEffect(() => {
+    if (antes.current === aberto) return;
+    antes.current = aberto;
+    const parado = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    for (const [nome, fechado, xis] of LINHAS) {
+      const linha = svg.current.querySelector(`[data-linha=${nome}]`);
+      const anim = linha.querySelector(aberto ? "[data-abre]" : "[data-fecha]");
+      // Sem animação, a linha vai direto ao fim.
+      if (parado || !anim.beginElement) linha.setAttribute("points", aberto ? xis : fechado);
+      else anim.beginElement();
+    }
+  }, [aberto]);
+  const tempo = {
+    attributeName: "points",
+    keyTimes: "0;0.5;1",
+    dur: "0.24s",
+    begin: "indefinite",
+    fill: "freeze",
+    calcMode: "spline",
+    keySplines: "0.42, 0, 1, 1;0, 0, 0.58, 1",
+  };
+  return (
+    <svg ref={svg} className="barra-menu-icone" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+      {LINHAS.map(([nome, fechado, xis]) => (
+        <polyline
+          key={nome}
+          data-linha={nome}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          points={fechado}
+        >
+          <animate data-abre="" {...tempo} values={`${fechado}; ${MEIO}; ${xis}`} />
+          <animate data-fecha="" {...tempo} values={`${xis}; ${MEIO}; ${fechado}`} />
+        </polyline>
+      ))}
+    </svg>
+  );
+}
+
 const paginas = [
   ["/", "Início"],
   ["/sobre", "Quem somos"],
@@ -185,14 +239,7 @@ function Nav() {
           aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
         >
           {/* Desenhado com a cor do texto: muda junto no modo escuro. */}
-          <svg className="barra-menu-icone" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-            <path
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              d={isOpen ? "M8 8l16 16M24 8L8 24" : "M4 8h24M4 16h24M4 24h24"}
-            />
-          </svg>
+          <IconeMenu aberto={isOpen} />
         </button>
 
         <div
