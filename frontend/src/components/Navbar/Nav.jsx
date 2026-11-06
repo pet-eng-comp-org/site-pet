@@ -4,7 +4,8 @@ import Icone from "../Icone/Icone";
 import logoPet from "../../assets/logo_pet.svg";
 import logoPetEscuro from "../../assets/logo_pet_escuro.svg";
 import useApi from "../../services/useApi";
-import { Link, NavLink, useHistory, useLocation } from "react-router-dom";
+import isAuth from "../../services/Auth";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 // Aviso em todas as páginas enquanto a seleção estiver aberta: o último dia,
 // ou null.
@@ -39,8 +40,7 @@ function Nav() {
   // trocam de página): o HTML pronto das páginas é o de quem não entrou.
   const [logado, setLogado] = useState(false);
   const { pathname } = useLocation();
-  useEffect(() => setLogado(Boolean(localStorage.getItem("LOGINPET_TOKEN"))), [pathname]);
-  const history = useHistory();
+  useEffect(() => setLogado(Boolean(isAuth())), [pathname]);
 
 
   const toggleCollapse = () => {
@@ -112,11 +112,6 @@ function Nav() {
 
   // No celular, escolher uma página fecha o menu, que senão cobre o título.
   const fecharMenu = () => setIsOpen(false);
-
-  const logout = () => {
-    localStorage.removeItem("LOGINPET_TOKEN");
-    history.push("/");
-  };
 
   return (
     <header className="topo" ref={topo}>
@@ -198,28 +193,19 @@ function Nav() {
                 </NavLink>
               </li>
             ))}
+            {/* Só para quem entrou. O Sair fica no painel, junto da senha:
+                é coisa da conta, não uma página do site. */}
             {logado && (
-              <>
-                <li>
-                  <NavLink
-                    to="/admin"
-                    className="barra-link"
-                    activeClassName="active-link"
-                    onClick={fecharMenu}
-                  >
-                    Admin
-                  </NavLink>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={logout}
-                    className="barra-link nav-sair"
-                  >
-                    Sair
-                  </button>
-                </li>
-              </>
+              <li>
+                <NavLink
+                  to="/admin"
+                  className="barra-link"
+                  activeClassName="active-link"
+                  onClick={fecharMenu}
+                >
+                  Painel
+                </NavLink>
+              </li>
             )}
           </ul>
         </div>
