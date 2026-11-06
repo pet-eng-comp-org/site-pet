@@ -113,8 +113,23 @@ function Nav() {
   // No celular, escolher uma página fecha o menu, que senão cobre o título.
   const fecharMenu = () => setIsOpen(false);
 
+  // Menu aberto: a página fica parada atrás dele, como no apple.com. A tela
+  // que passa de 768 px (iPad girado) mostra os links na barra e fecha o menu.
+  useEffect(() => {
+    if (!isOpen) return;
+    const raiz = document.documentElement.style;
+    raiz.overflow = "hidden";
+    const largo = window.matchMedia("(min-width: 768px)");
+    const fecharSeLargo = () => largo.matches && setIsOpen(false);
+    largo.addEventListener("change", fecharSeLargo);
+    return () => {
+      raiz.overflow = "";
+      largo.removeEventListener("change", fecharSeLargo);
+    };
+  }, [isOpen]);
+
   return (
-    <header className="topo" ref={topo}>
+    <header className={`topo ${isOpen ? "menu-aberto" : ""}`} ref={topo}>
       {/* Fixo no pé da tela, por cima da página: ele só chega depois da
           API, e no topo empurrava a página inteira para baixo. No Faça parte
           não aparece, que lá o aviso já está no conteúdo. */}
@@ -180,8 +195,8 @@ function Nav() {
           className={`barra-links ${isOpen ? "aberto" : ""}`}
         >
           <ul className="barra-lista">
-            {paginas.map(([to, rotulo]) => (
-              <li key={to}>
+            {paginas.map(([to, rotulo], i) => (
+              <li key={to} style={{ "--ordem": i }}>
                 <NavLink
                   to={to}
                   exact={to === "/"}
@@ -196,7 +211,7 @@ function Nav() {
             {/* Só para quem entrou. O Sair fica no painel, junto da senha:
                 é coisa da conta, não uma página do site. */}
             {logado && (
-              <li>
+              <li style={{ "--ordem": paginas.length }}>
                 <NavLink
                   to="/admin"
                   className="barra-link"
