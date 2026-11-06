@@ -111,7 +111,7 @@ function ProjetoPagina() {
             {canais.map((tag) => (
               <a
                 key={tag._id}
-                className={/^site\b/i.test(tag.title.trim()) ? "botao-principal" : "botao-secundario"}
+                className={/^site\b/i.test(tag.title.trim()) ? "botao-principal" : "botao-contorno"}
                 href={tag.link}
                 target="_blank"
                 rel="noopener noreferrer"

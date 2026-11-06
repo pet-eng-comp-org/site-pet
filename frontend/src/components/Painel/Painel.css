@@ -100,7 +100,8 @@ button.botao-link {
   padding: 0 1.25rem;
   border-radius: var(--raio-capsula);
   font: inherit;
-  font-weight: 600;
+  /* Peso normal, como o botão principal e os do apple.com. */
+  font-weight: 400;
   cursor: pointer;
 }
 
