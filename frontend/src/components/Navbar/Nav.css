@@ -73,30 +73,84 @@
 }
 
 /* Sobre o vidro, o texto fica sempre na cor do texto (o verde cairia a 3:1
-   com uma foto escura atrás): o estado aparece pelo sublinhado. */
+   com uma foto escura atrás). A página atual e o link sob o ponteiro ganham
+   um sublinhado de 1 px na cor do texto, como na barra das páginas do
+   apple.com. */
 .barra-link:hover,
-.barra-link:focus {
+.barra-link:focus,
+.active-link {
   text-decoration: underline;
-  text-decoration-color: var(--cor-acao);
+  text-decoration-thickness: 1px;
   text-underline-offset: 6px;
 }
 
 .active-link {
   font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: var(--cor-acao);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 6px;
 }
 
-/* Celular: o menu abre abaixo da barra, na largura toda. */
+/* Celular: o menu abre na tela inteira, abaixo da barra, como o do
+   apple.com (medido em 06/11/2026): fundo sólido, letra de 28 px em peso 600,
+   um item a cada 46 px, e a página parada atrás (Nav.jsx). */
+.barra {
+  position: relative;
+}
+
 .barra-links {
   display: none;
   flex-basis: 100%;
 }
 
-.barra-links.aberto {
-  display: block;
+@media (max-width: 767.98px) {
+  .topo.menu-aberto .barra {
+    background: var(--menu-fundo);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom-color: transparent;
+  }
+
+  /* A faixa de inscrições cobriria o fim da lista. */
+  .topo.menu-aberto .message {
+    display: none;
+  }
+
+  .barra-links.aberto {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    /* A tela menos a barra: 100% aqui é a altura da barra. */
+    height: calc(100vh - 100%);
+    height: calc(100dvh - 100%);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.5rem var(--margem) calc(2rem + env(safe-area-inset-bottom));
+    background: var(--menu-fundo);
+  }
+
+  .barra-links.aberto .barra-link {
+    min-height: 46px;
+    padding: 0;
+    font-size: 1.75rem;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: 0.007em;
+  }
+
+  /* Os itens descem 8 px ao abrir, um logo depois do outro. */
+  @media (prefers-reduced-motion: no-preference) {
+    .barra-links.aberto li {
+      animation: menu-entra 0.3s cubic-bezier(0.4, 0, 0.6, 1) both;
+      animation-delay: calc(var(--ordem) * 20ms);
+    }
+  }
+}
+
+@keyframes menu-entra {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 /* Sem JavaScript, o botão não abre nada: os links ficam à vista. */
