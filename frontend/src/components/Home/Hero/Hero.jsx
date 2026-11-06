@@ -4,7 +4,8 @@ import "./Hero.css";
 
 // Largura em que a foto aparece; o mesmo valor está no preload do index.html,
 // que pede a foto antes de o JavaScript chegar.
-const TAMANHO_FOTO = "(max-width: 900px) calc(100vw - 2rem), 538px";
+const TAMANHO_FOTO =
+  "(max-width: 767px) calc(100vw - 2rem), (max-width: 1043px) calc(100vw - 4rem), 980px";
 
 const Hero = () => {
   return (
@@ -22,7 +23,7 @@ const Hero = () => {
             <Link to="/projetos" className="botao-principal">
               Conheça os projetos
             </Link>
-            <Link to="/sobre" className="botao-link">
+            <Link to="/sobre" className="botao-contorno">
               Quem somos
             </Link>
           </div>

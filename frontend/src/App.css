@@ -148,7 +148,9 @@ label {
   --cor-texto-suave: rgba(60, 60, 67, 0.75);
   --cor-acao: #186a6c;
   --cor-acao-fundo: #186a6c;
-  --cor-acao-forte: #1b3f3f;
+  /* Hover dos botões: um tom só um pouco mais claro que o fundo de ação,
+     como no apple.com (#0071e3 vira #0076df), e 5,8:1 com o branco. */
+  --cor-acao-forte: #1a7072;
   --cor-texto-sobre-acao: #fff;
   --cor-texto-sobre-erro: #fff;
   --cor-preenchimento: rgba(120, 120, 128, 0.16);
@@ -196,7 +198,9 @@ label {
        projeto): o verde médio, 5,1:1 com o branco. O verde-claro fica para
        texto e borda. */
     --cor-acao-fundo: #1d7a7c;
-    --cor-acao-forte: #239294;
+    /* Hover dos botões: um pouco mais claro que o fundo de ação e ainda com
+       4,7:1 com o branco (o #239294 de antes dava 3,7:1). */
+    --cor-acao-forte: #1e8082;
     --cor-texto-sobre-acao: #fff;
     --cor-texto-sobre-erro: #1c1c1e;
     --cor-preenchimento: rgba(120, 120, 128, 0.32);
@@ -367,24 +371,55 @@ html {
   }
 }
 
-.botao-principal {
+/* Botões como os do apple.com (lidos do CSS de lá em 06/11/2026): cápsula,
+   texto de 17 px em peso normal e 11 px por 21 px de folga contando a borda
+   de 1 px (44 px de altura). O principal é cheio; o de contorno, ao lado
+   dele, enche ao passar o ponteiro. No celular o apple.com usa 14 px e 36 px
+   de altura; aqui a altura fica em 44, o mínimo de toque do guia da própria
+   Apple, e só a tela estreita encolhe o texto, para o par caber numa linha.
+   (O .botao-secundario cinza é do painel, em Painel.css.) */
+.botao-principal,
+.botao-contorno {
   display: inline-flex;
   align-items: center;
-  min-height: 48px;
-  padding: 0 1.5rem;
-  border: 0;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 1px solid transparent;
   border-radius: var(--raio-capsula);
   cursor: pointer;
+  font-size: var(--texto);
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.botao-principal {
   background: var(--cor-acao-fundo);
   color: var(--cor-texto-sobre-acao);
-  font-weight: 600;
-  font-size: var(--texto);
+}
+
+.botao-contorno {
+  background: transparent;
+  border-color: var(--cor-acao);
+  color: var(--cor-acao);
 }
 
 .botao-principal:hover,
-.botao-principal:focus {
+.botao-contorno:hover {
   background: var(--cor-acao-forte);
+  border-color: transparent;
   color: var(--cor-texto-sobre-acao);
+}
+
+@media (max-width: 389.98px) {
+  .botao-principal,
+  .botao-contorno {
+    padding: 10px 15px;
+    font-size: 0.9375rem;
+  }
 }
 
 .botao-principal:disabled {
