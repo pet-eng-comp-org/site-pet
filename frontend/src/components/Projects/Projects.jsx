@@ -44,6 +44,7 @@ const Projects = () => {
   }, [voltando]);
 
   return (
+    <div className="fundo-cartoes">
     <div className="pagina">
       <h1>Projetos</h1>
       <p className="pagina-intro">
@@ -73,6 +74,7 @@ const Projects = () => {
           ))}
         </ul>
       )}
+    </div>
     </div>
   );
 };

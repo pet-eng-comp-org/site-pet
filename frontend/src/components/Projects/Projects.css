@@ -1,38 +1,74 @@
+/* Página de cartões: fundo cinza e cartões brancos com sombra, que levam à
+   página de cada projeto. Três por linha na tela larga, dois no tablet, um
+   no celular. */
+.fundo-cartoes {
+  background: var(--cor-superficie);
+}
+
 .projetos-grade {
   list-style: none;
   padding: 0;
   margin: 2.5rem 0 0;
   display: grid;
-  /* Uma coluna no celular e duas do tablet em diante: com três, o décimo
-     projeto ficava sozinho; com mínimo de 420 px, o tablet tinha uma só. */
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 20px;
 }
 
-@media (min-width: 735px) {
+/* Duas colunas no tablet: o último cartão, se sobrar sozinho, ocupa a
+   linha inteira, para não deixar meia linha vazia. */
+@media (min-width: 735px) and (max-width: 1068px) {
   .projetos-grade {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .projetos-grade > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 }
 
+/* Três colunas na tela larga, numa grade de seis: o que sobra na última
+   linha se reparte por ela inteira (dois cartões de meia linha, ou um de
+   linha inteira). */
+@media (min-width: 1069px) {
+  .projetos-grade {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .projetos-grade > li {
+    grid-column: span 2;
+  }
+
+  .projetos-grade > li:last-child:nth-child(3n + 1) {
+    grid-column: span 6;
+  }
+
+  .projetos-grade > li:nth-last-child(2):nth-child(3n + 1),
+  .projetos-grade > li:last-child:nth-child(3n + 2) {
+    grid-column: span 3;
+  }
+}
+
+/* O cartão: branco, cantos de 28 px, sombra leve, 28 px de folga em cima e
+   30 px dos lados. No hover a sombra cresce e o cartão aumenta 1%. */
 .projeto {
+  position: relative;
   width: 100%;
   height: 100%;
+  min-height: 240px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  padding: 32px;
-  border: 0;
+  padding: 28px 30px 72px;
   border-radius: var(--raio-cartao);
-  background: var(--cor-superficie);
+  background: var(--cor-fundo);
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
   color: var(--cor-texto);
   text-decoration: none;
-  transition: transform 0.3s cubic-bezier(0, 0, 0.5, 1);
+  transition: box-shadow 0.3s cubic-bezier(0, 0, 0.5, 1),
+    transform 0.3s cubic-bezier(0, 0, 0.5, 1);
 }
 
-/* O hover dos cartões: o cartão cresce uns 6 px, sem sombra,
-   só onde há ponteiro. */
 .projeto:hover,
 .projeto:focus-visible {
   color: var(--cor-texto);
@@ -41,52 +77,58 @@
 
 @media (hover: hover) {
   .projeto:hover {
-    transform: scale(1.0125);
+    box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.16);
+    transform: scale(1.01);
   }
 }
 
-.projeto:focus-visible {
-  outline: 3px solid var(--cor-acao);
-  outline-offset: 3px;
-}
-
+/* Ícone de traço no verde de ação, sem círculo em volta. */
 .projeto-icone {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 14px;
+  background: var(--cor-acao);
+  -webkit-mask: var(--icone) center / contain no-repeat;
+  mask: var(--icone) center / contain no-repeat;
+}
+
+/* A chamada: o nome em verde e a frase em tinta, numa frase só de 24 px. */
+.App .projeto .projeto-chamada {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.16667;
+  letter-spacing: 0.009em;
+  margin: 0;
+  max-width: 22ch;
+  text-wrap: pretty;
+}
+
+.projeto-nome {
+  color: var(--cor-acao);
+}
+
+/* O botão "›" no canto de baixo, a 20 px das bordas. */
+.projeto-ir {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: var(--cor-acao-fundo);
-  margin-bottom: 1.25rem;
+  background: #e8e8ed;
 }
 
-.projeto-icone img {
-  width: 56%;
-  height: 56%;
-  object-fit: contain;
-}
-
-.App .projeto h2 {
-  font-size: var(--titulo-cartao);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.projeto p {
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
-}
-
-/* "Saiba mais ›" do cartão: sublinha
-   quando o ponteiro passa pelo cartão inteiro. */
-.projeto-mais {
-  margin-top: auto;
-  color: var(--cor-link);
-}
-
-.projeto:hover .projeto-mais {
-  text-decoration: underline;
+.projeto-ir::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 8px;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.56);
+  -webkit-mask: var(--seta) center / contain no-repeat;
+  mask: var(--seta) center / contain no-repeat;
+  transform: translateX(1px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -94,8 +136,7 @@
     transition: none;
   }
 
-  .projeto:hover,
-  .projeto:focus-visible {
+  .projeto:hover {
     transform: none;
   }
 }

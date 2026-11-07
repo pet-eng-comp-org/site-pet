@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Nav.css";
-import Icone from "../Icone/Icone";
 import logoPet from "../../assets/logo_pet_simbolo.svg";
 import useApi from "../../services/useApi";
 import isAuth from "../../services/Auth";
@@ -86,8 +85,7 @@ function Nav() {
   const fimSelecao = fimDaSelecaoAberta(
     useApi("api/selection/openSelection").data?.selection
   );
-  const [fechouAviso, setFechouAviso] = useState(false);
-  const showMessage = Boolean(fimSelecao) && !fechouAviso;
+  const showMessage = Boolean(fimSelecao);
   // Lido depois de montar, e de novo a cada troca de página (entrar e sair
   // trocam de página): o HTML pronto das páginas é o de quem não entrou.
   const [logado, setLogado] = useState(false);
@@ -121,46 +119,7 @@ function Nav() {
     };
   }, [isOpen]);
 
-  // A altura da faixa de inscrições abertas vira --faixa no <html>: o rodapé
-  // cresce nessa altura e a rolagem até o foco deixa essa folga embaixo.
-  // Medida, e não fixa, porque ela quebra em mais linhas na tela estreita.
-  const faixa = useRef();
   const comFaixa = showMessage && pathname !== "/inscricoes";
-  useEffect(() => {
-    const raiz = document.documentElement.style;
-    if (!comFaixa) {
-      raiz.removeProperty("--faixa");
-      return;
-    }
-    const medir = new ResizeObserver(([e]) =>
-      raiz.setProperty("--faixa", `${e.target.offsetHeight}px`)
-    );
-    medir.observe(faixa.current);
-    // O navegador só rola até o foco quando ele está fora da tela; um campo
-    // alto podia ficar meio coberto pela faixa. Rola o que faltar.
-    // O que não cabe entre o topo fixo (64 px) e a faixa (o <main>, ao
-    // trocar de página ou fechar a faixa) fica onde está.
-    const mostrarFoco = (e) => {
-      if (faixa.current.contains(e.target)) return;
-      const foco = e.target.getBoundingClientRect();
-      const topoDaFaixa = faixa.current.getBoundingClientRect().top;
-      if (foco.height > topoDaFaixa - 64 - 32) return;
-      const falta = foco.bottom - topoDaFaixa + 16;
-      if (falta > 0) window.scrollBy(0, falta);
-    };
-    document.addEventListener("focusin", mostrarFoco);
-    return () => {
-      medir.disconnect();
-      document.removeEventListener("focusin", mostrarFoco);
-      raiz.removeProperty("--faixa");
-    };
-  }, [comFaixa]);
-
-  // Fechar a faixa leva o foco ao conteúdo, e não ao começo da página.
-  const fecharFaixa = () => {
-    setFechouAviso(true);
-    document.querySelector("main").focus({ preventScroll: true });
-  };
 
   // No celular, escolher uma página fecha o menu, que senão cobre o título.
   const fecharMenu = () => setIsOpen(false);
@@ -186,88 +145,79 @@ function Nav() {
   }, [isOpen]);
 
   return (
-    <header className={`topo ${isOpen ? "menu-aberto" : ""}`} ref={topo}>
-      {/* Fixo no pé da tela, por cima da página: ele só chega depois da
-          API, e no topo empurrava a página inteira para baixo. No Faça parte
-          não aparece, que lá o aviso já está no conteúdo. */}
-      {comFaixa && (
-        <div
-          className="message"
-          role="region"
-          aria-label="Inscrições abertas"
-          ref={faixa}
-        >
-          <p>
-            Inscrições abertas até {fimSelecao}.{" "}
-            <Link to="/inscricoes">Saiba como participar</Link>
-          </p>
+    <>
+      <header className={`topo ${isOpen ? "menu-aberto" : ""}`} ref={topo}>
+        <nav className="barra" aria-label="Principal">
+          <Link to="/" onClick={fecharMenu} className="barra-marca">
+            <img
+              alt="PET Engenharia de Computação, página inicial"
+              src={logoPet}
+              width="18"
+              height="22"
+              className="logo-nav"
+            />
+          </Link>
           <button
             type="button"
-            className="message-fechar"
-            onClick={fecharFaixa}
-            aria-label="Fechar aviso"
+            className="barra-menu"
+            ref={botaoMenu}
+            onClick={toggleCollapse}
+            aria-controls="menu-principal"
+            aria-expanded={isOpen}
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
           >
-            <Icone nome="fechar" />
+            <IconeMenu aberto={isOpen} />
           </button>
-        </div>
+
+          <div
+            id="menu-principal"
+            className={`barra-links ${isOpen ? "aberto" : ""}`}
+          >
+            <ul className="barra-lista">
+              {paginas.map(([to, rotulo], i) => (
+                <li key={to} style={{ "--ordem": i }}>
+                  <NavLink
+                    to={to}
+                    exact={to === "/"}
+                    className="barra-link"
+                    onClick={fecharMenu}
+                  >
+                    {rotulo}
+                  </NavLink>
+                </li>
+              ))}
+              {/* Só para quem entrou. O Sair fica no painel, junto da senha:
+                  é coisa da conta, não uma página do site. */}
+              {logado && (
+                <li style={{ "--ordem": paginas.length }}>
+                  <NavLink
+                    to="/admin"
+                    className="barra-link"
+                    onClick={fecharMenu}
+                  >
+                    Painel
+                  </NavLink>
+                </li>
+              )}
+            </ul>
+          </div>
+        </nav>
+      </header>
+      {/* Faixa de aviso logo abaixo da barra, que sai com a rolagem. O servidor
+          já busca a seleção antes de montar a página, então ela vem no HTML e
+          não empurra nada ao carregar. No Faça parte não aparece: lá o aviso
+          já está no conteúdo. */}
+      {comFaixa && (
+        <aside className="faixa-aviso" aria-label="Inscrições abertas">
+          <p>
+            Inscrições abertas até {fimSelecao}.{" "}
+            <Link className="link-mais" to="/inscricoes">
+              Saiba como participar
+            </Link>
+          </p>
+        </aside>
       )}
-
-      <nav className="barra" aria-label="Principal">
-        <Link to="/" onClick={fecharMenu} className="barra-marca">
-          <img
-            alt="PET Engenharia de Computação, página inicial"
-            src={logoPet}
-            width="18"
-            height="22"
-            className="logo-nav"
-          />
-        </Link>
-        <button
-          type="button"
-          className="barra-menu"
-          ref={botaoMenu}
-          onClick={toggleCollapse}
-          aria-controls="menu-principal"
-          aria-expanded={isOpen}
-          aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-        >
-          <IconeMenu aberto={isOpen} />
-        </button>
-
-        <div
-          id="menu-principal"
-          className={`barra-links ${isOpen ? "aberto" : ""}`}
-        >
-          <ul className="barra-lista">
-            {paginas.map(([to, rotulo], i) => (
-              <li key={to} style={{ "--ordem": i }}>
-                <NavLink
-                  to={to}
-                  exact={to === "/"}
-                  className="barra-link"
-                  onClick={fecharMenu}
-                >
-                  {rotulo}
-                </NavLink>
-              </li>
-            ))}
-            {/* Só para quem entrou. O Sair fica no painel, junto da senha:
-                é coisa da conta, não uma página do site. */}
-            {logado && (
-              <li style={{ "--ordem": paginas.length }}>
-                <NavLink
-                  to="/admin"
-                  className="barra-link"
-                  onClick={fecharMenu}
-                >
-                  Painel
-                </NavLink>
-              </li>
-            )}
-          </ul>
-        </div>
-      </nav>
-    </header>
+    </>
   );
 }
 
