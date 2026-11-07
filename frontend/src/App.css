@@ -19,7 +19,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: var(--texto);
   font-weight: 400;
-  /* Como o texto do apple.com: 17 px e entrelinha de 25 px. */
+  /* Texto de 17 px e entrelinha de 25 px. */
   line-height: 1.47059;
   color: var(--cor-texto);
   background-color: var(--cor-fundo);
@@ -43,7 +43,7 @@ ol {
   margin: 0 0 1rem;
 }
 
-/* O tracking do apple.com, que muda com o tamanho: -0,022em no texto de
+/* O espaçamento entre letras, que muda com o tamanho: -0,022em no texto de
    17 px. Fica em cada elemento, e não no body, porque em "em" no body ele
    viraria um valor fixo herdado por textos de outros tamanhos. Os outros
    tamanhos ditam o seu (rodapé, barra, abertura, subtítulo). */
@@ -72,7 +72,7 @@ h3 {
   text-wrap: balance;
 }
 
-/* Link como os do apple.com: na cor de link, sem sublinhado, sublinhado ao
+/* Link: na cor de link, sem sublinhado, sublinhado ao
    passar o ponteiro. A cor de link (#1b797b) é um verde um pouco mais claro
    que o dos botões, para ter 3,3:1 com o texto em volta (o mínimo para
    dispensar o sublinhado) e 5,2:1 com o branco. Botões, barra e cartões
@@ -97,9 +97,8 @@ a:hover {
   text-decoration: none;
 }
 
-/* "Saiba mais ›": o link com a seta do apple.com, que lá é o chevron da
-   fonte de ícones da Apple (0,24em depois do texto); aqui, o mesmo desenho
-   em SVG, na cor do link. No hover só o texto sublinha: a seta é
+/* "Saiba mais ›": o link com a seta, desenhada em SVG na cor do link, a
+   0,24em do texto. No hover só o texto sublinha: a seta é
    inline-block e fica de fora do sublinhado. */
 .link-mais::after,
 .link-voltar::before {
@@ -139,7 +138,7 @@ label {
   display: inline-block;
 }
 
-/* Foco por teclado como o do apple.com: 2 px na cor de ação, afastado 1 px
+/* Foco por teclado: 2 px na cor de ação, afastado 1 px
    do elemento. Sobre as faixas verdes, em branco. */
 :focus-visible {
   outline: 2px solid var(--cor-acao);
@@ -156,7 +155,7 @@ label {
   width: auto;
 }
 
-/* Campo com o nome dentro, como os do apple.com (lidos em 07/11/2026): 56
+/* Campo com o nome dentro: 56
    px de altura, borda de 1 px #86868b, cantos de 12 px e texto de 17 px. O
    nome fica no meio do campo vazio, em #6e6e73, e sobe para 12 px a 10 px do
    topo quando o campo recebe o foco ou tem texto. No foco, a borda passa a
@@ -210,7 +209,7 @@ label {
   line-height: 16px;
 }
 
-/* Foco como o do campo do apple.com: a borda passa a 2 px na cor de ação,
+/* Foco: a borda passa a 2 px na cor de ação,
    sem contorno por fora (1 px sai da folga para o texto não andar). */
 .campo .form-control:focus,
 .campo .form-control:focus-visible {
@@ -258,7 +257,7 @@ label {
   border-color: var(--cor-erro);
 }
 
-/* Campo com erro: o nome também na cor de erro, como lá. */
+/* Campo com erro: o nome também na cor de erro. */
 .campo:has(.is-invalid) label {
   color: var(--cor-erro);
 }
@@ -305,11 +304,11 @@ label {
 
 /* Margem lateral do conteúdo: 16 px no celular e 32 px do tablet em diante,
    até a coluna de 980 px ficar com margem maior que isso. */
-/* Cores por função, como no apple.com (medido em 07/11/2026): página branca,
+/* Cores por função: página branca,
    cartões, blocos e rodapé em #f5f5f7, texto em #1d1d1f (o secundário em
    #6e6e73), separadores neutros e
-   uma única cor de ação, o verde do PET, no papel que o azul tem lá. Um tema
-   só, claro, como o apple.com, que não muda com o tema do aparelho. */
+   uma única cor de ação, o verde do PET. Um tema
+   só, claro, que não muda com o tema do aparelho. */
 :root {
   color-scheme: light;
   --cor-fundo: #fff;
@@ -321,10 +320,10 @@ label {
   --cor-acao: #186a6c;
   --cor-acao-fundo: #186a6c;
   --cor-link: #1b797b;
-  /* A seta do "Saiba mais ›" (traço de 2 em 8 de largura, o peso da de lá). */
+  /* A seta do "Saiba mais ›" (traço de 2 em 8 de largura). */
   --seta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  /* Hover dos botões: um tom só um pouco mais claro que o fundo de ação,
-     como no apple.com (#0071e3 vira #0076df), e 5,8:1 com o branco. */
+  /* Hover dos botões: um tom só um pouco mais claro que o fundo de ação, e
+     5,8:1 com o branco. */
   --cor-acao-forte: #1a7072;
   --cor-texto-sobre-acao: #fff;
   --cor-texto-sobre-erro: #fff;
@@ -341,11 +340,10 @@ label {
   --cor-alerta-borda: #f5c6cb;
   --cor-alerta-texto: #721c24;
   --cor-sobreposicao: rgba(0, 0, 0, 0.2);
-  /* Folha (janela do painel): branca, como as janelas do apple.com, sobre o
+  /* Folha (janela do painel): branca, sobre o
      fundo escurecido. */
   --cor-folha: #fff;
-  /* Barra do topo escura, como a da inicial do apple.com (medida em
-     07/11/2026): vidro #1d1d1f a 80% com saturate 180% e blur 20px, sem
+  /* Barra do topo escura: vidro #1d1d1f a 80% com saturate 180% e blur 20px, sem
      linha embaixo, links brancos a 80%. Sólida (#1d1d1f) sem suporte ao
      filtro. O menu aberto no celular é #161617, com os links em #e8e8ed.
      A 80%, o texto branco fica acima de 4,5:1 com qualquer coisa atrás. */
@@ -363,14 +361,13 @@ label {
 :root {
   --margem: 1rem;
   /* Escala de texto, num lugar só. Um tamanho para todo texto corrido; os
-     títulos em degraus claros (o da página cerca de 1,6 vez o da seção, como
-     na Apple). */
+     títulos em degraus claros (o da página cerca de 1,6 vez o da seção). */
   --texto: 1.0625rem; /* 17 px */
   --titulo-cartao: 1.25rem; /* 20 px */
   --titulo-secao: 1.375rem; /* 22 px no celular, 28 px na tela larga */
 }
 
-/* Margem lateral como a do apple.com: até 1068 px o conteúdo ocupa 87,5% da
+/* Margem lateral: até 1068 px o conteúdo ocupa 87,5% da
    tela (6,25% de cada lado); acima, a coluna de 980 px no centro. */
 @media (max-width: 1068px) {
   :root {
@@ -444,19 +441,19 @@ html {
   color: var(--cor-acao);
 }
 
-/* Página interna: a coluna de 980 px do apple.com, a mesma do cabeçalho e
+/* Página interna: a coluna de 980 px, a mesma do cabeçalho e
    do rodapé, e texto numa medida confortável de leitura.
    O width evita que o .App (flex) encolha a página à largura do conteúdo. */
 .pagina {
   width: 100%;
   max-width: calc(980px + 2 * var(--margem));
   margin: 0 auto;
-  /* O ritmo das seções do apple.com: 144 px embaixo (120 até 1068 px, 112
+  /* O ritmo das seções: 144 px embaixo (120 até 1068 px, 112
      até 734 px). */
   padding: 6rem var(--margem) 9rem;
 }
 
-/* Abertura da página como no apple.com: o título, do tamanho do título da
+/* Abertura da página: o título, do tamanho do título da
    página inicial, e o parágrafo de abertura logo abaixo dele, centralizados.
    O resto (seções, listas, texto corrido) fica à esquerda. A página de um
    projeto põe o título dentro da coluna de leitura, como um artigo, e fica
@@ -465,8 +462,7 @@ html {
   text-align: center;
 }
 
-/* O parágrafo de abertura no estilo do apple.com (lido do CSS de lá em
-   07/11/2026): semibold, 28 px na tela larga e 21 px no celular, entrelinha
+/* O parágrafo de abertura: semibold, 28 px na tela larga e 21 px no celular, entrelinha
    curta e linhas equilibradas, sem uma palavra sobrando sozinha embaixo. */
 .App .pagina > h1 + .pagina-intro {
   text-align: center;
@@ -506,7 +502,7 @@ html {
 }
 
 /* O título da página 1,5 vez o título de bloco (72 contra 48 px; 56 contra
-   40 até 1068 px; 48 contra 32 até 734 px, os degraus do apple.com), para
+   40 até 1068 px; 48 contra 32 até 734 px, os degraus), para
    ele mandar na primeira tela. */
 .App .pagina h1 {
   font-size: 4.5rem;
@@ -515,7 +511,7 @@ html {
   margin-bottom: 1rem;
 }
 
-/* Título de bloco, como os do apple.com: grande e na fonte da marca (faixa
+/* Título de bloco: grande e na fonte da marca (faixa
    da equipe, "O que é o PET", notícias). */
 .App .titulo-bloco {
   font-family: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
@@ -592,12 +588,12 @@ html {
   }
 }
 
-/* Botões como os do apple.com (lidos do CSS de lá em 06/11/2026): cápsula,
+/* Botões: cápsula,
    texto de 17 px em peso normal e 11 px por 21 px de folga contando a borda
    de 1 px (44 px de altura). O principal é cheio; o de contorno, ao lado
-   dele, enche ao passar o ponteiro. No celular o apple.com usa 14 px e 36 px
-   de altura; aqui a altura fica em 44, o mínimo de toque do guia da própria
-   Apple, e no celular o texto vai a 15 px, para o par caber numa linha.
+   dele, enche ao passar o ponteiro. A altura fica em 44 px também no
+   celular, o mínimo para o toque, e ali o texto vai a 15 px, para o par
+   caber numa linha.
    (O .botao-secundario cinza é do painel, em Painel.css.) */
 .botao-principal,
 .botao-contorno {
@@ -635,8 +631,8 @@ html {
   color: var(--cor-texto-sobre-acao);
 }
 
-/* Celular (até 734 px, o degrau do apple.com): texto de 15 px e folga
-   menor, para o par caber numa linha com a margem de 6,25% de lá. */
+/* Celular (até 734 px, o degrau): texto de 15 px e folga
+   menor, para o par caber numa linha com a margem de 6,25%. */
 @media (max-width: 734px) {
   .botao-principal,
   .botao-contorno {
@@ -663,13 +659,13 @@ a {
   margin: 0;
 }
 
-/* Bloco cheio (a cor ocupa a largura toda), como os do apple.com: 12 px de
+/* Bloco cheio (a cor ocupa a largura toda): 12 px de
    página branca embaixo de cada um, inclusive antes do rodapé. */
 .bloco {
   margin-bottom: 12px;
 }
 
-/* Folga dos blocos da inicial, por degrau, como lá: 56/63 px acima de
+/* Folga dos blocos da inicial, por degrau: 56/63 px acima de
    1068 px, 61/69 até 1068 px e 39/43 até 734 px. */
 @media (max-width: 734px) {
   .App .noticias,
@@ -679,7 +675,7 @@ a {
   }
 }
 
-/* O texto dos blocos da inicial, lido do apple.com em 07/11/2026: título de
+/* O texto dos blocos da inicial: título de
    56 px (48 até 1068 px, 32 até 734 px), subtítulo de 28 px em peso normal
    (24 e 19) 6 px abaixo dele, e os botões 17 px abaixo (16 e 11). */
 .App .bloco-titulo {

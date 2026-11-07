@@ -30,7 +30,7 @@ const About = () => {
           Estudantes de Engenharia de Computação e um professor tutor, em
           ensino, pesquisa e extensão.
         </p>
-        {/* Os números em destaque, como os do apple.com. Os do programa são
+        {/* Os números em destaque. Os do programa são
             do portal do MEC (gov.br/mec/pt-br/pet, conferido em 07/11/2026). */}
         <dl className="numeros">
           <div>

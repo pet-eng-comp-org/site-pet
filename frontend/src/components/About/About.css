@@ -1,4 +1,4 @@
-/* Números em destaque, como os do apple.com: o número grande na fonte da
+/* Números em destaque: o número grande na fonte da
    marca e a legenda curta embaixo, em quatro colunas (duas no celular). */
 .numeros {
   display: grid;

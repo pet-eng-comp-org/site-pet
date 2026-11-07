@@ -1,7 +1,6 @@
-/* Medido no rodapé do apple.com em 07/11/2026: fundo #f5f5f7 sob a página
-   branca, texto de 12 px com 16 px de entrelinha a 56% do preto, links da
-   linha de contato na cor de link e sublinhados, 17 px em cima, linha fina com 19 px antes e
-   16 px depois, e o copyright como o de lá. */
+/* Rodapé: fundo #f5f5f7 sob a página branca, texto de 12 px com 16 px de
+   entrelinha a 56% do preto, links na cor de link e sublinhados, 17 px em
+   cima, linha fina com 19 px antes e 16 px depois, e o copyright. */
 .rodape {
   --rodape-fundo: var(--cor-superficie);
   --rodape-texto: rgba(0, 0, 0, 0.56);
@@ -30,8 +29,7 @@
   line-height: inherit;
 }
 
-/* Os links da linha de endereço e contato do rodapé de lá ("Outras formas de
-   comprar…"): na cor de link, sublinhados. */
+/* Os links da linha de endereço e contato: na cor de link, sublinhados. */
 .rodape a {
   color: var(--cor-link);
   text-decoration: underline;
