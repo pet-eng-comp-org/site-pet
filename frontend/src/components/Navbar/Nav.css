@@ -6,13 +6,13 @@
 }
 
 /* Logo à esquerda, botão do menu à direita (celular) e links alinhados com o
-   conteúdo das páginas (largura de 1140px). */
+   conteúdo das páginas (largura de 980px). */
 .barra {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.4375rem max(var(--margem), calc((100% - 1140px) / 2));
+  padding: 0.4375rem max(var(--margem), calc((100% - 980px) / 2));
   /* Vidro: a barra flutua sobre o conteúdo, que aparece borrado por baixo ao
      rolar, como no apple.com. Sem suporte ao filtro, fica sólida. */
   background: var(--cor-superficie);
@@ -292,7 +292,7 @@
   align-items: center;
   gap: 1rem;
   min-height: 44px;
-  padding: 0.5rem max(var(--margem), calc((100% - 1140px) / 2));
+  padding: 0.5rem max(var(--margem), calc((100% - 980px) / 2));
   /* A barra do iPhone não cobre o botão de fechar. */
   padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   background: #ff9a5b;

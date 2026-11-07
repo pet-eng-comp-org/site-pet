@@ -22,16 +22,7 @@ const Documents = () => {
       <h1>Documentos</h1>
       <p className="pagina-intro">
         Normas, planejamentos, relatórios e editais do PET Engenharia de
-        Computação. A legislação do programa está no{" "}
-        <a
-          className="link-texto"
-          target="_blank"
-          href="https://www.gov.br/mec/pt-br/areas-de-atuacao/educacao-superior/pet"
-          rel="noopener noreferrer"
-        >
-          portal do MEC
-        </a>
-        .
+        Computação.
       </p>
       {/* O título e a abertura são fixos: aparecem já, e os documentos
           entram embaixo quando a API responde. */}
@@ -47,6 +38,20 @@ const Documents = () => {
             <GrupoDocumentos key={document._id} document={document} />
           ))}
         </div>
+      )}
+      {documents && (
+        <p className="pagina-texto documentos-mec">
+          A legislação do programa está no{" "}
+          <a
+            className="link-texto"
+            target="_blank"
+            href="https://www.gov.br/mec/pt-br/areas-de-atuacao/educacao-superior/pet"
+            rel="noopener noreferrer"
+          >
+            portal do MEC
+          </a>
+          .
+        </p>
       )}
     </div>
   );

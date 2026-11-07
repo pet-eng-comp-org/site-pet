@@ -132,7 +132,7 @@ label {
 }
 
 /* Margem lateral do conteúdo: 16 px no celular e 32 px do tablet em diante,
-   até a coluna de 1140 px ficar com margem maior que isso. */
+   até a coluna de 980 px ficar com margem maior que isso. */
 /* Cores por função, no padrão dos kits da Apple (Figma da identidade, página
    "Sistema (padrão Apple)"): fundo agrupado cinza com cartões brancos, texto
    em tinta, separadores neutros e uma única cor de ação, o verde do PET, no
@@ -279,7 +279,7 @@ html {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: calc(1140px + 2 * var(--margem));
+  max-width: calc(980px + 2 * var(--margem));
   margin: 0 auto;
   height: 100vh;
 }
@@ -303,24 +303,88 @@ html {
   color: var(--cor-acao);
 }
 
-/* Página interna: mesma largura do cabeçalho e do rodapé, título em tinta
-   como o da página inicial e texto numa medida confortável de leitura.
+/* Página interna: a coluna de 980 px do apple.com, a mesma do cabeçalho e
+   do rodapé, e texto numa medida confortável de leitura.
    O width evita que o .App (flex) encolha a página à largura do conteúdo. */
 .pagina {
   width: 100%;
-  max-width: calc(1140px + 2 * var(--margem));
+  max-width: calc(980px + 2 * var(--margem));
   margin: 0 auto;
   padding: 4rem var(--margem) 5rem;
 }
 
+/* Abertura da página como no apple.com: o título, do tamanho do título da
+   página inicial, e o parágrafo de abertura logo abaixo dele, centralizados.
+   O resto (seções, listas, texto corrido) fica à esquerda. A página de um
+   projeto põe o título dentro da coluna de leitura, como um artigo, e fica
+   toda à esquerda. */
+.App .pagina > h1 {
+  text-align: center;
+}
+
+/* O parágrafo de abertura no estilo do apple.com (lido do CSS de lá em
+   07/11/2026): semibold, 28 px na tela larga e 21 px no celular, entrelinha
+   curta e linhas equilibradas, sem uma palavra sobrando sozinha embaixo. */
+.App .pagina > h1 + .pagina-intro {
+  text-align: center;
+  text-wrap: balance;
+  margin-inline: auto;
+  max-width: 40rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+  .App .pagina > h1 + .pagina-intro {
+    font-size: 1.3125rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Texto corrido da página, fora da abertura: à esquerda, na medida de
+   leitura. */
+.pagina-texto {
+  font-size: var(--texto);
+  line-height: 1.6;
+  max-width: 36rem;
+}
+
+/* Página só de aviso (não encontrada, falha ao carregar): tudo no centro. */
+.pagina-centro {
+  text-align: center;
+}
+
+/* O título da página 1,5 vez o título de bloco (72 contra 48 px; 48 contra
+   32 no celular), para ele mandar na primeira tela. */
 .App .pagina h1 {
-  font-size: 3rem;
+  font-size: 4.5rem;
   line-height: 1.1;
   color: var(--cor-texto);
   margin-bottom: 1rem;
 }
 
-/* Título de seção: o mesmo em todas as páginas, inclusive na inicial. */
+/* Título de bloco, como os do apple.com: grande e na fonte da marca (faixa
+   da equipe, "O que é o PET", notícias). */
+.App .titulo-bloco {
+  font-family: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.App .pagina .titulo-bloco {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 900px) {
+  .App .titulo-bloco {
+    font-size: 2rem;
+  }
+}
+
+/* Título de seção dentro do texto: o mesmo em todas as páginas. */
 .pagina h2 {
   font-size: var(--titulo-secao);
   font-weight: 700;
@@ -366,7 +430,7 @@ html {
   }
 
   .App .pagina h1 {
-    font-size: 2.25rem;
+    font-size: 3rem;
   }
 }
 
