@@ -1,9 +1,11 @@
-/* Medido no rodapé do apple.com em 07/11/2026: fundo #f5f5f7, texto de
-   12 px com 16 px de entrelinha a 56% do preto, links em azul, conteúdo de
-   980 px, 17 px em cima, linha fina com 19 px antes e 16 px depois. Aqui o
-   azul é o verde de ação, e no escuro o fundo é o cinza do sistema. */
+/* Medido no rodapé do apple.com em 07/11/2026: texto de 12 px com 16 px de
+   entrelinha a 56% do preto, links em azul, 17 px em cima, linha fina com
+   19 px antes e 16 px depois. Lá o rodapé (#f5f5f7) é um degrau mais escuro
+   que a página branca; aqui a página já é #f2f2f7, então o rodapé desce
+   para #e8e8ed para o degrau continuar visível. O azul vira o verde de ação,
+   e no escuro o fundo é o cinza do sistema. */
 .rodape {
-  --rodape-fundo: #f5f5f7;
+  --rodape-fundo: #e8e8ed;
   --rodape-texto: rgba(0, 0, 0, 0.56);
   background: var(--rodape-fundo);
   color: var(--rodape-texto);
@@ -18,16 +20,18 @@
   }
 }
 
-/* Com a faixa de inscrições abertas no pé da tela, o rodapé cresce embaixo
-   na altura dela (--faixa, medida em Nav.jsx), e nada fica coberto. */
+/* Mesma largura do cabeçalho e das páginas internas. Com a faixa de
+   inscrições abertas no pé da tela, o rodapé cresce embaixo na altura dela
+   (--faixa, medida em Nav.jsx), e nada fica coberto. */
 .rodape-conteudo {
-  max-width: calc(980px + 2 * var(--margem));
+  max-width: calc(1140px + 2 * var(--margem));
   margin: 0 auto;
   padding: 17px var(--margem) calc(19px + var(--faixa, 0px));
 }
 
 .rodape p {
   margin: 0;
+  text-wrap: pretty;
   color: inherit;
   font-size: inherit;
   line-height: inherit;
