@@ -332,3 +332,13 @@
   margin: 0;
   letter-spacing: -0.016em;
 }
+
+/* O link não se parte: a quebra, se houver, vem antes dele. */
+.faixa-aviso a {
+  white-space: nowrap;
+}
+
+/* Na página de fundo cinza, a faixa acompanha o fundo. */
+.App:has(.fundo-cartoes) .faixa-aviso {
+  background: var(--cor-superficie);
+}

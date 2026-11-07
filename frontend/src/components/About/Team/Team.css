@@ -15,8 +15,19 @@
 
 .equipe-grade {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  grid-template-columns: 1fr;
   gap: 20px;
+}
+
+/* Duas colunas do tablet em diante; se sobrar um cartão, ele ocupa a linha. */
+@media (min-width: 735px) {
+  .equipe-grade {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .equipe-grade > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 1068px) {

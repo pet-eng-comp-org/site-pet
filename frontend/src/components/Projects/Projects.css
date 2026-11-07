@@ -14,15 +14,37 @@
   gap: 20px;
 }
 
-@media (min-width: 735px) {
+/* Duas colunas no tablet: o último cartão, se sobrar sozinho, ocupa a
+   linha inteira, para não deixar meia linha vazia. */
+@media (min-width: 735px) and (max-width: 1068px) {
   .projetos-grade {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .projetos-grade > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 }
 
+/* Três colunas na tela larga, numa grade de seis: o que sobra na última
+   linha se reparte por ela inteira (dois cartões de meia linha, ou um de
+   linha inteira). */
 @media (min-width: 1069px) {
   .projetos-grade {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .projetos-grade > li {
+    grid-column: span 2;
+  }
+
+  .projetos-grade > li:last-child:nth-child(3n + 1) {
+    grid-column: span 6;
+  }
+
+  .projetos-grade > li:nth-last-child(2):nth-child(3n + 1),
+  .projetos-grade > li:last-child:nth-child(3n + 2) {
+    grid-column: span 3;
   }
 }
 
@@ -37,7 +59,7 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  padding: 28px 30px 76px;
+  padding: 28px 30px 72px;
   border-radius: var(--raio-cartao);
   background: var(--cor-fundo);
   box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
@@ -62,24 +84,27 @@
 
 /* Ícone de traço no verde de ação, sem círculo em volta. */
 .projeto-icone {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   margin-bottom: 14px;
   background: var(--cor-acao);
   -webkit-mask: var(--icone) center / contain no-repeat;
   mask: var(--icone) center / contain no-repeat;
 }
 
-.App .projeto h2 {
+/* A chamada: o nome em verde e a frase em tinta, numa frase só de 24 px. */
+.App .projeto .projeto-chamada {
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.16667;
   letter-spacing: 0.009em;
-  margin-bottom: 8px;
+  margin: 0;
+  max-width: 22ch;
+  text-wrap: pretty;
 }
 
-.projeto p {
-  margin: 0;
+.projeto-nome {
+  color: var(--cor-acao);
 }
 
 /* O botão "›" no canto de baixo, a 20 px das bordas. */
