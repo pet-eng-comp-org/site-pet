@@ -1,8 +1,18 @@
-/* Topo fixo: aviso de inscrição (quando há) e barra de navegação. */
+/* Como no apple.com: o topo da página guarda o lugar da barra com uma faixa
+   escura sólida, e a barra fica fixa por cima dela. Parada no topo, a barra
+   translúcida aparece quase preta (#1c1c1e, medido lá); só quando a página
+   rola por baixo é que o conteúdo transparece no vidro. */
 .topo {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 1020;
+  height: 48px;
+  background: var(--barra-solida);
+}
+
+@media (min-width: 834px) {
+  .topo {
+    height: 44px;
+  }
 }
 
 /* A barra do apple.com (medida em 07/11/2026): 44 px de altura (48 no
@@ -98,7 +108,10 @@
    e os itens descem 8 px a partir de 0,2 s, um a cada 20 ms; ao fechar,
    saem todos juntos e o fundo sobe. */
 .barra {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .barra-links {
