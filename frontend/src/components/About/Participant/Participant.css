@@ -1,51 +1,32 @@
+/* Cada pessoa num cartão cinza de cantos de 28 px: a foto redonda e as
+   redes em cima, depois o nome, desde quando está no PET, a frase e as
+   comissões. */
 .petiano {
-  color: white;
-  font-weight: 400;
   display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "PH SM"
+    "NM NM"
+    "SP SP"
+    "DP DP"
+    "TG TG";
+  grid-template-rows: auto auto auto auto 1fr;
+  align-items: start;
+  padding: 30px;
+  border-radius: var(--raio-cartao);
+  background: var(--cor-superficie);
+  color: var(--cor-texto);
 }
 
-@media (min-width: 568px) {
-  .petiano {
-    grid-template-columns: 140px 1fr;
-    /* A foto ocupa 140 px; o que sobrar de altura fica numa linha vazia no
-       fim, e não entre a descrição e as etiquetas. */
-    grid-template-rows: auto auto auto auto 1fr;
-    grid-template-areas:
-      "PH NM"
-      "PH SP"
-      "PH DP"
-      "PH TG"
-      "PH .";
-  }
-}
-
-@media (max-width: 567px) {
-  .petiano {
-    grid-template-columns: 90px 1fr;
-    column-gap: 1rem;
-    align-items: center;
-    grid-template-areas:
-      "PH NM"
-      "PH SP"
-      "PH SM"
-      "DP DP"
-      "TG TG";
-  }
-}
-
-/* Foto e redes sociais juntas, numa coluna; no celular cada uma vai para a sua área. */
 .petiano-lado {
-  grid-area: PH;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: contents;
 }
 
 .petiano-foto {
   grid-area: PH;
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 96px;
+  height: 96px;
   overflow: hidden;
   border-radius: 50%;
 }
@@ -88,9 +69,9 @@
 
 .petiano-redes {
   grid-area: SM;
+  justify-self: end;
   display: flex;
-  justify-content: center;
-  padding-top: 0.5rem;
+  margin-right: -10px;
 }
 
 .petiano-redes a {
@@ -99,108 +80,67 @@
   justify-content: center;
   min-width: 44px;
   min-height: 44px;
-  color: white;
-  font-size: 30px;
+  color: var(--cor-texto-suave);
+  font-size: 22px;
+}
+
+.petiano-redes a:hover {
+  color: var(--cor-texto);
 }
 
 .petiano-nome {
   grid-area: NM;
-  font-size: var(--titulo-cartao);
-  font-weight: 700;
-  line-height: 1.2;
+  margin-top: 20px;
+  font-size: 1.3125rem;
+  font-weight: 600;
+  line-height: 1.19;
+  letter-spacing: 0.011em;
 }
 
 .petiano-desde {
   grid-area: SP;
-  font-size: 0.9rem;
-  opacity: 0.85;
-  margin-bottom: 0.5rem;
+  margin-top: 4px;
+  font-size: 0.875rem;
+  letter-spacing: -0.016em;
+  color: var(--cor-texto-suave);
 }
 
 .petiano-descricao {
   grid-area: DP;
+  margin-top: 12px;
   font-size: var(--texto);
-  line-height: 1.5;
-  margin-bottom: 0.75rem;
-  overflow: hidden;
+  letter-spacing: -0.022em;
 }
 
+/* As comissões em pílulas brancas, que levam à página do projeto. */
 .petiano-etiquetas {
   grid-area: TG;
+  align-self: end;
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
 }
 
-/* Uma cor só para todas as etiquetas, como na página de cada projeto. */
 .petiano-etiqueta {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 0 0.75rem;
-  margin: 0 0.5rem 0.5rem 0;
-  border: 1px solid #fff;
+  min-height: 32px;
+  padding: 0 12px;
   border-radius: var(--raio-capsula);
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.9rem;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-size: 0.875rem;
+  letter-spacing: -0.016em;
 }
 
-.petiano-etiqueta:hover,
-.petiano-etiqueta:focus {
-  background: #fff;
-  color: var(--cor-faixa-verde);
+.petiano-etiqueta:hover {
+  background: #e8e8ed;
+  color: var(--cor-texto);
   text-decoration: none;
-}
-
-@media (min-width: 568px) {
-  .petiano-nome {
-    margin-bottom: 10px;
-    padding: 0 20px;
-  }
-
-  .petiano-desde,
-  .petiano-descricao,
-  .petiano-etiquetas {
-    padding: 0 20px;
-  }
-}
-
-@media (max-width: 567px) {
-  .petiano-lado {
-    display: contents;
-  }
-
-  .petiano-foto {
-    width: 90px;
-    height: 90px;
-  }
-
-  .petiano-redes {
-    justify-content: flex-start;
-    padding-top: 0;
-  }
-
-  .petiano-redes a {
-    justify-content: flex-start;
-    margin-right: 0.25rem;
-  }
-
-  .petiano-nome,
-  .petiano-desde {
-    margin-bottom: 0.25rem;
-  }
-
-  .petiano-descricao {
-    padding-top: 1rem;
-  }
-
-  .petiano-etiquetas {
-    padding-top: 10px;
-  }
 }
 
 span.petiano-foto {
   display: block;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--cor-superficie-suave);
 }

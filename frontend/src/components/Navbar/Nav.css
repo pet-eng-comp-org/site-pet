@@ -150,10 +150,6 @@
     transition: opacity 0.24s cubic-bezier(0.4, 0, 0.6, 1), visibility 0.24s steps(1);
   }
 
-  /* A faixa de inscrições cobriria o fim da lista. */
-  .topo.menu-aberto .message {
-    display: none;
-  }
 
   /* Sempre na página, de altura zero e invisível quando fechado: assim dá
      para animar a abertura e o fechamento. */
@@ -322,62 +318,17 @@
   outline-offset: -3px;
 }
 
-.message {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  min-height: 44px;
-  padding: 0.5rem max(var(--margem), calc((100% - 980px) / 2));
-  /* A barra do iPhone não cobre o botão de fechar. */
-  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
-  /* Faixa de avisos: #fafcfe, texto de 14 px centralizado, link na cor de
-     ação, sem sombra. Fica no pé da tela porque só chega depois da API, e
-     no topo empurraria a página inteira para baixo. */
-  background: #fafcfe;
-  border-top: 1px solid var(--cor-separador);
-  color: var(--cor-texto);
+/* Faixa de aviso abaixo da barra: 14 px centralizado, com folga de 16 px,
+   no fundo da página, e um link "›". Sai com a rolagem. */
+.faixa-aviso {
+  padding: 16px var(--margem);
+  background: var(--cor-fundo);
   font-size: 0.875rem;
-  letter-spacing: -0.016em;
-  font-weight: 400;
-  z-index: 1030;
-}
-
-.message p {
-  margin: 0 auto;
+  line-height: 1.42859;
   text-align: center;
-  letter-spacing: inherit;
 }
 
-.message-fechar {
-  margin-left: auto;
-  /* Área de toque de 44px, com o X encostado na margem do conteúdo. */
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  background: none;
-  border: 0;
-  color: var(--cor-texto);
-  cursor: pointer;
-}
-
-.message a {
-  color: var(--cor-link);
-
-  font-weight: 500;
-}
-
-.message a:hover {
-  color: var(--cor-link);
-  text-decoration: underline;
-}
-
-.message-fechar .icone-svg {
-  height: 1.1rem;
+.faixa-aviso p {
+  margin: 0;
+  letter-spacing: -0.016em;
 }
