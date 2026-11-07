@@ -149,7 +149,7 @@
 .petiano-etiqueta:hover,
 .petiano-etiqueta:focus {
   background: #fff;
-  color: #1b3f3f;
+  color: var(--cor-faixa-verde);
   text-decoration: none;
 }
 
