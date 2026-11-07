@@ -20,8 +20,7 @@ const fimDaSelecaoAberta = (s) => {
 };
 
 // O ícone do menu: duas linhas que se juntam no meio e giram até virar o X,
-// com o desenho e o tempo do botão do apple.com (lido da página em
-// 06/11/2026: 18 px, traço de 1,2, 0,24 s). Cada linha: fechado e aberto.
+// em 18 px, traço de 1,2 e 0,24 s. Cada linha: fechado e aberto.
 const LINHAS = [
   ["baixo", "2 12, 16 12", "3.5 15, 15 3.5"],
   ["cima", "2 5, 16 5", "3.5 3.5, 15 15"],
@@ -166,10 +165,10 @@ function Nav() {
   // No celular, escolher uma página fecha o menu, que senão cobre o título.
   const fecharMenu = () => setIsOpen(false);
 
-  // Menu aberto: a página fica parada atrás dele, como no apple.com, e fora
+  // Menu aberto: a página fica parada atrás dele, e fora
   // do alcance do Tab e do VoiceOver (inert), que senão andavam pelo que o
   // menu cobre. A tela que passa de 833 px (iPad girado) mostra os links na
-  // barra e fecha o menu, no mesmo ponto do apple.com.
+  // barra e fecha o menu, no mesmo ponto.
   useEffect(() => {
     if (!isOpen) return;
     const raiz = document.documentElement.style;

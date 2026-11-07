@@ -1,6 +1,6 @@
-/* Como no apple.com: o topo da página guarda o lugar da barra com uma faixa
-   escura sólida, e a barra fica fixa por cima dela. Parada no topo, a barra
-   translúcida aparece quase preta (#1c1c1e, medido lá); só quando a página
+/* O topo da página guarda o lugar da barra com uma faixa escura sólida, e a
+   barra fica fixa por cima dela. Parada no topo, a barra translúcida
+   aparece quase preta (#1c1c1e); só quando a página
    rola por baixo é que o conteúdo transparece no vidro. */
 .topo {
   position: relative;
@@ -15,7 +15,7 @@
   }
 }
 
-/* A barra do apple.com (medida em 07/11/2026): 44 px de altura (48 no
+/* A barra: 44 px de altura (48 no
    celular), só o símbolo da marca e os links em 12 px, distribuídos por toda
    a largura do conteúdo (980 px). */
 .barra {
@@ -24,11 +24,11 @@
   align-items: center;
   justify-content: space-between;
   min-height: 48px;
-  /* Margem da barra do apple.com, que não segue a da página: 16 px até
+  /* Margem da barra, que não segue a da página: 16 px até
      833 px, 22 px até 1023 px e, acima, a coluna de 980 px. */
   padding: 0 16px;
   /* Vidro: a barra flutua sobre o conteúdo, que aparece borrado por baixo ao
-     rolar, como no apple.com. Sem suporte ao filtro, fica sólida. */
+     rolar. Sem suporte ao filtro, fica sólida. */
   background: var(--barra-solida);
 }
 
@@ -48,7 +48,7 @@
   }
 }
 
-/* Só o símbolo, como a maçã no apple.com: o guia da identidade usa o
+/* Só o símbolo: o guia da identidade usa o
    símbolo sozinho nos tamanhos pequenos. A caixa tem a altura da barra, para
    o toque. */
 .barra-marca {
@@ -59,8 +59,8 @@
   margin-left: -8px;
 }
 
-/* Como a maçã de lá, a 80% e acesa por inteiro sob o ponteiro, no mesmo
-   tempo dos links. */
+/* O símbolo a 80%, aceso por inteiro sob o ponteiro, no mesmo tempo dos
+   links. */
 .logo-nav {
   width: 18px;
   height: 22px;
@@ -82,8 +82,7 @@
   list-style: none;
 }
 
-/* Toque de 44 px em toda largura, inclusive no iPad. Como no apple.com
-   (medido em 06/11/2026): o texto a 80% da cor, e inteiro sob o ponteiro;
+/* Toque de 44 px em toda largura, inclusive no iPad. O texto a 80% da cor, e inteiro sob o ponteiro;
    sem sublinhado e sem marcar a página atual, que o título já diz (o
    aria-current fica para o leitor de tela). */
 .barra-link {
@@ -109,11 +108,11 @@
   border-radius: 4px;
 }
 
-/* Celular: o menu abre na tela inteira, abaixo da barra, como o do
-   apple.com (lido da página em 06/11/2026): fundo sólido, sem o logo, texto
+/* Celular: o menu abre na tela inteira, abaixo da barra: fundo sólido, sem
+   o logo, texto
    a 48 px da borda, letra de 28 px em peso 600, um item a cada 46 px logo
-   abaixo da barra, e a página parada atrás (Nav.jsx). Os tempos também são
-   os de lá: o fundo desce em 0,24 s depois de 80 ms, o logo some em 0,24 s,
+   abaixo da barra, e a página parada atrás (Nav.jsx). Os tempos: o fundo
+   desce em 0,24 s depois de 80 ms, o logo some em 0,24 s,
    e os itens descem 8 px a partir de 0,2 s, um a cada 20 ms; ao fechar,
    saem todos juntos e o fundo sobe. */
 .barra {
@@ -243,7 +242,7 @@
 }
 
 /* Computador: o símbolo e os links, todos em fila e espaçados por igual de
-   uma margem à outra, como no apple.com; texto de 12 px a 80% da cor. */
+   uma margem à outra; texto de 12 px a 80% da cor. */
 @media (min-width: 834px) {
   .barra {
     min-height: 44px;
@@ -282,7 +281,7 @@
   }
 }
 
-/* Botão de 48 px com o ícone de 18 px no meio, como no apple.com. A margem
+/* Botão de 48 px com o ícone de 18 px no meio. A margem
    negativa de 16 px (a margem do celular) leva a caixa até a borda da tela,
    sem passar dela: o traço fica a 1 px da margem do conteúdo. */
 .barra-menu {
@@ -335,10 +334,9 @@
   padding: 0.5rem max(var(--margem), calc((100% - 980px) / 2));
   /* A barra do iPhone não cobre o botão de fechar. */
   padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
-  /* No visual da faixa de avisos do apple.com (#fafcfe, texto de 14 px
-     centralizado, link na cor de ação, sem sombra). Lá ela fica sob a barra
-     do topo; aqui fica no pé da tela porque só chega depois da API, e no
-     topo empurraria a página inteira para baixo. */
+  /* Faixa de avisos: #fafcfe, texto de 14 px centralizado, link na cor de
+     ação, sem sombra. Fica no pé da tela porque só chega depois da API, e
+     no topo empurraria a página inteira para baixo. */
   background: #fafcfe;
   border-top: 1px solid var(--cor-separador);
   color: var(--cor-texto);

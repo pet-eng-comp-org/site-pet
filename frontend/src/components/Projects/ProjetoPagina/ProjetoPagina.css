@@ -1,4 +1,4 @@
-/* "‹ Todos os projetos": a seta do apple.com virada, antes do texto. */
+/* "‹ Todos os projetos": a seta virada, antes do texto. */
 .projeto-voltar {
   display: inline-flex;
   align-items: center;
@@ -23,7 +23,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  /* Entre botões, como no apple.com. */
+  /* Entre botões. */
   gap: 14px 17px;
   margin-top: 1.5rem;
 }
