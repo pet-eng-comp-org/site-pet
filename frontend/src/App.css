@@ -159,8 +159,8 @@ label {
 /* Campo com o nome dentro, como os do apple.com (lidos em 07/11/2026): 56
    px de altura, borda de 1 px #86868b, cantos de 12 px e texto de 17 px. O
    nome fica no meio do campo vazio, em #6e6e73, e sobe para 12 px a 10 px do
-   topo quando o campo recebe o foco ou tem texto. No foco, a borda e um
-   contorno de 2 px na cor de ação. */
+   topo quando o campo recebe o foco ou tem texto. No foco, a borda passa a
+   2 px na cor de ação, sem contorno por fora. */
 .campo {
   position: relative;
 }
@@ -231,8 +231,27 @@ label {
   padding-top: 27px;
 }
 
-.campo:has(textarea:focus) label {
-  left: 16px;
+/* O nome da mensagem ocupa a faixa de cima da caixa inteira: tocar nela
+   abre o campo, e o texto fica a 10 px (18 px vazio) e 17 px da borda de
+   fora, como nos outros campos. */
+.campo:has(textarea.form-control) label {
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 17px 16px 0;
+  pointer-events: auto;
+  cursor: text;
+  transition: padding 0.125s ease-in, font-size 0.125s ease-in;
+}
+
+.campo:has(textarea.form-control:not(:placeholder-shown)) label {
+  top: 0;
+  padding-top: 9px;
+}
+
+.campo:has(textarea.form-control:focus) label {
+  top: 0;
+  padding: 8px 15px 0;
 }
 
 .campo:has(textarea.is-invalid) {
@@ -302,8 +321,8 @@ label {
   --cor-acao: #186a6c;
   --cor-acao-fundo: #186a6c;
   --cor-link: #1b797b;
-  /* A seta do "Saiba mais ›" (chevron de 1,5 de traço). */
-  --seta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  /* A seta do "Saiba mais ›" (traço de 2 em 8 de largura, o peso da de lá). */
+  --seta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   /* Hover dos botões: um tom só um pouco mais claro que o fundo de ação,
      como no apple.com (#0071e3 vira #0076df), e 5,8:1 com o branco. */
   --cor-acao-forte: #1a7072;
