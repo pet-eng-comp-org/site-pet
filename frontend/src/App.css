@@ -107,7 +107,7 @@ label {
   font-weight: 400;
   line-height: 1.5;
   color: var(--cor-texto);
-  background: var(--cor-superficie);
+  background: #fff;
   border: 1px solid var(--cor-borda-campo);
   border-radius: 12px;
 }
@@ -133,14 +133,14 @@ label {
 
 /* Margem lateral do conteúdo: 16 px no celular e 32 px do tablet em diante,
    até a coluna de 980 px ficar com margem maior que isso. */
-/* Cores por função, no padrão dos kits da Apple (Figma da identidade, página
-   "Sistema (padrão Apple)"): fundo agrupado cinza com cartões brancos, texto
-   em tinta, separadores neutros e uma única cor de ação, o verde do PET, no
-   papel que o azul tem na Apple. No escuro, os valores do kit. */
+/* Cores por função, como no apple.com (medido em 07/11/2026): página branca,
+   cartões, blocos e rodapé em #f5f5f7, texto em tinta, separadores neutros e
+   uma única cor de ação, o verde do PET, no papel que o azul tem lá. Um tema
+   só, claro, como o apple.com, que não muda com o tema do aparelho. */
 :root {
-  color-scheme: light dark;
-  --cor-fundo: #f2f2f7;
-  --cor-superficie: #fff;
+  color-scheme: light;
+  --cor-fundo: #fff;
+  --cor-superficie: #f5f5f7;
   --cor-superficie-suave: #e5e5ea;
   --cor-hover: rgba(118, 118, 128, 0.12);
   --cor-texto: #1b3f3f;
@@ -182,43 +182,6 @@ label {
   --raio-capsula: 999px;
   --raio-cartao: 20px;
   --raio-folha: 32px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --cor-fundo: #000;
-    --cor-superficie: #1c1c1e;
-    --cor-superficie-suave: #2c2c2e;
-    --cor-hover: rgba(118, 118, 128, 0.24);
-    --cor-texto: #fff;
-    --cor-texto-suave: rgba(235, 235, 245, 0.7);
-    --cor-acao: #56c4c6;
-    /* Fundo de ação que leva conteúdo branco (botão, aba ativa, ícone de
-       projeto): o verde médio, 5,1:1 com o branco. O verde-claro fica para
-       texto e borda. */
-    --cor-acao-fundo: #1d7a7c;
-    /* Hover dos botões: um pouco mais claro que o fundo de ação e ainda com
-       4,7:1 com o branco (o #239294 de antes dava 3,7:1). */
-    --cor-acao-forte: #1e8082;
-    --cor-texto-sobre-acao: #fff;
-    --cor-texto-sobre-erro: #1c1c1e;
-    --cor-preenchimento: rgba(120, 120, 128, 0.32);
-    --cor-faixa-verde: #154f51;
-    --cor-rodape: #1c1c1e;
-    --cor-linha: #38383a;
-    --cor-separador: rgba(255, 255, 255, 0.16);
-    --cor-borda-campo: #8e8e93;
-    --cor-erro: #ff6b5e;
-    --cor-ok: #4cd471;
-    --cor-ok-fundo: #173d2a;
-    --cor-alerta-fundo: #3d1715;
-    --cor-alerta-borda: #6b2a26;
-    --cor-alerta-texto: #ffb4ab;
-    --cor-sobreposicao: rgba(0, 0, 0, 0.48);
-    --cor-folha: #1c1c1e;
-    --vidro-fundo: rgba(29, 29, 31, 0.8);
-    --menu-fundo: #1d1d1f;
-  }
 }
 
 :root {
