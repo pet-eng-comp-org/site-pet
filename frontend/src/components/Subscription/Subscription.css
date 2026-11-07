@@ -1,6 +1,6 @@
 .requisitos {
   font-size: var(--texto);
-  line-height: 1.7;
+  line-height: 1.47059;
   max-width: 36rem;
   margin: 0 0 1.5rem;
   padding-left: 1.5rem;
@@ -8,9 +8,8 @@
 
 .aviso-selecao {
   background: var(--cor-superficie);
-  border-left: 6px solid #ff9a5b;
-  border-radius: 12px;
-  padding: 1.5rem 1.75rem;
+  border-radius: var(--raio-cartao);
+  padding: 32px;
   margin-bottom: 2.5rem;
   max-width: 36rem;
 }
@@ -22,7 +21,7 @@
 
 .aviso-selecao p {
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.47059;
 }
 
 .aviso-selecao p + p {
@@ -49,10 +48,6 @@
 
 .aviso-reserva {
   visibility: hidden;
-}
-
-.aviso-selecao-aberta {
-  border-left-color: var(--cor-acao);
 }
 
 .aviso-selecao .botao-principal,

@@ -1,24 +1,15 @@
+/* O primeiro bloco do apple.com (medido em 07/11/2026): cabe na primeira
+   tela (692 px de altura a 1440), com o texto centralizado em cima e a
+   imagem na largura toda do bloco, até a borda de baixo, sem canto nem
+   sombra. */
 .hero {
   background: var(--cor-superficie);
-  padding: 56px var(--margem) 63px;
-}
-
-/* Como os blocos da página inicial do apple.com: texto centralizado, os
-   dois botões lado a lado embaixo dele e a foto abaixo, na largura de 980 px
-   do conteúdo de lá. */
-.hero-conteudo {
-  max-width: 980px;
-  margin: 0 auto;
-  display: grid;
-  gap: 3rem;
+  padding: 56px 0 0;
   text-align: center;
 }
 
-.hero-sobretitulo {
-  color: var(--cor-acao);
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
+.hero-texto {
+  padding: 0 var(--margem);
 }
 
 .App .hero h1 {
@@ -26,19 +17,31 @@
 }
 
 .hero-foto {
+  display: block;
   width: 100%;
-  height: auto;
-  border-radius: var(--raio-cartao);
-  box-shadow: 0 20px 40px -24px rgba(27, 63, 63, 0.5);
+  height: 405px;
+  margin-top: 40px;
+  object-fit: cover;
+  object-position: center 45%;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 1068px) {
   .hero {
-    padding: 39px var(--margem) 43px;
+    padding-top: 61px;
   }
 
-  .hero-conteudo {
-    gap: 2rem;
+  .hero-foto {
+    height: 380px;
+  }
+}
+
+@media (max-width: 734px) {
+  .App .hero {
+    padding: 39px 0 0;
   }
 
+  .hero-foto {
+    height: 260px;
+    margin-top: 32px;
+  }
 }

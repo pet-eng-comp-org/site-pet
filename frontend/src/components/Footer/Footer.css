@@ -9,6 +9,7 @@
   color: var(--rodape-texto);
   font-size: 12px;
   line-height: 16px;
+  letter-spacing: -0.01em;
 }
 
 /* Na coluna de 980 px do cabeçalho e das páginas. Com a faixa de
@@ -22,6 +23,7 @@
 
 .rodape p {
   margin: 0;
+  letter-spacing: inherit;
   text-wrap: pretty;
   color: inherit;
   font-size: inherit;
@@ -31,7 +33,6 @@
 .rodape a {
   color: var(--cor-acao);
   text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .rodape a:hover {
