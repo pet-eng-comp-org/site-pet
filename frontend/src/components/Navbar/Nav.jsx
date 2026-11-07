@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Nav.css";
 import Icone from "../Icone/Icone";
-import logoPet from "../../assets/logo_pet.svg";
-import logoPetEscuro from "../../assets/logo_pet_escuro.svg";
+import logoPet from "../../assets/logo_pet_simbolo.svg";
 import useApi from "../../services/useApi";
 import isAuth from "../../services/Auth";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -169,15 +168,15 @@ function Nav() {
 
   // Menu aberto: a página fica parada atrás dele, como no apple.com, e fora
   // do alcance do Tab e do VoiceOver (inert), que senão andavam pelo que o
-  // menu cobre. A tela que passa de 768 px (iPad girado) mostra os links na
-  // barra e fecha o menu.
+  // menu cobre. A tela que passa de 833 px (iPad girado) mostra os links na
+  // barra e fecha o menu, no mesmo ponto do apple.com.
   useEffect(() => {
     if (!isOpen) return;
     const raiz = document.documentElement.style;
     raiz.overflow = "hidden";
     const atras = [...document.querySelectorAll("main, footer")];
     atras.forEach((e) => (e.inert = true));
-    const largo = window.matchMedia("(min-width: 768px)");
+    const largo = window.matchMedia("(min-width: 834px)");
     const fecharSeLargo = () => largo.matches && setIsOpen(false);
     largo.addEventListener("change", fecharSeLargo);
     return () => {
@@ -216,18 +215,13 @@ function Nav() {
 
       <nav className="barra" aria-label="Principal">
         <Link to="/" onClick={fecharMenu} className="barra-marca">
-          {/* No modo escuro, a versão do logo para fundo escuro, do pacote da
-              identidade (logo-completo-sem-ufes-principal-fundo-tinta). */}
-          <picture>
-            <source srcSet={logoPetEscuro} media="(prefers-color-scheme: dark)" />
-            <img
-              alt="PET Engenharia de Computação, página inicial"
-              src={logoPet}
-              width="120"
-              height="52"
-              className="logo-nav"
-            />
-          </picture>
+          <img
+            alt="PET Engenharia de Computação, página inicial"
+            src={logoPet}
+            width="18"
+            height="22"
+            className="logo-nav"
+          />
         </Link>
         <button
           type="button"
@@ -238,7 +232,6 @@ function Nav() {
           aria-expanded={isOpen}
           aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
         >
-          {/* Desenhado com a cor do texto: muda junto no modo escuro. */}
           <IconeMenu aberto={isOpen} />
         </button>
 

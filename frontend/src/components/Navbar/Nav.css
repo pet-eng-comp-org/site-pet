@@ -5,18 +5,21 @@
   z-index: 1020;
 }
 
-/* Logo à esquerda, botão do menu à direita (celular) e links alinhados com o
-   conteúdo das páginas (largura de 980px). */
+/* A barra do apple.com (medida em 07/11/2026): 44 px de altura (48 no
+   celular), só o símbolo da marca e os links em 12 px, distribuídos por toda
+   a largura do conteúdo (980 px). */
 .barra {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.4375rem max(var(--margem), calc((100% - 980px) / 2));
+  min-height: 48px;
+  /* Margem da barra do apple.com, que não segue a da página: 16 px até
+     833 px, 22 px até 1023 px e, acima, a coluna de 980 px. */
+  padding: 0 16px;
   /* Vidro: a barra flutua sobre o conteúdo, que aparece borrado por baixo ao
      rolar, como no apple.com. Sem suporte ao filtro, fica sólida. */
-  background: var(--cor-superficie);
-  border-bottom: 1px solid var(--cor-separador);
+  background: var(--menu-fundo);
 }
 
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
@@ -29,27 +32,26 @@
 
 @media (prefers-reduced-transparency: reduce) {
   .barra {
-    background: var(--cor-superficie);
+    background: var(--menu-fundo);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
 }
 
-/* 120 px de largura, o mínimo do guia da identidade para o logo sem "UFES"
-   ("Tamanho mínimo", no guia do Figma). Em volta, os 7 px de respiro do guia
-   (o tamanho de um nó do grafo nessa largura): o cabeçalho fica com 66 px. */
+/* Só o símbolo, como a maçã no apple.com: o guia da identidade usa o
+   símbolo sozinho nos tamanhos pequenos. A caixa tem a altura da barra, para
+   o toque. */
 .barra-marca {
-  display: block;
-  margin-right: 1rem;
-}
-
-.barra-marca picture {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 8px;
+  margin-left: -8px;
 }
 
 .logo-nav {
-  width: 120px;
-  height: 52px;
+  width: 18px;
+  height: 22px;
   display: block;
 }
 
@@ -104,7 +106,7 @@
   flex-basis: 100%;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 833.98px) {
   .barra {
     transition: background-color 0.24s cubic-bezier(0.4, 0, 0.6, 1) 80ms;
   }
@@ -118,7 +120,6 @@
     background: var(--menu-fundo);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    border-bottom-color: transparent;
   }
 
   /* Some, mas guarda o lugar: o X não pula. */
@@ -198,7 +199,7 @@
   }
 }
 
-@media (max-width: 767.98px) and (prefers-reduced-motion: reduce) {
+@media (max-width: 833.98px) and (prefers-reduced-motion: reduce) {
   .barra,
   .barra-marca,
   .topo.menu-aberto .barra-marca,
@@ -219,27 +220,44 @@
   display: none;
 }
 
-@media (min-width: 768px) {
-  .barra-links {
-    display: flex;
-    flex-basis: auto;
-    flex-grow: 1;
+/* Computador: o símbolo e os links, todos em fila e espaçados por igual de
+   uma margem à outra, como no apple.com; texto de 12 px a 80% da cor. */
+@media (min-width: 834px) {
+  .barra {
+    min-height: 44px;
+    padding: 0 max(22px, calc((100% - 980px) / 2));
   }
 
+  .barra-links {
+    display: flex;
+    flex: 1;
+  }
+
+  /* O ::before vazio é o primeiro da fila: entre ele e o primeiro link fica
+     o mesmo espaço que entre os links, e assim o símbolo também. */
   .barra-lista {
+    display: flex;
+    flex: 1;
     flex-direction: row;
-    margin-left: auto;
+    justify-content: space-between;
+  }
+
+  .barra-lista::before {
+    content: "";
   }
 
   .barra-link {
-    padding: 0.5rem;
+    min-height: 44px;
+    padding: 0 8px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
   }
 
   /* O texto do último link, não a caixa dele, encosta na margem do conteúdo. */
   .barra-lista li:last-child .barra-link {
-    padding-right: 0;
+    margin-right: -8px;
   }
-
 }
 
 /* Botão de 48 px com o ícone de 18 px no meio, como no apple.com. A margem
@@ -268,7 +286,7 @@
 
 /* Depois da regra do botão, que o mostra: no computador os links estão na
    barra. */
-@media (min-width: 768px) {
+@media (min-width: 834px) {
   .barra-menu {
     display: none;
   }
@@ -295,15 +313,23 @@
   padding: 0.5rem max(var(--margem), calc((100% - 980px) / 2));
   /* A barra do iPhone não cobre o botão de fechar. */
   padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
-  background: #ff9a5b;
-  color: #1b3f3f;
+  /* No visual da faixa de avisos do apple.com (#fafcfe, texto de 14 px
+     centralizado, link na cor de ação, sem sombra). Lá ela fica sob a barra
+     do topo; aqui fica no pé da tela porque só chega depois da API, e no
+     topo empurraria a página inteira para baixo. */
+  background: #fafcfe;
+  border-top: 1px solid var(--cor-separador);
+  color: var(--cor-texto);
+  font-size: 0.875rem;
+  letter-spacing: -0.016em;
   font-weight: 400;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.12);
   z-index: 1030;
 }
 
 .message p {
-  margin: 0;
+  margin: 0 auto;
+  text-align: center;
+  letter-spacing: inherit;
 }
 
 .message-fechar {
@@ -317,18 +343,18 @@
   padding: 0;
   background: none;
   border: 0;
-  color: #1b3f3f;
+  color: var(--cor-texto);
   cursor: pointer;
 }
 
 .message a {
-  color: #1b3f3f;
+  color: var(--cor-acao);
 
   font-weight: 500;
 }
 
 .message a:hover {
-  color: #1b3f3f;
+  color: var(--cor-acao);
   text-decoration: underline;
 }
 

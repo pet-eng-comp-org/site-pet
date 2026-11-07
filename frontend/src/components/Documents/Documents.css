@@ -4,7 +4,7 @@
   margin-top: 2.5rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 735px) {
   .grupo-documentos ul {
     columns: 3 16rem;
     column-gap: 2rem;
@@ -20,7 +20,7 @@
   margin-bottom: 1.5rem;
   background: var(--cor-superficie);
   border-radius: var(--raio-cartao);
-  padding: 1.5rem 1.5rem 1rem;
+  padding: 32px 32px 24px;
 }
 
 .App .grupo-documentos h2 {
