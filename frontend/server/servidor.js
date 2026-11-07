@@ -64,7 +64,7 @@ const SELECAO = "api/selection/openSelection";
 
 // rota: título, descrição (sem ela, a página não é indexada) e dados da API.
 const paginas = {
-  "/": { dados: ["api/news/"] },
+  "/": { dados: ["api/news/", "api/comissions"] },
   "/sobre": {
     titulo: "Quem somos",
     descricao: "Os petianos atuais e o professor tutor do PET Engenharia de Computação da Ufes.",
