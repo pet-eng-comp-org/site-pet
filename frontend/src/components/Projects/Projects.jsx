@@ -47,9 +47,8 @@ const Projects = () => {
     <div className="pagina">
       <h1>Projetos</h1>
       <p className="pagina-intro">
-        Como todo grupo PET, trabalhamos no tripé de ensino, pesquisa e
-        extensão. As atividades se dividem em comissões, cada uma com um líder
-        que coordena os seus projetos. Escolha uma para saber mais.
+        Ensino, pesquisa e extensão, divididos em comissões. Escolha uma para
+        saber mais.
       </p>
 
       {/* O título e a abertura são fixos: aparecem já, e a lista entra

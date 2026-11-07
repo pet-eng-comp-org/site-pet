@@ -9,7 +9,7 @@ const AboutUs = () => {
   return (
     <section className="green-bg about-us" id="about-us">
       <div className="secao">
-        <h2>O que é o PET</h2>
+        <h2 className="titulo-bloco">O que é o PET</h2>
         <p>
           Um programa do MEC que une alunos de graduação e um professor tutor
           em ensino, pesquisa e extensão. O nosso existe desde 1993.
