@@ -30,7 +30,7 @@
 
 .contato-local p {
   font-size: var(--texto);
-  line-height: 1.6;
+  line-height: 1.47059;
 }
 
 .contato-local iframe {
