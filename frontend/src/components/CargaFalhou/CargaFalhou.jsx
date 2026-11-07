@@ -19,7 +19,7 @@ export const AvisoDeFalha = () => (
 );
 
 const CargaFalhou = ({ titulo }) => (
-  <div className="pagina">
+  <div className="pagina pagina-centro">
     <h1>{titulo}</h1>
     <AvisoDeFalha />
   </div>

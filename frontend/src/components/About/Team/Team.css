@@ -3,20 +3,18 @@
 }
 
 .equipe-conteudo {
-  max-width: 1140px;
+  max-width: 980px;
   margin: 0 auto;
 }
 
 .equipe h2 {
   color: #fff;
-  font-size: var(--titulo-secao);
-  font-weight: 700;
   margin-bottom: 2.5rem;
 }
 
 .equipe-grade {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
   gap: 3rem 4rem;
 }
 

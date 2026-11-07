@@ -6,7 +6,7 @@ const NaoEncontrada = () => {
   useTitulo("Página não encontrada");
 
   return (
-    <div className="pagina">
+    <div className="pagina pagina-centro">
       <h1>Página não encontrada</h1>
       <p className="pagina-intro">
         O endereço pode estar errado ou a página mudou de lugar.
