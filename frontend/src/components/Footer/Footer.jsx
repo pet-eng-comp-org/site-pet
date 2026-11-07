@@ -17,7 +17,9 @@ const Footer = () => {
           <a href={MAPA} target="_blank" rel="noopener noreferrer">
             ver no mapa
           </a>
-          ). Fale com a gente pelo e-mail{" "}
+          ).
+          <br />
+          Fale com a gente pelo e-mail{" "}
           <a href="mailto:petengcomp@inf.ufes.br">petengcomp@inf.ufes.br</a>
           , no Instagram{" "}
           <a

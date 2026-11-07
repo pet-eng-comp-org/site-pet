@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 
-/* Texto na fonte do sistema (SF no Apple, Segoe no Windows, Roboto no
+/* Texto na fonte do sistema (SF no macOS e no iOS, Segoe no Windows, Roboto no
    Android): feita para ler em tela em cada aparelho, com o espaçamento
    ajustado ao tamanho, e sem nada para baixar. A marca fica no título, na
    Sofia Sans Condensed (.App h1). Sem system-ui na lista: no Linux ele

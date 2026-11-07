@@ -1,15 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import slug from "../../../utils/slug";
-
-// Ícones de traço do Lucide (licença ISC, em assets/projetos/LICENCA-lucide.txt),
-// um por projeto, todos no mesmo peso. Projeto sem ícone aqui usa o enviado
-// pelo painel.
-const ICONES = Object.fromEntries(
-  Object.entries(
-    import.meta.glob("../../../assets/projetos/*.svg", { eager: true, import: "default" })
-  ).map(([caminho, url]) => [caminho.split("/").pop().replace(".svg", ""), url])
-);
+import iconeProjeto from "../../../utils/iconeProjeto";
 
 // O cartão é uma chamada: o nome em verde e uma frase curta. A descrição
 // inteira fica na página do projeto. Projeto novo, sem frase aqui, usa a
@@ -31,9 +23,7 @@ const primeiraFrase = (texto) => texto.match(/^[\s\S]*?[.!?](?=\s|$)/)?.[0] || t
 
 // O cartão inteiro é o link para a página do projeto.
 function Project({ title, description, icon, onClick }) {
-  const src =
-    ICONES[slug(title)] ||
-    (icon ? `${import.meta.env.VITE_API_URL}api/file/getComissionPhoto/${icon}` : "");
+  const src = iconeProjeto(title, icon);
 
   return (
     // O nome do link é o título; a frase vem como descrição. Antes o leitor

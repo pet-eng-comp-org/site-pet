@@ -64,7 +64,7 @@ const SELECAO = "api/selection/openSelection";
 
 // rota: título, descrição (sem ela, a página não é indexada) e dados da API.
 const paginas = {
-  "/": { dados: ["api/news/"] },
+  "/": { dados: ["api/news/", "api/comissions"] },
   "/sobre": {
     titulo: "Quem somos",
     descricao: "Os petianos atuais e o professor tutor do PET Engenharia de Computação da Ufes.",
@@ -150,6 +150,7 @@ const montar = ({ url, titulo, descricao, imagem, indexar, conteudo, dados }) =>
       .replace(/(property="og:image" content=")[^"]*/, (_, a) => a + atributo(imagem))
       .replace(/\s*<meta property="og:image:(width|height)"[^>]*>/g, "");
   if (!indexar) html = html.replace("<head>", '<head><meta name="robots" content="noindex" />');
+  else html = html.replace("</head>", () => `<link rel="canonical" href="${atributo(SITE + url)}" />\n  </head>`);
   if (dados)
     html = html.replace(
       '<script type="module"',
@@ -298,6 +299,29 @@ const servidor = http.createServer(async (req, res) => {
     // Endereço antigo da página de inscrição, que ainda circula.
     if (/^\/subscription(\/|$)/i.test(pathname)) {
       res.writeHead(301, { Location: "/inscricoes" }).end();
+      return;
+    }
+
+    // Mapa do site para os buscadores: as páginas indexadas e um endereço
+    // por projeto.
+    if (pathname === "/sitemap.xml") {
+      const comissoes = (await buscar("api/comissions"))?.data?.comissions || [];
+      const enderecos = [
+        "/",
+        ...Object.keys(paginas).filter((u) => paginas[u].descricao),
+        ...comissoes.map((c) => `/projetos/${slug(c.title)}`),
+      ];
+      const xml =
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+        enderecos.map((u) => `  <url><loc>${atributo(SITE + u)}</loc></url>`).join("\n") +
+        "\n</urlset>\n";
+      enviar(
+        req,
+        res,
+        200,
+        { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" },
+        Buffer.from(xml)
+      );
       return;
     }
 

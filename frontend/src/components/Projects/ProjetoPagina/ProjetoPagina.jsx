@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import useApi from "../../../services/useApi";
 import goUp from "../../../utils/goUp";
 import slug from "../../../utils/slug";
+import iconeProjeto from "../../../utils/iconeProjeto";
 import useTitulo from "../../../utils/useTitulo";
 import CargaFalhou from "../../CargaFalhou/CargaFalhou";
 import Loader from "../../Loader/Loader";
@@ -92,12 +93,14 @@ function ProjetoPagina() {
     t.link && slug(t.title).includes(slug(comission.title));
   const canais = comission.tags.filter(doProjeto);
   const ferramentas = comission.tags.filter((t) => !doProjeto(t));
+  // O site do projeto é a ação principal; sem site, o primeiro canal.
+  const temSite = canais.some((t) => /^site\b/i.test(t.title.trim()));
 
   return (
     <div className="pagina">
-      {/* O texto numa coluna de leitura, centrada; a galeria, embaixo, na
-          largura toda. Alinhado à esquerda, sobrava meia tela vazia. */}
-      <div className="coluna-leitura">
+      {/* O texto numa medida de leitura, alinhado à esquerda com a galeria
+          logo abaixo, que ocupa a coluna toda. */}
+      <div className="projeto-cabeca">
         <Link
           className="projeto-voltar link-voltar"
           to={{ pathname: "/projetos", state: { voltar: true } }}
@@ -109,10 +112,10 @@ function ProjetoPagina() {
 
         {canais.length > 0 && (
           <div className="projeto-acoes">
-            {canais.map((tag) => (
+            {canais.map((tag, i) => (
               <a
                 key={tag._id}
-                className={/^site\b/i.test(tag.title.trim()) ? "botao-principal" : "botao-contorno"}
+                className={(temSite ? /^site\b/i.test(tag.title.trim()) : i === 0) ? "botao-principal" : "botao-contorno"}
                 href={tag.link}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -123,23 +126,36 @@ function ProjetoPagina() {
           </div>
         )}
 
+        {/* Ferramentas numa linha de texto: não são ações, não têm cara de botão. */}
         {ferramentas.length > 0 && (
-          <ul className="projeto-tags" aria-label="Ferramentas">
-            {ferramentas.map((tag) => (
-              <li key={tag._id}>
+          <p className="projeto-ferramentas">
+            <span>Ferramentas: </span>
+            {ferramentas.map((tag, i) => (
+              <React.Fragment key={tag._id}>
+                {i > 0 && ", "}
                 {tag.link ? (
                   <a href={tag.link} target="_blank" rel="noopener noreferrer">
                     {tag.title.trim()}
                   </a>
                 ) : (
-                  <span>{tag.title.trim()}</span>
+                  tag.title.trim()
                 )}
-              </li>
+              </React.Fragment>
             ))}
-          </ul>
+          </p>
         )}
       </div>
 
+      {/* Sem fotos, um bloco cinza com o ícone grande, para a página não
+          terminar num parágrafo solto. */}
+      {fotos.length === 0 && (
+        <div className="projeto-sem-fotos" aria-hidden="true">
+          <span
+            className="projeto-icone"
+            style={{ "--icone": `url("${iconeProjeto(comission.title, comission.photos[0])}")` }}
+          />
+        </div>
+      )}
       {fotos.length > 0 && (
         <div className="projeto-fotos">
           {linhas(

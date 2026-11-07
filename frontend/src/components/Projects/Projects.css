@@ -14,38 +14,33 @@
   gap: 20px;
 }
 
-/* Duas colunas no tablet: o último cartão, se sobrar sozinho, ocupa a
-   linha inteira, para não deixar meia linha vazia. */
-@media (min-width: 735px) and (max-width: 1068px) {
+/* Duas colunas no tablet e três na tela larga. Os 11 projetos e o cartão
+   "Faça parte" fecham as linhas nas duas. */
+@media (min-width: 735px) {
   .projetos-grade {
     grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .projetos-grade > li:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
+@media (min-width: 1069px) {
+  .projetos-grade {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Três colunas na tela larga, numa grade de seis: o que sobra na última
-   linha se reparte por ela inteira (dois cartões de meia linha, ou um de
-   linha inteira). */
-@media (min-width: 1069px) {
-  .projetos-grade {
-    grid-template-columns: repeat(6, 1fr);
-  }
+/* O convite, em verde, para se destacar dos projetos. */
+.projeto-convite {
+  background: var(--cor-acao-fundo);
+}
 
-  .projetos-grade > li {
-    grid-column: span 2;
-  }
+.projeto-convite .projeto-chamada,
+.projeto-convite .projeto-nome {
+  color: #fff;
+}
 
-  .projetos-grade > li:last-child:nth-child(3n + 1) {
-    grid-column: span 6;
-  }
-
-  .projetos-grade > li:nth-last-child(2):nth-child(3n + 1),
-  .projetos-grade > li:last-child:nth-child(3n + 2) {
-    grid-column: span 3;
-  }
+.projeto-convite:hover,
+.projeto-convite:focus-visible {
+  color: #fff;
 }
 
 /* O cartão: branco, cantos de 28 px, sombra leve, 28 px de folga em cima e
