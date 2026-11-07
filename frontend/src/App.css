@@ -186,18 +186,17 @@ label {
   /* Folha (janela do painel): branca, como as janelas do apple.com, sobre o
      fundo escurecido. */
   --cor-folha: #fff;
-  /* Vidro da barra do topo: o mesmo material da barra do apple.com, medido
-     em 05/11/2026 (fundo #fafafc a 80%, saturate 180% e blur 20px, sem brilho
-     nas bordas e, como conferido em 07/11, sem linha embaixo, nem ao rolar).
-     O Liquid Glass dos apps a
-     Apple não usa no site. A 80%, o texto da barra fica acima de 4,5:1 com
-     qualquer coisa atrás. O Safari não tem prefers-reduced-transparency: a
-     leitura vem do contraste, não do ajuste do aparelho. */
-  --vidro-fundo: rgba(250, 250, 252, 0.8);
+  /* Barra do topo escura, como a da inicial do apple.com (medida em
+     07/11/2026): vidro #1d1d1f a 80% com saturate 180% e blur 20px, sem
+     linha embaixo, links brancos a 80%. Sólida (#1d1d1f) sem suporte ao
+     filtro. O menu aberto no celular é #161617, com os links em #e8e8ed.
+     A 80%, o texto branco fica acima de 4,5:1 com qualquer coisa atrás. */
+  --vidro-fundo: rgba(29, 29, 31, 0.8);
   --vidro-filtro: saturate(180%) blur(20px);
-  /* O menu aberto no celular: a mesma cor do vidro, sólida, como no
-     apple.com. */
-  --menu-fundo: #fafafc;
+  --barra-solida: #1d1d1f;
+  --barra-texto: #fff;
+  --menu-fundo: #161617;
+  --menu-texto: #e8e8ed;
   --raio-capsula: 999px;
   --raio-cartao: 28px;
   --raio-folha: 32px;

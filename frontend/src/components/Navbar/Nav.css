@@ -19,7 +19,7 @@
   padding: 0 16px;
   /* Vidro: a barra flutua sobre o conteúdo, que aparece borrado por baixo ao
      rolar, como no apple.com. Sem suporte ao filtro, fica sólida. */
-  background: var(--menu-fundo);
+  background: var(--barra-solida);
 }
 
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
@@ -32,7 +32,7 @@
 
 @media (prefers-reduced-transparency: reduce) {
   .barra {
-    background: var(--menu-fundo);
+    background: var(--barra-solida);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
@@ -72,20 +72,20 @@
   align-items: center;
   min-height: 44px;
   padding: 0.5rem 0;
-  color: color-mix(in srgb, var(--cor-texto) 80%, transparent);
+  color: color-mix(in srgb, var(--barra-texto) 80%, transparent);
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .barra-link:hover {
-  color: var(--cor-texto);
+  color: var(--barra-texto);
 }
 
-/* Teclado: o contorno de foco do site, e não o sublinhado. */
+/* Teclado: contorno branco, que aparece sobre a barra escura. */
 .barra-link:focus-visible {
-  color: var(--cor-texto);
-  outline: 2px solid var(--cor-acao);
+  color: var(--barra-texto);
+  outline: 2px solid var(--barra-texto);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -183,7 +183,7 @@
     line-height: 1.1;
     font-weight: 600;
     letter-spacing: 0.007em;
-    color: var(--cor-texto);
+    color: var(--menu-texto);
   }
 
   /* Sem JavaScript, os links ficam à vista, sem o menu por cima. */
@@ -274,7 +274,7 @@
   background: none;
   border: 0;
   border-radius: 4px;
-  color: var(--cor-texto);
+  color: var(--menu-texto);
   cursor: pointer;
 }
 
@@ -295,7 +295,7 @@
 /* O mesmo contorno de foco dos links: depois do Esc, quem usa teclado vê
    que o foco voltou ao botão. */
 .barra-menu:focus-visible {
-  outline: 3px solid var(--cor-acao);
+  outline: 3px solid var(--barra-texto);
   /* Dentro da caixa: ela encosta na borda da tela no celular, e um contorno
      de fora perdia o lado direito. */
   outline-offset: -3px;
