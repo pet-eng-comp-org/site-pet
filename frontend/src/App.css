@@ -81,13 +81,12 @@ label {
 }
 
 /* Foco por teclado com um padrão só: 3 px na cor do site, afastado do
-   elemento. Sobre fundo escuro (rodapé, faixas verdes), em branco. */
+   elemento. Sobre as faixas verdes, em branco. */
 :focus-visible {
   outline: 3px solid var(--cor-acao);
   outline-offset: 3px;
 }
 
-.rodape :focus-visible,
 .about-us :focus-visible,
 .equipe :focus-visible {
   outline-color: #fff;
