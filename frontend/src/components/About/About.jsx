@@ -24,13 +24,12 @@ const About = () => {
 
   return (
     <>
-      <div className="pagina coluna-leitura">
+      <div className="pagina">
         <h1>Quem somos</h1>
         <p className="pagina-intro">
-          O PET Engenharia de Computação é um dos grupos PET originais da Ufes,
-          criado em 1993.
+          Um dos grupos PET originais da Ufes, criado em 1993.
         </p>
-        <p className="pagina-intro">
+        <p className="pagina-texto">
           O{" "}
           <a className="link-texto" href="https://www.gov.br/mec/pt-br/pet">
             Programa de Educação Tutorial

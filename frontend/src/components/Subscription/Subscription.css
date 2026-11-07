@@ -73,13 +73,14 @@
     align-items: start;
   }
 
-  .faca-parte > h1 {
+  .faca-parte > h1,
+  .faca-parte > .pagina-intro {
     grid-column: 1 / -1;
   }
 
   .faca-parte > .aviso-lugar {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 3;
     position: sticky;
     top: 6rem;
     max-width: none;
@@ -88,6 +89,6 @@
 
   .faca-parte-texto {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 3;
   }
 }

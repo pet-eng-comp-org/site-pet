@@ -104,16 +104,14 @@ function Content() {
   return (
     <div className="pagina faca-parte">
       <h1>Faça parte do PET</h1>
+      <p className="pagina-intro">
+        Quem entra dedica 20 horas por semana ao grupo e recebe bolsa de
+        R$&nbsp;700 por mês, paga pelo MEC.
+      </p>
       {/* Quem chega quer saber primeiro se pode se inscrever agora. */}
       {aviso}
       <div className="faca-parte-texto">
-        <p className="pagina-intro">
-          Os petianos são alunos de Engenharia de Computação que trabalham em
-          projetos de ensino, pesquisa e extensão, com um professor tutor. Quem
-          entra dedica 20 horas por semana ao grupo e recebe bolsa de R$&nbsp;700
-          por mês, paga pelo MEC.
-        </p>
-        <h2>Para se inscrever, é preciso</h2>
+        <h2 className="titulo-bloco">Para se inscrever, é preciso</h2>
         <ul className="requisitos">
           <li>
             cursar Engenharia de Computação na Ufes, com entrada recente no
@@ -126,12 +124,12 @@ function Content() {
             e de permanência (PBP).
           </li>
         </ul>
-        <p className="pagina-intro">
+        <p className="pagina-texto">
           Parte das vagas é reservada a pessoas pretas, pardas e indígenas, a
           pessoas com deficiência e a pessoas trans. A seleção tem uma dinâmica
           em grupo e uma entrevista.
         </p>
-        <p className="pagina-intro">
+        <p className="pagina-texto">
           Também dá para participar de um projeto sem ser petiano: veja os{" "}
           <Link className="link-texto" to="/projetos">
             nossos projetos

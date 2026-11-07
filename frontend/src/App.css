@@ -322,11 +322,33 @@ html {
   text-align: center;
 }
 
-.pagina > h1 + .pagina-intro {
+/* O parágrafo de abertura no estilo do apple.com (lido do CSS de lá em
+   07/11/2026): semibold, 28 px na tela larga e 21 px no celular, entrelinha
+   curta e linhas equilibradas, sem uma palavra sobrando sozinha embaixo. */
+.App .pagina > h1 + .pagina-intro {
   text-align: center;
+  text-wrap: balance;
   margin-inline: auto;
-  font-size: var(--texto-abertura);
-  margin-bottom: 2.5rem;
+  max-width: 40rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+  .App .pagina > h1 + .pagina-intro {
+    font-size: 1.3125rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Texto corrido da página, fora da abertura: à esquerda, na medida de
+   leitura. */
+.pagina-texto {
+  font-size: var(--texto);
+  line-height: 1.6;
+  max-width: 36rem;
 }
 
 /* Página só de aviso (não encontrada, falha ao carregar): tudo no centro. */
@@ -348,6 +370,10 @@ html {
   font-size: 3rem;
   font-weight: 800;
   line-height: 1.05;
+}
+
+.App .pagina .titulo-bloco {
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 900px) {
