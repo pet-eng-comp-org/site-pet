@@ -30,8 +30,8 @@ const Footer = () => {
           .
         </p>
         <p className="rodape-direitos">
-          Copyright © {new Date().getFullYear()} PET Engenharia de Computação ·
-          Ufes
+          Copyright © {new Date().getFullYear()} PET Engenharia de Computação.
+          Todos os direitos reservados.
         </p>
       </div>
     </footer>

@@ -99,7 +99,7 @@ function ProjetoPagina() {
           largura toda. Alinhado à esquerda, sobrava meia tela vazia. */}
       <div className="coluna-leitura">
         <Link
-          className="projeto-voltar link-texto"
+          className="projeto-voltar link-voltar"
           to={{ pathname: "/projetos", state: { voltar: true } }}
         >
           <span>Todos os projetos</span>

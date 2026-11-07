@@ -66,9 +66,6 @@
 }
 
 .noticia a {
-  color: var(--cor-acao);
-  text-decoration: underline;
-  text-underline-offset: 3px;
   overflow-wrap: anywhere;
 }
 

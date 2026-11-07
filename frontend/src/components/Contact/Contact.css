@@ -9,18 +9,11 @@
 .contato-formulario {
   background: var(--cor-superficie);
   border-radius: var(--raio-cartao);
-  padding: 1.75rem;
+  padding: 32px;
 }
 
-.contato-formulario label {
-  display: block;
-  font-weight: 600;
-  margin: 0 0 0.35rem;
-}
-
-.contato-formulario .form-control {
-  margin-bottom: 1.25rem;
-  min-height: 44px;
+.contato-formulario .campo {
+  margin-bottom: 14px;
 }
 
 .contato-formulario .botao-principal {

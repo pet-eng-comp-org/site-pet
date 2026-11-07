@@ -1,7 +1,7 @@
 /* Medido no rodapé do apple.com em 07/11/2026: fundo #f5f5f7 sob a página
-   branca, texto de 12 px com 16 px de entrelinha a 56% do preto, links em
-   azul (aqui, o verde de ação), 17 px em cima, linha fina com 19 px antes e
-   16 px depois. */
+   branca, texto de 12 px com 16 px de entrelinha a 56% do preto, links do
+   texto a 72% e sublinhados, 17 px em cima, linha fina com 19 px antes e
+   16 px depois, e o copyright como o de lá. */
 .rodape {
   --rodape-fundo: var(--cor-superficie);
   --rodape-texto: rgba(0, 0, 0, 0.56);
@@ -30,8 +30,9 @@
   line-height: inherit;
 }
 
+/* Os links do texto do rodapé de lá: cinza a 72%, sublinhados. */
 .rodape a {
-  color: var(--cor-acao);
+  color: rgba(0, 0, 0, 0.72);
   text-decoration: underline;
 }
 
