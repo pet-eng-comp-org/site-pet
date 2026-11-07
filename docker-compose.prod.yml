@@ -16,8 +16,8 @@ x-logging: &logging
 services:
   back-end:
     container_name: site-pet_back-end
-    # ghcr.io/pet-eng-comp-org/site-pet/back-end:sha-331def0
-    image: ghcr.io/pet-eng-comp-org/site-pet/back-end@sha256:33736b0a6e683cee024d7046d45f549156c107b3ae301f42ab563531e9ef1b9b
+    # ghcr.io/pet-eng-comp-org/site-pet/back-end:sha-b3e9bda
+    image: ghcr.io/pet-eng-comp-org/site-pet/back-end@sha256:dbc614a2e956350ca31ceba7f8d2cc5d906139d71f666e0c5e770c1fc47375aa
     logging: *logging
     restart: always
     environment:
@@ -55,8 +55,8 @@ services:
 
   front-end:
     container_name: site-pet_front-end
-    # ghcr.io/pet-eng-comp-org/site-pet/front-end:sha-5da0cf6
-    image: ghcr.io/pet-eng-comp-org/site-pet/front-end@sha256:652368408605977481065acb07cf57d9d0e412b7e79e2ee1f061e6e648786388
+    # ghcr.io/pet-eng-comp-org/site-pet/front-end:sha-b3e9bda
+    image: ghcr.io/pet-eng-comp-org/site-pet/front-end@sha256:e504a1b9588904d1226bb0752530ce47cbe18193b269567cf04c0fea7e491890
     logging: *logging
     restart: always
     stdin_open: true
