@@ -232,8 +232,8 @@ label {
    barra, e o topo e o rodapé paravam a 15 px da borda nas páginas curtas.) */
 html {
   overflow-y: scroll;
-  /* O topo fixo tem 66 px: o campo ou link que recebe o foco não fica
-     escondido atrás dele. Embaixo, o mesmo para a faixa de inscrições
+  /* A barra fixa tem 44 px (48 no celular): o campo ou link que recebe o
+     foco não fica escondido atrás dele. Embaixo, o mesmo para a faixa de inscrições
      abertas, quando ela aparece (--faixa, medida em Nav.jsx). */
   scroll-padding-top: 5rem;
   scroll-padding-bottom: calc(var(--faixa, 0px) + 1rem);
