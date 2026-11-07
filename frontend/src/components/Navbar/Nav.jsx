@@ -146,77 +146,77 @@ function Nav() {
 
   return (
     <>
-    <header className={`topo ${isOpen ? "menu-aberto" : ""}`} ref={topo}>
-      <nav className="barra" aria-label="Principal">
-        <Link to="/" onClick={fecharMenu} className="barra-marca">
-          <img
-            alt="PET Engenharia de Computação, página inicial"
-            src={logoPet}
-            width="18"
-            height="22"
-            className="logo-nav"
-          />
-        </Link>
-        <button
-          type="button"
-          className="barra-menu"
-          ref={botaoMenu}
-          onClick={toggleCollapse}
-          aria-controls="menu-principal"
-          aria-expanded={isOpen}
-          aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-        >
-          <IconeMenu aberto={isOpen} />
-        </button>
-
-        <div
-          id="menu-principal"
-          className={`barra-links ${isOpen ? "aberto" : ""}`}
-        >
-          <ul className="barra-lista">
-            {paginas.map(([to, rotulo], i) => (
-              <li key={to} style={{ "--ordem": i }}>
-                <NavLink
-                  to={to}
-                  exact={to === "/"}
-                  className="barra-link"
-                  onClick={fecharMenu}
-                >
-                  {rotulo}
-                </NavLink>
-              </li>
-            ))}
-            {/* Só para quem entrou. O Sair fica no painel, junto da senha:
-                é coisa da conta, não uma página do site. */}
-            {logado && (
-              <li style={{ "--ordem": paginas.length }}>
-                <NavLink
-                  to="/admin"
-                  className="barra-link"
-                  onClick={fecharMenu}
-                >
-                  Painel
-                </NavLink>
-              </li>
-            )}
-          </ul>
-        </div>
-      </nav>
-    </header>
-    {/* Faixa de aviso logo abaixo da barra, que sai com a rolagem. O servidor
-        já busca a seleção antes de montar a página, então ela vem no HTML e
-        não empurra nada ao carregar. No Faça parte não aparece: lá o aviso
-        já está no conteúdo. */}
-    {comFaixa && (
-      <aside className="faixa-aviso" aria-label="Inscrições abertas">
-        <p>
-          Inscrições abertas até {fimSelecao}.{" "}
-          <Link className="link-mais" to="/inscricoes">
-            Saiba como participar
+      <header className={`topo ${isOpen ? "menu-aberto" : ""}`} ref={topo}>
+        <nav className="barra" aria-label="Principal">
+          <Link to="/" onClick={fecharMenu} className="barra-marca">
+            <img
+              alt="PET Engenharia de Computação, página inicial"
+              src={logoPet}
+              width="18"
+              height="22"
+              className="logo-nav"
+            />
           </Link>
-        </p>
-      </aside>
-    )}
+          <button
+            type="button"
+            className="barra-menu"
+            ref={botaoMenu}
+            onClick={toggleCollapse}
+            aria-controls="menu-principal"
+            aria-expanded={isOpen}
+            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+          >
+            <IconeMenu aberto={isOpen} />
+          </button>
+
+          <div
+            id="menu-principal"
+            className={`barra-links ${isOpen ? "aberto" : ""}`}
+          >
+            <ul className="barra-lista">
+              {paginas.map(([to, rotulo], i) => (
+                <li key={to} style={{ "--ordem": i }}>
+                  <NavLink
+                    to={to}
+                    exact={to === "/"}
+                    className="barra-link"
+                    onClick={fecharMenu}
+                  >
+                    {rotulo}
+                  </NavLink>
+                </li>
+              ))}
+              {/* Só para quem entrou. O Sair fica no painel, junto da senha:
+                  é coisa da conta, não uma página do site. */}
+              {logado && (
+                <li style={{ "--ordem": paginas.length }}>
+                  <NavLink
+                    to="/admin"
+                    className="barra-link"
+                    onClick={fecharMenu}
+                  >
+                    Painel
+                  </NavLink>
+                </li>
+              )}
+            </ul>
+          </div>
+        </nav>
+      </header>
+      {/* Faixa de aviso logo abaixo da barra, que sai com a rolagem. O servidor
+          já busca a seleção antes de montar a página, então ela vem no HTML e
+          não empurra nada ao carregar. No Faça parte não aparece: lá o aviso
+          já está no conteúdo. */}
+      {comFaixa && (
+        <aside className="faixa-aviso" aria-label="Inscrições abertas">
+          <p>
+            Inscrições abertas até {fimSelecao}.{" "}
+            <Link className="link-mais" to="/inscricoes">
+              Saiba como participar
+            </Link>
+          </p>
+        </aside>
+      )}
     </>
   );
 }

@@ -118,11 +118,14 @@
   align-self: end;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px 8px;
   margin-top: 20px;
 }
 
+/* Desenho de 32 px, toque de 44 px: a área invisível passa 6 px acima e
+   abaixo, sem encostar na da linha de baixo (12 px entre as linhas). */
 .petiano-etiqueta {
+  position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 32px;
@@ -132,6 +135,12 @@
   color: var(--cor-texto);
   font-size: 0.875rem;
   letter-spacing: -0.016em;
+}
+
+.petiano-etiqueta::after {
+  content: "";
+  position: absolute;
+  inset: -6px 0;
 }
 
 .petiano-etiqueta:hover {
