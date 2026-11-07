@@ -10,9 +10,7 @@
 }
 
 .noticias .title {
-  font-size: var(--titulo-secao);
-  font-weight: bold;
-  color: var(--cor-acao);
+  color: var(--cor-texto);
   margin: 0 0 2rem;
   text-align: center;
 }

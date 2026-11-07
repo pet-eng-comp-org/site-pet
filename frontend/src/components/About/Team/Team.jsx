@@ -16,7 +16,7 @@ const Team = ({ petianos, projetos }) => (
     <div className="equipe-conteudo">
       {/* A contagem fica no título da equipe, que chega junto com ela: no
           texto de cima, ela empurrava o parágrafo ao chegar. */}
-      <h2>
+      <h2 className="titulo-bloco">
         Hoje somos {petianos.filter((p) => !p.tutor).length} alunos e um
         professor tutor
       </h2>

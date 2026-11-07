@@ -20,11 +20,11 @@
   }
 }
 
-/* Mesma largura do cabeçalho e das páginas internas. Com a faixa de
+/* Na coluna de 980 px do cabeçalho e das páginas. Com a faixa de
    inscrições abertas no pé da tela, o rodapé cresce embaixo na altura dela
    (--faixa, medida em Nav.jsx), e nada fica coberto. */
 .rodape-conteudo {
-  max-width: calc(1140px + 2 * var(--margem));
+  max-width: calc(980px + 2 * var(--margem));
   margin: 0 auto;
   padding: 17px var(--margem) calc(19px + var(--faixa, 0px));
 }

@@ -34,7 +34,7 @@ const News = () => {
   return (
     <section className="noticias">
       <div className="secao">
-        <h2 className="title">Notícias</h2>
+        <h2 className="title titulo-bloco">Notícias</h2>
         <div className="noticias-grade">
           {news.map((singleNew) => (
             <article key={singleNew._id} className="noticia">
