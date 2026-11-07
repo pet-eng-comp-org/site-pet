@@ -1,5 +1,6 @@
+/* 980 px, a largura dos blocos do topo e de "O que é o PET". */
 .secao {
-  max-width: 1140px;
+  max-width: 980px;
   margin: 0 auto;
 }
 
@@ -13,6 +14,7 @@
   font-weight: bold;
   color: var(--cor-acao);
   margin: 0 0 2rem;
+  text-align: center;
 }
 
 .noticias-grade {
