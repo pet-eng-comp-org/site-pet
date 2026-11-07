@@ -4,7 +4,7 @@
   margin-top: 2.5rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 735px) {
   .grupo-documentos ul {
     columns: 3 16rem;
     column-gap: 2rem;

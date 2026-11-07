@@ -7,14 +7,14 @@ import imagemNos3 from "../../../assets/topcom.webp";
 
 const AboutUs = () => {
   return (
-    <section className="green-bg about-us" id="about-us">
+    <section className="bloco green-bg about-us" id="about-us">
       <div className="secao">
-        <h2 className="titulo-bloco">O que é o PET</h2>
-        <p>
+        <h2 className="bloco-titulo">O que é o PET</h2>
+        <p className="bloco-subtitulo">
           Um programa do MEC que une alunos de graduação e um professor tutor
           em ensino, pesquisa e extensão. O nosso existe desde 1993.
         </p>
-        <div className="about-us-acoes">
+        <div className="bloco-acoes">
           <Link to="/inscricoes" className="botao-principal">
             Faça parte
           </Link>

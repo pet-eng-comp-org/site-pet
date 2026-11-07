@@ -6,7 +6,7 @@
 
 .noticias {
   background: var(--cor-superficie);
-  padding: 5rem var(--margem);
+  padding: 56px var(--margem) 63px;
 }
 
 .noticias .title {
@@ -67,9 +67,9 @@
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 833px) {
   .noticias {
-    padding: 3rem var(--margem);
+    padding: 39px var(--margem) 43px;
   }
 
   .noticias-grade {

@@ -1,14 +1,6 @@
-/* Os blocos da inicial como os do apple.com: cada um na largura toda, em
-   #f5f5f7 ou numa cor cheia, com 12 px de página branca entre eles. */
-.hero,
-.noticias,
-.about-us {
-  margin-bottom: 12px;
-}
-
 .hero {
   background: var(--cor-superficie);
-  padding: 4rem var(--margem) 5rem;
+  padding: 56px var(--margem) 63px;
 }
 
 /* Como os blocos da página inicial do apple.com: texto centralizado, os
@@ -30,25 +22,7 @@
 }
 
 .App .hero h1 {
-  font-size: 3.5rem;
-  line-height: 1.05;
   color: var(--cor-texto);
-  margin-bottom: 1.25rem;
-}
-
-.hero-descricao {
-  font-size: var(--texto-abertura);
-  line-height: 1.55;
-  max-width: 36rem;
-  margin: 0 auto 1.5rem;
-}
-
-/* 17 px entre os botões, como lá. */
-.hero-acoes {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 17px;
 }
 
 .hero-foto {
@@ -58,24 +32,13 @@
   box-shadow: 0 20px 40px -24px rgba(27, 63, 63, 0.5);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 833px) {
   .hero {
-    padding: 2.5rem var(--margem) 3rem;
+    padding: 39px var(--margem) 43px;
   }
 
   .hero-conteudo {
     gap: 2rem;
   }
 
-  .hero-acoes {
-    gap: 14px;
-  }
-
-  .App .hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .hero-descricao {
-    font-size: var(--texto-abertura);
-  }
 }

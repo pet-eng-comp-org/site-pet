@@ -65,7 +65,7 @@
    lê. A coluna do aviso tem pelo menos 20rem, para ele não virar uma tira
    estreita perto de 992 px. No celular, o aviso continua logo abaixo do
    título, que é onde quem chega procura primeiro. */
-@media (min-width: 992px) {
+@media (min-width: 1069px) {
   .faca-parte {
     display: grid;
     grid-template-columns: minmax(0, 36rem) minmax(20rem, 1fr);

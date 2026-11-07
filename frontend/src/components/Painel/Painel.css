@@ -116,7 +116,7 @@ button.botao-link {
   filter: brightness(0.92);
 }
 
-/* Destrutivo cheio: 6,9:1 no claro e 5,6:1 no escuro. */
+/* Destrutivo cheio: 6,9:1 com o branco. */
 .botao-perigo {
   background: var(--cor-erro);
   border: 0;

@@ -5,21 +5,20 @@ import "./Hero.css";
 // Largura em que a foto aparece; o mesmo valor está no preload do index.html,
 // que pede a foto antes de o JavaScript chegar.
 const TAMANHO_FOTO =
-  "(max-width: 767px) calc(100vw - 2rem), (max-width: 1043px) calc(100vw - 4rem), 980px";
+  "(max-width: 1068px) 87.5vw, 980px";
 
 const Hero = () => {
   return (
-    <section className="hero">
+    <section className="bloco hero">
       <div className="hero-conteudo">
         <div className="hero-texto">
           <p className="hero-sobretitulo">Programa de Educação Tutorial · Ufes</p>
-          <h1>PET Engenharia de Computação</h1>
-          <p className="hero-descricao">
-            Somos estudantes de Engenharia de Computação da Ufes e um professor
-            tutor. Fazemos ensino, pesquisa e extensão: o Topcom, o Game Jam,
-            monitorias e muito mais.
+          <h1 className="bloco-titulo">PET Engenharia de Computação</h1>
+          <p className="bloco-subtitulo">
+            Ensino, pesquisa e extensão na Ufes: Topcom, Game Jam, monitorias e
+            mais.
           </p>
-          <div className="hero-acoes">
+          <div className="bloco-acoes">
             <Link to="/projetos" className="botao-principal">
               Conheça os projetos
             </Link>
