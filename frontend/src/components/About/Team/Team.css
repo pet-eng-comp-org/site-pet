@@ -1,5 +1,7 @@
+/* A equipe numa grade de cartões, na página branca, sob um título à
+   esquerda: três por linha na coluna de 980 px, um no celular. */
 .equipe {
-  padding: 144px var(--margem);
+  padding: 0 var(--margem) 144px;
 }
 
 .equipe-conteudo {
@@ -8,18 +10,23 @@
 }
 
 .equipe h2 {
-  color: #fff;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .equipe-grade {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
-  gap: 3rem 4rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  gap: 20px;
 }
 
-@media (max-width: 833px) {
+@media (max-width: 1068px) {
   .equipe {
-    padding: 112px var(--margem);
+    padding-bottom: 120px;
+  }
+}
+
+@media (max-width: 734px) {
+  .equipe {
+    padding-bottom: 112px;
   }
 }

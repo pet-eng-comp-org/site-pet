@@ -24,7 +24,7 @@ const About = () => {
 
   return (
     <>
-      <div className="pagina">
+      <div className="pagina pagina-sobre">
         <h1>Quem somos</h1>
         <p className="pagina-intro">
           Estudantes de Engenharia de Computação e um professor tutor, em

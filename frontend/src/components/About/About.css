@@ -28,6 +28,11 @@
   text-align: center;
 }
 
+/* A equipe vem logo abaixo, na mesma página branca. */
+.pagina.pagina-sobre {
+  padding-bottom: 96px;
+}
+
 @media (max-width: 734px) {
   .numeros {
     grid-template-columns: repeat(2, 1fr);
