@@ -356,8 +356,10 @@ html {
   text-align: center;
 }
 
+/* O título da página 1,5 vez o título de bloco (72 contra 48 px; 48 contra
+   32 no celular), para ele mandar na primeira tela. */
 .App .pagina h1 {
-  font-size: 3.5rem;
+  font-size: 4.5rem;
   line-height: 1.1;
   color: var(--cor-texto);
   margin-bottom: 1rem;
@@ -428,7 +430,7 @@ html {
   }
 
   .App .pagina h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
 }
 

@@ -27,17 +27,7 @@ const About = () => {
       <div className="pagina">
         <h1>Quem somos</h1>
         <p className="pagina-intro">
-          Um dos grupos PET originais da Ufes, criado em 1993.
-        </p>
-        <p className="pagina-texto">
-          O{" "}
-          <a className="link-texto" href="https://www.gov.br/mec/pt-br/pet">
-            Programa de Educação Tutorial
-          </a>{" "}
-          foi criado pela CAPES em 1979, com o nome de Programa Especial de
-          Treinamento, e desde 1999 é gerido pela SESu. É destinado a alunos de
-          graduação que demonstrem potencial, interesse e habilidades
-          destacadas. Na Ufes são 13 grupos PET.
+          Um dos 13 grupos PET da Ufes e um dos primeiros, de 1993.
         </p>
         {falhou && <AvisoDeFalha />}
       </div>
