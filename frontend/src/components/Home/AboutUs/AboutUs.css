@@ -1,13 +1,19 @@
+/* Centralizada como os blocos da página inicial do apple.com: título,
+   texto curto, os dois botões e as fotos embaixo. */
 .about-us {
   padding: 5rem var(--margem);
   color: #fff;
+  text-align: center;
 }
 
+/* Título do bloco na mesma fonte do título do topo, um degrau abaixo. */
 .about-us h2 {
-  font-size: var(--titulo-secao);
-  font-weight: bold;
+  font-family: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.05;
   color: #fff;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.25rem;
 }
 
 .about-us p {
@@ -15,25 +21,40 @@
   font-size: var(--texto);
   line-height: 1.6;
   max-width: 36rem;
-  margin: 0 0 1.25rem;
+  margin: 0 auto 1.5rem;
 }
 
-.about-us a {
+/* Sobre a faixa verde, o par se inverte: o cheio é branco com texto verde e
+   o de contorno tem borda branca. No hover os dois ficam quase brancos. */
+.about-us-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 17px;
+}
+
+.about-us .botao-principal {
+  background: #fff;
+  color: var(--cor-faixa-verde);
+}
+
+.about-us .botao-contorno {
+  border-color: #fff;
   color: #fff;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
-.about-us a:hover {
-  text-decoration-thickness: 2px;
+.about-us .botao-principal:hover,
+.about-us .botao-contorno:hover {
+  background: #e6f2f2;
+  border-color: transparent;
+  color: var(--cor-faixa-verde);
 }
 
 .about-us-fotos {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-  margin: 2.5rem 0;
+  margin: 2.5rem 0 0;
 }
 
 .about-us-fotos img {
@@ -48,8 +69,22 @@
     padding: 3rem var(--margem);
   }
 
+  .about-us h2 {
+    font-size: 2rem;
+  }
+
+  .about-us-acoes {
+    gap: 14px;
+  }
+
+  .about-us-fotos {
+    gap: 1rem;
+  }
+}
+
+/* Uma foto embaixo da outra só no celular; no tablet ainda cabem as duas. */
+@media (max-width: 599.98px) {
   .about-us-fotos {
     grid-template-columns: 1fr;
-    gap: 1rem;
   }
 }

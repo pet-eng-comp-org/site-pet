@@ -11,18 +11,21 @@ const AboutUs = () => {
       <div className="secao">
         <h2>O que é o PET</h2>
         <p>
-          O Programa de Educação Tutorial, do MEC, reúne alunos de graduação e
-          um professor tutor em atividades de ensino, pesquisa e extensão. Na
-          Ufes são 13 grupos, e o nosso é um dos originais, de 1993.{" "}
-          <a href="https://www.gov.br/mec/pt-br/pet">Saiba mais no site do MEC</a>.
+          Um programa do MEC que une alunos de graduação e um professor tutor
+          em ensino, pesquisa e extensão. O nosso existe desde 1993.
         </p>
+        <div className="about-us-acoes">
+          <Link to="/inscricoes" className="botao-principal">
+            Faça parte
+          </Link>
+          <a href="https://www.gov.br/mec/pt-br/pet" className="botao-contorno">
+            Site do MEC
+          </a>
+        </div>
         <div className="about-us-fotos">
           <img alt="Palestra no auditório durante a JACEE, a Jornada de Atualização em Computação, Elétrica e Eletrônica" src={imagemNos2} loading="lazy" />
           <img alt="Participantes do Topcom" src={imagemNos3} loading="lazy" />
         </div>
-        <p>
-          Quer fazer parte? <Link to="/inscricoes">Veja como entrar</Link>.
-        </p>
       </div>
     </section>
   );
