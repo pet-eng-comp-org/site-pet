@@ -86,7 +86,7 @@ const ContactPage = () => {
         setErroGeral(
           typeof erro === "string"
             ? erro
-            : "Não conseguimos enviar agora. Tente de novo em alguns minutos ou escreva para petengcomp.ufes@gmail.com."
+            : "Não conseguimos enviar agora. Tente de novo em alguns minutos ou escreva para petengcomp@inf.ufes.br."
         );
     }
     setLoading(false);
@@ -101,6 +101,9 @@ const ContactPage = () => {
   const campo = (id, setValor) => ({
     id: `contato-${id}`,
     className: `form-control ${erroCampo[id] ? "is-invalid" : ""}`,
+    // Espaço em branco: o rótulo fica dentro do campo enquanto ele está vazio
+    // (:placeholder-shown, em App.css).
+    placeholder: " ",
     "aria-invalid": Boolean(erroCampo[id]),
     "aria-describedby": erroCampo[id] ? `contato-${id}-erro` : undefined,
     required: true,
@@ -126,8 +129,8 @@ const ContactPage = () => {
       <h1>Fale com a gente</h1>
       <p className="pagina-intro">
         Dúvidas, convites e parcerias: use o formulário ou escreva para{" "}
-        <a className="link-texto" href="mailto:petengcomp.ufes@gmail.com">
-          petengcomp.ufes@gmail.com
+        <a className="link-texto" href="mailto:petengcomp@inf.ufes.br">
+          petengcomp@inf.ufes.br
         </a>
         .
       </p>
@@ -140,38 +143,46 @@ const ContactPage = () => {
             </p>
           )}
 
-          <label htmlFor="contato-name">Nome</label>
-          <input
-            {...campo("name", setName)}
-            type="text"
-            autoComplete="name"
-            maxLength={100}
-          />
+          <div className="campo">
+            <input
+              {...campo("name", setName)}
+              type="text"
+              autoComplete="name"
+              maxLength={100}
+            />
+            <label htmlFor="contato-name">Nome</label>
+          </div>
           {erroDo("name")}
 
-          <label htmlFor="contato-email">E-mail</label>
-          <input
-            {...campo("email", setEmail)}
-            type="email"
-            autoComplete="email"
-            maxLength={254}
-          />
+          <div className="campo">
+            <input
+              {...campo("email", setEmail)}
+              type="email"
+              autoComplete="email"
+              maxLength={254}
+            />
+            <label htmlFor="contato-email">E-mail</label>
+          </div>
           {erroDo("email")}
 
-          <label htmlFor="contato-subject">Assunto</label>
-          <input
-            {...campo("subject", setSubject)}
-            type="text"
-            maxLength={120}
-          />
+          <div className="campo">
+            <input
+              {...campo("subject", setSubject)}
+              type="text"
+              maxLength={120}
+            />
+            <label htmlFor="contato-subject">Assunto</label>
+          </div>
           {erroDo("subject")}
 
-          <label htmlFor="contato-message">Mensagem</label>
-          <textarea
-            {...campo("message", setMessage)}
-            rows="5"
-            maxLength={5000}
-          />
+          <div className="campo">
+            <textarea
+              {...campo("message", setMessage)}
+              rows="5"
+              maxLength={5000}
+            />
+            <label htmlFor="contato-message">Mensagem</label>
+          </div>
           {erroDo("message")}
           {message.length > 4000 && (
             <p className="contato-contador">{message.length} de 5000 caracteres</p>
@@ -180,7 +191,7 @@ const ContactPage = () => {
           {/* Sem JavaScript, o formulário não envia: diz como falar com a gente. */}
           <p className="alerta-erro contato-sem-js">
             Para enviar pelo formulário, o navegador precisa de JavaScript. Escreva para
-            petengcomp.ufes@gmail.com.
+            petengcomp@inf.ufes.br.
           </p>
 
           {erroGeral && (
