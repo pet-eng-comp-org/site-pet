@@ -86,7 +86,7 @@ const ContactPage = () => {
         setErroGeral(
           typeof erro === "string"
             ? erro
-            : "Não conseguimos enviar agora. Tente de novo em alguns minutos ou escreva para petengcomp.ufes@gmail.com."
+            : "Não conseguimos enviar agora. Tente de novo em alguns minutos ou escreva para petengcomp@inf.ufes.br."
         );
     }
     setLoading(false);
@@ -129,8 +129,8 @@ const ContactPage = () => {
       <h1>Fale com a gente</h1>
       <p className="pagina-intro">
         Dúvidas, convites e parcerias: use o formulário ou escreva para{" "}
-        <a className="link-texto" href="mailto:petengcomp.ufes@gmail.com">
-          petengcomp.ufes@gmail.com
+        <a className="link-texto" href="mailto:petengcomp@inf.ufes.br">
+          petengcomp@inf.ufes.br
         </a>
         .
       </p>
@@ -191,7 +191,7 @@ const ContactPage = () => {
           {/* Sem JavaScript, o formulário não envia: diz como falar com a gente. */}
           <p className="alerta-erro contato-sem-js">
             Para enviar pelo formulário, o navegador precisa de JavaScript. Escreva para
-            petengcomp.ufes@gmail.com.
+            petengcomp@inf.ufes.br.
           </p>
 
           {erroGeral && (

@@ -28,15 +28,21 @@
   background: var(--cor-superficie);
   color: var(--cor-texto);
   text-decoration: none;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0, 0, 0.5, 1);
 }
 
+/* O hover dos cartões do apple.com: o cartão cresce uns 6 px, sem sombra,
+   só onde há ponteiro. */
 .projeto:hover,
 .projeto:focus-visible {
   color: var(--cor-texto);
   text-decoration: none;
-  box-shadow: 0 16px 32px -20px rgba(0, 0, 0, 0.25);
-  transform: translateY(-2px);
+}
+
+@media (hover: hover) {
+  .projeto:hover {
+    transform: scale(1.0125);
+  }
 }
 
 .projeto:focus-visible {

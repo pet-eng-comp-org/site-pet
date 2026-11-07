@@ -86,6 +86,10 @@ a:hover {
   text-decoration: underline;
 }
 
+.botao-link:hover {
+  text-decoration: underline;
+}
+
 .botao-principal:hover,
 .botao-contorno:hover,
 .barra-link:hover,
@@ -101,19 +105,19 @@ a:hover {
 .link-voltar::before {
   content: "";
   display: inline-block;
-  width: 0.4em;
-  height: 0.7em;
+  width: 0.28em;
+  height: 0.49em;
   background: currentColor;
   -webkit-mask: var(--seta) center / contain no-repeat;
   mask: var(--seta) center / contain no-repeat;
 }
 
 .link-mais::after {
-  margin-left: 0.3em;
+  margin-left: 0.24em;
 }
 
 .link-voltar::before {
-  margin-right: 0.3em;
+  margin-right: 0.24em;
   transform: scaleX(-1);
 }
 
@@ -165,10 +169,24 @@ label {
   min-height: 56px;
   padding: 18px 16px 0;
   border-color: #86868b;
+  line-height: 1.23529;
+}
+
+/* Na mensagem, a borda fica na caixa em volta e o texto começa abaixo do
+   nome: ao rolar, o texto some antes de chegar ao nome. */
+.campo:has(textarea) {
+  padding-top: 28px;
+  background: #fff;
+  border: 1px solid #86868b;
+  border-radius: 12px;
 }
 
 .campo textarea.form-control {
-  padding-top: 26px;
+  min-height: 0;
+  padding: 0 16px 12px;
+  border: 0;
+  border-radius: 0 0 12px 12px;
+  resize: vertical;
 }
 
 .campo label {
@@ -187,15 +205,43 @@ label {
 
 .campo:has(.form-control:focus) label,
 .campo:has(.form-control:not(:placeholder-shown)) label {
-  top: 8px;
+  top: 10px;
   font-size: 12px;
   line-height: 16px;
 }
 
-.campo .form-control:focus {
+/* Foco como o do campo do apple.com: a borda passa a 2 px na cor de ação,
+   sem contorno por fora (1 px sai da folga para o texto não andar). */
+.campo .form-control:focus,
+.campo .form-control:focus-visible {
+  border-width: 2px;
   border-color: var(--cor-acao);
-  outline: 2px solid var(--cor-acao);
-  outline-offset: 0;
+  padding: 17px 15px 0;
+  outline: none;
+}
+
+.campo textarea.form-control:focus,
+.campo textarea.form-control:focus-visible {
+  border: 0;
+  padding: 0 15px 11px;
+}
+
+.campo:has(textarea:focus) {
+  border: 2px solid var(--cor-acao);
+  padding-top: 27px;
+}
+
+.campo:has(textarea:focus) label {
+  left: 16px;
+}
+
+.campo:has(textarea.is-invalid) {
+  border-color: var(--cor-erro);
+}
+
+/* Campo com erro: o nome também na cor de erro, como lá. */
+.campo:has(.is-invalid) label {
+  color: var(--cor-erro);
 }
 
 @media (prefers-reduced-motion: reduce) {
