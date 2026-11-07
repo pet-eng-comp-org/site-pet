@@ -41,7 +41,7 @@ const Documents = () => {
       )}
       {documents && (
         <p className="pagina-texto documentos-mec">
-          O programa foi criado pela{" "}
+          O programa, que existe desde 1979, foi instituído com o nome atual pela{" "}
           <a
             className="link-texto"
             target="_blank"

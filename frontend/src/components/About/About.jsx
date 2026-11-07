@@ -27,14 +27,15 @@ const About = () => {
       <div className="pagina">
         <h1>Quem somos</h1>
         <p className="pagina-intro">
-          Um dos 13 grupos PET da Ufes e um dos primeiros, de 1993.
+          Estudantes de Engenharia de Computação e um professor tutor, em
+          ensino, pesquisa e extensão.
         </p>
         {/* Os números em destaque, como os do apple.com. Os do programa são
             do portal do MEC (gov.br/mec/pt-br/pet, conferido em 07/11/2026). */}
         <dl className="numeros">
           <div>
             <dt>1993</dt>
-            <dd>o ano em que o nosso grupo começou</dd>
+            <dd>o começo do nosso grupo</dd>
           </div>
           <div>
             <dt>13</dt>
@@ -52,7 +53,7 @@ const About = () => {
         <p className="numeros-fonte">
           <a
             className="link-mais"
-            href="https://www.sbc.org.br/educacao/grupos-pet"
+            href="https://www.sbc.org.br/grupos-pet/"
             target="_blank"
             rel="noopener noreferrer"
           >
