@@ -1,76 +1,50 @@
+/* Medido no rodapé do apple.com em 07/11/2026: fundo #f5f5f7, texto de
+   12 px com 16 px de entrelinha a 56% do preto, links em azul, conteúdo de
+   980 px, 17 px em cima, linha fina com 19 px antes e 16 px depois. Aqui o
+   azul é o verde de ação, e no escuro o fundo é o cinza do sistema. */
 .rodape {
-  background-color: var(--cor-rodape);
-  color: #fff;
-  font-size: 0.9rem;
+  --rodape-fundo: #f5f5f7;
+  --rodape-texto: rgba(0, 0, 0, 0.56);
+  background: var(--rodape-fundo);
+  color: var(--rodape-texto);
+  font-size: 12px;
+  line-height: 16px;
 }
 
-.rodape a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.rodape a:hover,
-.rodape a:focus {
-  color: #fff;
-  text-decoration: underline;
-}
-
-/* Mesma largura e mesmas margens do cabeçalho e do conteúdo (1140px). */
-.rodape-faixa {
-  display: flex;
-  align-items: center;
-  gap: 2rem 3rem;
-  max-width: calc(1140px + 2 * var(--margem));
-  margin: 0 auto;
-  padding: 1.5rem var(--margem);
-}
-
-.logoPet {
-  width: 160px;
-  flex-shrink: 0;
-}
-
-.rodape-endereco {
-  line-height: 1.6;
-}
-
-.rodape-contatos {
-  margin: 0 0 0 auto;
-  padding: 0;
-  list-style: none;
-}
-
-/* Ícones na mesma coluna e área de toque de 44px. */
-.rodape-contatos a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 44px;
-}
-
-.icone {
-  width: 22px;
-  height: 22px;
+@media (prefers-color-scheme: dark) {
+  .rodape {
+    --rodape-fundo: #1c1c1e;
+    --rodape-texto: rgba(255, 255, 255, 0.6);
+  }
 }
 
 /* Com a faixa de inscrições abertas no pé da tela, o rodapé cresce embaixo
    na altura dela (--faixa, medida em Nav.jsx), e nada fica coberto. */
-.rodape-direitos {
-  padding: 0.5rem 1rem calc(0.5rem + var(--faixa, 0px));
-  background: rgba(0, 0, 0, 0.2);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 10pt;
-  text-align: center;
+.rodape-conteudo {
+  max-width: calc(980px + 2 * var(--margem));
+  margin: 0 auto;
+  padding: 17px var(--margem) calc(19px + var(--faixa, 0px));
 }
 
-@media (max-width: 767.98px) {
-  .rodape-faixa {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
+.rodape p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
 
-  .rodape-contatos {
-    margin-left: 0;
-  }
+.rodape a {
+  color: var(--cor-acao);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rodape a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.rodape .rodape-info {
+  padding-bottom: 19px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--cor-separador);
 }
