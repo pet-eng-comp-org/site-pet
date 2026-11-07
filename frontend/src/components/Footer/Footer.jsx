@@ -4,7 +4,7 @@ import "./Footer.css";
 const MAPA =
   "https://www.google.com/maps?ll=-20.273378,-40.305981&z=14&t=m&hl=pt-BR&gl=BR&mapclient=embed&cid=8957845249469204268";
 
-// Como o rodapé do apple.com: texto miúdo em cinza, links na cor de ação,
+// Rodapé: texto miúdo em cinza, links na cor de link,
 // uma linha fina e o copyright embaixo. Sem logo nem ícones: a marca já
 // está no topo, e o rodapé só responde onde estamos e como falar com a gente.
 const Footer = () => {
