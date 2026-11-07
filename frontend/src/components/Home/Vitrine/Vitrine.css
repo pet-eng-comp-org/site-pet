@@ -1,0 +1,30 @@
+/* Vitrine de projetos na inicial: bloco cinza com três cartões brancos. */
+.vitrine {
+  background: var(--cor-superficie);
+  padding: 56px var(--margem) 63px;
+}
+
+.vitrine-conteudo {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.vitrine-grade {
+  margin-top: 2rem;
+}
+
+.vitrine-todos {
+  margin: 2rem 0 0;
+}
+
+@media (min-width: 735px) {
+  .vitrine-grade {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 734px) {
+  .vitrine {
+    padding: 39px var(--margem) 43px;
+  }
+}

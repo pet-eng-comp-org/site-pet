@@ -10,13 +10,45 @@
   white-space: pre-line;
 }
 
-.projeto-tags {
-  list-style: none;
-  padding: 0;
+/* Título, texto e botões numa medida de leitura, na mesma margem esquerda
+   da galeria. */
+.projeto-cabeca {
+  max-width: 36rem;
+}
+
+.projeto-ferramentas {
   margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+  letter-spacing: -0.016em;
+  color: var(--cor-texto-suave);
+}
+
+/* Sem fotos: bloco cinza com o ícone grande, na largura da coluna. */
+.projeto-sem-fotos {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  height: 360px;
+  margin-top: 2.5rem;
+  border-radius: var(--raio-cartao);
+  background: var(--cor-superficie);
+}
+
+.projeto-sem-fotos .projeto-icone {
+  width: 160px;
+  height: 160px;
+  margin: 0;
+}
+
+@media (max-width: 734px) {
+  .projeto-sem-fotos {
+    height: 240px;
+  }
+
+  .projeto-sem-fotos .projeto-icone {
+    width: 112px;
+    height: 112px;
+  }
 }
 
 .projeto-acoes {
@@ -26,30 +58,6 @@
   /* Entre botões. */
   gap: 14px 17px;
   margin-top: 1.5rem;
-}
-
-/* Ferramenta com link é uma pílula com contorno, que se toca; sem link, só
-   um rótulo, sem cara de botão. */
-.projeto-tags span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2rem;
-  padding: 0 0.75rem;
-  border-radius: var(--raio-capsula);
-  background: var(--cor-superficie-suave);
-  color: var(--cor-texto);
-  font-weight: 600;
-}
-
-.projeto-tags a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 1rem;
-  border-radius: var(--raio-capsula);
-  border: 1px solid var(--cor-acao);
-  color: var(--cor-acao);
-  font-weight: 600;
 }
 
 /* Cada linha ocupa a largura toda, com as fotos inteiras na proporção
@@ -95,9 +103,4 @@
   }
 }
 
-.projeto-tags a:hover,
-.projeto-tags a:focus {
-  background: var(--cor-acao-fundo);
-  color: #fff;
-}
 

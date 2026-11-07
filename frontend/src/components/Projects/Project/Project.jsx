@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import slug from "../../../utils/slug";
+import iconeProjeto from "../../../utils/iconeProjeto";
 
 // O cartão é uma chamada: o nome em verde e uma frase curta. A descrição
 // inteira fica na página do projeto. Projeto novo, sem frase aqui, usa a
@@ -22,9 +23,7 @@ const primeiraFrase = (texto) => texto.match(/^[\s\S]*?[.!?](?=\s|$)/)?.[0] || t
 
 // O cartão inteiro é o link para a página do projeto.
 function Project({ title, description, icon, onClick }) {
-  const src = icon
-    ? `${import.meta.env.VITE_API_URL}api/file/getComissionPhoto/${icon}`
-    : "";
+  const src = iconeProjeto(title, icon);
 
   return (
     // O nome do link é o título; a frase vem como descrição. Antes o leitor
