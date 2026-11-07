@@ -59,10 +59,19 @@
   margin-left: -8px;
 }
 
+/* Como a maçã de lá, a 80% e acesa por inteiro sob o ponteiro, no mesmo
+   tempo dos links. */
 .logo-nav {
   width: 18px;
   height: 22px;
   display: block;
+  opacity: 0.8;
+  transition: opacity 0.32s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.barra-marca:hover .logo-nav,
+.barra-marca:focus-visible .logo-nav {
+  opacity: 1;
 }
 
 .barra-lista {
@@ -85,7 +94,7 @@
   color: color-mix(in srgb, var(--barra-texto) 80%, transparent);
   font-weight: 500;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.32s cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 .barra-link:hover {
