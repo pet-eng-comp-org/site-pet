@@ -125,8 +125,7 @@ const ContactPage = () => {
     <div className="pagina">
       <h1>Fale com a gente</h1>
       <p className="pagina-intro">
-        Dúvidas, convites e parcerias: mande uma mensagem pelo formulário ou
-        escreva para{" "}
+        Dúvidas, convites e parcerias: use o formulário ou escreva para{" "}
         <a className="link-texto" href="mailto:petengcomp.ufes@gmail.com">
           petengcomp.ufes@gmail.com
         </a>
@@ -197,7 +196,7 @@ const ContactPage = () => {
         </form>
 
         <div className="contato-local">
-          <h2>Onde estamos</h2>
+          <h2 className="titulo-bloco">Onde estamos</h2>
           <p>
             Sala 18, 2º andar do CT XIII
             <br />
