@@ -57,26 +57,32 @@ const Login = () => {
             {errorMessage}
           </p>
         )}
-        <label htmlFor="email">E-mail</label>
-        <input
-          type="email"
-          id="email"
-          autoComplete="username"
-          required
-          className={`form-control ${invalido}`}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label htmlFor="password">Senha</label>
-        <input
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          required
-          className={`form-control ${invalido}`}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="campo">
+          <input
+            type="email"
+            id="email"
+            autoComplete="username"
+            required
+            placeholder=" "
+            className={`form-control ${invalido}`}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label htmlFor="email">E-mail</label>
+        </div>
+        <div className="campo">
+          <input
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            required
+            placeholder=" "
+            className={`form-control ${invalido}`}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <label htmlFor="password">Senha</label>
+        </div>
         <button type="submit" className="botao-principal">
           Entrar
         </button>

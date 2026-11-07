@@ -96,7 +96,7 @@
 .barra-link:focus-visible {
   color: var(--barra-texto);
   outline: 2px solid var(--barra-texto);
-  outline-offset: 2px;
+  outline-offset: 1px;
   border-radius: 4px;
 }
 
@@ -361,13 +361,13 @@
 }
 
 .message a {
-  color: var(--cor-acao);
+  color: var(--cor-link);
 
   font-weight: 500;
 }
 
 .message a:hover {
-  color: var(--cor-acao);
+  color: var(--cor-link);
   text-decoration: underline;
 }
 

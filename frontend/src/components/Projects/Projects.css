@@ -72,12 +72,15 @@
   margin-bottom: 1.25rem;
 }
 
+/* "Saiba mais ›" do cartão, como o link de cartão do apple.com: sublinha
+   quando o ponteiro passa pelo cartão inteiro. */
 .projeto-mais {
   margin-top: auto;
-  color: var(--cor-acao);
-  font-weight: 600;
+  color: var(--cor-link);
+}
+
+.projeto:hover .projeto-mais {
   text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {

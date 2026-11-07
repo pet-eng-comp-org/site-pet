@@ -49,8 +49,7 @@
 
 .grupo-documentos a:hover,
 .grupo-documentos a:focus {
-  color: var(--cor-acao);
-  text-decoration: underline;
+  color: var(--cor-link);
 }
 
 .grupo-documentos .icone-svg {
