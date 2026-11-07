@@ -32,9 +32,9 @@ const News = () => {
   if (!news?.length) return null;
 
   return (
-    <section className="noticias">
+    <section className="bloco noticias">
       <div className="secao">
-        <h2 className="title titulo-bloco">Notícias</h2>
+        <h2 className="title bloco-titulo">Notícias</h2>
         <div className="noticias-grade">
           {news.map((singleNew) => (
             <article key={singleNew._id} className="noticia">

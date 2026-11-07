@@ -30,7 +30,7 @@
 
 .contato-local p {
   font-size: var(--texto);
-  line-height: 1.6;
+  line-height: 1.47059;
 }
 
 .contato-local iframe {
@@ -42,7 +42,7 @@
   background: var(--cor-superficie-suave);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 833px) {
   .contato-grade {
     grid-template-columns: 1fr;
   }

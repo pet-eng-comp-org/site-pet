@@ -14,8 +14,10 @@ function Home() {
   return (
     <>
       <Hero />
-      <News />
       <AboutUs />
+      {/* Por último: só aparece quando a API responde e há notícia recente,
+          e embaixo não empurra o que já está na tela. */}
+      <News />
     </>
   );
 }

@@ -27,10 +27,10 @@ const srcSet = (id, largura) =>
     .join(", ");
 
 // Largura em que a foto aparece: a fração da linha que cabe a ela, na coluna
-// de até 980 px, com 2 rem de margem de cada lado (1 rem de espaço entre
+// de até 980 px, que até 1068 px é 87,5% da tela (1 rem de espaço entre
 // fotos); no celular, a coluna toda.
 const tamanho = (fracao, nalinha) =>
-  `(max-width: 767.98px) calc(100vw - 2rem), calc((min(100vw - 4rem, 980px) - ${nalinha - 1}rem) * ${fracao.toFixed(3)})`;
+  `(max-width: 734px) 87.5vw, calc((min(87.5vw, 980px) - ${nalinha - 1}rem) * ${fracao.toFixed(3)})`;
 
 // Divide as fotos, na ordem, em linhas de soma de proporções parecida (cerca
 // de 3,5 por linha, uns 300 px de altura na tela larga), para nenhuma linha

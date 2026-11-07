@@ -12,7 +12,7 @@ const ordenar = (petianos) => {
 };
 
 const Team = ({ petianos, projetos }) => (
-  <section className="green-bg equipe">
+  <section className="bloco green-bg equipe">
     <div className="equipe-conteudo">
       {/* A contagem fica no título da equipe, que chega junto com ela: no
           texto de cima, ela empurrava o parágrafo ao chegar. */}

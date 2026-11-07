@@ -1,6 +1,6 @@
 .requisitos {
   font-size: var(--texto);
-  line-height: 1.7;
+  line-height: 1.47059;
   max-width: 36rem;
   margin: 0 0 1.5rem;
   padding-left: 1.5rem;
@@ -8,9 +8,8 @@
 
 .aviso-selecao {
   background: var(--cor-superficie);
-  border-left: 6px solid #ff9a5b;
-  border-radius: 12px;
-  padding: 1.5rem 1.75rem;
+  border-radius: var(--raio-cartao);
+  padding: 32px;
   margin-bottom: 2.5rem;
   max-width: 36rem;
 }
@@ -22,7 +21,7 @@
 
 .aviso-selecao p {
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.47059;
 }
 
 .aviso-selecao p + p {
@@ -51,10 +50,6 @@
   visibility: hidden;
 }
 
-.aviso-selecao-aberta {
-  border-left-color: var(--cor-acao);
-}
-
 .aviso-selecao .botao-principal,
 .aviso-selecao .botao-link {
   margin-top: 1rem;
@@ -65,7 +60,7 @@
    lê. A coluna do aviso tem pelo menos 20rem, para ele não virar uma tira
    estreita perto de 992 px. No celular, o aviso continua logo abaixo do
    título, que é onde quem chega procura primeiro. */
-@media (min-width: 992px) {
+@media (min-width: 1069px) {
   .faca-parte {
     display: grid;
     grid-template-columns: minmax(0, 36rem) minmax(20rem, 1fr);

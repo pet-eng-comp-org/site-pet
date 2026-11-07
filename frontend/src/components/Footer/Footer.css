@@ -1,23 +1,15 @@
-/* Medido no rodapé do apple.com em 07/11/2026: texto de 12 px com 16 px de
-   entrelinha a 56% do preto, links em azul, 17 px em cima, linha fina com
-   19 px antes e 16 px depois. Lá o rodapé (#f5f5f7) é um degrau mais escuro
-   que a página branca; aqui a página já é #f2f2f7, então o rodapé desce
-   para #e8e8ed para o degrau continuar visível. O azul vira o verde de ação,
-   e no escuro o fundo é o cinza do sistema. */
+/* Medido no rodapé do apple.com em 07/11/2026: fundo #f5f5f7 sob a página
+   branca, texto de 12 px com 16 px de entrelinha a 56% do preto, links em
+   azul (aqui, o verde de ação), 17 px em cima, linha fina com 19 px antes e
+   16 px depois. */
 .rodape {
-  --rodape-fundo: #e8e8ed;
+  --rodape-fundo: var(--cor-superficie);
   --rodape-texto: rgba(0, 0, 0, 0.56);
   background: var(--rodape-fundo);
   color: var(--rodape-texto);
   font-size: 12px;
   line-height: 16px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .rodape {
-    --rodape-fundo: #1c1c1e;
-    --rodape-texto: rgba(255, 255, 255, 0.6);
-  }
+  letter-spacing: -0.01em;
 }
 
 /* Na coluna de 980 px do cabeçalho e das páginas. Com a faixa de
@@ -31,6 +23,7 @@
 
 .rodape p {
   margin: 0;
+  letter-spacing: inherit;
   text-wrap: pretty;
   color: inherit;
   font-size: inherit;
@@ -40,7 +33,6 @@
 .rodape a {
   color: var(--cor-acao);
   text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .rodape a:hover {

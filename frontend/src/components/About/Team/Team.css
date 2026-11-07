@@ -1,5 +1,5 @@
 .equipe {
-  padding: 4rem var(--margem) 5rem;
+  padding: 144px var(--margem);
 }
 
 .equipe-conteudo {
@@ -18,8 +18,8 @@
   gap: 3rem 4rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 833px) {
   .equipe {
-    padding: 3rem var(--margem);
+    padding: 112px var(--margem);
   }
 }
