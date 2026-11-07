@@ -1,5 +1,13 @@
+/* Os blocos da inicial como os do apple.com: cada um na largura toda, em
+   #f5f5f7 ou numa cor cheia, com 12 px de página branca entre eles. */
+.hero,
+.noticias,
+.about-us {
+  margin-bottom: 12px;
+}
+
 .hero {
-  background: var(--cor-fundo);
+  background: var(--cor-superficie);
   padding: 4rem var(--margem) 5rem;
 }
 
