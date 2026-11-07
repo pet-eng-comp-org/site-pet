@@ -5,18 +5,19 @@
   z-index: 1020;
 }
 
-/* Logo à esquerda, botão do menu à direita (celular) e links alinhados com o
-   conteúdo das páginas (largura de 980px). */
+/* A barra do apple.com (medida em 07/11/2026): 44 px de altura (48 no
+   celular), só o símbolo da marca e os links em 12 px, distribuídos por toda
+   a largura do conteúdo (980 px). */
 .barra {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.4375rem max(var(--margem), calc((100% - 980px) / 2));
+  min-height: 48px;
+  padding: 0 max(var(--margem), calc((100% - 980px) / 2));
   /* Vidro: a barra flutua sobre o conteúdo, que aparece borrado por baixo ao
      rolar, como no apple.com. Sem suporte ao filtro, fica sólida. */
   background: var(--menu-fundo);
-  border-bottom: 1px solid var(--cor-separador);
 }
 
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
@@ -35,17 +36,20 @@
   }
 }
 
-/* 120 px de largura, o mínimo do guia da identidade para o logo sem "UFES"
-   ("Tamanho mínimo", no guia do Figma). Em volta, os 7 px de respiro do guia
-   (o tamanho de um nó do grafo nessa largura): o cabeçalho fica com 66 px. */
+/* Só o símbolo, como a maçã no apple.com: o guia da identidade usa o
+   símbolo sozinho nos tamanhos pequenos. A caixa tem a altura da barra, para
+   o toque. */
 .barra-marca {
-  display: block;
-  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 8px;
+  margin-left: -8px;
 }
 
 .logo-nav {
-  width: 120px;
-  height: 52px;
+  width: 18px;
+  height: 22px;
   display: block;
 }
 
@@ -100,7 +104,7 @@
   flex-basis: 100%;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 833.98px) {
   .barra {
     transition: background-color 0.24s cubic-bezier(0.4, 0, 0.6, 1) 80ms;
   }
@@ -114,7 +118,6 @@
     background: var(--menu-fundo);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    border-bottom-color: transparent;
   }
 
   /* Some, mas guarda o lugar: o X não pula. */
@@ -194,7 +197,7 @@
   }
 }
 
-@media (max-width: 767.98px) and (prefers-reduced-motion: reduce) {
+@media (max-width: 833.98px) and (prefers-reduced-motion: reduce) {
   .barra,
   .barra-marca,
   .topo.menu-aberto .barra-marca,
@@ -215,27 +218,43 @@
   display: none;
 }
 
-@media (min-width: 768px) {
-  .barra-links {
-    display: flex;
-    flex-basis: auto;
-    flex-grow: 1;
+/* Computador: o símbolo e os links, todos em fila e espaçados por igual de
+   uma margem à outra, como no apple.com; texto de 12 px a 80% da cor. */
+@media (min-width: 834px) {
+  .barra {
+    min-height: 44px;
   }
 
+  .barra-links {
+    display: flex;
+    flex: 1;
+  }
+
+  /* O ::before vazio é o primeiro da fila: entre ele e o primeiro link fica
+     o mesmo espaço que entre os links, e assim o símbolo também. */
   .barra-lista {
+    display: flex;
+    flex: 1;
     flex-direction: row;
-    margin-left: auto;
+    justify-content: space-between;
+  }
+
+  .barra-lista::before {
+    content: "";
   }
 
   .barra-link {
-    padding: 0.5rem;
+    min-height: 44px;
+    padding: 0 8px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
   }
 
   /* O texto do último link, não a caixa dele, encosta na margem do conteúdo. */
   .barra-lista li:last-child .barra-link {
-    padding-right: 0;
+    margin-right: -8px;
   }
-
 }
 
 /* Botão de 48 px com o ícone de 18 px no meio, como no apple.com. A margem
@@ -264,7 +283,7 @@
 
 /* Depois da regra do botão, que o mostra: no computador os links estão na
    barra. */
-@media (min-width: 768px) {
+@media (min-width: 834px) {
   .barra-menu {
     display: none;
   }

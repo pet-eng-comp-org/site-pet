@@ -95,7 +95,7 @@
 }
 
 /* No celular, uma foto por linha, na largura toda. */
-@media (max-width: 767.98px) {
+@media (max-width: 734px) {
   .projeto-fotos,
   .projeto-fotos-linha {
     gap: 0.75rem;
