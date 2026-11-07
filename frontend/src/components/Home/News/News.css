@@ -5,7 +5,7 @@
 }
 
 .noticias {
-  /* Na página branca, com os cartões em #f5f5f7, como os do apple.com. */
+  /* Na página branca, com os cartões em #f5f5f7. */
   background: var(--cor-fundo);
   padding: 56px var(--margem) 63px;
 }
@@ -37,7 +37,7 @@
   background: var(--cor-rodape);
 }
 
-/* O cartão do apple.com: 32 px de folga, título de 21 px em peso 600,
+/* O cartão: 32 px de folga, título de 21 px em peso 600,
    texto de 17/25 e a data em 14 px. */
 .noticia-texto {
   padding: 32px;
