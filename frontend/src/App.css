@@ -72,11 +72,53 @@ h3 {
   text-wrap: balance;
 }
 
-/* Link sem sublinhado por padrão, como era com o Bootstrap: quem quer
-   sublinhado (.link-texto, .botao-link) diz isso. */
+/* Link como os do apple.com: na cor de link, sem sublinhado, sublinhado ao
+   passar o ponteiro. A cor de link (#1b797b) é um verde um pouco mais claro
+   que o dos botões, para ter 3,3:1 com o texto em volta (o mínimo para
+   dispensar o sublinhado) e 5,2:1 com o branco. Botões, barra e cartões
+   desligam o sublinhado no hover. */
 a {
-  color: var(--cor-acao);
+  color: var(--cor-link);
   text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.botao-link:hover {
+  text-decoration: underline;
+}
+
+.botao-principal:hover,
+.botao-contorno:hover,
+.barra-link:hover,
+.barra-marca:hover {
+  text-decoration: none;
+}
+
+/* "Saiba mais ›": o link com a seta do apple.com, que lá é o chevron da
+   fonte de ícones da Apple (0,24em depois do texto); aqui, o mesmo desenho
+   em SVG, na cor do link. No hover só o texto sublinha: a seta é
+   inline-block e fica de fora do sublinhado. */
+.link-mais::after,
+.link-voltar::before {
+  content: "";
+  display: inline-block;
+  width: 0.28em;
+  height: 0.49em;
+  background: currentColor;
+  -webkit-mask: var(--seta) center / contain no-repeat;
+  mask: var(--seta) center / contain no-repeat;
+}
+
+.link-mais::after {
+  margin-left: 0.24em;
+}
+
+.link-voltar::before {
+  margin-right: 0.24em;
+  transform: scaleX(-1);
 }
 
 img,
@@ -97,11 +139,11 @@ label {
   display: inline-block;
 }
 
-/* Foco por teclado com um padrão só: 3 px na cor do site, afastado do
-   elemento. Sobre as faixas verdes, em branco. */
+/* Foco por teclado como o do apple.com: 2 px na cor de ação, afastado 1 px
+   do elemento. Sobre as faixas verdes, em branco. */
 :focus-visible {
-  outline: 3px solid var(--cor-acao);
-  outline-offset: 3px;
+  outline: 2px solid var(--cor-acao);
+  outline-offset: 1px;
 }
 
 .about-us :focus-visible,
@@ -114,7 +156,120 @@ label {
   width: auto;
 }
 
-/* Campo de formulário (Contato e login). */
+/* Campo com o nome dentro, como os do apple.com (lidos em 07/11/2026): 56
+   px de altura, borda de 1 px #86868b, cantos de 12 px e texto de 17 px. O
+   nome fica no meio do campo vazio, em #6e6e73, e sobe para 12 px a 10 px do
+   topo quando o campo recebe o foco ou tem texto. No foco, a borda passa a
+   2 px na cor de ação, sem contorno por fora. */
+.campo {
+  position: relative;
+}
+
+.campo .form-control {
+  min-height: 56px;
+  padding: 18px 16px 0;
+  border-color: #86868b;
+  line-height: 1.23529;
+}
+
+/* Na mensagem, a borda fica na caixa em volta e o texto começa abaixo do
+   nome: ao rolar, o texto some antes de chegar ao nome. */
+.campo:has(textarea) {
+  padding-top: 28px;
+  background: #fff;
+  border: 1px solid #86868b;
+  border-radius: 12px;
+}
+
+.campo textarea.form-control {
+  min-height: 0;
+  padding: 0 16px 12px;
+  border: 0;
+  border-radius: 0 0 12px 12px;
+  resize: vertical;
+}
+
+.campo label {
+  position: absolute;
+  top: 18px;
+  left: 17px;
+  right: 17px;
+  margin: 0;
+  font-size: var(--texto);
+  font-weight: 400;
+  line-height: 1.17648;
+  color: var(--cor-texto-suave);
+  pointer-events: none;
+  transition: top 0.125s ease-in, font-size 0.125s ease-in;
+}
+
+.campo:has(.form-control:focus) label,
+.campo:has(.form-control:not(:placeholder-shown)) label {
+  top: 10px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* Foco como o do campo do apple.com: a borda passa a 2 px na cor de ação,
+   sem contorno por fora (1 px sai da folga para o texto não andar). */
+.campo .form-control:focus,
+.campo .form-control:focus-visible {
+  border-width: 2px;
+  border-color: var(--cor-acao);
+  padding: 17px 15px 0;
+  outline: none;
+}
+
+.campo textarea.form-control:focus,
+.campo textarea.form-control:focus-visible {
+  border: 0;
+  padding: 0 15px 11px;
+}
+
+.campo:has(textarea:focus) {
+  border: 2px solid var(--cor-acao);
+  padding-top: 27px;
+}
+
+/* O nome da mensagem ocupa a faixa de cima da caixa inteira: tocar nela
+   abre o campo, e o texto fica a 10 px (18 px vazio) e 17 px da borda de
+   fora, como nos outros campos. */
+.campo:has(textarea.form-control) label {
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 17px 16px 0;
+  pointer-events: auto;
+  cursor: text;
+  transition: padding 0.125s ease-in, font-size 0.125s ease-in;
+}
+
+.campo:has(textarea.form-control:not(:placeholder-shown)) label {
+  top: 0;
+  padding-top: 9px;
+}
+
+.campo:has(textarea.form-control:focus) label {
+  top: 0;
+  padding: 8px 15px 0;
+}
+
+.campo:has(textarea.is-invalid) {
+  border-color: var(--cor-erro);
+}
+
+/* Campo com erro: o nome também na cor de erro, como lá. */
+.campo:has(.is-invalid) label {
+  color: var(--cor-erro);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campo label {
+    transition: none;
+  }
+}
+
+/* Campo de formulário (Contato, login e painel). */
 .form-control {
   display: block;
   width: 100%;
@@ -165,6 +320,9 @@ label {
   --cor-texto-suave: #6e6e73;
   --cor-acao: #186a6c;
   --cor-acao-fundo: #186a6c;
+  --cor-link: #1b797b;
+  /* A seta do "Saiba mais ›" (traço de 2 em 8 de largura, o peso da de lá). */
+  --seta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   /* Hover dos botões: um tom só um pouco mais claro que o fundo de ação,
      como no apple.com (#0071e3 vira #0076df), e 5,8:1 com o branco. */
   --cor-acao-forte: #1a7072;
@@ -411,14 +569,7 @@ html {
 }
 
 .link-texto {
-  color: var(--cor-acao);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.link-texto:hover,
-.link-texto:focus {
-  color: var(--cor-texto);
+  color: var(--cor-link);
 }
 
 @media (max-width: 1068px) {
@@ -502,17 +653,9 @@ html {
 .botao-link {
   display: inline-flex;
   align-items: center;
-  min-height: 48px;
-  color: var(--cor-acao);
-  font-weight: 600;
+  min-height: 44px;
+  color: var(--cor-link);
   font-size: var(--texto);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.botao-link:hover,
-.botao-link:focus {
-  color: var(--cor-texto);
 }
 
 

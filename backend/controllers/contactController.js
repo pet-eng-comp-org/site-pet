@@ -52,7 +52,7 @@ module.exports = {
     } catch (err) {
       console.error("contato: falha ao enviar e-mail:", err.message);
       res.status(502).json({
-        erro: "Não conseguimos enviar agora. Tente de novo mais tarde ou escreva para petengcomp.ufes@gmail.com.",
+        erro: "Não conseguimos enviar agora. Tente de novo mais tarde ou escreva para petengcomp@inf.ufes.br.",
       });
     }
   },

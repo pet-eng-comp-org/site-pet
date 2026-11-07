@@ -27,7 +27,7 @@ function Project({ title, description, icon, onClick }) {
       </span>
       <h2 id={`projeto-${slug(title)}`}>{title}</h2>
       <p id={`projeto-${slug(title)}-frase`}>{primeiraFrase(description)}</p>
-      <span className="projeto-mais" aria-hidden="true">
+      <span className="projeto-mais link-mais" aria-hidden="true">
         Saiba mais
       </span>
     </Link>

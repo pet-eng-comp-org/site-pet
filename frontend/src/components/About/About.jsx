@@ -27,7 +27,38 @@ const About = () => {
       <div className="pagina">
         <h1>Quem somos</h1>
         <p className="pagina-intro">
-          Um dos 13 grupos PET da Ufes e um dos primeiros, de 1993.
+          Estudantes de Engenharia de Computação e um professor tutor, em
+          ensino, pesquisa e extensão.
+        </p>
+        {/* Os números em destaque, como os do apple.com. Os do programa são
+            do portal do MEC (gov.br/mec/pt-br/pet, conferido em 07/11/2026). */}
+        <dl className="numeros">
+          <div>
+            <dt>1993</dt>
+            <dd>o começo do nosso grupo</dd>
+          </div>
+          <div>
+            <dt>13</dt>
+            <dd>grupos PET na Ufes</dd>
+          </div>
+          <div>
+            <dt>881</dt>
+            <dd>grupos PET no Brasil</dd>
+          </div>
+          <div>
+            <dt>+10 mil</dt>
+            <dd>bolsistas no país</dd>
+          </div>
+        </dl>
+        <p className="numeros-fonte">
+          <a
+            className="link-mais"
+            href="https://www.sbc.org.br/grupos-pet/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Os outros grupos PET de computação do país
+          </a>
         </p>
         {falhou && <AvisoDeFalha />}
       </div>

@@ -18,20 +18,28 @@ const Footer = () => {
             ver no mapa
           </a>
           ). Fale com a gente pelo e-mail{" "}
-          <a href="mailto:petengcomp.ufes@gmail.com">petengcomp.ufes@gmail.com</a>{" "}
-          ou no Instagram{" "}
+          <a href="mailto:petengcomp@inf.ufes.br">petengcomp@inf.ufes.br</a>
+          , no Instagram{" "}
           <a
             href="https://www.instagram.com/petengcomp/"
             target="_blank"
             rel="noopener noreferrer"
           >
             @petengcomp
+          </a>{" "}
+          ou no{" "}
+          <a
+            href="https://www.youtube.com/c/PETEngCompUfes"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            YouTube
           </a>
           .
         </p>
         <p className="rodape-direitos">
-          Copyright © {new Date().getFullYear()} PET Engenharia de Computação ·
-          Ufes
+          Copyright © {new Date().getFullYear()} PET Engenharia de Computação.
+          Todos os direitos reservados.
         </p>
       </div>
     </footer>

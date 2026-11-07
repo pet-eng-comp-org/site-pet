@@ -22,7 +22,7 @@ function ClosedSelection({ edital }) {
       </p>
       {edital ? (
         <a
-          className="botao-link"
+          className="botao-link link-mais"
           href={edital}
           target="_blank"
           rel="noopener noreferrer"
@@ -30,7 +30,7 @@ function ClosedSelection({ edital }) {
           Ler o último edital
         </a>
       ) : (
-        <Link className="botao-link" to="/documentos">
+        <Link className="botao-link link-mais" to="/documentos">
           Ver os editais
         </Link>
       )}

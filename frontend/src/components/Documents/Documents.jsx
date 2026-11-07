@@ -41,7 +41,16 @@ const Documents = () => {
       )}
       {documents && (
         <p className="pagina-texto documentos-mec">
-          A legislação do programa está no{" "}
+          O programa, que existe desde 1979, foi instituído com o nome atual pela{" "}
+          <a
+            className="link-texto"
+            target="_blank"
+            href="https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2005/lei/l11180.htm"
+            rel="noopener noreferrer"
+          >
+            Lei nº 11.180/2005
+          </a>
+          , e o resto da legislação está no{" "}
           <a
             className="link-texto"
             target="_blank"
