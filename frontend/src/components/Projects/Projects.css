@@ -28,8 +28,9 @@
   }
 }
 
-/* O convite, em verde, para se destacar dos projetos. */
-.projeto-convite {
+/* O convite, em verde, para se destacar dos projetos. As duas classes
+   juntas vencem o fundo branco do .projeto, que vem depois. */
+.projeto.projeto-convite {
   background: var(--cor-acao-fundo);
 }
 
@@ -38,8 +39,8 @@
   color: #fff;
 }
 
-.projeto-convite:hover,
-.projeto-convite:focus-visible {
+.projeto.projeto-convite:hover,
+.projeto.projeto-convite:focus-visible {
   color: #fff;
 }
 

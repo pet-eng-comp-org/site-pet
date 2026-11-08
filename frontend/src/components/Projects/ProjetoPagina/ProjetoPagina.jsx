@@ -89,8 +89,13 @@ function ProjetoPagina() {
   // Os canais do próprio projeto ("Site do Topcom", "Instagram do Mobiliza
   // PET") são ações: o site é o botão principal; os outros, links. O resto
   // das etiquetas são ferramentas, mostradas como rótulo, com ou sem link.
+  // Canal é link do próprio projeto: o nome dele no rótulo ("Site do
+  // Topcom"), ou uma ação ("Solicitar impressão 3D") ou o lugar onde os
+  // projetos estão publicados ("Instructables").
   const doProjeto = (t) =>
-    t.link && slug(t.title).includes(slug(comission.title));
+    t.link &&
+    (slug(t.title).includes(slug(comission.title)) ||
+      /^(solicitar|inscrever|instructables)/i.test(t.title.trim()));
   const canais = comission.tags.filter(doProjeto);
   const ferramentas = comission.tags.filter((t) => !doProjeto(t));
   // O site do projeto é a ação principal; sem site, o primeiro canal.
