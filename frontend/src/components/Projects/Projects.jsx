@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Project from "./Project/Project";
 import "./Projects.css";
 import useApi from "../../services/useApi";
@@ -72,17 +72,6 @@ const Projects = () => {
               />
             </li>
           ))}
-          {/* Fecha a grade (11 projetos + este = 4 linhas de 3) com o
-              próximo passo de quem chegou até aqui. */}
-          <li>
-            <Link className="projeto projeto-convite" to="/inscricoes">
-              <h2 className="projeto-chamada">
-                <span className="projeto-nome">Faça parte.</span> Entre no PET
-                ou participe de um projeto.
-              </h2>
-              <span className="projeto-ir" aria-hidden="true" />
-            </Link>
-          </li>
         </ul>
       )}
     </div>
