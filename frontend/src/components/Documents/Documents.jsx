@@ -42,9 +42,14 @@ const Documents = () => {
           <Loader />
         </div>
       )}
-      {/* Busca como a de uma central de ajuda: filtra enquanto se digita. */}
+      {/* Busca de central de ajuda: lupa à esquerda, o nome dentro do campo
+          que sobe ao digitar, e o × para limpar. Filtra enquanto se digita. */}
       {documents && (
         <div className="campo documentos-busca">
+          <svg className="busca-lupa" viewBox="0 0 15 15" aria-hidden="true">
+            <circle cx="6.25" cy="6.25" r="5.25" />
+            <path d="M10.1 10.1 14 14" />
+          </svg>
           <input
             id="documentos-busca"
             className="form-control"
@@ -55,6 +60,17 @@ const Documents = () => {
             onChange={(e) => setBusca(e.target.value)}
           />
           <label htmlFor="documentos-busca">Buscar documentos</label>
+          {busca && (
+            <button
+              type="button"
+              className="busca-limpar"
+              aria-label="Limpar busca"
+              onClick={() => {
+                setBusca("");
+                document.getElementById("documentos-busca").focus();
+              }}
+            />
+          )}
         </div>
       )}
       {documents && (
