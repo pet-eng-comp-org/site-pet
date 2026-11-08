@@ -11,12 +11,6 @@ export const nomeLegivel = (nome) =>
     .replace(/\s+/g, " ")
     .trim();
 
-// "250396" bytes vira "245 KB": o tamanho diz se vale abrir no celular.
-const tamanho = (bytes) =>
-  bytes >= 1024 * 1024
-    ? `${(bytes / 1024 / 1024).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} MB`
-    : `${Math.max(1, Math.round(bytes / 1024))} KB`;
-
 // Busca sem acento e sem diferença de maiúscula: "edital 2026" acha
 // "Edital nº 018/2026".
 export const normaliza = (texto) =>
@@ -38,10 +32,7 @@ const GrupoDocumentos = ({ document, busca = "" }) => {
           <li key={file._id}>
             <a href={url + file._id} target="_blank" rel="noopener noreferrer">
               <Icone nome="pdf" />
-              <span>
-                {nomeLegivel(file.name)}
-                {file.size > 0 && <small>PDF, {tamanho(file.size)}</small>}
-              </span>
+              {nomeLegivel(file.name)}
             </a>
           </li>
         ))}

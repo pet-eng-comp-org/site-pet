@@ -14,8 +14,8 @@
   gap: 20px;
 }
 
-/* Duas colunas no tablet e três na tela larga. Os 11 projetos e o cartão
-   "Faça parte" fecham as linhas nas duas. */
+/* Duas colunas no tablet e três na tela larga; a última linha, se
+   incompleta, fica alinhada à esquerda. */
 @media (min-width: 735px) {
   .projetos-grade {
     grid-template-columns: repeat(2, 1fr);
@@ -26,22 +26,6 @@
   .projetos-grade {
     grid-template-columns: repeat(3, 1fr);
   }
-}
-
-/* O convite, em verde, para se destacar dos projetos. As duas classes
-   juntas vencem o fundo branco do .projeto, que vem depois. */
-.projeto.projeto-convite {
-  background: var(--cor-acao-fundo);
-}
-
-.projeto-convite .projeto-chamada,
-.projeto-convite .projeto-nome {
-  color: #fff;
-}
-
-.projeto.projeto-convite:hover,
-.projeto.projeto-convite:focus-visible {
-  color: #fff;
 }
 
 /* O cartão: branco, cantos de 28 px, sombra leve, 28 px de folga em cima e
