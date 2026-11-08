@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AvisoDeFalha } from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
 import goUp from "../../utils/goUp";
 import useApi from "../../services/useApi";
-import GrupoDocumentos from "./GrupoDocumentos/GrupoDocumentos";
+import GrupoDocumentos, { nomeLegivel, normaliza } from "./GrupoDocumentos/GrupoDocumentos";
 import "./Documents.css";
 import useTitulo from "../../utils/useTitulo";
 
@@ -12,6 +12,16 @@ const Documents = () => {
   const resposta = useApi("api/documents/");
   const documents = resposta.data?.documents;
   const falhou = Boolean(resposta.falhou || resposta.status);
+  const [busca, setBusca] = useState("");
+  const termos = normaliza(busca).split(/\s+/).filter(Boolean);
+  const achados = (documents || []).reduce(
+    (n, d) =>
+      n +
+      d.files.filter((f) =>
+        termos.every((t) => normaliza(`${nomeLegivel(f.name)} ${d.title}`).includes(t))
+      ).length,
+    0
+  );
 
   useEffect(() => {
     goUp();
@@ -32,11 +42,33 @@ const Documents = () => {
           <Loader />
         </div>
       )}
+      {/* Busca como a de uma central de ajuda: filtra enquanto se digita. */}
+      {documents && (
+        <div className="campo documentos-busca">
+          <input
+            id="documentos-busca"
+            className="form-control"
+            type="search"
+            placeholder=" "
+            autoComplete="off"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+          />
+          <label htmlFor="documentos-busca">Buscar documentos</label>
+        </div>
+      )}
       {documents && (
         <div className="documentos-grade">
           {documents.map((document) => (
-            <GrupoDocumentos key={document._id} document={document} />
+            <GrupoDocumentos key={document._id} document={document} busca={busca} />
           ))}
+          {termos.length > 0 && (
+            <p className="documentos-nada" role="status">
+              {achados === 0
+                ? "Nenhum documento com esse nome. Tente outra palavra, como \"edital\" ou o ano."
+                : `${achados} ${achados === 1 ? "documento" : "documentos"}`}
+            </p>
+          )}
         </div>
       )}
       {documents && (

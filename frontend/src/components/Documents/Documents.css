@@ -1,17 +1,25 @@
 /* Um grupo por linha, na largura toda, e os documentos dele em colunas:
    em duas colunas de grupos, o mais alto abria um vazio ao lado do outro. */
 .documentos-grade {
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
 }
 
+.documentos-busca {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.documentos-nada {
+  color: var(--cor-texto-suave);
+}
+
+/* Documentos em colunas que se alinham por linha: nome de duas linhas
+   numa coluna não desalinha as divisórias das outras. */
 @media (min-width: 735px) {
   .grupo-documentos ul {
-    columns: 3 16rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
     column-gap: 2rem;
-  }
-
-  .grupo-documentos li {
-    break-inside: avoid;
   }
 }
 
@@ -50,6 +58,13 @@
 .grupo-documentos a:hover,
 .grupo-documentos a:focus {
   color: var(--cor-link);
+}
+
+.grupo-documentos a small {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto-suave);
 }
 
 .grupo-documentos .icone-svg {
