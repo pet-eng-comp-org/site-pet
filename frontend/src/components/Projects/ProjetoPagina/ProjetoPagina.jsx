@@ -103,8 +103,7 @@ function ProjetoPagina() {
 
   return (
     <div className="pagina">
-      {/* O texto numa medida de leitura, alinhado à esquerda com a galeria
-          logo abaixo, que ocupa a coluna toda. */}
+      {/* A abertura no centro; a galeria, logo abaixo, ocupa a coluna toda. */}
       <div className="projeto-cabeca">
         <Link
           className="projeto-voltar link-voltar"
@@ -113,7 +112,15 @@ function ProjetoPagina() {
           <span>Todos os projetos</span>
         </Link>
         <h1>{comission.title}</h1>
-        <p className="pagina-intro projeto-descricao">{comission.description}</p>
+        {/* Cada linha do texto do painel é um parágrafo. */}
+        <div className="projeto-descricao">
+          {comission.description
+            .split(/\n+/)
+            .filter((t) => t.trim())
+            .map((t, i) => (
+              <p key={i}>{t.trim()}</p>
+            ))}
+        </div>
 
         {canais.length > 0 && (
           <div className="projeto-acoes">
