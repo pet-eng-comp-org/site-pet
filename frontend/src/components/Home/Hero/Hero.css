@@ -1,6 +1,7 @@
-/* O primeiro bloco: título, subtítulo e botões no centro, com a folga dos
-   outros blocos da inicial (56/63 px acima de 1068 px, 61/69 até 1068 px e
-   39/43 até 734 px). */
+/* O primeiro bloco: título do tamanho do das outras páginas (72 px, 56 até
+   1068 px, 48 até 734 px), subtítulo e o link, no centro; logo abaixo, os
+   cartões dos projetos. A folga é a dos outros blocos da inicial (56/63 px,
+   61/69 até 1068 px, 39/43 até 734 px). */
 .hero {
   background: var(--cor-superficie);
   padding: 56px 0 63px;
@@ -13,16 +14,38 @@
 
 .App .hero h1 {
   color: var(--cor-texto);
+  font-size: 4.5rem;
+  line-height: 1.1;
+}
+
+.hero-link {
+  margin: 17px 0 0;
 }
 
 @media (max-width: 1068px) {
   .hero {
     padding: 61px 0 69px;
   }
+
+  .App .hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero-link {
+    margin-top: 16px;
+  }
 }
 
 @media (max-width: 734px) {
   .App .hero {
     padding: 39px 0 43px;
+  }
+
+  .App .hero h1 {
+    font-size: 3rem;
+  }
+
+  .hero-link {
+    margin-top: 11px;
   }
 }

@@ -1,16 +1,11 @@
-/* Vitrine de projetos na inicial: bloco cinza com três cartões brancos. */
+/* Os três cartões brancos dentro da abertura da inicial, na coluna de
+   980 px, com o texto deles à esquerda. */
 .vitrine {
-  background: var(--cor-superficie);
-  padding: 56px var(--margem) 63px;
-}
-
-.vitrine-conteudo {
   max-width: 980px;
-  margin: 0 auto;
-}
-
-.vitrine-grade {
-  margin-top: 2rem;
+  margin: 3rem auto 0;
+  padding: 0 var(--margem);
+  box-sizing: content-box;
+  text-align: left;
 }
 
 .vitrine-todos {
@@ -25,6 +20,6 @@
 
 @media (max-width: 734px) {
   .vitrine {
-    padding: 39px var(--margem) 43px;
+    margin-top: 2rem;
   }
 }

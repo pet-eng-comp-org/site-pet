@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Vitrine from "../Vitrine/Vitrine";
 import "./Hero.css";
 
+// A abertura da inicial: o nome do PET, o que ele faz e, no mesmo bloco, os
+// três projetos mais conhecidos, que são a primeira coisa a ver.
 const Hero = () => {
   return (
     <section className="bloco hero">
@@ -11,15 +14,13 @@ const Hero = () => {
           Ensino, pesquisa e extensão na Ufes: Topcom, Game Jam, monitorias e
           mais.
         </p>
-        <div className="bloco-acoes">
-          <Link to="/projetos" className="botao-principal">
-            Conheça os projetos
-          </Link>
-          <Link to="/sobre" className="botao-contorno">
+        <p className="hero-link">
+          <Link className="link-mais" to="/sobre">
             Quem somos
           </Link>
-        </div>
+        </p>
       </div>
+      <Vitrine />
     </section>
   );
 };
