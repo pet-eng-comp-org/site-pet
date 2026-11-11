@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FocusEvent, type FormEvent } from "react";
-import "./Contact.css";
 import api from "../../services/api";
 
 // As mesmas regras e mensagens do servidor (backend/utils/validation.js), para
@@ -119,7 +118,7 @@ const ContactPage = () => {
 
   const erroDo = (id: IdCampo) =>
     erroCampo[id] && (
-      <p className="contato-erro" id={`contato-${id}-erro`}>
+      <p className="mx-0 -mt-[0.85rem] mb-5 text-[0.95rem] text-erro" id={`contato-${id}-erro`}>
         {erroCampo[id]}
       </p>
     );
@@ -135,15 +134,15 @@ const ContactPage = () => {
         .
       </p>
 
-      <div className="contato-grade">
-        <form className="contato-formulario" onSubmit={sendMessage} noValidate>
+      <div className="mt-10 grid grid-cols-2 items-start gap-8 max-menu:grid-cols-1">
+        <form className="rounded-cartao bg-superficie p-8" onSubmit={sendMessage} noValidate>
           {enviada && (
-            <p className="contato-enviada" role="status" tabIndex={-1} ref={aviso}>
+            <p className="mb-6 rounded-[12px] border-l-[6px] border-acao bg-ok-fundo px-5 py-4" role="status" tabIndex={-1} ref={aviso}>
               Mensagem enviada. Respondemos pelo e-mail que você informou.
             </p>
           )}
 
-          <div className="campo">
+          <div className="campo mb-[14px]">
             <input
               {...campo("name", setName)}
               type="text"
@@ -154,7 +153,7 @@ const ContactPage = () => {
           </div>
           {erroDo("name")}
 
-          <div className="campo">
+          <div className="campo mb-[14px]">
             <input
               {...campo("email", setEmail)}
               type="email"
@@ -165,7 +164,7 @@ const ContactPage = () => {
           </div>
           {erroDo("email")}
 
-          <div className="campo">
+          <div className="campo mb-[14px]">
             <input
               {...campo("subject", setSubject)}
               type="text"
@@ -175,7 +174,7 @@ const ContactPage = () => {
           </div>
           {erroDo("subject")}
 
-          <div className="campo">
+          <div className="campo mb-[14px]">
             <textarea
               {...campo("message", setMessage)}
               rows={5}
@@ -185,11 +184,11 @@ const ContactPage = () => {
           </div>
           {erroDo("message")}
           {message.length > 4000 && (
-            <p className="contato-contador">{message.length} de 5000 caracteres</p>
+            <p className="-mt-[0.85rem] mb-5 text-[0.9rem]">{message.length} de 5000 caracteres</p>
           )}
 
           {/* Sem JavaScript, o formulário não envia: diz como falar com a gente. */}
-          <p className="alerta-erro contato-sem-js">
+          <p className="alerta-erro hidden [.sem-js_&]:block">
             Para enviar pelo formulário, o navegador precisa de JavaScript. Escreva para
             petengcomp@inf.ufes.br.
           </p>
@@ -201,14 +200,14 @@ const ContactPage = () => {
           )}
 
           {/* O botão fica no lugar durante o envio, só muda o texto. */}
-          <button type="submit" className="botao-principal" disabled={loading}>
+          <button type="submit" className="botao-principal cursor-pointer border-0" disabled={loading}>
             {loading ? "Enviando…" : "Enviar mensagem"}
           </button>
         </form>
 
-        <div className="contato-local">
+        <div>
           <h2 className="titulo-bloco">Onde estamos</h2>
-          <p>
+          <p className="text-corpo leading-[1.47059]">
             Sala 18, 2º andar do CT XIII
             <br />
             Ufes, campus de Goiabeiras, Vitória (ES)
@@ -218,6 +217,7 @@ const ContactPage = () => {
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14970.596826259594!2d-40.305981!3d-20.2733782!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x7c50a8cb2f88472c!2sPET%20Engenharia%20da%20Computa%C3%A7%C3%A3o%20UFES!5e0!3m2!1spt-BR!2sbr!4v1587417017850!5m2!1spt-BR!2sbr"
             title="Mapa com a sala do PET Engenharia de Computação na Ufes"
+            className="h-[320px] w-full rounded-cartao border-0 bg-superficie-suave"
             loading="lazy"
             // Fora da ordem do Tab: eram 11 paradas dentro do mapa. O
             // endereço está no texto acima e no rodapé, com link para o Maps.

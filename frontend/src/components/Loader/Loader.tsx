@@ -14,7 +14,7 @@ const override = {
 
 const Loader = () => (
   <div className="sweet-loading">
-    <PropagateLoader cssOverride={override} size={15} color="var(--cor-acao)" />
+    <PropagateLoader cssOverride={override} size={15} color="var(--color-acao)" />
   </div>
 );
 

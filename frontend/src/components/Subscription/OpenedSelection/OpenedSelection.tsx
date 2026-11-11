@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AVISO, FRASE } from "../aviso";
 
 const ultimoDia = (data: string) =>
   new Date(data).toLocaleDateString("pt-BR", {
@@ -11,9 +12,9 @@ const ultimoDia = (data: string) =>
 // usa valores de exemplo.
 function OpenedSelection({ edital, fim, formulario }: { edital: string | null; fim: string; formulario: string }) {
   return (
-    <section className="aviso-selecao aviso-selecao-aberta">
+    <section className={AVISO}>
       <h2>Inscrições abertas até {ultimoDia(fim)}</h2>
-      <p>
+      <p className={FRASE}>
         Antes de se inscrever, leia o{" "}
         {edital ? (
           <a
@@ -32,7 +33,7 @@ function OpenedSelection({ edital, fim, formulario }: { edital: string | null; f
         .
       </p>
       <a
-        className="botao-principal"
+        className="botao-principal mt-4"
         href={formulario}
         target="_blank"
         rel="noopener noreferrer"
