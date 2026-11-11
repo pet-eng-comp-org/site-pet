@@ -6,14 +6,42 @@
   margin-bottom: 0.5rem;
 }
 
-.projeto-descricao {
-  white-space: pre-line;
+/* Linhas equilibradas da tela média para cima, onde o texto tem até 6
+   linhas. No celular passa disso, o Chrome deixa de equilibrar, e fica o
+   pretty herdado, que não deixa uma palavra sozinha no fim. */
+@media (min-width: 735px) {
+  .projeto-descricao p {
+    text-wrap: balance;
+  }
 }
 
-/* Título, texto e botões numa medida de leitura, na mesma margem esquerda
-   da galeria. */
+.projeto-descricao p + p {
+  margin-top: 0.75em;
+}
+
+/* A abertura no centro, como nas outras páginas: título, texto em 21 px
+   (19 px no celular) numa coluna de 600 px e os botões embaixo. */
 .projeto-cabeca {
-  max-width: 36rem;
+  max-width: 600px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.App .projeto-cabeca .projeto-descricao {
+  font-size: 1.3125rem;
+  line-height: 1.381;
+  letter-spacing: 0.011em;
+}
+
+@media (max-width: 734px) {
+  /* Em 480 px, para a linha não passar de uns 60 caracteres. */
+  .App .projeto-cabeca .projeto-descricao {
+    max-width: 480px;
+    margin-inline: auto;
+    font-size: 1.1875rem;
+    line-height: 1.421;
+    letter-spacing: 0.012em;
+  }
 }
 
 .projeto-ferramentas {
@@ -55,6 +83,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   /* Entre botões. */
   gap: 14px 17px;
   margin-top: 1.5rem;
