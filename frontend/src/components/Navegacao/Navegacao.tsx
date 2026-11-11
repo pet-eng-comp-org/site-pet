@@ -15,6 +15,10 @@ const Navegacao = () => {
   const primeira = useRef(true);
 
   useEffect(() => {
+    // O script do layout tira a classe antes da primeira pintura; na página de
+    // erro do Next (o 404 de um projeto) ele não roda, e o menu do celular
+    // ficaria aberto como se não houvesse JavaScript.
+    document.documentElement.classList.remove("sem-js");
     const aoVoltar = () => {
       voltou = true;
     };

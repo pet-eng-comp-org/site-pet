@@ -377,16 +377,15 @@ export interface Lista<T> {
   tentarDeNovo: () => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const useLista = <T,>(caminho: string, extrair: (data: any) => T): Lista<T> => {
+// extrair tira da resposta da API a lista que a seção mostra.
+export const useLista = <T, D>(caminho: string, extrair: (data: D) => T): Lista<T> => {
   const [estado, setEstado] = useState<{ carregando?: boolean; dados?: T; erro?: string }>({ carregando: true });
   const recarregar = useCallback(
     () =>
       painel
-        .get(caminho)
+        .get<D>(caminho)
         .then(({ data }) => setEstado({ dados: extrair(data) }))
         .catch((err: unknown) => setEstado({ erro: erroDe(err) })),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [caminho]
   );
   useEffect(() => {

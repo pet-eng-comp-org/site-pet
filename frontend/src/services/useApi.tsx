@@ -40,7 +40,7 @@ export default function useApi<C extends Caminho>(caminho: C): Estado<Respostas[
     return () => {
       vivo = false;
     };
-  }, [caminho]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [caminho]); // os dados iniciais só valem na primeira montagem
 
   return estado;
 }
