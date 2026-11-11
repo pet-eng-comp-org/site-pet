@@ -269,7 +269,7 @@ export const Confirmar = ({
           // Destrutivo cheio: 6,9:1 com o branco.
           className={
             perigo
-              ? "inline-flex min-h-[44px] cursor-pointer items-center justify-center rounded-capsula border-0 bg-erro px-5 font-normal text-texto-sobre-erro hover:brightness-90 disabled:cursor-not-allowed disabled:opacity-55"
+              ? "inline-flex min-h-[44px] cursor-pointer items-center justify-center rounded-capsula border-0 bg-erro px-5 py-0 font-normal text-texto-sobre-erro hover:brightness-90 disabled:cursor-not-allowed disabled:opacity-55"
               : "botao-principal"
           }
           onClick={confirmar}
