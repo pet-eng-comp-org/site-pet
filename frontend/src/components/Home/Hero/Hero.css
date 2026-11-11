@@ -18,8 +18,18 @@
   line-height: 1.1;
 }
 
+/* O link tem 44 px de altura de toque, 12 px acima e abaixo do texto;
+   a margem desconta isso, e o texto fica 17 px abaixo do subtítulo (16 e
+   11 nos degraus menores). */
 .hero-link {
-  margin: 17px 0 0;
+  margin: 5px 0 0;
+}
+
+.hero-link .link-mais,
+.vitrine-todos .link-mais {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 @media (max-width: 1068px) {
@@ -32,7 +42,7 @@
   }
 
   .hero-link {
-    margin-top: 16px;
+    margin-top: 4px;
   }
 }
 
@@ -46,6 +56,6 @@
   }
 
   .hero-link {
-    margin-top: 11px;
+    margin-top: 0;
   }
 }

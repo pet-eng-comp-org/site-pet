@@ -2,14 +2,15 @@
    980 px, com o texto deles à esquerda. */
 .vitrine {
   max-width: 980px;
-  margin: 3rem auto 0;
+  /* 48 px até os cartões, descontada a folga do link de cima. */
+  margin: 36px auto 0;
   padding: 0 var(--margem);
   box-sizing: content-box;
   text-align: left;
 }
 
 .vitrine-todos {
-  margin: 2rem 0 0;
+  margin: 20px 0 0;
 }
 
 @media (min-width: 735px) {
@@ -18,8 +19,38 @@
   }
 }
 
+/* No celular, um carrossel: cartões de 260 px, 20 px entre eles, o primeiro
+   na margem da página e o seguinte aparecendo na borda, para mostrar que
+   dá para deslizar. Cada deslize para no começo de um cartão. A folga em
+   cima e embaixo deixa a sombra do cartão à vista. */
 @media (max-width: 734px) {
   .vitrine {
-    margin-top: 2rem;
+    margin-top: 20px;
+    padding: 0;
+  }
+
+  .vitrine-grade {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 260px;
+    margin: 0;
+    padding: 8px var(--margem) 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--margem);
+    scrollbar-width: none;
+  }
+
+  .vitrine-grade::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vitrine-grade > li {
+    scroll-snap-align: start;
+  }
+
+  .vitrine-todos {
+    margin-top: 4px;
+    padding: 0 var(--margem);
   }
 }
