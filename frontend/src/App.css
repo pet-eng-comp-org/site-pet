@@ -450,9 +450,7 @@ html {
 
 /* Abertura da página: o título, do tamanho do título da
    página inicial, e o parágrafo de abertura logo abaixo dele, centralizados.
-   O resto (seções, listas, texto corrido) fica à esquerda. A página de um
-   projeto põe o título dentro da coluna de leitura, como um artigo, e fica
-   toda à esquerda. */
+   O resto (seções, listas, texto corrido) fica à esquerda. */
 .App .pagina > h1 {
   text-align: center;
 }
@@ -541,22 +539,6 @@ html {
 .pagina-intro {
   font-size: var(--texto);
   max-width: 36rem;
-}
-
-/* Página de texto, sem nada ao lado: uma coluna de leitura no centro, em vez
-   do texto à esquerda com meia tela vazia (Quem somos, página de projeto). */
-.coluna-leitura {
-  max-width: 36rem;
-  margin-inline: auto;
-}
-
-.pagina.coluna-leitura {
-  max-width: calc(36rem + 2 * var(--margem));
-}
-
-/* Na coluna, o texto ocupa a largura dela (a medida já é a de leitura). */
-.coluna-leitura .pagina-intro {
-  max-width: none;
 }
 
 .link-texto {

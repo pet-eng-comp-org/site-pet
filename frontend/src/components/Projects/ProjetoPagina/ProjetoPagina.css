@@ -6,6 +6,10 @@
   margin-bottom: 0.5rem;
 }
 
+.projeto-descricao p {
+  text-wrap: balance;
+}
+
 .projeto-descricao p + p {
   margin-top: 0.75em;
 }
