@@ -6,8 +6,13 @@
   margin-bottom: 0.5rem;
 }
 
-.projeto-descricao p {
-  text-wrap: balance;
+/* Linhas equilibradas da tela média para cima, onde o texto tem até 6
+   linhas. No celular passa disso, o Chrome deixa de equilibrar, e fica o
+   pretty herdado, que não deixa uma palavra sozinha no fim. */
+@media (min-width: 735px) {
+  .projeto-descricao p {
+    text-wrap: balance;
+  }
 }
 
 .projeto-descricao p + p {
