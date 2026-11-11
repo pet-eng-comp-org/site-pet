@@ -38,7 +38,7 @@
   background: rgba(210, 210, 215, 0.64);
   color: rgba(0, 0, 0, 0.56);
   cursor: pointer;
-  transition: background-color 0.1s linear, color 0.1s linear, opacity 0.1s linear;
+  transition: background-color 0.1s linear, color 0.1s linear;
   /* 44 px de área de toque sem aumentar o círculo. */
   position: relative;
 }
@@ -54,14 +54,21 @@
   color: rgba(0, 0, 0, 0.64);
 }
 
+/* Desligada, só o círculo e a seta esmaecem (a 42%): o contorno de foco
+   continua inteiro. */
 .vitrine-setas button[aria-disabled="true"] {
   cursor: default;
+  background: rgba(210, 210, 215, 0.27);
+}
+
+.vitrine-setas button[aria-disabled="true"] svg {
   opacity: 0.42;
 }
 
 .vitrine-setas svg {
   width: 36px;
   height: 36px;
+  transition: opacity 0.1s linear;
 }
 
 @media (min-width: 1069px) {
