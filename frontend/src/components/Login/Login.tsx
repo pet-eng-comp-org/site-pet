@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import "./Login.css";
 import { useRouter } from "next/navigation";
 import isAuth from "../../services/Auth";
 import api from "../../services/api";
@@ -51,14 +50,15 @@ const Login = () => {
 
   return (
     <div className="pagina">
-      <form className="cartao-login" onSubmit={handleLogin}>
-        <h1>Entrar no painel</h1>
+      {/* O mesmo cartão do formulário de contato, numa coluna só: entrar é uma tarefa só. */}
+      <form className="mx-auto max-w-[26rem] rounded-cartao bg-superficie p-8" onSubmit={handleLogin}>
+        <h1 className="mb-6 text-[2rem]">Entrar no painel</h1>
         {errorMessage && (
           <p className="alerta-erro" role="alert">
             {errorMessage}
           </p>
         )}
-        <div className="campo">
+        <div className="campo mb-[14px]">
           <input
             type="email"
             id="email"
@@ -71,7 +71,7 @@ const Login = () => {
           />
           <label htmlFor="email">E-mail</label>
         </div>
-        <div className="campo">
+        <div className="campo mb-[14px]">
           <input
             type="password"
             id="password"
@@ -84,7 +84,7 @@ const Login = () => {
           />
           <label htmlFor="password">Senha</label>
         </div>
-        <button type="submit" className="botao-principal">
+        <button type="submit" className="botao-principal w-full cursor-pointer justify-center border-0">
           Entrar
         </button>
       </form>

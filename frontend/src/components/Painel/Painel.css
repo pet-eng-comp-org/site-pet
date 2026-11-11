@@ -68,7 +68,7 @@
 }
 
 .painel-subtitulo {
-  font-size: var(--titulo-cartao);
+  font-size: var(--text-cartao);
   font-weight: 600;
   margin: 1.5rem 0 0.75rem;
 }
@@ -239,7 +239,7 @@ button.botao-link {
   gap: 0.5rem;
   list-style: none;
   min-height: 44px;
-  font-size: var(--titulo-cartao);
+  font-size: var(--text-cartao);
   font-weight: 600;
   cursor: pointer;
 }
@@ -288,7 +288,7 @@ button.botao-link {
 
 .painel .painel-cartao h3 {
   margin: 0;
-  font-size: var(--titulo-cartao);
+  font-size: var(--text-cartao);
 }
 
 .painel-arquivos {
@@ -345,7 +345,7 @@ html:has(.janela[open]) {
 
 .App .janela h2 {
   margin: 0.5rem 0 0;
-  font-size: var(--titulo-cartao);
+  font-size: var(--text-cartao);
 }
 
 .janela-fechar {

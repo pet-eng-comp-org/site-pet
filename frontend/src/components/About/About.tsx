@@ -2,9 +2,13 @@
 
 import Team from "./Team/Team";
 import useApi from "../../services/useApi";
-import "./About.css";
 import { AvisoDeFalha } from "../CargaFalhou/CargaFalhou";
 import Loader from "../Loader/Loader";
+
+// Números em destaque: o número grande na fonte da marca e a legenda curta
+// embaixo, em quatro colunas (duas no celular).
+const NUMERO = "font-marca text-[4rem] leading-none font-extrabold text-acao max-tablet:text-[3rem]";
+const LEGENDA = "mx-0 mt-2 mb-0 text-corpo tracking-[-0.022em] text-texto-suave";
 
 const About = () => {
   const membros = useApi("api/members/");
@@ -18,7 +22,8 @@ const About = () => {
 
   return (
     <>
-      <div className="pagina pagina-sobre">
+      {/* A equipe vem logo abaixo, na mesma página branca. */}
+      <div className="pagina pb-24">
         <h1>Quem somos</h1>
         <p className="pagina-intro">
           Estudantes de Engenharia de Computação e um professor tutor, em
@@ -26,25 +31,25 @@ const About = () => {
         </p>
         {/* Os números em destaque. Os do programa são
             do portal do MEC (gov.br/mec/pt-br/pet, conferido em 07/11/2026). */}
-        <dl className="numeros">
+        <dl className="m-0 grid grid-cols-4 gap-8 text-center max-tablet:grid-cols-2 max-tablet:gap-x-4">
           <div>
-            <dt>1993</dt>
-            <dd>o começo do nosso grupo</dd>
+            <dt className={NUMERO}>1993</dt>
+            <dd className={LEGENDA}>o começo do nosso grupo</dd>
           </div>
           <div>
-            <dt>13</dt>
-            <dd>grupos PET na Ufes</dd>
+            <dt className={NUMERO}>13</dt>
+            <dd className={LEGENDA}>grupos PET na Ufes</dd>
           </div>
           <div>
-            <dt>881</dt>
-            <dd>grupos PET no Brasil</dd>
+            <dt className={NUMERO}>881</dt>
+            <dd className={LEGENDA}>grupos PET no Brasil</dd>
           </div>
           <div>
-            <dt>+10 mil</dt>
-            <dd>bolsistas no país</dd>
+            <dt className={NUMERO}>+10 mil</dt>
+            <dd className={LEGENDA}>bolsistas no país</dd>
           </div>
         </dl>
-        <p className="numeros-fonte">
+        <p className="mt-10 mb-0 text-center">
           <a
             className="link-mais"
             href="https://www.sbc.org.br/grupos-pet/"

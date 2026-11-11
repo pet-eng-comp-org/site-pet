@@ -108,7 +108,7 @@
 .petiano-descricao {
   grid-area: DP;
   margin-top: 12px;
-  font-size: var(--texto);
+  font-size: var(--text-corpo);
   letter-spacing: -0.022em;
 }
 
