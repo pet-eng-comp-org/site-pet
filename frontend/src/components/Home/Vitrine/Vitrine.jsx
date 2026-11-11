@@ -46,13 +46,17 @@ const Vitrine = () => {
     return () => window.removeEventListener("resize", medir);
   }, [projetos.length]);
 
+  // As setas usam aria-disabled em vez de disabled: um botão desligado perde
+  // o foco, e quem navega pelo teclado ficaria sem saber onde está.
   // Anda um cartão (a largura dele mais o espaço entre eles).
   const andar = (sentido) => {
+    if (sentido < 0 ? limites.inicio : limites.fim) return;
     const t = trilho.current;
     const cartao = t?.firstElementChild;
     if (!cartao) return;
     const passo = cartao.getBoundingClientRect().width + parseFloat(getComputedStyle(t).columnGap);
-    t.scrollBy({ left: sentido * passo, behavior: "smooth" });
+    const reduzir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    t.scrollBy({ left: sentido * passo, behavior: reduzir ? "auto" : "smooth" });
   };
 
   if (!projetos.length) return null;
@@ -72,10 +76,10 @@ const Vitrine = () => {
           </Link>
         </p>
         <div className="vitrine-setas">
-          <button type="button" aria-label="Projeto anterior" disabled={limites.inicio} onClick={() => andar(-1)}>
+          <button type="button" aria-label="Projeto anterior" aria-disabled={limites.inicio} onClick={() => andar(-1)}>
             <Seta lado="anterior" />
           </button>
-          <button type="button" aria-label="Próximo projeto" disabled={limites.fim} onClick={() => andar(1)}>
+          <button type="button" aria-label="Próximo projeto" aria-disabled={limites.fim} onClick={() => andar(1)}>
             <Seta lado="proximo" />
           </button>
         </div>
