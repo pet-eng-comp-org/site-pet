@@ -5,7 +5,7 @@ Site do PET (Programa de Educação Tutorial) da Engenharia de Computação — 
 ## Estrutura
 
 - `backend/` — API REST (Node 18 + Express + Mongoose, MongoDB Atlas)
-- `frontend/` — React com Vite; em produção, `server/servidor.js` gera cada página a cada visita, já com os dados da API
+- `frontend/` — Next (App Router) com TypeScript; o servidor do Next gera cada página a cada visita, já com os dados da API
 - `docker-compose.yml` — composição local (builda a partir do código)
 - `docker-compose.prod.yml` — a stack de produção: o Portainer aplica o que estiver aqui
 - `.github/workflows/build-and-push.yml` — CI: builda e publica imagens no GHCR
@@ -23,7 +23,7 @@ Site em http://localhost:3000 e API em http://localhost:3333. O painel está em 
 Para mexer no front com recarga automática, com a API acima no ar:
 
 ```bash
-cd frontend && yarn install && VITE_API_URL=http://localhost:3333/ yarn dev
+cd frontend && yarn install && NEXT_PUBLIC_API_URL=http://localhost:3333/ yarn dev
 ```
 
 ## Deploy
@@ -44,7 +44,7 @@ Merge na `main` implanta sozinho:
 
 Configuradas em **Settings → Secrets and variables → Actions**:
 
-- `VITE_API_URL` (repository **variable**, não secret) — URL da API embutida no build do front. Se não definida, o Dockerfile usa o default `https://api.pet.inf.ufes.br/`.
+- `NEXT_PUBLIC_API_URL` (repository **variable**, não secret) — URL da API embutida no build do front. Se não definida, o Dockerfile usa o default `https://api.pet.inf.ufes.br/`.
 
 Não há secrets adicionais: o workflow usa o `GITHUB_TOKEN` nativo para autenticar no GHCR.
 

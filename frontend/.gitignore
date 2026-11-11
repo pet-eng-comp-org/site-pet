@@ -1,5 +1,5 @@
 node_modules
-build
+.next
+next-env.d.ts
+*.tsbuildinfo
 src/.env
-build
-build-ssr
