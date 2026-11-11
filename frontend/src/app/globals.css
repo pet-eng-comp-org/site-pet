@@ -46,6 +46,9 @@
   --breakpoint-menu: 834px;
   --breakpoint-desktop: 1069px;
 
+  /* A curva das transições da barra do topo. */
+  --ease-barra: cubic-bezier(0.4, 0, 0.6, 1);
+
   --font-marca: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
 
   /* Um tamanho para todo texto corrido: 17 px. */
@@ -137,8 +140,12 @@
     text-decoration: none;
   }
 
-  a:hover {
-    text-decoration: underline;
+  /* Os estados "sob o ponteiro" só valem com mouse, como as classes do
+     Tailwind: no toque, o estado grudava depois de tocar. */
+  @media (hover: hover) {
+    a:hover {
+      text-decoration: underline;
+    }
   }
 
   img,
@@ -235,13 +242,15 @@
     letter-spacing: -0.022em;
   }
 
-  .botao-link:hover {
-    text-decoration: underline;
-  }
+  @media (hover: hover) {
+    .botao-link:hover {
+      text-decoration: underline;
+    }
 
-  .botao-principal:hover,
-  .botao-contorno:hover {
-    text-decoration: none;
+    .botao-principal:hover,
+    .botao-contorno:hover {
+      text-decoration: none;
+    }
   }
 
   /* "Saiba mais ›": o link com a seta, desenhada em SVG na cor do link, a
@@ -625,11 +634,13 @@
     color: var(--color-acao);
   }
 
-  .botao-principal:hover,
-  .botao-contorno:hover {
-    background: var(--color-acao-forte);
-    border-color: transparent;
-    color: var(--color-texto-sobre-acao);
+  @media (hover: hover) {
+    .botao-principal:hover,
+    .botao-contorno:hover {
+      background: var(--color-acao-forte);
+      border-color: transparent;
+      color: var(--color-texto-sobre-acao);
+    }
   }
 
   /* Celular (até 734 px, o degrau): texto de 15 px e folga
@@ -713,6 +724,146 @@
     .bloco-acoes {
       gap: 14px;
       margin-top: 11px;
+    }
+  }
+
+
+  /* ---- Barra do topo ---------------------------------------------------- */
+
+  /* Vidro: o conteúdo aparece borrado por baixo ao rolar. Sem suporte ao
+     filtro, ou com transparência reduzida, a barra fica sólida. */
+  .barra {
+    background: var(--barra-solida);
+  }
+
+  @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .barra {
+      background: var(--vidro-fundo);
+      -webkit-backdrop-filter: var(--vidro-filtro);
+      backdrop-filter: var(--vidro-filtro);
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .barra {
+      background: var(--barra-solida);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  /* Os links: a partir de 834 px, em fila na barra; sem JavaScript, à vista. */
+  .barra-links {
+    display: none;
+    flex-basis: 100%;
+  }
+
+  .sem-js .barra-links {
+    display: block;
+  }
+
+  @media (min-width: 834px) {
+    .barra-links {
+      display: flex;
+      flex: 1;
+    }
+  }
+
+  /* Menu do celular, aberto pelo botão (data-menu="aberto" no topo): abre na
+     tela inteira, abaixo da barra, com fundo sólido e sem o símbolo, que some
+     mas guarda o lugar (o X não pula). Os links ficam sempre na página, de
+     altura zero e invisíveis quando fechados, para dar para animar. O fundo
+     desce em 0,24 s depois de 80 ms; os itens descem 8 px a partir de 0,2 s,
+     um a cada 20 ms (--ordem); ao fechar, saem todos juntos e o fundo sobe. */
+  @media (max-width: 833.98px) {
+    .barra {
+      transition: background-color 0.24s var(--ease-barra) 80ms;
+    }
+
+    .barra-marca {
+      transition:
+        opacity 0.24s var(--ease-barra) 80ms,
+        visibility 0.24s steps(1, start) 80ms;
+    }
+
+    [data-menu="aberto"] .barra {
+      background: var(--menu-fundo);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    [data-menu="aberto"] .barra-marca {
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity 0.24s var(--ease-barra),
+        visibility 0.24s steps(1);
+    }
+
+    .barra-links {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 0;
+      overflow: hidden;
+      overscroll-behavior: contain;
+      padding: 0 48px;
+      background: var(--menu-fundo);
+      visibility: hidden;
+      transition:
+        height 0.24s var(--ease-barra) 80ms,
+        visibility 0s linear 0.32s;
+    }
+
+    /* A tela menos a barra: 100% aqui é a altura da barra. */
+    [data-menu="aberto"] .barra-links {
+      height: calc(100dvh - 100%);
+      overflow-y: auto;
+      padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+      visibility: visible;
+      transition:
+        height 0.24s var(--ease-barra) 80ms,
+        visibility 0s;
+    }
+
+    .barra-links li {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition:
+        opacity 0.16s var(--ease-barra),
+        transform 0.16s var(--ease-barra);
+    }
+
+    [data-menu="aberto"] .barra-links li {
+      opacity: 1;
+      transform: none;
+      transition-duration: 0.24s;
+      transition-delay: calc(0.2s + var(--ordem) * 20ms);
+    }
+
+    .sem-js .barra-links {
+      position: static;
+      height: auto;
+      visibility: visible;
+    }
+
+    .sem-js .barra-links li {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 833.98px) and (prefers-reduced-motion: reduce) {
+    .barra,
+    .barra-marca,
+    [data-menu="aberto"] .barra-marca,
+    .barra-links,
+    [data-menu="aberto"] .barra-links,
+    .barra-links li,
+    [data-menu="aberto"] .barra-links li {
+      transition: none;
     }
   }
 

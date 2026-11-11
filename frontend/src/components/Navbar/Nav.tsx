@@ -83,34 +83,23 @@ const paginas = [
   ["/inscricoes", "Faça parte"],
 ];
 
-// A curva de todas as transições da barra.
 // O topo guarda o lugar da barra com uma faixa escura sólida (48 px no
-// celular, 44 px a partir de 834 px), e a barra fica fixa por cima dela.
+// celular, 44 px a partir de 834 px), e a barra fica fixa por cima dela. O
+// vidro da barra e a animação do menu do celular, que dependem do estado
+// (data-menu) e de haver JavaScript, estão em globals.css (.barra).
 const TOPO = "relative z-[1020] h-[48px] bg-(--barra-solida) menu:h-[44px]";
 
-// A barra: só o símbolo e os links. Vidro: o conteúdo aparece borrado por
-// baixo ao rolar; sem suporte ao filtro (ou com transparência reduzida),
-// fica sólida. Margem de 16 px no celular e, a partir de 834 px, a coluna de
-// 980 px (pelo menos 22 px).
-const BARRA = [
-  "fixed inset-x-0 top-0 flex min-h-[48px] flex-wrap items-center justify-between bg-(--barra-solida) px-4",
-  "supports-[backdrop-filter:blur(1px)]:bg-(--vidro-fundo) supports-[backdrop-filter:blur(1px)]:[-webkit-backdrop-filter:var(--vidro-filtro)] supports-[backdrop-filter:blur(1px)]:[backdrop-filter:var(--vidro-filtro)]",
-  "[@media(prefers-reduced-transparency:reduce)]:bg-(--barra-solida)! [@media(prefers-reduced-transparency:reduce)]:[backdrop-filter:none]!",
-  "menu:min-h-[44px] menu:px-[max(22px,calc((100%-980px)/2))]",
-  "max-menu:[transition:background-color_0.24s_cubic-bezier(0.4,0,0.6,1)_80ms] motion-reduce:[transition:none]!",
-].join(" ");
+// Só o símbolo e os links: margem de 16 px no celular e, a partir de 834 px,
+// a coluna de 980 px (pelo menos 22 px).
+const BARRA =
+  "barra fixed inset-x-0 top-0 flex min-h-[48px] flex-wrap items-center justify-between px-4 menu:min-h-[44px] menu:px-[max(22px,calc((100%-980px)/2))]";
 
-// Menu aberto no celular: fundo sólido, sem o vidro.
-const BARRA_ABERTA = "max-menu:bg-(--menu-fundo)! max-menu:[backdrop-filter:none]! max-menu:[-webkit-backdrop-filter:none]!";
-
-// Só o símbolo, numa caixa da altura da barra para o toque. No celular, com o
-// menu aberto, some mas guarda o lugar: o X não pula.
-const MARCA = "group/marca -ml-2 flex min-h-[44px] min-w-[44px] items-center justify-center px-2 no-underline motion-reduce:[transition:none]!";
-const MARCA_VISIVEL = "max-menu:[transition:opacity_0.24s_cubic-bezier(0.4,0,0.6,1)_80ms,visibility_0.24s_steps(1,start)_80ms]";
-const MARCA_ESCONDIDA = "max-menu:invisible max-menu:opacity-0 max-menu:[transition:opacity_0.24s_cubic-bezier(0.4,0,0.6,1),visibility_0.24s_steps(1)]";
+// Só o símbolo, numa caixa da altura da barra para o toque.
+const MARCA = "barra-marca group/marca -ml-2 flex min-h-[44px] min-w-[44px] items-center justify-center px-2 no-underline";
 
 // O símbolo a 80%, aceso por inteiro sob o ponteiro.
-const SIMBOLO = "block h-[22px] w-[18px] opacity-80 transition-opacity duration-320 ease-[cubic-bezier(0.4,0,0.6,1)] group-hover/marca:opacity-100 group-focus-visible/marca:opacity-100";
+const SIMBOLO =
+  "block h-[22px] w-[18px] opacity-80 transition-opacity duration-320 ease-barra group-hover/marca:opacity-100 group-focus-visible/marca:opacity-100";
 
 // Botão de 48 px com o ícone de 18 px. A margem negativa leva a caixa até a
 // borda da tela; o contorno de foco fica dentro dela. Some a partir de 834
@@ -118,39 +107,19 @@ const SIMBOLO = "block h-[22px] w-[18px] opacity-80 transition-opacity duration-
 const BOTAO_MENU =
   "-mr-4 flex size-12 cursor-pointer items-center justify-center rounded-[4px] border-0 bg-transparent p-0 text-(--menu-texto) focus-visible:outline-3 focus-visible:-outline-offset-3 focus-visible:outline-(--barra-texto) menu:hidden [.sem-js_&]:hidden";
 
-// Os links. No celular, sempre na página, de altura zero e invisíveis quando
-// fechados, para animar a abertura: o fundo desce em 0,24 s depois de 80 ms
-// e ocupa a tela menos a barra (100% aqui é a altura da barra). Sem
-// JavaScript, ficam à vista. A partir de 834 px, em fila na barra.
-const LINKS = [
-  "hidden basis-full [.sem-js_&]:block! menu:flex menu:flex-1",
-  "max-menu:absolute max-menu:inset-x-0 max-menu:top-full max-menu:block max-menu:overscroll-contain max-menu:bg-(--menu-fundo) max-menu:px-12 motion-reduce:[transition:none]!",
-  "max-menu:[.sem-js_&]:visible! max-menu:[.sem-js_&]:static! max-menu:[.sem-js_&]:h-auto!",
-].join(" ");
-const LINKS_FECHADOS =
-  "max-menu:invisible max-menu:h-0 max-menu:overflow-hidden max-menu:[transition:height_0.24s_cubic-bezier(0.4,0,0.6,1)_80ms,visibility_0s_linear_0.32s]";
-const LINKS_ABERTOS =
-  "max-menu:visible max-menu:h-[calc(100dvh-100%)] max-menu:overflow-y-auto max-menu:pb-[calc(2rem+env(safe-area-inset-bottom))] max-menu:[transition:height_0.24s_cubic-bezier(0.4,0,0.6,1)_80ms,visibility_0s]";
-
 // O ::before vazio é o primeiro da fila: entre ele e o primeiro link fica o
 // mesmo espaço que entre os links, e assim o símbolo também.
 const LISTA = "m-0 flex list-none flex-col p-0 menu:flex-1 menu:flex-row menu:justify-between menu:before:content-['']";
-
-// No celular, os itens descem 8 px a partir de 0,2 s, um a cada 20 ms; ao
-// fechar, saem todos juntos.
-const ITEM = "group/item motion-reduce:[transition:none]! [.sem-js_&]:opacity-100! [.sem-js_&]:[transform:none]!";
-const ITEM_ESCONDIDO = "max-menu:[transform:translateY(-8px)] max-menu:opacity-0 max-menu:[transition:opacity_0.16s_cubic-bezier(0.4,0,0.6,1),transform_0.16s_cubic-bezier(0.4,0,0.6,1)]";
-const ITEM_VISIVEL = `max-menu:[transform:none] max-menu:opacity-100 max-menu:[transition:opacity_0.24s_cubic-bezier(0.4,0,0.6,1)_calc(0.2s+var(--ordem)*20ms),transform_0.24s_cubic-bezier(0.4,0,0.6,1)_calc(0.2s+var(--ordem)*20ms)]`;
 
 // Toque de 44 px, texto a 80% da cor e inteiro sob o ponteiro, sem marcar a
 // página atual (o aria-current fica para o leitor de tela). Teclado: contorno
 // branco. No celular, letra de 28 px em peso 600, um item a cada 46 px; a
 // partir de 834 px, texto de 12 px, e o do último link encosta na margem.
 const LINK = [
-  "flex min-h-[44px] items-center py-2 font-medium text-[color-mix(in_srgb,var(--barra-texto)_80%,transparent)] no-underline transition-colors duration-320 ease-[cubic-bezier(0.4,0,0.6,1)]",
-  "hover:text-(--barra-texto) focus-visible:rounded-[4px] focus-visible:text-(--barra-texto) focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-(--barra-texto)",
-  "max-menu:min-h-[46px] max-menu:p-0 max-menu:text-[1.75rem] max-menu:leading-[1.1] max-menu:font-semibold max-menu:tracking-[0.007em] max-menu:text-(--menu-texto)!",
-  "menu:min-h-[44px] menu:px-2 menu:py-0 menu:text-[12px] menu:font-normal menu:tracking-[-0.01em] menu:group-last/item:-mr-2",
+  "flex min-h-[44px] items-center py-2 font-medium text-[color-mix(in_srgb,var(--barra-texto)_80%,transparent)] no-underline transition-colors duration-320 ease-barra",
+  "focus-visible:rounded-[4px] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-(--barra-texto)",
+  "max-menu:min-h-[46px] max-menu:p-0 max-menu:text-[1.75rem] max-menu:leading-[1.1] max-menu:font-semibold max-menu:tracking-[0.007em] max-menu:text-(--menu-texto)",
+  "menu:min-h-[44px] menu:px-2 menu:py-0 menu:text-[12px] menu:font-normal menu:tracking-[-0.01em] menu:group-last/item:-mr-2 menu:hover:text-(--barra-texto) menu:focus-visible:text-(--barra-texto)",
 ].join(" ");
 
 function Nav() {
@@ -222,9 +191,9 @@ function Nav() {
 
   return (
     <>
-      <header className={TOPO} ref={topo}>
-        <nav className={`${BARRA} ${isOpen ? BARRA_ABERTA : ""}`} aria-label="Principal">
-          <Link href="/" onClick={fecharMenu} className={`${MARCA} ${isOpen ? MARCA_ESCONDIDA : MARCA_VISIVEL}`}>
+      <header className={TOPO} data-menu={isOpen ? "aberto" : undefined} ref={topo}>
+        <nav className={BARRA} aria-label="Principal">
+          <Link href="/" onClick={fecharMenu} className={MARCA}>
             <img
               alt="PET Engenharia de Computação, página inicial"
               src="/imagens/logo_pet_simbolo.svg"
@@ -245,10 +214,10 @@ function Nav() {
             <IconeMenu aberto={isOpen} />
           </button>
 
-          <div id="menu-principal" className={`${LINKS} ${isOpen ? LINKS_ABERTOS : LINKS_FECHADOS}`}>
+          <div id="menu-principal" className="barra-links">
             <ul className={LISTA}>
               {paginas.map(([to, rotulo], i) => (
-                <li key={to} className={`${ITEM} ${isOpen ? ITEM_VISIVEL : ITEM_ESCONDIDO}`} style={{ "--ordem": i } as CSSProperties}>
+                <li key={to} className="group/item" style={{ "--ordem": i } as CSSProperties}>
                   <Link href={to} className={LINK} aria-current={atual(to) ? "page" : undefined} onClick={fecharMenu}>
                     {rotulo}
                   </Link>
@@ -257,7 +226,7 @@ function Nav() {
               {/* Só para quem entrou. O Sair fica no painel, junto da senha:
                   é coisa da conta, não uma página do site. */}
               {logado && (
-                <li className={`${ITEM} ${isOpen ? ITEM_VISIVEL : ITEM_ESCONDIDO}`} style={{ "--ordem": paginas.length } as CSSProperties}>
+                <li className="group/item" style={{ "--ordem": paginas.length } as CSSProperties}>
                   <Link href="/admin" className={LINK} aria-current={atual("/admin") ? "page" : undefined} onClick={fecharMenu}>
                     Painel
                   </Link>
