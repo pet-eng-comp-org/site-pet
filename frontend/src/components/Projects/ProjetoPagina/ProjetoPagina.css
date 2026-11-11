@@ -34,7 +34,10 @@
 }
 
 @media (max-width: 734px) {
+  /* Em 480 px, para a linha não passar de uns 60 caracteres. */
   .App .projeto-cabeca .projeto-descricao {
+    max-width: 480px;
+    margin-inline: auto;
     font-size: 1.1875rem;
     line-height: 1.421;
     letter-spacing: 0.012em;
