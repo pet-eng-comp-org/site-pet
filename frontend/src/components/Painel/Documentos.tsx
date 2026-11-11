@@ -39,7 +39,7 @@ function Documentos() {
             {lista.map((g) => (
               <section key={g._id} className="rounded-cartao bg-superficie px-6 pt-5 pb-6" aria-labelledby={`grupo-${g._id}`}>
                 <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-                  <h3 id={`grupo-${g._id}`} className="m-0 text-cartao">{g.title}</h3>
+                  <h3 id={`grupo-${g._id}`} className="m-0 text-21">{g.title}</h3>
                   <div className="painel-item-acoes">
                     <button type="button" className="botao-secundario" onClick={() => setAberto({ tipo: "grupo", grupo: g })}>
                       Renomear<span className="sr-only"> {g.title}</span>

@@ -51,10 +51,31 @@
 
   --font-marca: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
 
-  /* Um tamanho para todo texto corrido: 17 px. */
-  --text-corpo: 1.0625rem;
-  /* Título de cartão: 20 px. */
-  --text-cartao: 1.25rem;
+  /* A escala de texto, a mesma do apple.com: cada tamanho tem a sua
+     entrelinha e o seu espaçamento entre letras (text-24, text-17...). O
+     texto corrido é o de 17 px. Os títulos na fonte da marca usam só o
+     tamanho, com a entrelinha deles. */
+  --text-28: 1.75rem;
+  --text-28--line-height: 1.14286;
+  --text-28--letter-spacing: 0.007em;
+  --text-24: 1.5rem;
+  --text-24--line-height: 1.16667;
+  --text-24--letter-spacing: 0.009em;
+  --text-21: 1.3125rem;
+  --text-21--line-height: 1.19048;
+  --text-21--letter-spacing: 0.011em;
+  --text-19: 1.1875rem;
+  --text-19--line-height: 1.21053;
+  --text-19--letter-spacing: 0.012em;
+  --text-17: 1.0625rem;
+  --text-17--line-height: 1.47059;
+  --text-17--letter-spacing: -0.022em;
+  --text-14: 0.875rem;
+  --text-14--line-height: 1.42859;
+  --text-14--letter-spacing: -0.016em;
+  --text-12: 0.75rem;
+  --text-12--line-height: 1.33337;
+  --text-12--letter-spacing: -0.01em;
 }
 
 /* Os elementos do HTML: fonte, links, foco, margens. */
@@ -77,7 +98,7 @@
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: var(--text-corpo);
+    font-size: var(--text-17);
     font-weight: 400;
     /* Texto de 17 px e entrelinha de 25 px. */
     line-height: 1.47059;
@@ -271,6 +292,10 @@
     margin-left: 0.24em;
   }
 
+  .link-voltar {
+    letter-spacing: var(--text-17--letter-spacing);
+  }
+
   .link-voltar::before {
     margin-right: 0.24em;
     transform: scaleX(-1);
@@ -320,7 +345,7 @@
     left: 17px;
     right: 17px;
     margin: 0;
-    font-size: var(--text-corpo);
+    font-size: var(--text-17);
     font-weight: 400;
     line-height: 1.17648;
     color: var(--color-texto-suave);
@@ -400,7 +425,7 @@
     width: 100%;
     min-height: 44px;
     padding: 0.375rem 0.75rem;
-    font-size: var(--text-corpo);
+    font-size: var(--text-17);
     font-weight: 400;
     line-height: 1.47059;
     color: var(--color-texto);
@@ -488,29 +513,34 @@
     text-align: center;
   }
 
-  /* O parágrafo de abertura: semibold, 28 px na tela larga e 21 px no celular, entrelinha
-     curta e linhas equilibradas, sem uma palavra sobrando sozinha embaixo. */
+  /* O parágrafo de abertura: semibold, 28 px na tela larga, 24 até 1068 px e
+     21 no celular, com linhas equilibradas, sem uma palavra sobrando sozinha
+     embaixo. */
   .App .pagina > h1 + .pagina-intro {
     text-align: center;
     text-wrap: balance;
     margin-inline: auto;
     max-width: 40rem;
-    font-size: 1.75rem;
+    font-size: var(--text-28);
+    line-height: var(--text-28--line-height);
+    letter-spacing: var(--text-28--letter-spacing);
     font-weight: 600;
-    line-height: 1.14286;
-    letter-spacing: 0.007em;
     margin-bottom: 3rem;
   }
 
   @media (max-width: 1068px) {
     .App .pagina > h1 + .pagina-intro {
-      font-size: 1.5rem;
+      font-size: var(--text-24);
+      line-height: var(--text-24--line-height);
+      letter-spacing: var(--text-24--letter-spacing);
     }
   }
 
   @media (max-width: 734px) {
     .App .pagina > h1 + .pagina-intro {
-      font-size: 1.3125rem;
+      font-size: var(--text-21);
+      line-height: var(--text-21--line-height);
+      letter-spacing: var(--text-21--letter-spacing);
       margin-bottom: 2rem;
     }
   }
@@ -518,7 +548,7 @@
   /* Texto corrido da página, fora da abertura: à esquerda, na medida de
      leitura. */
   .pagina-texto {
-    font-size: var(--text-corpo);
+    font-size: var(--text-17);
     max-width: 36rem;
   }
 
@@ -531,7 +561,7 @@
      40 até 1068 px; 48 contra 32 até 734 px, os degraus), para
      ele mandar na primeira tela. */
   .App .pagina h1 {
-    font-size: 4.5rem;
+    font-size: 5rem;
     line-height: 1.1;
     color: var(--color-texto);
     margin-bottom: 1rem;
@@ -570,7 +600,7 @@
   }
 
   .pagina-intro {
-    font-size: var(--text-corpo);
+    font-size: var(--text-17);
     max-width: 36rem;
   }
 
@@ -615,7 +645,7 @@
     border: 1px solid transparent;
     border-radius: var(--radius-capsula);
     cursor: pointer;
-    font-size: var(--text-corpo);
+    font-size: var(--text-17);
     font-weight: 400;
     line-height: 1.17648;
     text-align: center;
@@ -643,13 +673,15 @@
     }
   }
 
-  /* Celular (até 734 px, o degrau): texto de 15 px e folga
-     menor, para o par caber numa linha com a margem de 6,25%. */
+  /* Celular (até 734 px, o degrau): texto de 14 px e folga menor, para o par
+     caber numa linha. A altura fica em 44 px, o mínimo para o toque. */
   @media (max-width: 734px) {
     .botao-principal,
     .botao-contorno {
       padding: 10px 15px;
-      font-size: 0.9375rem;
+      font-size: var(--text-14);
+      line-height: var(--text-14--line-height);
+      letter-spacing: var(--text-14--letter-spacing);
     }
   }
 
@@ -663,7 +695,8 @@
     align-items: center;
     min-height: 44px;
     color: var(--color-link);
-    font-size: var(--text-corpo);
+    font-size: var(--text-17);
+    letter-spacing: var(--text-17--letter-spacing);
   }
 
 
@@ -679,10 +712,10 @@
   }
 
   .App .bloco-subtitulo {
-    font-size: 1.75rem;
+    font-size: var(--text-28);
+    line-height: var(--text-28--line-height);
+    letter-spacing: var(--text-28--letter-spacing);
     font-weight: 400;
-    line-height: 1.14286;
-    letter-spacing: 0.007em;
     max-width: 40rem;
     margin: 6px auto 0;
     text-wrap: balance;
@@ -702,7 +735,9 @@
     }
 
     .App .bloco-subtitulo {
-      font-size: 1.5rem;
+      font-size: var(--text-24);
+      line-height: var(--text-24--line-height);
+      letter-spacing: var(--text-24--letter-spacing);
       margin-top: 4px;
     }
 
@@ -718,7 +753,9 @@
     }
 
     .App .bloco-subtitulo {
-      font-size: 1.1875rem;
+      font-size: var(--text-19);
+      line-height: var(--text-19--line-height);
+      letter-spacing: var(--text-19--letter-spacing);
     }
 
     .bloco-acoes {

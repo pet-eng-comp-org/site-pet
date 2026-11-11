@@ -50,10 +50,10 @@ const News = () => {
               />
               {/* 32 px de folga, a data em 14 px, título de 21 px em peso 600 e texto de 17/25. */}
               <div className="p-8">
-                <time className="mb-[0.35rem] block text-[0.875rem] tracking-[-0.016em] text-texto-suave" dateTime={singleNew.date}>
+                <time className="mb-[0.35rem] block text-14 text-texto-suave" dateTime={singleNew.date}>
                   {dataDa(singleNew)}
                 </time>
-                <h3 className="mb-3 text-[1.3125rem] font-semibold tracking-[0.011em] text-texto">{singleNew.title}</h3>
+                <h3 className="mb-3 text-21 font-semibold text-texto">{singleNew.title}</h3>
                 <p className="m-0 max-w-[34rem] whitespace-pre-line">{comLinks(singleNew.text)}</p>
               </div>
             </article>

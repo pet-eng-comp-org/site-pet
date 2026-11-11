@@ -118,11 +118,11 @@ function Petianos() {
           );
           return (
             <>
-              <h3 className="mt-6 mb-3 text-cartao font-semibold">Atuais ({atuais.length})</h3>
+              <h3 className="mt-6 mb-3 text-21 font-semibold">Atuais ({atuais.length})</h3>
               <ul className="painel-lista">{atuais.map(linha)}</ul>
               <details className="group mt-8">
                 {/* A seta gira ao abrir: diz que a lista abre. */}
-                <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-2 text-cartao font-semibold before:size-[0.55rem] before:-rotate-45 before:border-r-2 before:border-b-2 before:border-current before:transition-transform before:duration-150 group-open:before:rotate-45 [&::-webkit-details-marker]:hidden">Egressos ({egressos.length})</summary>
+                <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-2 text-21 font-semibold before:size-[0.55rem] before:-rotate-45 before:border-r-2 before:border-b-2 before:border-current before:transition-transform before:duration-150 group-open:before:rotate-45 [&::-webkit-details-marker]:hidden">Egressos ({egressos.length})</summary>
                 <ul className="painel-lista">{egressos.map(linha)}</ul>
               </details>
             </>

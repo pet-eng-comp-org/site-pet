@@ -150,7 +150,7 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
 
         {/* Ferramentas numa linha de texto: não são ações, não têm cara de botão. */}
         {ferramentas.length > 0 && (
-          <p className="mx-0 mt-6 mb-0 text-[0.875rem] tracking-[-0.016em] text-texto-suave">
+          <p className="mx-0 mt-6 mb-0 text-14 text-texto-suave">
             <span>Ferramentas: </span>
             {ferramentas.map((tag, i) => (
               <Fragment key={tag._id}>

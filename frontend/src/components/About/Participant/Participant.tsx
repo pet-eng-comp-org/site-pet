@@ -96,11 +96,11 @@ const Participant = ({ participant, projetos }: { participant: Membro; projetos:
           ))}
         </div>
       </div>
-      <div className="col-span-full mt-5 text-[1.3125rem] leading-[1.19] font-semibold tracking-[0.011em]">
+      <div className="col-span-full mt-5 text-21 font-semibold">
         {participant.memberName}
       </div>
-      <div className="col-span-full mt-1 text-[0.875rem] tracking-[-0.016em] text-texto-suave">{desde(participant)}</div>
-      <div className="col-span-full mt-3 text-corpo tracking-[-0.022em]">{participant.description}</div>
+      <div className="col-span-full mt-1 text-14 text-texto-suave">{desde(participant)}</div>
+      <div className="col-span-full mt-3 text-17 tracking-[-0.022em]">{participant.description}</div>
       <div className="col-span-full mt-5 flex flex-wrap gap-x-2 gap-y-3 self-end">
         {/* Só etiqueta de projeto: "Tutor" já está em "Tutor desde…". */}
         {participant.tags
@@ -110,7 +110,7 @@ const Participant = ({ participant, projetos }: { participant: Membro; projetos:
             // Pílula branca de 32 px, com toque de 44 px: a área invisível passa
             // 6 px acima e abaixo, sem encostar na da linha de baixo.
             <Link
-              className="relative inline-flex min-h-[32px] items-center rounded-capsula bg-fundo px-3 text-[0.875rem] tracking-[-0.016em] text-texto no-underline after:absolute after:inset-x-0 after:-inset-y-[6px] hover:bg-[#e8e8ed]"
+              className="relative inline-flex min-h-[32px] items-center rounded-capsula bg-fundo px-3 text-14 text-texto no-underline after:absolute after:inset-x-0 after:-inset-y-[6px] hover:bg-[#e8e8ed]"
               key={projeto._id}
               href={`/projetos/${slug(projeto.title)}`}
             >

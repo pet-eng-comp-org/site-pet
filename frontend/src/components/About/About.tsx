@@ -8,7 +8,7 @@ import Loader from "../Loader/Loader";
 // Números em destaque: o número grande na fonte da marca e a legenda curta
 // embaixo, em quatro colunas (duas no celular).
 const NUMERO = "font-marca text-[4rem] leading-none font-extrabold text-acao max-tablet:text-[3rem]";
-const LEGENDA = "mx-0 mt-2 mb-0 text-corpo tracking-[-0.022em] text-texto-suave";
+const LEGENDA = "mx-0 mt-2 mb-0 text-17 text-texto-suave";
 
 const About = () => {
   const membros = useApi("api/members/");
