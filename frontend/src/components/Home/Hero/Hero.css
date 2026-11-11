@@ -32,6 +32,16 @@
   min-height: 44px;
 }
 
+/* O contorno de foco acompanha a área de toque com cantos arredondados. */
+.hero-link .link-mais:focus-visible,
+.vitrine-todos .link-mais:focus-visible {
+  border-radius: 8px;
+}
+
+.vitrine-setas button:focus-visible {
+  border-radius: 50%;
+}
+
 @media (max-width: 1068px) {
   .hero {
     padding: 61px 0 69px;
