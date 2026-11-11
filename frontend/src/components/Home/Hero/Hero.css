@@ -1,10 +1,9 @@
-/* O primeiro bloco: cabe na primeira
-   tela (692 px de altura a 1440), com o texto centralizado em cima e a
-   imagem na largura toda do bloco, até a borda de baixo, sem canto nem
-   sombra. */
+/* O primeiro bloco: título, subtítulo e botões no centro, com a folga dos
+   outros blocos da inicial (56/63 px acima de 1068 px, 61/69 até 1068 px e
+   39/43 até 734 px). */
 .hero {
   background: var(--cor-superficie);
-  padding: 56px 0 0;
+  padding: 56px 0 63px;
   text-align: center;
 }
 
@@ -16,32 +15,14 @@
   color: var(--cor-texto);
 }
 
-.hero-foto {
-  display: block;
-  width: 100%;
-  height: 405px;
-  margin-top: 40px;
-  object-fit: cover;
-  object-position: center 45%;
-}
-
 @media (max-width: 1068px) {
   .hero {
-    padding-top: 61px;
-  }
-
-  .hero-foto {
-    height: 380px;
+    padding: 61px 0 69px;
   }
 }
 
 @media (max-width: 734px) {
   .App .hero {
-    padding: 39px 0 0;
-  }
-
-  .hero-foto {
-    height: 260px;
-    margin-top: 32px;
+    padding: 39px 0 43px;
   }
 }
