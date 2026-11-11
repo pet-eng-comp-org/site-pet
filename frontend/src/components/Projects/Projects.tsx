@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { chegouVoltando } from "../Navegacao/Navegacao";
 import Project from "./Project/Project";
-import "./Projects.css";
 import useApi from "../../services/useApi";
 
 import { AvisoDeFalha } from "../CargaFalhou/CargaFalhou";
@@ -54,7 +53,8 @@ const Projects = () => {
   }, [comissions, voltando]);
 
   return (
-    <div className="fundo-cartoes">
+    // Fundo cinza e cartões brancos com sombra.
+    <div className="bg-superficie">
     <div className="pagina">
       <h1>Projetos</h1>
       <p className="pagina-intro">
@@ -71,7 +71,9 @@ const Projects = () => {
         </div>
       )}
       {comissions && (
-        <ul className="projetos-grade">
+        // Três por linha na tela larga, dois no tablet, um no celular; a última
+        // linha, se incompleta, fica alinhada à esquerda.
+        <ul className="mt-10 mb-0 grid list-none grid-cols-1 gap-5 p-0 tablet:grid-cols-2 desktop:grid-cols-3">
           {comissions.map((comission) => (
             <li key={comission._id}>
               <Project

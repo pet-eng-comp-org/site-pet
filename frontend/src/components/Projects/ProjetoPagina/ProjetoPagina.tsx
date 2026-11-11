@@ -9,9 +9,9 @@ import CargaFalhou from "../../CargaFalhou/CargaFalhou";
 import Loader from "../../Loader/Loader";
 import NaoEncontrada from "../../NaoEncontrada/NaoEncontrada";
 import { marcarVolta } from "../Projects";
+import { ICONE } from "../Project/Project";
 import { API } from "../../../services/apiUrl";
 import type { Comissao } from "../../../tipos";
-import "./ProjetoPagina.css";
 
 const foto = (id: string) => `${API}api/file/getComissionPhoto/${id}`;
 
@@ -108,9 +108,10 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
   return (
     <div className="pagina">
       {/* A abertura no centro; a galeria, logo abaixo, ocupa a coluna toda. */}
-      <div className="projeto-cabeca">
+      {/* Título e texto de 21 px (19 no celular) numa coluna de 600 px, no centro. */}
+      <div className="mx-auto max-w-[600px] text-center">
         <Link
-          className="projeto-voltar link-voltar"
+          className="link-voltar mb-2 inline-flex min-h-[44px] items-center"
           href="/projetos"
           onClick={marcarVolta}
         >
@@ -118,7 +119,11 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
         </Link>
         <h1>{comission.title}</h1>
         {/* Cada linha do texto do painel é um parágrafo. */}
-        <div className="projeto-descricao">
+        {/* No celular, em 480 px, para a linha não passar de uns 60 caracteres.
+            Linhas equilibradas da tela média para cima, onde o texto tem até
+            6 linhas; no celular fica o pretty, que não deixa uma palavra
+            sozinha no fim. */}
+        <div className="text-[1.3125rem] leading-[1.381] max-tablet:mx-auto max-tablet:max-w-[480px] max-tablet:text-[1.1875rem] max-tablet:leading-[1.421] tablet:[&_p]:text-balance [&_p+p]:mt-[0.75em]">
           {comission.description
             .split(/\n+/)
             .filter((t) => t.trim())
@@ -128,7 +133,7 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
         </div>
 
         {canais.length > 0 && (
-          <div className="projeto-acoes">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-[17px] gap-y-[14px]">
             {canais.map((tag, i) => (
               <a
                 key={tag._id}
@@ -145,7 +150,7 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
 
         {/* Ferramentas numa linha de texto: não são ações, não têm cara de botão. */}
         {ferramentas.length > 0 && (
-          <p className="projeto-ferramentas">
+          <p className="mx-0 mt-6 mb-0 text-[0.875rem] tracking-[-0.016em] text-texto-suave">
             <span>Ferramentas: </span>
             {ferramentas.map((tag, i) => (
               <Fragment key={tag._id}>
@@ -166,15 +171,18 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
       {/* Sem fotos, um bloco cinza com o ícone grande, para a página não
           terminar num parágrafo solto. */}
       {fotos.length === 0 && (
-        <div className="projeto-sem-fotos" aria-hidden="true">
+        <div className="mt-10 flex h-[360px] items-center justify-center rounded-cartao bg-superficie max-tablet:h-[240px]" aria-hidden="true">
           <span
-            className="projeto-icone"
+            className={`size-40 max-tablet:size-28 ${ICONE}`}
             style={{ "--icone": `url("${iconeProjeto(comission.title, comission.photos[0])}")` } as CSSProperties}
           />
         </div>
       )}
       {fotos.length > 0 && (
-        <div className="projeto-fotos">
+        // Cada linha ocupa a largura toda, com as fotos inteiras na proporção
+        // delas: a largura cresce com a proporção, e a altura sai da largura,
+        // igual para a linha toda. No celular, uma foto por linha.
+        <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-4 max-tablet:gap-3">
           {linhas(
             fotos.map((id) => {
               const { width, height, alt } = medidas(comission, id);
@@ -185,13 +193,14 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
             // A primeira linha costuma estar na primeira tela: vem logo.
             const primeira = n === 0;
             return (
-              <div className="projeto-fotos-linha" key={linha[0].id}>
+              <div className="flex items-start gap-4 max-tablet:flex-col max-tablet:gap-3" key={linha[0].id}>
                 {linha.map((f) => (
                   <img
                     key={f.id}
                     src={foto(f.id)}
                     srcSet={srcSet(f.id, f.width)}
                     sizes={tamanho(f.proporcao / soma, linha.length)}
+                    className="block aspect-(--proporcao) h-auto min-w-0 flex-[var(--proporcao)_1_0] rounded-cartao bg-superficie-suave max-tablet:w-full max-tablet:flex-none"
                     alt={f.alt || ""}
                     loading={primeira ? "eager" : "lazy"}
                     fetchPriority={primeira ? "high" : undefined}

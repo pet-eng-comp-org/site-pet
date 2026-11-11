@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import useApi from "../../../services/useApi";
 import Project from "../../Projects/Project/Project";
-import "../../Projects/Projects.css";
 import { LINK_DE_TOQUE } from "../Hero/Hero";
 
 // As setas: círculos cinza de 36 px, com 44 px de área de toque (o ::after).

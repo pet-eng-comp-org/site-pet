@@ -1,5 +1,8 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
+
+// Ícone de traço no verde de ação: o SVG do projeto vira máscara (--icone).
+export const ICONE = "bg-acao [-webkit-mask:var(--icone)_center/contain_no-repeat] [mask:var(--icone)_center/contain_no-repeat]";
 import slug from "../../../utils/slug";
 import iconeProjeto from "../../../utils/iconeProjeto";
 
@@ -36,7 +39,9 @@ function Project({ title, description, icon, onClick }: Props) {
     // O nome do link é o título; a frase vem como descrição. Antes o leitor
     // de tela lia o cartão inteiro como nome, com 150 caracteres.
     <Link
-      className="projeto"
+      // Branco, cantos de 28 px, sombra leve, 28 px de folga em cima e 30 px
+      // dos lados. No hover a sombra cresce e o cartão aumenta 1%.
+      className="relative flex h-full min-h-[240px] w-full flex-col items-start rounded-cartao bg-fundo px-[30px] pt-[28px] pb-[72px] text-left text-texto no-underline shadow-[2px_4px_12px_rgba(0,0,0,0.08)] transition-[box-shadow,scale] duration-300 ease-[cubic-bezier(0,0,0.5,1)] hover:scale-[1.01] hover:shadow-[2px_4px_16px_rgba(0,0,0,0.16)] motion-reduce:transition-none motion-reduce:hover:scale-100"
       href={`/projetos/${slug(title)}`}
       onClick={onClick}
       aria-labelledby={`projeto-${slug(title)}`}
@@ -44,11 +49,12 @@ function Project({ title, description, icon, onClick }: Props) {
     >
       {/* O ícone (traço branco) vira máscara pintada no verde de ação. */}
       <span
-        className="projeto-icone"
+        className={`mb-[14px] size-14 ${ICONE}`}
         style={src ? ({ "--icone": `url("${src}")` } as CSSProperties) : undefined}
       />
-      <h2 className="projeto-chamada">
-        <span id={`projeto-${slug(title)}`} className="projeto-nome">
+      {/* A chamada: o nome em verde e a frase em tinta, numa frase só de 24 px. */}
+      <h2 className="m-0 max-w-[22ch] text-[1.5rem] leading-[1.16667] font-semibold tracking-[0.009em] text-pretty">
+        <span id={`projeto-${slug(title)}`} className="text-acao">
           {title}.
         </span>{" "}
         <span id={`projeto-${slug(title)}-frase`}>
@@ -56,7 +62,10 @@ function Project({ title, description, icon, onClick }: Props) {
         </span>
       </h2>
       {/* O cartão inteiro é o link; o botão "›" no canto só mostra isso. */}
-      <span className="projeto-ir" aria-hidden="true" />
+      <span
+        className="absolute right-5 bottom-5 size-9 rounded-full bg-[#e8e8ed] after:absolute after:inset-0 after:m-auto after:h-[14px] after:w-[8px] after:translate-x-[1px] after:bg-[rgba(0,0,0,0.56)] after:[-webkit-mask:var(--seta)_center/contain_no-repeat] after:[mask:var(--seta)_center/contain_no-repeat]"
+        aria-hidden="true"
+      />
     </Link>
   );
 }

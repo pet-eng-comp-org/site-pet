@@ -240,9 +240,7 @@
   }
 
   .botao-principal:hover,
-  .botao-contorno:hover,
-  .barra-link:hover,
-  .barra-marca:hover {
+  .botao-contorno:hover {
     text-decoration: none;
   }
 
