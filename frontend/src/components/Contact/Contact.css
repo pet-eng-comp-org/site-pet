@@ -7,8 +7,8 @@
 }
 
 .contato-formulario {
-  background: var(--cor-superficie);
-  border-radius: var(--raio-cartao);
+  background: var(--color-superficie);
+  border-radius: var(--radius-cartao);
   padding: 32px;
 }
 
@@ -30,9 +30,9 @@
   width: 100%;
   height: 320px;
   border: 0;
-  border-radius: var(--raio-cartao);
+  border-radius: var(--radius-cartao);
   /* Enquanto o mapa carrega, o lugar dele aparece. */
-  background: var(--cor-superficie-suave);
+  background: var(--color-superficie-suave);
 }
 
 @media (max-width: 833px) {
@@ -42,15 +42,15 @@
 }
 
 .contato-enviada {
-  background: var(--cor-ok-fundo);
-  border-left: 6px solid var(--cor-acao);
+  background: var(--color-ok-fundo);
+  border-left: 6px solid var(--color-acao);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
 }
 
 .contato-erro {
-  color: var(--cor-erro);
+  color: var(--color-erro);
   font-size: 0.95rem;
   margin: -0.85rem 0 1.25rem;
 }

@@ -13,13 +13,13 @@
   font-size: 4rem;
   font-weight: 800;
   line-height: 1;
-  color: var(--cor-acao);
+  color: var(--color-acao);
 }
 
 .numeros dd {
   margin: 0.5rem 0 0;
   font-size: var(--texto);
-  color: var(--cor-texto-suave);
+  color: var(--color-texto-suave);
   letter-spacing: -0.022em;
 }
 

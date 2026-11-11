@@ -324,7 +324,7 @@
    no fundo da página, e um link "›". Sai com a rolagem. */
 .faixa-aviso {
   padding: 16px var(--margem);
-  background: var(--cor-fundo);
+  background: var(--color-fundo);
   font-size: 0.875rem;
   line-height: 1.42859;
   text-align: center;
@@ -342,5 +342,5 @@
 
 /* Na página de fundo cinza, a faixa acompanha o fundo. */
 .App:has(.fundo-cartoes) .faixa-aviso {
-  background: var(--cor-superficie);
+  background: var(--color-superficie);
 }

@@ -48,7 +48,7 @@
   margin: 1.5rem 0 0;
   font-size: 0.875rem;
   letter-spacing: -0.016em;
-  color: var(--cor-texto-suave);
+  color: var(--color-texto-suave);
 }
 
 /* Sem fotos: bloco cinza com o ícone grande, na largura da coluna. */
@@ -58,8 +58,8 @@
   justify-content: center;
   height: 360px;
   margin-top: 2.5rem;
-  border-radius: var(--raio-cartao);
-  background: var(--cor-superficie);
+  border-radius: var(--radius-cartao);
+  background: var(--color-superficie);
 }
 
 .projeto-sem-fotos .projeto-icone {
@@ -111,8 +111,8 @@
   min-width: 0;
   height: auto;
   aspect-ratio: var(--proporcao);
-  border-radius: var(--raio-cartao);
-  background: var(--cor-superficie-suave);
+  border-radius: var(--radius-cartao);
+  background: var(--color-superficie-suave);
 }
 
 /* No celular, uma foto por linha, na largura toda. */

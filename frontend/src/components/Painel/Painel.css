@@ -22,7 +22,7 @@
   margin: 0 0 2rem;
   padding: 0 0 1rem;
   list-style: none;
-  border-bottom: 1px solid var(--cor-linha);
+  border-bottom: 1px solid var(--color-linha);
 }
 
 .painel-secoes a {
@@ -30,18 +30,18 @@
   align-items: center;
   min-height: 44px;
   padding: 0 1rem;
-  border-radius: var(--raio-capsula);
-  color: var(--cor-texto);
+  border-radius: var(--radius-capsula);
+  color: var(--color-texto);
   font-weight: 600;
 }
 
 .painel-secoes a:hover {
-  background: var(--cor-preenchimento);
+  background: var(--color-preenchimento);
 }
 
 .painel-secoes a.ativa {
-  background: var(--cor-acao-fundo);
-  color: var(--cor-texto-sobre-acao);
+  background: var(--color-acao-fundo);
+  color: var(--color-texto-sobre-acao);
 }
 
 .painel-cabecalho {
@@ -74,7 +74,7 @@
 }
 
 .painel-vazio {
-  color: var(--cor-texto-suave);
+  color: var(--color-texto-suave);
 }
 
 /* ---- Botões ---------------------------------------------------------------- */
@@ -98,7 +98,7 @@ button.botao-link {
   justify-content: center;
   min-height: 44px;
   padding: 0 1.25rem;
-  border-radius: var(--raio-capsula);
+  border-radius: var(--radius-capsula);
   font: inherit;
   /* Peso normal, como o botão principal e os. */
   font-weight: 400;
@@ -107,9 +107,9 @@ button.botao-link {
 
 /* Botão tingido do kit: preenchimento cinza translúcido, texto na cor de ação. */
 .botao-secundario {
-  background: var(--cor-preenchimento);
+  background: var(--color-preenchimento);
   border: 0;
-  color: var(--cor-acao);
+  color: var(--color-acao);
 }
 
 .botao-secundario:hover {
@@ -118,9 +118,9 @@ button.botao-link {
 
 /* Destrutivo cheio: 6,9:1 com o branco. */
 .botao-perigo {
-  background: var(--cor-erro);
+  background: var(--color-erro);
   border: 0;
-  color: var(--cor-texto-sobre-erro);
+  color: var(--color-texto-sobre-erro);
 }
 
 .botao-perigo:hover {
@@ -130,7 +130,7 @@ button.botao-link {
 .botao-texto-perigo {
   background: none;
   border: 0;
-  color: var(--cor-erro);
+  color: var(--color-erro);
   text-decoration: underline;
   text-underline-offset: 3px;
   padding: 0 0.5rem;
@@ -159,7 +159,7 @@ button.botao-link {
   align-items: center;
   gap: 0.5rem 1rem;
   padding: 0.75rem 0;
-  border-bottom: 1px solid var(--cor-linha);
+  border-bottom: 1px solid var(--color-linha);
 }
 
 .painel-item-sem-foto {
@@ -173,7 +173,7 @@ button.botao-link {
 }
 
 .painel-item-texto span {
-  color: var(--cor-texto-suave);
+  color: var(--color-texto-suave);
   font-size: 0.9375rem;
 }
 
@@ -195,7 +195,7 @@ button.botao-link {
 /* O ícone do projeto é branco: no círculo verde, como no site. */
 .painel-foto-icone {
   padding: 10px;
-  background: var(--cor-acao-fundo);
+  background: var(--color-acao-fundo);
   object-fit: contain;
 }
 
@@ -206,7 +206,7 @@ button.botao-link {
 
 .painel-foto-vazia {
   display: block;
-  background: var(--cor-linha);
+  background: var(--color-linha);
 }
 
 @media (max-width: 767.98px) {
@@ -273,8 +273,8 @@ button.botao-link {
 
 .painel-cartao {
   padding: 1.25rem 1.5rem 1.5rem;
-  border-radius: var(--raio-cartao);
-  background: var(--cor-superficie);
+  border-radius: var(--radius-cartao);
+  background: var(--color-superficie);
 }
 
 .painel-cartao-topo {
@@ -303,7 +303,7 @@ button.botao-link {
   justify-content: space-between;
   gap: 0.5rem;
   min-height: 44px;
-  border-bottom: 1px solid var(--cor-linha);
+  border-bottom: 1px solid var(--color-linha);
 }
 
 /* ---- Janela ---------------------------------------------------------------- */
@@ -313,9 +313,9 @@ button.botao-link {
   max-height: calc(100% - 2rem);
   padding: 1.5rem;
   border: 0;
-  border-radius: var(--raio-folha);
-  background: var(--cor-folha);
-  color: var(--cor-texto);
+  border-radius: var(--radius-folha);
+  background: var(--color-folha);
+  color: var(--color-texto);
   /* Folha (sheet) do kit: raio 32 e esta sombra. */
   box-shadow: 0 15px 37.5px rgba(0, 0, 0, 0.18);
   /* Rolar até o fim da janela não passa a rolar a página atrás. */
@@ -332,7 +332,7 @@ html:has(.janela[open]) {
 }
 
 .janela::backdrop {
-  background: var(--cor-sobreposicao);
+  background: var(--color-sobreposicao);
 }
 
 .janela-topo {
@@ -357,10 +357,10 @@ html:has(.janela[open]) {
   height: 44px;
   margin: -0.25rem -0.5rem 0 0;
   /* Botão redondo, como o X das folhas do kit. */
-  background: var(--cor-preenchimento);
+  background: var(--color-preenchimento);
   border: 0;
   border-radius: 50%;
-  color: var(--cor-texto);
+  color: var(--color-texto);
   cursor: pointer;
 }
 
@@ -377,7 +377,7 @@ html:has(.janela[open]) {
 }
 
 .janela-erro {
-  color: var(--cor-erro);
+  color: var(--color-erro);
   scroll-margin: 1rem;
 }
 
@@ -415,18 +415,18 @@ html:has(.janela[open]) {
 
 .campo-dica {
   margin: 0 0 0.35rem;
-  color: var(--cor-texto-suave);
+  color: var(--color-texto-suave);
   font-size: 0.9375rem;
 }
 
 .campo-erro {
   margin: 0.35rem 0 0;
-  color: var(--cor-erro);
+  color: var(--color-erro);
   font-weight: 600;
 }
 
 .campo [aria-invalid="true"] {
-  border-color: var(--cor-erro);
+  border-color: var(--color-erro);
 }
 
 .campo input[type="file"].form-control {
@@ -498,7 +498,7 @@ textarea.form-control {
 .painel-caixa input {
   width: 1.25rem;
   height: 1.25rem;
-  accent-color: var(--cor-acao);
+  accent-color: var(--color-acao);
 }
 
 .painel-linha-rede {
@@ -535,7 +535,7 @@ textarea.form-control {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 12px;
-  background: var(--cor-superficie-suave);
+  background: var(--color-superficie-suave);
 }
 
 .painel-fotos-papel {
@@ -606,14 +606,14 @@ textarea.form-control {
   margin: 0 0 0.5rem;
   padding: 0.75rem 1rem;
   border-radius: 12px;
-  background: var(--cor-rodape);
+  background: var(--color-rodape);
   color: #fff;
   box-shadow: 0 15px 37.5px rgba(0, 0, 0, 0.18);
 }
 
 .painel-aviso-erro {
-  background: var(--cor-erro);
-  color: var(--cor-texto-sobre-erro);
+  background: var(--color-erro);
+  color: var(--color-texto-sobre-erro);
 }
 
 .painel-aviso button {

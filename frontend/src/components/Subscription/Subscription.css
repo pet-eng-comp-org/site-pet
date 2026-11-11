@@ -7,8 +7,8 @@
 }
 
 .aviso-selecao {
-  background: var(--cor-superficie);
-  border-radius: var(--raio-cartao);
+  background: var(--color-superficie);
+  border-radius: var(--radius-cartao);
   padding: 32px;
   margin-bottom: 2.5rem;
   max-width: 36rem;

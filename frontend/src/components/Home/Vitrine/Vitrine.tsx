@@ -5,7 +5,12 @@ import Link from "next/link";
 import useApi from "../../../services/useApi";
 import Project from "../../Projects/Project/Project";
 import "../../Projects/Projects.css";
-import "./Vitrine.css";
+import { LINK_DE_TOQUE } from "../Hero/Hero";
+
+// As setas: círculos cinza de 36 px, com 44 px de área de toque (o ::after).
+// Desligada, só o círculo e a seta esmaecem, e o contorno de foco fica inteiro.
+const SETA =
+  "group relative grid size-9 cursor-pointer place-items-center rounded-full border-0 bg-[rgba(210,210,215,0.64)] p-0 text-[rgba(0,0,0,0.56)] transition-colors duration-100 ease-linear after:absolute after:-inset-1 hover:not-aria-disabled:bg-[rgba(223,223,227,0.7)] hover:not-aria-disabled:text-[rgba(0,0,0,0.64)] aria-disabled:cursor-default aria-disabled:bg-[rgba(210,210,215,0.27)]";
 
 // Três projetos na abertura da inicial, nos mesmos cartões da página
 // Projetos, com o caminho para os outros. Até 1068 px eles viram um
@@ -14,7 +19,12 @@ import "./Vitrine.css";
 const DESTAQUES = ["Topcom", "IntroComp", "PET Game Jam"];
 
 const Seta = ({ lado }: { lado: "anterior" | "proximo" }) => (
-  <svg viewBox="0 0 36 36" aria-hidden="true" focusable="false">
+  <svg
+    className="size-9 transition-opacity duration-100 ease-linear group-aria-disabled:opacity-[0.42]"
+    viewBox="0 0 36 36"
+    aria-hidden="true"
+    focusable="false"
+  >
     <path
       d={lado === "anterior" ? "M21 11l-7 7 7 7" : "M15 11l7 7-7 7"}
       fill="none"
@@ -63,25 +73,35 @@ const Vitrine = () => {
 
   if (!projetos.length) return null;
   return (
-    <div className="vitrine">
-      <ul className="projetos-grade vitrine-grade" ref={trilho} onScroll={medir}>
+    // Os três cartões na coluna de 980 px, com o texto à esquerda.
+    <div className="mx-auto mt-[36px] box-content max-w-[980px] px-(--margem) text-left max-desktop:max-w-none max-desktop:px-0 max-tablet:mt-[20px]">
+      {/* Até 1068 px, um carrossel: cartões de 344 px (260 no celular), 20 px
+          entre eles, o primeiro na margem da página e o seguinte aparecendo na
+          borda. Cada deslize para no começo de um cartão, e a folga em cima e
+          embaixo deixa a sombra do cartão à vista. */}
+      <ul
+        className="mt-10 mb-0 grid list-none gap-5 p-0 desktop:grid-cols-3 max-desktop:mt-0 max-desktop:snap-x max-desktop:snap-mandatory max-desktop:auto-cols-[344px] max-desktop:grid-flow-col max-desktop:scroll-px-(--margem) max-desktop:overflow-x-auto max-desktop:px-(--margem) max-desktop:pt-[8px] max-desktop:pb-[24px] max-desktop:[scrollbar-width:none] max-tablet:auto-cols-[260px] max-desktop:[&::-webkit-scrollbar]:hidden"
+        ref={trilho}
+        onScroll={medir}
+      >
         {projetos.map((c) => (
-          <li key={c._id}>
+          <li key={c._id} className="max-desktop:snap-start">
             <Project title={c.title} description={c.description} icon={c.photos[0]} />
           </li>
         ))}
       </ul>
-      <div className="vitrine-rodape">
-        <p className="vitrine-todos">
-          <Link className="link-mais" href="/projetos">
+      <div className="mt-[20px] flex items-center justify-between gap-4 max-desktop:mt-[4px] max-desktop:px-(--margem)">
+        <p className="m-0">
+          <Link className={`link-mais ${LINK_DE_TOQUE}`} href="/projetos">
             Todos os projetos
           </Link>
         </p>
-        <div className="vitrine-setas">
-          <button type="button" aria-label="Projeto anterior" aria-disabled={limites.inicio} onClick={() => andar(-1)}>
+        {/* Nas telas largas cabem os três lado a lado: sem setas. */}
+        <div className="hidden gap-[18px] max-desktop:flex">
+          <button type="button" className={SETA} aria-label="Projeto anterior" aria-disabled={limites.inicio} onClick={() => andar(-1)}>
             <Seta lado="anterior" />
           </button>
-          <button type="button" aria-label="Próximo projeto" aria-disabled={limites.fim} onClick={() => andar(1)}>
+          <button type="button" className={SETA} aria-label="Próximo projeto" aria-disabled={limites.fim} onClick={() => andar(1)}>
             <Seta lado="proximo" />
           </button>
         </div>

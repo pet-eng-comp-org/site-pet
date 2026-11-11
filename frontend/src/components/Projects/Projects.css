@@ -2,7 +2,7 @@
    página de cada projeto. Três por linha na tela larga, dois no tablet, um
    no celular. */
 .fundo-cartoes {
-  background: var(--cor-superficie);
+  background: var(--color-superficie);
 }
 
 .projetos-grade {
@@ -40,10 +40,10 @@
   align-items: flex-start;
   text-align: left;
   padding: 28px 30px 72px;
-  border-radius: var(--raio-cartao);
-  background: var(--cor-fundo);
+  border-radius: var(--radius-cartao);
+  background: var(--color-fundo);
   box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
-  color: var(--cor-texto);
+  color: var(--color-texto);
   text-decoration: none;
   transition: box-shadow 0.3s cubic-bezier(0, 0, 0.5, 1),
     transform 0.3s cubic-bezier(0, 0, 0.5, 1);
@@ -51,7 +51,7 @@
 
 .projeto:hover,
 .projeto:focus-visible {
-  color: var(--cor-texto);
+  color: var(--color-texto);
   text-decoration: none;
 }
 
@@ -67,7 +67,7 @@
   width: 56px;
   height: 56px;
   margin-bottom: 14px;
-  background: var(--cor-acao);
+  background: var(--color-acao);
   -webkit-mask: var(--icone) center / contain no-repeat;
   mask: var(--icone) center / contain no-repeat;
 }
@@ -84,7 +84,7 @@
 }
 
 .projeto-nome {
-  color: var(--cor-acao);
+  color: var(--color-acao);
 }
 
 /* O botão "›" no canto de baixo, a 20 px das bordas. */

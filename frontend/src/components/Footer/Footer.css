@@ -2,7 +2,7 @@
    entrelinha a 56% do preto, links na cor de link e sublinhados, 17 px em
    cima, linha fina com 19 px antes e 16 px depois, e o copyright. */
 .rodape {
-  --rodape-fundo: var(--cor-superficie);
+  --rodape-fundo: var(--color-superficie);
   --rodape-texto: rgba(0, 0, 0, 0.56);
   background: var(--rodape-fundo);
   color: var(--rodape-texto);
@@ -29,7 +29,7 @@
 
 /* Os links da linha de endereço e contato: na cor de link, sublinhados. */
 .rodape a {
-  color: var(--cor-link);
+  color: var(--color-link);
   text-decoration: underline;
 }
 
@@ -40,5 +40,5 @@
 .rodape .rodape-info {
   padding-bottom: 19px;
   margin-bottom: 16px;
-  border-bottom: 1px solid var(--cor-separador);
+  border-bottom: 1px solid var(--color-separador);
 }
