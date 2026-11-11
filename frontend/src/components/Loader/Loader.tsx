@@ -12,9 +12,9 @@ const override = {
   borderColor: "#186a6c",
 };
 
-const Loader = ({ color }: { color?: string }) => (
+const Loader = () => (
   <div className="sweet-loading">
-    <PropagateLoader cssOverride={override} size={15} color={color || "var(--cor-acao)"} />
+    <PropagateLoader cssOverride={override} size={15} color="var(--cor-acao)" />
   </div>
 );
 

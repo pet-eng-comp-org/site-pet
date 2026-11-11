@@ -1,11 +1,6 @@
 "use client";
 
-import { useContext } from "react";
 import Link from "next/link";
-import {
-  SelectionContext,
-  SelectionProvider,
-} from "./SelectionContext/SelectionContext";
 import ClosedSelection from "./ClosedSelection/ClosedSelection";
 import OpenedSelection from "./OpenedSelection/OpenedSelection";
 import useApi, { type Estado } from "../../services/useApi";
@@ -56,10 +51,17 @@ const FalhaInscricoes = () => (
   </section>
 );
 
-function Content() {
+function Subscription() {
   const edital = editalMaisRecente(useApi("api/documents/"));
 
-  const [selection] = useContext(SelectionContext);
+  const resposta = useApi("api/selection/openSelection");
+  // Resposta da API sem seleção aberta é "fechadas"; sem resposta, ou com
+  // erro do servidor (5xx), não dá para saber.
+  const selection = resposta.carregando
+    ? "loading"
+    : resposta.falhou || (resposta.status !== undefined && resposta.status >= 500)
+      ? "falhou"
+      : resposta.data?.selection || null;
 
   const renderSelection = () => {
     if (selection === "loading" || edital === undefined) return null;
@@ -140,14 +142,6 @@ function Content() {
         </p>
       </div>
     </div>
-  );
-}
-
-function Subscription() {
-  return (
-    <SelectionProvider>
-      <Content />
-    </SelectionProvider>
   );
 }
 
