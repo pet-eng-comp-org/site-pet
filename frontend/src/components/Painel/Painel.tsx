@@ -90,7 +90,7 @@ const Painel = () => {
         <div className="painel-cabecalho">
           <h1>Painel</h1>
           {/* O que é da conta fica junto, aqui, e não no menu do site. */}
-          <div className="painel-conta">
+          <div className="flex gap-6">
             <button type="button" className="botao-link" onClick={() => setSenha(true)}>
               Trocar minha senha
             </button>
@@ -101,12 +101,15 @@ const Painel = () => {
         </div>
         {senha && <TrocarSenha aoFechar={() => setSenha(false)} />}
         <nav aria-label="Seções do painel">
-          <ul className="painel-secoes">
+          {/* Abas que quebram linha no celular, em vez de sumir para o lado. */}
+          <ul className="m-0 mb-8 flex list-none flex-wrap gap-2 border-b border-linha p-0 pb-4">
             {secoes.map(([caminho, nome]) => (
               <li key={caminho}>
                 <Link
                   href={`/admin/${caminho}`}
-                  className={caminho === atual?.[0] ? "ativa" : undefined}
+                  className={`inline-flex min-h-[44px] items-center rounded-capsula px-4 font-semibold ${
+                    caminho === atual?.[0] ? "bg-acao-fundo text-texto-sobre-acao" : "text-texto hover:bg-preenchimento"
+                  }`}
                   aria-current={caminho === atual?.[0] ? "page" : undefined}
                 >
                   {nome}

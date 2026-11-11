@@ -45,7 +45,7 @@ function Projetos() {
             {lista.map((p) => (
               <li key={p._id} className="painel-item">
                 {p.photos[0] ? (
-                  <img className="painel-foto painel-foto-icone" src={foto(p.photos[0])} alt="" width="56" height="56" loading="lazy" />
+                  <img className="painel-foto bg-acao-fundo object-contain p-[10px]" src={foto(p.photos[0])} alt="" width="56" height="56" loading="lazy" />
                 ) : (
                   <span className="painel-foto painel-foto-vazia" aria-hidden="true" />
                 )}
@@ -232,11 +232,11 @@ function Descricao({ id, rotulo, atual, aoSalvar }: PropsDescricao) {
     }
   };
   return (
-    <div className="painel-fotos-descricao">
-      <label htmlFor={`alt-${id}`}>O que a {rotulo} mostra</label>
+    <div className="mb-2">
+      <label className="mb-1 block text-[0.9375rem] font-semibold" htmlFor={`alt-${id}`}>O que a {rotulo} mostra</label>
       <textarea
         id={`alt-${id}`}
-        className="form-control"
+        className="form-control text-[0.9375rem]"
         rows={2}
         maxLength={300}
         value={texto}
@@ -319,11 +319,11 @@ function Fotos({ projeto, aoFechar, aoMudar }: PropsFotos) {
         nessa ordem; a primeira que não está em pé também aparece quando alguém compartilha o link do projeto. Escreva em cada uma o
         que ela mostra, para quem usa leitor de tela. As mudanças valem na hora.
       </p>
-      <ol className="painel-fotos" aria-busy={ocupado} ref={lista}>
+      <ol className="mx-0 mt-0 mb-6 grid list-none grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] gap-4 p-0" aria-busy={ocupado} ref={lista}>
         {projeto.photos.map((id, i) => (
           <li key={id} data-foto={id}>
-            <img src={foto(id)} alt="" loading="lazy" />
-            <span className="painel-fotos-papel">{i === 0 ? "Ícone" : `Foto ${i}`}</span>
+            <img className="block aspect-[4/3] w-full rounded-[12px] bg-superficie-suave object-cover" src={foto(id)} alt="" loading="lazy" />
+            <span className="my-[0.35rem] block font-semibold">{i === 0 ? "Ícone" : `Foto ${i}`}</span>
             {i > 0 && (
               <Descricao
                 id={id}
@@ -336,14 +336,14 @@ function Fotos({ projeto, aoFechar, aoMudar }: PropsFotos) {
                 }}
               />
             )}
-            <div className="painel-fotos-acoes">
+            <div className="flex flex-wrap gap-1">
               {i > 0 && (
-                <button type="button" className="botao-secundario" data-acao="antes" onClick={() => mover(i, i - 1, "antes")}>
+                <button type="button" className="botao-secundario px-3" data-acao="antes" onClick={() => mover(i, i - 1, "antes")}>
                   Antes<span className="sr-only"> ({papel(i)})</span>
                 </button>
               )}
               {i < projeto.photos.length - 1 && (
-                <button type="button" className="botao-secundario" data-acao="depois" onClick={() => mover(i, i + 1, "depois")}>
+                <button type="button" className="botao-secundario px-3" data-acao="depois" onClick={() => mover(i, i + 1, "depois")}>
                   Depois<span className="sr-only"> ({papel(i)})</span>
                 </button>
               )}
@@ -354,7 +354,7 @@ function Fotos({ projeto, aoFechar, aoMudar }: PropsFotos) {
           </li>
         ))}
       </ol>
-      <p className="janela-status" role="status">{anuncio}</p>
+      <p className="mx-0 mt-4 mb-0 font-semibold empty:m-0" role="status">{anuncio}</p>
       <div className="campo">
         <label htmlFor="fotos-novas">{projeto.photos.length ? "Enviar mais fotos" : "Enviar o ícone e as fotos"}</label>
         <p className="campo-dica" id="fotos-dica">Pode escolher várias de uma vez; elas entram no fim, na ordem escolhida.</p>

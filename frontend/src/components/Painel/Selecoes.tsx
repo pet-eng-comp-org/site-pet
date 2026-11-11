@@ -63,7 +63,7 @@ function Selecoes() {
           lista.length ? (
             <ul className="painel-lista">
               {lista.map((s) => (
-                <li key={s._id} className="painel-item painel-item-sem-foto">
+                <li key={s._id} className="painel-item grid-cols-[minmax(0,1fr)_auto] max-[768px]:grid-cols-[minmax(0,1fr)]">
                   <div className="painel-item-texto">
                     <strong>{s.title}</strong>
                     <span>{situacao(s)}</span>

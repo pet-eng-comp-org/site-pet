@@ -118,10 +118,11 @@ function Petianos() {
           );
           return (
             <>
-              <h3 className="painel-subtitulo">Atuais ({atuais.length})</h3>
+              <h3 className="mt-6 mb-3 text-cartao font-semibold">Atuais ({atuais.length})</h3>
               <ul className="painel-lista">{atuais.map(linha)}</ul>
-              <details className="painel-egressos">
-                <summary>Egressos ({egressos.length})</summary>
+              <details className="group mt-8">
+                {/* A seta gira ao abrir: diz que a lista abre. */}
+                <summary className="flex min-h-[44px] cursor-pointer list-none items-center gap-2 text-cartao font-semibold before:size-[0.55rem] before:-rotate-45 before:border-r-2 before:border-b-2 before:border-current before:transition-transform before:duration-150 group-open:before:rotate-45 [&::-webkit-details-marker]:hidden">Egressos ({egressos.length})</summary>
                 <ul className="painel-lista">{egressos.map(linha)}</ul>
               </details>
             </>
@@ -284,7 +285,8 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }: PropsForm) {
   return (
     <Janela titulo={petiano ? `Editar ${petiano.memberName}` : "Cadastrar petiano"} aberta aoFechar={aoFechar} larga>
       <form onSubmit={aoEnviar} noValidate className="painel-form">
-        <div className="painel-form-fotos">
+        {/* Foto e foto descontraída, uma embaixo da outra. */}
+        <div className="mb-5 grid gap-4">
           <div className="painel-form-foto">
             {previaFoto || atual ? (
               <img src={previaFoto || atual || undefined} alt="" width="96" height="96" />
@@ -301,7 +303,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }: PropsForm) {
             ) : (
               <span className="painel-foto-vazia" aria-hidden="true" />
             )}
-            <div className="painel-form-foto-campo">
+            <div className="flex-1">
               <Campo id={id("descontraida")} rotulo="Foto descontraída (opcional)" dica="Aparece quando passam o mouse ou tocam na foto.">
                 <input
                   key={campoDescontraida}
@@ -316,7 +318,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }: PropsForm) {
               {temDescontraida && (
                 <button
                   type="button"
-                  className="botao-texto-perigo"
+                  className="botao-texto-perigo mt-1 pl-0"
                   onClick={() => {
                     setDescontraida(null);
                     setSemDescontraida(true);
@@ -376,9 +378,9 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }: PropsForm) {
               A lista de projetos não carregou; os projetos de hoje ficam como estão.
             </p>
           )}
-          <div className="painel-caixas">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(11rem,1fr))]">
             {projetos.map((c) => (
-              <label key={c._id} className="painel-caixa">
+              <label key={c._id} className="painel-caixa m-0">
                 <input
                   type="checkbox"
                   checked={f.projetos.includes(c.title)}
