@@ -29,7 +29,7 @@
 }
 
 /* Os três avisos invisíveis e o verdadeiro no mesmo lugar: o lugar tem a
-   altura do maior (Subscription.jsx). */
+   altura do maior (Subscription.tsx). */
 .aviso-lugar {
   display: grid;
   margin-bottom: 2.5rem;

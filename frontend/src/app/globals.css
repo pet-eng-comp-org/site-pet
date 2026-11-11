@@ -1,0 +1,716 @@
+
+/* Base das páginas públicas. O Bootstrap, o MDB e o Font Awesome (492 KB que
+   bloqueavam a primeira pintura, com 1% em uso) ficaram só no painel; isto é
+   o pouco deles que o site usava. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Texto na fonte do sistema (SF no macOS e no iOS, Segoe no Windows, Roboto no
+   Android): feita para ler em tela em cada aparelho, com o espaçamento
+   ajustado ao tamanho, e sem nada para baixar. A marca fica no título, na
+   Sofia Sans Condensed (.App h1). Sem system-ui na lista: no Linux ele
+   segue a configuração da máquina e já caiu numa fonte chinesa; lá vale a
+   Arial. */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--texto);
+  font-weight: 400;
+  /* Texto de 17 px e entrelinha de 25 px. */
+  line-height: 1.47059;
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1rem;
+}
+
+/* O espaçamento entre letras, que muda com o tamanho: -0,022em no texto de
+   17 px. Fica em cada elemento, e não no body, porque em "em" no body ele
+   viraria um valor fixo herdado por textos de outros tamanhos. Os outros
+   tamanhos ditam o seu (rodapé, barra, abertura, subtítulo). */
+p,
+li,
+label,
+input,
+textarea,
+select,
+button,
+.botao-principal,
+.botao-contorno {
+  letter-spacing: -0.022em;
+}
+
+/* Sem palavra sozinha na última linha do parágrafo, e título em linhas de
+   tamanho parecido. Navegador que não conhece a regra quebra como sempre. */
+p,
+li {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Link: na cor de link, sem sublinhado, sublinhado ao
+   passar o ponteiro. A cor de link (#1b797b) é um verde um pouco mais claro
+   que o dos botões, para ter 3,3:1 com o texto em volta (o mínimo para
+   dispensar o sublinhado) e 5,2:1 com o branco. Botões, barra e cartões
+   desligam o sublinhado no hover. */
+a {
+  color: var(--cor-link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.botao-link:hover {
+  text-decoration: underline;
+}
+
+.botao-principal:hover,
+.botao-contorno:hover,
+.barra-link:hover,
+.barra-marca:hover {
+  text-decoration: none;
+}
+
+/* "Saiba mais ›": o link com a seta, desenhada em SVG na cor do link, a
+   0,24em do texto. No hover só o texto sublinha: a seta é
+   inline-block e fica de fora do sublinhado. */
+.link-mais::after,
+.link-voltar::before {
+  content: "";
+  display: inline-block;
+  width: 0.28em;
+  height: 0.49em;
+  background: currentColor;
+  -webkit-mask: var(--seta) center / contain no-repeat;
+  mask: var(--seta) center / contain no-repeat;
+}
+
+.link-mais::after {
+  margin-left: 0.24em;
+}
+
+.link-voltar::before {
+  margin-right: 0.24em;
+  transform: scaleX(-1);
+}
+
+img,
+svg {
+  vertical-align: middle;
+}
+
+button,
+input,
+textarea,
+select {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+label {
+  display: inline-block;
+}
+
+/* Foco por teclado: 2 px na cor de ação, afastado 1 px
+   do elemento. Sobre as faixas verdes, em branco. */
+:focus-visible {
+  outline: 2px solid var(--cor-acao);
+  outline-offset: 1px;
+}
+
+.about-us :focus-visible {
+  outline-color: #fff;
+}
+
+.icone-svg {
+  height: 1em;
+  width: auto;
+}
+
+/* Campo com o nome dentro: 56
+   px de altura, borda de 1 px #86868b, cantos de 12 px e texto de 17 px. O
+   nome fica no meio do campo vazio, em #6e6e73, e sobe para 12 px a 10 px do
+   topo quando o campo recebe o foco ou tem texto. No foco, a borda passa a
+   2 px na cor de ação, sem contorno por fora. */
+.campo {
+  position: relative;
+}
+
+.campo .form-control {
+  min-height: 56px;
+  padding: 18px 16px 0;
+  border-color: #86868b;
+  line-height: 1.23529;
+}
+
+/* Na mensagem, a borda fica na caixa em volta e o texto começa abaixo do
+   nome: ao rolar, o texto some antes de chegar ao nome. */
+.campo:has(textarea) {
+  padding-top: 28px;
+  background: #fff;
+  border: 1px solid #86868b;
+  border-radius: 12px;
+}
+
+.campo textarea.form-control {
+  min-height: 0;
+  padding: 0 16px 12px;
+  border: 0;
+  border-radius: 0 0 12px 12px;
+  resize: vertical;
+}
+
+.campo label {
+  position: absolute;
+  top: 18px;
+  left: 17px;
+  right: 17px;
+  margin: 0;
+  font-size: var(--texto);
+  font-weight: 400;
+  line-height: 1.17648;
+  color: var(--cor-texto-suave);
+  pointer-events: none;
+  transition: top 0.125s ease-in, font-size 0.125s ease-in;
+}
+
+.campo:has(.form-control:focus) label,
+.campo:has(.form-control:not(:placeholder-shown)) label {
+  top: 10px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* Foco: a borda passa a 2 px na cor de ação,
+   sem contorno por fora (1 px sai da folga para o texto não andar). */
+.campo .form-control:focus,
+.campo .form-control:focus-visible {
+  border-width: 2px;
+  border-color: var(--cor-acao);
+  padding: 17px 15px 0;
+  outline: none;
+}
+
+.campo textarea.form-control:focus,
+.campo textarea.form-control:focus-visible {
+  border: 0;
+  padding: 0 15px 11px;
+}
+
+.campo:has(textarea:focus) {
+  border: 2px solid var(--cor-acao);
+  padding-top: 27px;
+}
+
+/* O nome da mensagem ocupa a faixa de cima da caixa inteira: tocar nela
+   abre o campo, e o texto fica a 10 px (18 px vazio) e 17 px da borda de
+   fora, como nos outros campos. */
+.campo:has(textarea.form-control) label {
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 17px 16px 0;
+  pointer-events: auto;
+  cursor: text;
+  transition: padding 0.125s ease-in, font-size 0.125s ease-in;
+}
+
+.campo:has(textarea.form-control:not(:placeholder-shown)) label {
+  top: 0;
+  padding-top: 9px;
+}
+
+.campo:has(textarea.form-control:focus) label {
+  top: 0;
+  padding: 8px 15px 0;
+}
+
+.campo:has(textarea.is-invalid) {
+  border-color: var(--cor-erro);
+}
+
+/* Campo com erro: o nome também na cor de erro. */
+.campo:has(.is-invalid) label {
+  color: var(--cor-erro);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campo label {
+    transition: none;
+  }
+}
+
+/* Campo de formulário (Contato, login e painel). */
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.375rem 0.75rem;
+  font-size: var(--texto);
+  font-weight: 400;
+  line-height: 1.47059;
+  color: var(--cor-texto);
+  background: #fff;
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: 12px;
+}
+
+/* Foco visível: com o tema antigo, o campo focado não mudava em nada. */
+.form-control:focus {
+  border-color: var(--cor-acao);
+  outline: 3px solid var(--cor-acao);
+  outline-offset: 0;
+}
+
+.form-control.is-invalid {
+  border-color: var(--cor-erro);
+}
+
+.alerta-erro {
+  padding: 0.75rem 1.25rem;
+  color: var(--cor-alerta-texto);
+  background: var(--cor-alerta-fundo);
+  border: 1px solid var(--cor-alerta-borda);
+  border-radius: 12px;
+}
+
+/* Margem lateral do conteúdo: 16 px no celular e 32 px do tablet em diante,
+   até a coluna de 980 px ficar com margem maior que isso. */
+/* Cores por função: página branca,
+   cartões, blocos e rodapé em #f5f5f7, texto em #1d1d1f (o secundário em
+   #6e6e73), separadores neutros e
+   uma única cor de ação, o verde do PET. Um tema
+   só, claro, que não muda com o tema do aparelho. */
+:root {
+  color-scheme: light;
+  --cor-fundo: #fff;
+  --cor-superficie: #f5f5f7;
+  --cor-superficie-suave: #e5e5ea;
+  --cor-texto: #1d1d1f;
+  --cor-texto-suave: #6e6e73;
+  --cor-acao: #186a6c;
+  --cor-acao-fundo: #186a6c;
+  --cor-link: #1b797b;
+  /* A seta do "Saiba mais ›" (traço de 2 em 8 de largura). */
+  --seta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  /* Hover dos botões: um tom só um pouco mais claro que o fundo de ação, e
+     5,8:1 com o branco. */
+  --cor-acao-forte: #1a7072;
+  --cor-texto-sobre-acao: #fff;
+  --cor-texto-sobre-erro: #fff;
+  --cor-preenchimento: rgba(120, 120, 128, 0.16);
+  --cor-faixa-verde: #186a6c;
+  --cor-rodape: #1b3f3f;
+  --cor-linha: #c6c6c8;
+  --cor-separador: rgba(0, 0, 0, 0.16);
+  --cor-borda-campo: #8e8e93;
+  --cor-erro: #a3321f;
+  --cor-ok-fundo: #e3f1ec;
+  --cor-alerta-fundo: #f8d7da;
+  --cor-alerta-borda: #f5c6cb;
+  --cor-alerta-texto: #721c24;
+  --cor-sobreposicao: rgba(0, 0, 0, 0.2);
+  /* Folha (janela do painel): branca, sobre o
+     fundo escurecido. */
+  --cor-folha: #fff;
+  /* Barra do topo escura: vidro #1d1d1f a 80% com saturate 180% e blur 20px, sem
+     linha embaixo, links brancos a 80%. Sólida (#1d1d1f) sem suporte ao
+     filtro. O menu aberto no celular é #161617, com os links em #e8e8ed.
+     A 80%, o texto branco fica acima de 4,5:1 com qualquer coisa atrás. */
+  --vidro-fundo: rgba(29, 29, 31, 0.8);
+  --vidro-filtro: saturate(180%) blur(20px);
+  --barra-solida: #1d1d1f;
+  --barra-texto: #fff;
+  --menu-fundo: #161617;
+  --menu-texto: #e8e8ed;
+  --raio-capsula: 999px;
+  --raio-cartao: 28px;
+  --raio-folha: 32px;
+}
+
+:root {
+  --margem: 1rem;
+  /* Escala de texto, num lugar só. Um tamanho para todo texto corrido; os
+     títulos em degraus claros (o da página cerca de 1,6 vez o da seção). */
+  --texto: 1.0625rem; /* 17 px */
+  --titulo-cartao: 1.25rem; /* 20 px */
+  --titulo-secao: 1.375rem; /* 22 px no celular, 28 px na tela larga */
+}
+
+/* Margem lateral: até 1068 px o conteúdo ocupa 87,5% da
+   tela (6,25% de cada lado); acima, a coluna de 980 px no centro. */
+@media (max-width: 1068px) {
+  :root {
+    --margem: 6.25vw;
+  }
+}
+
+@media (min-width: 1069px) {
+  :root {
+    --margem: 2rem;
+    --titulo-secao: 1.75rem;
+  }
+}
+
+/* Barra de rolagem sempre desenhada: a página não anda para o lado quando
+   o conteúdo cresce. (O scrollbar-gutter reservava o espaço mesmo sem a
+   barra, e o topo e o rodapé paravam a 15 px da borda nas páginas curtas.) */
+html {
+  overflow-y: scroll;
+  /* A barra fixa tem 44 px (48 no celular): o campo ou link que recebe o
+     foco não fica escondido atrás dele. */
+  scroll-padding-top: 5rem;
+}
+
+/* Rodapé sempre no fim da tela, mesmo em página curta. */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+}
+
+/* Enquanto a página carrega: na mesma caixa da página, para o conteúdo
+   entrar no lugar em vez de deslizar da largura toda para a coluna. */
+.divloader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: calc(980px + 2 * var(--margem));
+  margin: 0 auto;
+  height: 100vh;
+}
+
+/* Onde os dados da API entram, enquanto ela não responde: o texto fixo da
+   página já está em cima, e o rodapé fica fora da tela até os dados
+   chegarem, em vez de subir e descer. */
+.carregando-dados {
+  min-height: 100vh;
+}
+
+/* O foco vai para o <main> ao trocar de página (FocoNaTroca); o contorno
+   ali só confundiria quem usa o mouse. */
+.conteudo:focus {
+  outline: none;
+}
+
+.App h1 {
+  font-family: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
+  font-weight: 800;
+  color: var(--cor-acao);
+}
+
+/* Página interna: a coluna de 980 px, a mesma do cabeçalho e
+   do rodapé, e texto numa medida confortável de leitura.
+   O width evita que o .App (flex) encolha a página à largura do conteúdo. */
+.pagina {
+  width: 100%;
+  max-width: calc(980px + 2 * var(--margem));
+  margin: 0 auto;
+  /* O ritmo das seções: 144 px embaixo (120 até 1068 px, 112
+     até 734 px). */
+  padding: 6rem var(--margem) 9rem;
+}
+
+/* Abertura da página: o título, do tamanho do título da
+   página inicial, e o parágrafo de abertura logo abaixo dele, centralizados.
+   O resto (seções, listas, texto corrido) fica à esquerda. */
+.App .pagina > h1 {
+  text-align: center;
+}
+
+/* O parágrafo de abertura: semibold, 28 px na tela larga e 21 px no celular, entrelinha
+   curta e linhas equilibradas, sem uma palavra sobrando sozinha embaixo. */
+.App .pagina > h1 + .pagina-intro {
+  text-align: center;
+  text-wrap: balance;
+  margin-inline: auto;
+  max-width: 40rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.14286;
+  letter-spacing: 0.007em;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 1068px) {
+  .App .pagina > h1 + .pagina-intro {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 734px) {
+  .App .pagina > h1 + .pagina-intro {
+    font-size: 1.3125rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Texto corrido da página, fora da abertura: à esquerda, na medida de
+   leitura. */
+.pagina-texto {
+  font-size: var(--texto);
+  max-width: 36rem;
+}
+
+/* Página só de aviso (não encontrada, falha ao carregar): tudo no centro. */
+.pagina-centro {
+  text-align: center;
+}
+
+/* O título da página 1,5 vez o título de bloco (72 contra 48 px; 56 contra
+   40 até 1068 px; 48 contra 32 até 734 px, os degraus), para
+   ele mandar na primeira tela. */
+.App .pagina h1 {
+  font-size: 4.5rem;
+  line-height: 1.1;
+  color: var(--cor-texto);
+  margin-bottom: 1rem;
+}
+
+/* Título de bloco: grande e na fonte da marca (faixa
+   da equipe, "O que é o PET", notícias). */
+.App .titulo-bloco {
+  font-family: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.App .pagina .titulo-bloco {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 1068px) {
+  .App .titulo-bloco {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 734px) {
+  .App .titulo-bloco {
+    font-size: 2rem;
+  }
+}
+
+/* Título de seção dentro do texto: o mesmo em todas as páginas. */
+.pagina h2 {
+  font-size: var(--titulo-secao);
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.pagina-intro {
+  font-size: var(--texto);
+  max-width: 36rem;
+}
+
+.link-texto {
+  color: var(--cor-link);
+}
+
+@media (max-width: 1068px) {
+  .pagina {
+    padding: 5rem var(--margem) 7.5rem;
+  }
+
+  .App .pagina h1 {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 734px) {
+  .pagina {
+    padding: 4rem var(--margem) 7rem;
+  }
+
+  .App .pagina h1 {
+    font-size: 3rem;
+  }
+}
+
+/* Botões: cápsula,
+   texto de 17 px em peso normal e 11 px por 21 px de folga contando a borda
+   de 1 px (44 px de altura). O principal é cheio; o de contorno, ao lado
+   dele, enche ao passar o ponteiro. A altura fica em 44 px também no
+   celular, o mínimo para o toque, e ali o texto vai a 15 px, para o par
+   caber numa linha.
+   (O .botao-secundario cinza é do painel, em Painel.css.) */
+.botao-principal,
+.botao-contorno {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 21px;
+  border: 1px solid transparent;
+  border-radius: var(--raio-capsula);
+  cursor: pointer;
+  font-size: var(--texto);
+  font-weight: 400;
+  line-height: 1.17648;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.botao-principal {
+  background: var(--cor-acao-fundo);
+  color: var(--cor-texto-sobre-acao);
+}
+
+.botao-contorno {
+  background: transparent;
+  border-color: var(--cor-acao);
+  color: var(--cor-acao);
+}
+
+.botao-principal:hover,
+.botao-contorno:hover {
+  background: var(--cor-acao-forte);
+  border-color: transparent;
+  color: var(--cor-texto-sobre-acao);
+}
+
+/* Celular (até 734 px, o degrau): texto de 15 px e folga
+   menor, para o par caber numa linha com a margem de 6,25%. */
+@media (max-width: 734px) {
+  .botao-principal,
+  .botao-contorno {
+    padding: 10px 15px;
+    font-size: 0.9375rem;
+  }
+}
+
+.botao-principal:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.botao-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--cor-link);
+  font-size: var(--texto);
+}
+
+
+a {
+  margin: 0;
+}
+
+/* Bloco cheio (a cor ocupa a largura toda): 12 px de
+   página branca embaixo de cada um, inclusive antes do rodapé. */
+.bloco {
+  margin-bottom: 12px;
+}
+
+/* Folga dos blocos da inicial, por degrau: 56/63 px acima de
+   1068 px, 61/69 até 1068 px e 39/43 até 734 px. */
+@media (max-width: 734px) {
+  .App .noticias,
+  .App .about-us {
+    padding-top: 39px;
+    padding-bottom: 43px;
+  }
+}
+
+/* O texto dos blocos da inicial: título de
+   56 px (48 até 1068 px, 32 até 734 px), subtítulo de 28 px em peso normal
+   (24 e 19) 6 px abaixo dele, e os botões 17 px abaixo (16 e 11). */
+.App .bloco-titulo {
+  font-family: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.07;
+  margin: 0;
+}
+
+.App .bloco-subtitulo {
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.14286;
+  letter-spacing: 0.007em;
+  max-width: 40rem;
+  margin: 6px auto 0;
+  text-wrap: balance;
+}
+
+.bloco-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 17px;
+  margin-top: 17px;
+}
+
+@media (max-width: 1068px) {
+  .App .bloco-titulo {
+    font-size: 3rem;
+  }
+
+  .App .bloco-subtitulo {
+    font-size: 1.5rem;
+    margin-top: 4px;
+  }
+
+  .bloco-acoes {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 734px) {
+  .App .bloco-titulo {
+    font-size: 2rem;
+    line-height: 1.125;
+  }
+
+  .App .bloco-subtitulo {
+    font-size: 1.1875rem;
+  }
+
+  .bloco-acoes {
+    gap: 14px;
+    margin-top: 11px;
+  }
+}
+
+.green-bg {
+  background: var(--cor-faixa-verde);
+  display: block;
+}
+
+.App > .rodape {
+  margin-top: auto;
+}

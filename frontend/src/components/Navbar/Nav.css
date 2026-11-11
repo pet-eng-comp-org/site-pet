@@ -113,7 +113,7 @@
 /* Celular: o menu abre na tela inteira, abaixo da barra: fundo sólido, sem
    o logo, texto
    a 48 px da borda, letra de 28 px em peso 600, um item a cada 46 px logo
-   abaixo da barra, e a página parada atrás (Nav.jsx). Os tempos: o fundo
+   abaixo da barra, e a página parada atrás (Nav.tsx). Os tempos: o fundo
    desce em 0,24 s depois de 80 ms, o logo some em 0,24 s,
    e os itens descem 8 px a partir de 0,2 s, um a cada 20 ms; ao fechar,
    saem todos juntos e o fundo sobe. */
