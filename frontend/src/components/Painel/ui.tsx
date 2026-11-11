@@ -34,6 +34,9 @@ interface Aviso {
   tipo: "ok" | "erro";
 }
 
+// Cada aviso: fundo escuro (vermelho no erro), cantos de 12 px e a sombra das folhas.
+const AVISO = "pointer-events-auto m-0 mb-2 flex items-center justify-between gap-2 rounded-[12px] px-4 py-3 shadow-[0_15px_37.5px_rgba(0,0,0,0.18)]";
+
 export const ComAvisos = ({ children }: { children: ReactNode }) => {
   const [avisos, setAvisos] = useState<Aviso[]>([]);
   const tirar = (id: number) => setAvisos((a) => a.filter((x) => x.id !== id));
@@ -58,18 +61,30 @@ export const ComAvisos = ({ children }: { children: ReactNode }) => {
   return (
     <Avisos.Provider value={avisar}>
       {children}
-      <div className="painel-avisos" popover="manual" ref={ref}>
+      {/* No canto de baixo, em cima de tudo. Vazio, não pega clique: só os avisos. */}
+      <div
+        className="pointer-events-none fixed inset-auto right-[max(1rem,calc((100%-1140px)/2))] bottom-4 z-[2000] m-0 flex w-[min(100%-2rem,26rem)] flex-col gap-2 overflow-visible border-0 bg-transparent p-0"
+        popover="manual"
+        ref={ref}
+      >
         <div role="status">
           {avisos.filter((a) => a.tipo === "ok").map((a) => (
-            <p key={a.id} className="painel-aviso">{a.texto}</p>
+            <p key={a.id} className={`${AVISO} bg-rodape text-white`}>
+              {a.texto}
+            </p>
           ))}
         </div>
         <div role="alert">
           {avisos.filter((a) => a.tipo === "erro").map((a) => (
-            <p key={a.id} className="painel-aviso painel-aviso-erro">
+            <p key={a.id} className={`${AVISO} bg-erro text-texto-sobre-erro`}>
               {a.texto}
-              <button type="button" onClick={() => tirar(a.id)} aria-label="Fechar aviso">
-                <Icone nome="fechar" />
+              <button
+                type="button"
+                className="-my-2 -mr-2 inline-flex size-11 flex-none cursor-pointer items-center justify-center border-0 bg-transparent text-inherit"
+                onClick={() => tirar(a.id)}
+                aria-label="Fechar aviso"
+              >
+                <Icone nome="fechar" className="h-4" />
               </button>
             </p>
           ))}
@@ -156,7 +171,9 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
   return (
     <dialog
       ref={ref}
-      className={`janela ${larga ? "janela-larga" : ""}`}
+      // A folha: raio de 32 px e sombra, sobre o fundo escurecido. Rolar até
+      // o fim dela não passa a rolar a página atrás.
+      className={`max-h-[calc(100%-2rem)] overscroll-contain rounded-folha border-0 bg-folha p-6 text-texto shadow-[0_15px_37.5px_rgba(0,0,0,0.18)] backdrop:bg-sobreposicao ${larga ? "w-[min(100%-2rem,46rem)]" : "w-[min(100%-2rem,34rem)]"}`}
       aria-labelledby={idTitulo}
       onClose={aoFechar}
       // O Esc fecha só esta janela: sem isto, com uma pergunta aberta dentro
@@ -173,12 +190,18 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
     >
       {aberta && (
         <FecharJanela.Provider value={pedirFechar}>
-          <div className="janela-topo">
-            <h2 id={idTitulo} tabIndex={-1}>
+          <div className="mb-4 flex items-start justify-between gap-4">
+            <h2 id={idTitulo} className="mt-2 mb-0 text-cartao focus:outline-none" tabIndex={-1}>
               {titulo}
             </h2>
-            <button type="button" className="janela-fechar" onClick={pedirFechar} aria-label="Fechar">
-              <Icone nome="fechar" />
+            {/* Botão redondo, como o X das folhas. */}
+            <button
+              type="button"
+              className="-mt-1 -mr-2 inline-flex size-11 flex-none cursor-pointer items-center justify-center rounded-full border-0 bg-preenchimento text-texto"
+              onClick={pedirFechar}
+              aria-label="Fechar"
+            >
+              <Icone nome="fechar" className="h-[1.1rem]" />
             </button>
           </div>
           {children}
@@ -243,7 +266,12 @@ export const Confirmar = ({
         </button>
         <button
           type="button"
-          className={perigo ? "botao-perigo" : "botao-principal"}
+          // Destrutivo cheio: 6,9:1 com o branco.
+          className={
+            perigo
+              ? "inline-flex min-h-[44px] cursor-pointer items-center justify-center rounded-capsula border-0 bg-erro px-5 font-normal text-texto-sobre-erro hover:brightness-90 disabled:cursor-not-allowed disabled:opacity-55"
+              : "botao-principal"
+          }
           onClick={confirmar}
           disabled={enviando}
         >
@@ -342,7 +370,7 @@ export const ErroDaJanela = ({ erro }: { erro?: string }) => {
     (ref.current.nextElementSibling || ref.current).scrollIntoView({ block: "end" });
   }, [erro]);
   return (
-    <p className="janela-erro" role="alert" tabIndex={-1} ref={ref}>
+    <p className="mx-0 mt-4 mb-0 scroll-m-4 font-semibold text-erro empty:m-0 focus:outline-none" role="alert" tabIndex={-1} ref={ref}>
       {erro}
     </p>
   );

@@ -146,7 +146,7 @@ function FormNoticia({ noticia, aoFechar, aoSalvar }: PropsForm) {
           <textarea rows={6} value={f.text} onChange={muda("text")} />
         </Campo>
         <div className="painel-form-foto">
-          {previa && <img src={previa} alt="" width="160" height="90" className="painel-previa-larga" />}
+          {previa && <img src={previa} alt="" width="160" height="90" className="h-[90px] w-[160px] rounded-[12px] object-center" />}
           <Campo id="noticia-imagem" rotulo={nova ? "Imagem" : "Trocar a imagem"} dica="Deitada, como 16:9; ela abre o cartão." erro={erros.imagem}>
             <input
               type="file"

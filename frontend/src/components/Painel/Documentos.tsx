@@ -34,11 +34,12 @@ function Documentos() {
       </p>
       <Carregando estado={grupos}>
         {(lista) => (
-          <div className="painel-grupos">
+          // Um cartão por grupo, como na página pública.
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,30rem),1fr))] items-start gap-6">
             {lista.map((g) => (
-              <section key={g._id} className="painel-cartao" aria-labelledby={`grupo-${g._id}`}>
-                <div className="painel-cartao-topo">
-                  <h3 id={`grupo-${g._id}`}>{g.title}</h3>
+              <section key={g._id} className="rounded-cartao bg-superficie px-6 pt-5 pb-6" aria-labelledby={`grupo-${g._id}`}>
+                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                  <h3 id={`grupo-${g._id}`} className="m-0 text-cartao">{g.title}</h3>
                   <div className="painel-item-acoes">
                     <button type="button" className="botao-secundario" onClick={() => setAberto({ tipo: "grupo", grupo: g })}>
                       Renomear<span className="sr-only"> {g.title}</span>
@@ -49,9 +50,9 @@ function Documentos() {
                   </div>
                 </div>
                 {g.files.length ? (
-                  <ul className="painel-arquivos">
+                  <ul className="mt-0 mb-4 list-none p-0">
                     {g.files.map((a) => (
-                      <li key={a._id}>
+                      <li key={a._id} className="flex min-h-[44px] items-center justify-between gap-2 border-b border-linha">
                         <a className="link-texto" href={arquivoUrl(a._id)} target="_blank" rel="noopener noreferrer">
                           {a.name}
                         </a>
