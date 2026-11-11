@@ -13,12 +13,7 @@ import NaoEncontrada from "./components/NaoEncontrada/NaoEncontrada";
 import Loader from "./components/Loader/Loader";
 import Login from "./components/Login/Login";
 import isAuth from "./services/Auth";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 // O painel só é baixado por quem entra nele, não por todo visitante. O login
 // é pequeno e fica no pacote, para a tela dele não pular ao abrir.
@@ -39,20 +34,9 @@ const FocoNaTroca = () => {
   return null;
 };
 
-const AdminRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuth() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: "/login" }} />
-        )
-      }
-    />
-  );
-};
+// O painel só para quem entrou; os outros vão ao login.
+const SoLogado = ({ children }) =>
+  isAuth() ? children : <Navigate to="/login" replace />;
 
 // O site sem o roteador: no navegador ele vai dentro do BrowserRouter
 // (main.jsx); no build, dentro do StaticRouter, para gerar o HTML de cada
@@ -75,18 +59,18 @@ function App() {
               endereços que o servidor serve (os outros recebem o 404.html),
               senão a página "não encontrada" chegava e era trocada por outra.
               O /subscription antigo o servidor redireciona (serve.json). */}
-          <Switch>
-            <Route path="/" exact sensitive component={Home} />
-            <Route path="/sobre" exact sensitive component={About} />
-            <Route path="/documentos" exact sensitive component={Documents} />
-            <Route path="/inscricoes" exact sensitive component={Subscription} />
-            <Route path="/projetos" exact sensitive component={Projects} />
-            <Route path="/projetos/:projeto" exact sensitive component={ProjetoPagina} />
-            <Route path="/login" exact sensitive component={Login} />
-            <Route path="/contato" exact sensitive component={Contact} />
-            <AdminRoute path="/admin" sensitive component={Painel} />
-            <Route component={NaoEncontrada} />
-          </Switch>
+          <Routes>
+            <Route path="/" caseSensitive element={<Home />} />
+            <Route path="/sobre" caseSensitive element={<About />} />
+            <Route path="/documentos" caseSensitive element={<Documents />} />
+            <Route path="/inscricoes" caseSensitive element={<Subscription />} />
+            <Route path="/projetos" caseSensitive element={<Projects />} />
+            <Route path="/projetos/:projeto" caseSensitive element={<ProjetoPagina />} />
+            <Route path="/login" caseSensitive element={<Login />} />
+            <Route path="/contato" caseSensitive element={<Contact />} />
+            <Route path="/admin/*" caseSensitive element={<SoLogado><Painel /></SoLogado>} />
+            <Route path="*" element={<NaoEncontrada />} />
+          </Routes>
         </Suspense>
       </main>
       <Footer />
