@@ -1,30 +1,134 @@
-/* Vitrine de projetos na inicial: bloco cinza com três cartões brancos. */
+/* Os três cartões brancos dentro da abertura da inicial, na coluna de
+   980 px, com o texto deles à esquerda. */
 .vitrine {
-  background: var(--cor-superficie);
-  padding: 56px var(--margem) 63px;
-}
-
-.vitrine-conteudo {
   max-width: 980px;
-  margin: 0 auto;
+  /* 48 px até os cartões, descontada a folga do link de cima. */
+  margin: 36px auto 0;
+  padding: 0 var(--margem);
+  box-sizing: content-box;
+  text-align: left;
 }
 
-.vitrine-grade {
-  margin-top: 2rem;
+.vitrine-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
 }
 
 .vitrine-todos {
-  margin: 2rem 0 0;
+  margin: 0;
 }
 
-@media (min-width: 735px) {
+/* Nas telas largas cabem os três lado a lado: sem setas. */
+.vitrine-setas {
+  display: none;
+  gap: 18px;
+}
+
+.vitrine-setas button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(210, 210, 215, 0.64);
+  color: rgba(0, 0, 0, 0.56);
+  cursor: pointer;
+  transition: background-color 0.1s linear, color 0.1s linear;
+  /* 44 px de área de toque sem aumentar o círculo. */
+  position: relative;
+}
+
+.vitrine-setas button::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+}
+
+.vitrine-setas button:hover:not([aria-disabled="true"]) {
+  background: rgba(223, 223, 227, 0.7);
+  color: rgba(0, 0, 0, 0.64);
+}
+
+/* Desligada, só o círculo e a seta esmaecem (a 42%): o contorno de foco
+   continua inteiro. */
+.vitrine-setas button[aria-disabled="true"] {
+  cursor: default;
+  background: rgba(210, 210, 215, 0.27);
+}
+
+.vitrine-setas button[aria-disabled="true"] svg {
+  opacity: 0.42;
+}
+
+.vitrine-setas svg {
+  width: 36px;
+  height: 36px;
+  transition: opacity 0.1s linear;
+}
+
+@media (min-width: 1069px) {
   .vitrine-grade {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
+/* Até 1068 px, um carrossel: cartões de 344 px (260 px no celular), 20 px
+   entre eles, o primeiro na margem da página e o seguinte aparecendo na
+   borda, para mostrar que dá para deslizar. Cada deslize para no começo de
+   um cartão. A folga em cima e embaixo deixa a sombra do cartão à vista. */
+@media (max-width: 1068px) {
+  .vitrine {
+    max-width: none;
+    padding: 0;
+  }
+
+  .vitrine-grade {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 344px;
+    margin: 0;
+    padding: 8px var(--margem) 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--margem);
+    scrollbar-width: none;
+  }
+
+  .vitrine-grade::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vitrine-grade > li {
+    scroll-snap-align: start;
+  }
+
+  .vitrine-rodape {
+    margin-top: 4px;
+    padding: 0 var(--margem);
+  }
+
+  .vitrine-setas {
+    display: flex;
+  }
+}
+
 @media (max-width: 734px) {
   .vitrine {
-    padding: 39px var(--margem) 43px;
+    margin-top: 20px;
+  }
+
+  .vitrine-grade {
+    grid-auto-columns: 260px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vitrine-grade {
+    scroll-behavior: auto;
   }
 }

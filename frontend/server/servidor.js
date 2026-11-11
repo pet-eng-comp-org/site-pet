@@ -132,7 +132,6 @@ const jsonNoHtml = (valor) => JSON.stringify(valor).replace(/</g, "\\u003c");
 // quebraria a página ou abriria uma tag.
 const montar = ({ url, titulo, descricao, imagem, indexar, conteudo, dados }) => {
   let html = modelo.replace("<!--app-->", () => conteudo);
-  if (url !== "/") html = html.replace(/<link[^>]*data-so-inicio[^>]*>/, "");
   if (titulo) {
     const completo = `${titulo} · PET Eng Comp Ufes`;
     html = html

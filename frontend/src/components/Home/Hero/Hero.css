@@ -1,10 +1,10 @@
-/* O primeiro bloco: cabe na primeira
-   tela (692 px de altura a 1440), com o texto centralizado em cima e a
-   imagem na largura toda do bloco, até a borda de baixo, sem canto nem
-   sombra. */
+/* O primeiro bloco: título do tamanho do das outras páginas (72 px, 56 até
+   1068 px, 48 até 734 px), subtítulo e o link, no centro; logo abaixo, os
+   cartões dos projetos. A folga é a dos outros blocos da inicial (56/63 px,
+   61/69 até 1068 px, 39/43 até 734 px). */
 .hero {
   background: var(--cor-superficie);
-  padding: 56px 0 0;
+  padding: 56px 0 63px;
   text-align: center;
 }
 
@@ -14,34 +14,58 @@
 
 .App .hero h1 {
   color: var(--cor-texto);
+  font-size: 4.5rem;
+  line-height: 1.1;
 }
 
-.hero-foto {
-  display: block;
-  width: 100%;
-  height: 405px;
-  margin-top: 40px;
-  object-fit: cover;
-  object-position: center 45%;
+/* O link tem 44 px de altura de toque, 12 px acima e abaixo do texto;
+   a margem desconta isso, e o texto fica 17 px abaixo do subtítulo (16 e
+   11 nos degraus menores). */
+.hero-link {
+  margin: 5px 0 0;
+}
+
+.hero-link .link-mais,
+.vitrine-todos .link-mais {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* O contorno de foco acompanha a área de toque com cantos arredondados. */
+.hero-link .link-mais:focus-visible,
+.vitrine-todos .link-mais:focus-visible {
+  border-radius: 8px;
+}
+
+.vitrine-setas button:focus-visible {
+  border-radius: 50%;
 }
 
 @media (max-width: 1068px) {
   .hero {
-    padding-top: 61px;
+    padding: 61px 0 69px;
   }
 
-  .hero-foto {
-    height: 380px;
+  .App .hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero-link {
+    margin-top: 4px;
   }
 }
 
 @media (max-width: 734px) {
   .App .hero {
-    padding: 39px 0 0;
+    padding: 39px 0 43px;
   }
 
-  .hero-foto {
-    height: 260px;
-    margin-top: 32px;
+  .App .hero h1 {
+    font-size: 3rem;
+  }
+
+  .hero-link {
+    margin-top: 0;
   }
 }
