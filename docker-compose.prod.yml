@@ -55,8 +55,8 @@ services:
 
   front-end:
     container_name: site-pet_front-end
-    # ghcr.io/pet-eng-comp-org/site-pet/front-end:sha-29c0ab6
-    image: ghcr.io/pet-eng-comp-org/site-pet/front-end@sha256:ec038c44d91985b1a7e7cb785cb157b9974645e324087e34eb2482c7553ef22d
+    # ghcr.io/pet-eng-comp-org/site-pet/front-end:sha-fb1c27c
+    image: ghcr.io/pet-eng-comp-org/site-pet/front-end@sha256:385ba46398d9c60348ca49e5cf02e5fef2a9a8f11df6033c06d1b45d9958a6f6
     logging: *logging
     restart: always
     stdin_open: true
