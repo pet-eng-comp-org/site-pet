@@ -53,7 +53,7 @@ function Project({ title, description, icon, onClick }: Props) {
         style={src ? ({ "--icone": `url("${src}")` } as CSSProperties) : undefined}
       />
       {/* A chamada: o nome em verde e a frase em tinta, numa frase só de 24 px. */}
-      <h2 className="m-0 max-w-[22ch] text-24 font-semibold text-pretty">
+      <h2 className="m-0 max-w-[22ch] text-28 font-semibold max-desktop:text-24 max-tablet:text-21 text-pretty">
         <span id={`projeto-${slug(title)}`} className="text-acao">
           {title}.
         </span>{" "}

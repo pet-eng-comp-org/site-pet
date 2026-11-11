@@ -673,18 +673,6 @@
     }
   }
 
-  /* Celular (até 734 px, o degrau): texto de 14 px e folga menor, para o par
-     caber numa linha. A altura fica em 44 px, o mínimo para o toque. */
-  @media (max-width: 734px) {
-    .botao-principal,
-    .botao-contorno {
-      padding: 10px 15px;
-      font-size: var(--text-14);
-      line-height: var(--text-14--line-height);
-      letter-spacing: var(--text-14--letter-spacing);
-    }
-  }
-
   .botao-principal:disabled {
     opacity: 0.7;
     cursor: progress;
