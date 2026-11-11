@@ -178,7 +178,7 @@ function Nav() {
                 <li key={to} style={{ "--ordem": i }}>
                   <NavLink
                     to={to}
-                    exact={to === "/"}
+                    end={to === "/"}
                     className="barra-link"
                     onClick={fecharMenu}
                   >

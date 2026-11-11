@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
-import { Redirect, useHistory } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import isAuth from "../../services/Auth";
 import api from "../../services/api";
 import useTitulo from "../../utils/useTitulo";
@@ -10,7 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  let history = useHistory();
+  const navigate = useNavigate();
 
   // O painel manda para cá quando o token vence (services/api.js).
   useEffect(() => {
@@ -33,7 +33,7 @@ const Login = () => {
         },
       });
       localStorage.setItem("LOGINPET_TOKEN", responseLogin.data.token);
-      history.push("/admin");
+      navigate("/admin");
     } catch (err) {
       setErrorMessage(
         err?.response && err.response.status < 500
@@ -44,7 +44,7 @@ const Login = () => {
   }
 
   // Quem já entrou e abre o login vai direto ao painel.
-  if (isAuth()) return <Redirect to="/admin" />;
+  if (isAuth()) return <Navigate to="/admin" replace />;
 
   const invalido = errorMessage ? "is-invalid" : "";
 

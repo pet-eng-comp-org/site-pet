@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation, useNavigationType } from "react-router-dom";
 import Project from "./Project/Project";
 import "./Projects.css";
 import useApi from "../../services/useApi";
@@ -30,9 +30,9 @@ const Projects = () => {
   const resposta = useApi("api/comissions");
   const comissions = resposta.data?.comissions;
   const falhou = Boolean(resposta.falhou || resposta.status);
-  const history = useHistory();
+  const tipo = useNavigationType();
   const location = useLocation();
-  const voltando = history.action === "POP" || location.state?.voltar;
+  const voltando = tipo === "POP" || location.state?.voltar;
 
   // A posição só existe depois que a lista carrega e a página cresce.
   useEffect(() => {

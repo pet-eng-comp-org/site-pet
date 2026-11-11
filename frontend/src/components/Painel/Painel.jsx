@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { NavLink, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import isAuth from "../../services/Auth";
 import { painel } from "./painelApi";
 import { Acoes, Campo, ComAvisos, Janela, useEnvio } from "./ui";
@@ -64,10 +64,10 @@ function TrocarSenha({ aoFechar }) {
 
 const Painel = () => {
   const [senha, setSenha] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const sair = () => {
     localStorage.removeItem("LOGINPET_TOKEN");
-    history.push("/");
+    navigate("/");
   };
   return (
     <ComAvisos>
@@ -89,19 +89,19 @@ const Painel = () => {
           <ul className="painel-secoes">
             {secoes.map(([caminho, nome]) => (
               <li key={caminho}>
-                <NavLink to={`/admin/${caminho}`} activeClassName="ativa">
+                <NavLink to={`/admin/${caminho}`} className={({ isActive }) => (isActive ? "ativa" : undefined)}>
                   {nome}
                 </NavLink>
               </li>
             ))}
           </ul>
         </nav>
-        <Switch>
+        <Routes>
           {secoes.map(([caminho, , Secao]) => (
-            <Route key={caminho} path={`/admin/${caminho}`} exact component={Secao} />
+            <Route key={caminho} path={caminho} element={<Secao />} />
           ))}
-          <Redirect to="/admin/petianos" />
-        </Switch>
+          <Route path="*" element={<Navigate to="/admin/petianos" replace />} />
+        </Routes>
       </div>
     </ComAvisos>
   );
