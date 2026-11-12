@@ -27,7 +27,7 @@ const GrupoDocumentos = ({ document, busca = "" }: { document: GrupoDeDocumentos
 
   return (
     <section className="mb-6 break-inside-avoid rounded-cartao bg-superficie px-8 pt-8 pb-6">
-      <h2 className="mb-3 text-cartao">{document.title}</h2>
+      <h2 className="mb-3 text-21 font-semibold">{document.title}</h2>
       {/* Do tablet em diante, os documentos em colunas que se alinham por
           linha: nome de duas linhas numa coluna não desalinha as divisórias
           das outras. */}
@@ -41,7 +41,7 @@ const GrupoDocumentos = ({ document, busca = "" }: { document: GrupoDeDocumentos
               rel="noopener noreferrer"
             >
               {/* Nome em duas linhas não espreme o ícone. */}
-              <Icone nome="pdf" className="shrink-0 text-corpo text-acao" />
+              <Icone nome="pdf" className="shrink-0 text-17 text-acao" />
               {nomeLegivel(file.name)}
             </a>
           </li>

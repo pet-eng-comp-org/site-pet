@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     // Fundo cinza sob a página branca, texto de 12 px com 16 px de entrelinha
     // a 56% do preto, 17 px em cima e uma linha fina antes do copyright.
-    <footer className="mt-auto bg-superficie text-[12px] leading-[16px] tracking-[-0.01em] text-[rgba(0,0,0,0.56)]">
+    <footer className="mt-auto bg-superficie text-12 text-[rgba(0,0,0,0.56)]">
       {/* Na coluna de 980 px do cabeçalho e das páginas. */}
       <div className="mx-auto max-w-[calc(980px+2*var(--margem))] px-(--margem) pt-[17px] pb-[19px]">
         <p className="mt-0 mb-4 border-b border-separador pb-[19px] tracking-[inherit]">

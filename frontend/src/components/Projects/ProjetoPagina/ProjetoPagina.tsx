@@ -123,7 +123,7 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
             Linhas equilibradas da tela média para cima, onde o texto tem até
             6 linhas; no celular fica o pretty, que não deixa uma palavra
             sozinha no fim. */}
-        <div className="text-[1.3125rem] leading-[1.381] max-tablet:mx-auto max-tablet:max-w-[480px] max-tablet:text-[1.1875rem] max-tablet:leading-[1.421] tablet:[&_p]:text-balance [&_p+p]:mt-[0.75em]">
+        <div className="text-[1.3125rem] leading-[1.381] [&_p]:tracking-[0.011em] max-tablet:[&_p]:tracking-[0.012em] max-tablet:mx-auto max-tablet:max-w-[480px] max-tablet:text-[1.1875rem] max-tablet:leading-[1.421] tablet:[&_p]:text-balance [&_p+p]:mt-[0.75em]">
           {comission.description
             .split(/\n+/)
             .filter((t) => t.trim())
@@ -150,7 +150,7 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
 
         {/* Ferramentas numa linha de texto: não são ações, não têm cara de botão. */}
         {ferramentas.length > 0 && (
-          <p className="mx-0 mt-6 mb-0 text-[0.875rem] tracking-[-0.016em] text-texto-suave">
+          <p className="mx-0 mt-6 mb-0 text-14 text-texto-suave">
             <span>Ferramentas: </span>
             {ferramentas.map((tag, i) => (
               <Fragment key={tag._id}>

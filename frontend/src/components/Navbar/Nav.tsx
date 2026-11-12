@@ -119,7 +119,7 @@ const LINK = [
   "flex min-h-[44px] items-center py-2 font-medium text-[color-mix(in_srgb,var(--barra-texto)_80%,transparent)] no-underline transition-colors duration-320 ease-barra",
   "focus-visible:rounded-[4px] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-(--barra-texto)",
   "max-menu:min-h-[46px] max-menu:p-0 max-menu:text-[1.75rem] max-menu:leading-[1.1] max-menu:font-semibold max-menu:tracking-[0.007em] max-menu:text-(--menu-texto)",
-  "menu:min-h-[44px] menu:px-2 menu:py-0 menu:text-[12px] menu:font-normal menu:tracking-[-0.01em] menu:group-last/item:-mr-2 menu:hover:text-(--barra-texto) menu:focus-visible:text-(--barra-texto)",
+  "menu:min-h-[44px] menu:px-2 menu:py-0 menu:text-12 menu:font-normal menu:group-last/item:-mr-2 menu:hover:text-(--barra-texto) menu:focus-visible:text-(--barra-texto)",
 ].join(" ");
 
 function Nav() {
@@ -243,10 +243,10 @@ function Nav() {
           lá o aviso já está no conteúdo. */}
       {comFaixa && (
         <aside
-          className={`px-(--margem) py-4 text-center text-[0.875rem] leading-[1.42859] ${pathname === "/projetos" ? "bg-superficie" : "bg-fundo"}`}
+          className={`px-(--margem) py-4 text-center text-14 ${pathname === "/projetos" ? "bg-superficie" : "bg-fundo"}`}
           aria-label="Inscrições abertas"
         >
-          <p className="m-0 tracking-[-0.016em]">
+          <p className="m-0 text-14">
             Inscrições abertas até {fimSelecao}.{" "}
             {/* O link não se parte: a quebra, se houver, vem antes dele. */}
             <Link className="link-mais whitespace-nowrap" href="/inscricoes">

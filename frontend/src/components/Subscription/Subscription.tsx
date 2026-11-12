@@ -118,7 +118,7 @@ function Subscription() {
       {aviso}
       <div className="desktop:col-start-1 desktop:row-start-3">
         <h2 className="titulo-bloco">Para se inscrever, é preciso</h2>
-        <ul className="mt-0 mb-6 max-w-[36rem] pl-6 text-corpo leading-[1.47059]">
+        <ul className="mt-0 mb-6 max-w-[36rem] pl-6 text-17">
           <li>
             cursar Engenharia de Computação na Ufes, com entrada recente no
             curso (cada edital diz a partir de qual semestre);

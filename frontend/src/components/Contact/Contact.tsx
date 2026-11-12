@@ -207,7 +207,7 @@ const ContactPage = () => {
 
         <div>
           <h2 className="titulo-bloco">Onde estamos</h2>
-          <p className="text-corpo leading-[1.47059]">
+          <p className="text-17">
             Sala 18, 2º andar do CT XIII
             <br />
             Ufes, campus de Goiabeiras, Vitória (ES)

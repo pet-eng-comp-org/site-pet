@@ -16,8 +16,8 @@ const Hero = () => {
   return (
     <section className={`mb-3 bg-superficie ${FOLGA_DO_BLOCO} text-center`}>
       <div className="px-(--margem)">
-        {/* Do tamanho do título das outras páginas: 72 px, 56 até 1068 px, 48 até 734 px. */}
-        <h1 className="bloco-titulo text-[4.5rem] leading-[1.1] text-texto max-desktop:text-[3.5rem] max-tablet:text-[3rem]">PET Engenharia de Computação</h1>
+        {/* Do tamanho do título das outras páginas: 80 px, 56 até 1068 px, 48 até 734 px. */}
+        <h1 className="bloco-titulo text-[5rem] leading-[1.1] text-texto max-desktop:text-[3.5rem] max-tablet:text-[3rem]">PET Engenharia de Computação</h1>
         <p className="bloco-subtitulo">
           Ensino, pesquisa e extensão na Ufes: Topcom, Game Jam, monitorias e
           mais.
