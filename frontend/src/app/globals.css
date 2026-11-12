@@ -571,6 +571,8 @@
     font-size: 3rem;
     font-weight: 800;
     line-height: 1.05;
+    /* A fonte da marca usa o espaçamento dela, e não o da escala. */
+    letter-spacing: normal;
   }
 
   .App .pagina .titulo-bloco {
