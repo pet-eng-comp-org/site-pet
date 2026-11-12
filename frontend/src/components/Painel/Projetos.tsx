@@ -233,10 +233,10 @@ function Descricao({ id, rotulo, atual, aoSalvar }: PropsDescricao) {
   };
   return (
     <div className="mb-2">
-      <label className="mb-1 block text-[0.9375rem] font-semibold" htmlFor={`alt-${id}`}>O que a {rotulo} mostra</label>
+      <label className="mb-1 block text-14 font-semibold" htmlFor={`alt-${id}`}>O que a {rotulo} mostra</label>
       <textarea
         id={`alt-${id}`}
-        className="form-control text-[0.9375rem]"
+        className="form-control text-14"
         rows={2}
         maxLength={300}
         value={texto}

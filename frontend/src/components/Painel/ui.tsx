@@ -191,7 +191,7 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
       {aberta && (
         <FecharJanela.Provider value={pedirFechar}>
           <div className="mb-4 flex items-start justify-between gap-4">
-            <h2 id={idTitulo} className="mt-2 mb-0 text-21 focus:outline-none" tabIndex={-1}>
+            <h2 id={idTitulo} className="mt-2 mb-0 text-21 font-semibold focus:outline-none" tabIndex={-1}>
               {titulo}
             </h2>
             {/* Botão redondo, como o X das folhas. */}

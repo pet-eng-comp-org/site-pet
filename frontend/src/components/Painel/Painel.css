@@ -107,7 +107,9 @@
 
   .painel-item-texto span {
     color: var(--color-texto-suave);
-    font-size: 0.9375rem;
+    font-size: var(--text-14);
+    line-height: var(--text-14--line-height);
+    letter-spacing: var(--text-14--letter-spacing);
   }
 
   .painel-item-acoes {
@@ -179,12 +181,15 @@
     display: block;
     margin-bottom: 0.25rem;
     font-weight: 600;
+    letter-spacing: var(--text-17--letter-spacing);
   }
 
   .campo-dica {
     margin: 0 0 0.35rem;
     color: var(--color-texto-suave);
-    font-size: 0.9375rem;
+    font-size: var(--text-14);
+    line-height: var(--text-14--line-height);
+    letter-spacing: var(--text-14--letter-spacing);
   }
 
   .campo-erro {

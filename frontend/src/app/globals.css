@@ -224,9 +224,6 @@
 
   :root {
     --margem: 1rem;
-    /* Escala de texto, num lugar só. Um tamanho para todo texto corrido; os
-       títulos em degraus claros (o da página cerca de 1,6 vez o da seção). */
-    --titulo-secao: 1.375rem; /* 22 px no celular, 28 px na tela larga */
   }
 
   /* Margem lateral: até 1068 px o conteúdo ocupa 87,5% da
@@ -240,7 +237,6 @@
   @media (min-width: 1069px) {
     :root {
       --margem: 2rem;
-      --titulo-secao: 1.75rem;
     }
   }
 
@@ -356,8 +352,9 @@
   .campo:has(.form-control:focus) label,
   .campo:has(.form-control:not(:placeholder-shown)) label {
     top: 10px;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: var(--text-12);
+    line-height: var(--text-12--line-height);
+    letter-spacing: var(--text-12--letter-spacing);
   }
 
   /* Foco: a borda passa a 2 px na cor de ação,
@@ -593,10 +590,30 @@
   }
 
   /* Título de seção dentro do texto: o mesmo em todas as páginas. */
+  /* Título de seção dentro da página (no painel, o nome da seção): 28 px,
+     24 até 1068 px e 21 até 734 px, em peso 600. */
   .pagina h2 {
-    font-size: var(--titulo-secao);
-    font-weight: 700;
+    font-size: var(--text-28);
+    line-height: var(--text-28--line-height);
+    letter-spacing: var(--text-28--letter-spacing);
+    font-weight: 600;
     color: var(--color-texto);
+  }
+
+  @media (max-width: 1068px) {
+    .pagina h2 {
+      font-size: var(--text-24);
+      line-height: var(--text-24--line-height);
+      letter-spacing: var(--text-24--letter-spacing);
+    }
+  }
+
+  @media (max-width: 734px) {
+    .pagina h2 {
+      font-size: var(--text-21);
+      line-height: var(--text-21--line-height);
+      letter-spacing: var(--text-21--letter-spacing);
+    }
   }
 
   .pagina-intro {
