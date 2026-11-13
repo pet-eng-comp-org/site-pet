@@ -71,7 +71,7 @@ const Participant = ({ participant, projetos }: { participant: Membro; projetos:
     // Cada pessoa num cartão cinza: a foto redonda e as redes em cima, depois
     // o nome, desde quando está no PET, a frase e as comissões, que descem
     // para o fim do cartão.
-    <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_auto_auto_auto_1fr] items-start rounded-cartao bg-superficie p-[30px] text-texto">
+    <div data-revela className="grid grid-cols-[auto_1fr] grid-rows-[auto_auto_auto_auto_1fr] items-start rounded-cartao bg-superficie p-[30px] text-texto">
       <div className="contents">
         {/* Cadastro cuja foto não subiu fica sem ela, e não derruba a página. */}
         {participant.profilePhoto ? (

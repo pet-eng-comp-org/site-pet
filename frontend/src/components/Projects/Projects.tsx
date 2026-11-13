@@ -75,7 +75,7 @@ const Projects = () => {
         // linha, se incompleta, fica alinhada à esquerda.
         <ul className="mt-10 mb-0 grid list-none grid-cols-1 gap-5 p-0 tablet:grid-cols-2 desktop:grid-cols-3">
           {comissions.map((comission) => (
-            <li key={comission._id}>
+            <li key={comission._id} data-revela>
               <Project
                 title={comission.title}
                 description={comission.description}

@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "../components/Navbar/Nav";
 import Footer from "../components/Footer/Footer";
 import Navegacao from "../components/Navegacao/Navegacao";
+import Revelar from "../components/Revelar/Revelar";
 import { ComDadosIniciais } from "../services/useApi";
 import { buscarVarios } from "../services/dadosDoServidor";
 import { SITE, DESCRICAO, PREVIA } from "../services/metadados";
@@ -53,6 +54,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
               {children}
             </main>
             <Footer />
+            <Revelar />
           </div>
         </ComDadosIniciais>
       </body>
