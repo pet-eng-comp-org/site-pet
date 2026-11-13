@@ -250,6 +250,10 @@
      barra, e o topo e o rodapé paravam a 15 px da borda nas páginas curtas.) */
   html {
     overflow-y: scroll;
+    /* O iPhone deitado não aumenta o texto sozinho: os tamanhos são os da
+       escala em qualquer posição. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     /* A barra fixa tem 44 px (48 no celular): o campo ou link que recebe o
        foco não fica escondido atrás dele. */
     scroll-padding-top: 5rem;
