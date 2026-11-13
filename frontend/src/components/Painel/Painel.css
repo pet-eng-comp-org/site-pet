@@ -236,9 +236,11 @@
     margin-top: 6px;
   }
 
+  /* A foto alinhada pelo topo da caixa ao lado: centralizada no bloco, ela
+     descia com a dica e o "Tirar esta foto" e ficava solta da caixa. */
   .painel-form-foto {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
   }
 

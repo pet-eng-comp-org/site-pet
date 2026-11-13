@@ -304,7 +304,7 @@ function FormPetiano({ petiano, projetos, aoFechar, aoSalvar }: PropsForm) {
               <span className="painel-foto-vazia" aria-hidden="true" />
             )}
             <div className="flex-1">
-              <Campo id={id("descontraida")} rotulo="Foto descontraída (opcional)" dica="Aparece quando passam o mouse ou tocam na foto.">
+              <Campo id={id("descontraida")} rotulo="Foto descontraída" dica="Opcional. Aparece quando passam o mouse ou tocam na foto.">
                 <input
                   key={campoDescontraida}
                   type="file"
