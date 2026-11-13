@@ -118,7 +118,8 @@ const ContactPage = () => {
 
   const erroDo = (id: IdCampo) =>
     erroCampo[id] && (
-      <p className="mx-0 -mt-[0.85rem] mb-5 text-[0.95rem] text-erro" id={`contato-${id}-erro`}>
+      // A caixa tem 14 px embaixo; o erro fica a 8 px dela.
+      <p className="campo-erro -mt-[6px]" id={`contato-${id}-erro`}>
         {erroCampo[id]}
       </p>
     );

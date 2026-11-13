@@ -171,12 +171,18 @@
   /* ---- Formulário ------------------------------------------------------------ */
 
   /* O campo (a caixa com o nome dentro) e, embaixo, a dica e o erro. */
+  /* 14 px até o próximo campo; com dica ou erro, eles dão a distância. */
   .painel-campo {
-    margin-bottom: 1.25rem;
+    margin-bottom: 14px;
   }
 
-  .painel-campo .campo-dica {
-    margin: 0.375rem 0 0;
+  .painel-campo:has(.campo-dica, .campo-erro) {
+    margin-bottom: 0;
+  }
+
+  /* Dica de um grupo vem antes das opções. */
+  .painel-grupo > .campo-dica {
+    margin: 0 0 0.5rem;
   }
 
   .painel-grupo legend {
@@ -186,21 +192,7 @@
     letter-spacing: var(--text-17--letter-spacing);
   }
 
-  .campo-dica {
-    margin: 0 0 0.35rem;
-    color: var(--color-texto-suave);
-    font-size: var(--text-14);
-    line-height: var(--text-14--line-height);
-    letter-spacing: var(--text-14--letter-spacing);
-  }
-
-  .campo-erro {
-    margin: 0.35rem 0 0;
-    color: var(--color-erro);
-    font-weight: 600;
-  }
-
-  .painel .campo [aria-invalid="true"] {
+  .painel .campo [aria-invalid="true"]:not(:focus) {
     border-color: var(--color-erro);
   }
 

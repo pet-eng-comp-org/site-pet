@@ -26,6 +26,8 @@
   --color-separador: rgba(0, 0, 0, 0.16);
   --color-borda-campo: #8e8e93;
   --color-erro: #a3321f;
+  /* Fundo do campo com erro, fora do foco. */
+  --color-erro-fundo: #fff2f4;
   --color-ok-fundo: #e3f1ec;
   --color-alerta-fundo: #f8d7da;
   --color-alerta-borda: #f5c6cb;
@@ -406,6 +408,27 @@
 
   .campo:has(textarea.is-invalid) {
     border-color: var(--color-erro);
+  }
+
+  /* Dica e erro embaixo da caixa: 12 px, a 8 px dela, e 12 px até o
+     próximo campo. */
+  .campo-dica,
+  .campo-erro {
+    margin: 0.5rem 0 0.75rem;
+    font-size: var(--text-12);
+    line-height: var(--text-12--line-height);
+    letter-spacing: var(--text-12--letter-spacing);
+    color: var(--color-texto-suave);
+  }
+
+  .campo-erro {
+    color: var(--color-erro);
+  }
+
+  /* Campo com erro: fundo rosado fora do foco; no foco, a borda de ação. */
+  .campo .form-control:is(.is-invalid, [aria-invalid="true"]):not(:focus),
+  .campo:has(textarea:is(.is-invalid, [aria-invalid="true"]):not(:focus)) {
+    background-color: var(--color-erro-fundo);
   }
 
   /* Campo com erro: o nome também na cor de erro. */
