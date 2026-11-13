@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import Nav from "../components/Navbar/Nav";
@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
   manifest: "/manifest.json",
 };
+
+export const viewport: Viewport = { themeColor: "#1d1d1f" };
 
 // Toda página é montada a cada visita, com os dados da API (guardados 30 s).
 export const dynamic = "force-dynamic";
