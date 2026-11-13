@@ -54,7 +54,7 @@ export default function Caminho() {
     <nav aria-label="Caminho" className="mb-[17px] flex items-center border-b border-separador pb-[17px] text-[rgba(0,0,0,0.72)]">
       <Link
         href="/"
-        className="block h-[18px] w-[14px] flex-none bg-current [mask:url(/imagens/logo_pet_simbolo.svg)_center/contain_no-repeat]"
+        className="block h-[18px] w-[14px] flex-none bg-current text-inherit [mask:url(/imagens/logo_pet_simbolo.svg)_center/contain_no-repeat]"
       >
         <span className="sr-only">Início</span>
       </Link>
