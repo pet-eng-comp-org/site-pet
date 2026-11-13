@@ -10,6 +10,7 @@ import Loader from "../../Loader/Loader";
 import NaoEncontrada from "../../NaoEncontrada/NaoEncontrada";
 import { marcarVolta } from "../Projects";
 import { ICONE } from "../Project/Project";
+import Artigos, { temArtigos } from "./Artigos";
 import { API } from "../../../services/apiUrl";
 import type { Comissao } from "../../../tipos";
 
@@ -168,9 +169,11 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
         )}
       </div>
 
+      <Artigos projeto={projeto} />
+
       {/* Sem fotos, um bloco cinza com o ícone grande, para a página não
-          terminar num parágrafo solto. */}
-      {fotos.length === 0 && (
+          terminar num parágrafo solto (com artigos, ela já não termina). */}
+      {fotos.length === 0 && !temArtigos(projeto) && (
         <div className="mt-10 flex h-[360px] items-center justify-center rounded-cartao bg-superficie max-tablet:h-[240px]" aria-hidden="true">
           <span
             className={`size-40 max-tablet:size-28 ${ICONE}`}
