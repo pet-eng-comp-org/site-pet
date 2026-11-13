@@ -203,9 +203,10 @@
      cartões, blocos e rodapé em #f5f5f7, texto em #1d1d1f (o secundário em
      #6e6e73), separadores neutros e
      uma única cor de ação, o verde do PET. Um tema
-     só, claro, que não muda com o tema do aparelho. */
+     só, claro, que não muda com o tema do aparelho. Sem color-scheme, como o
+     apple.com: os campos continuam claros, e só a barra de rolagem da página
+     segue o tema do sistema (escura no Windows escuro). */
   :root {
-    color-scheme: light;
     /* A seta do "Saiba mais ›" (traço de 2 em 8 de largura). */
     --seta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     /* Hover dos botões: um tom só um pouco mais claro que o fundo de ação, e
