@@ -13,27 +13,38 @@ export default function Revelar() {
   useEffect(() => {
     if (caminho === "/" || caminho.startsWith("/admin")) return undefined;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
-    const elementos = [...document.querySelectorAll<HTMLElement>("main .titulo-bloco, main [data-revela]")];
-    const observador = new IntersectionObserver(
-      (entradas) => {
-        for (const e of entradas) {
-          // Também o que ficou para trás num salto de rolagem (voltar à
-          // lista de projetos, por exemplo), para nada sumir acima da tela.
-          if (!e.isIntersecting && e.boundingClientRect.top > 0) continue;
-          e.target.removeAttribute("data-esperando");
-          observador.unobserve(e.target);
-        }
-      },
-      { rootMargin: "0px 0px -100px 0px" },
+    // O que está abaixo da tela espera; a cada quadro de rolagem, o que já
+    // chegou a 100 px dentro dela (ou passou, num salto) aparece. Sem
+    // IntersectionObserver: num salto, o elemento vai de baixo para cima da
+    // tela sem cruzá-la, o observador não avisa e ele ficaria escondido.
+    let esperando = [...document.querySelectorAll<HTMLElement>("main .titulo-bloco, main [data-revela]")].filter(
+      (el) => el.getBoundingClientRect().top >= window.innerHeight - 100,
     );
-    for (const el of elementos) {
-      if (el.getBoundingClientRect().top < window.innerHeight - 100) continue;
-      el.setAttribute("data-esperando", "");
-      observador.observe(el);
-    }
+    esperando.forEach((el) => el.setAttribute("data-esperando", ""));
+    let quadro = 0;
+    const conferir = () => {
+      quadro = 0;
+      const limite = window.innerHeight - 100;
+      esperando = esperando.filter((el) => {
+        if (el.getBoundingClientRect().top >= limite) return true;
+        el.removeAttribute("data-esperando");
+        return false;
+      });
+      if (!esperando.length) parar();
+    };
+    const pedir = () => {
+      if (!quadro) quadro = requestAnimationFrame(conferir);
+    };
+    const parar = () => {
+      window.removeEventListener("scroll", pedir);
+      window.removeEventListener("resize", pedir);
+    };
+    window.addEventListener("scroll", pedir, { passive: true });
+    window.addEventListener("resize", pedir);
     return () => {
-      observador.disconnect();
-      elementos.forEach((el) => el.removeAttribute("data-esperando"));
+      parar();
+      cancelAnimationFrame(quadro);
+      esperando.forEach((el) => el.removeAttribute("data-esperando"));
     };
   }, [caminho]);
   return null;
