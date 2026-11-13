@@ -7,7 +7,9 @@ const NaoEncontrada = () => {
       <p className="pagina-intro">
         O endereço pode estar errado ou a página mudou de lugar.
       </p>
-      <Link className="botao-principal" href="/">
+      {/* Um link de texto com a seta, e não um botão: a página só aponta o
+          caminho de volta. */}
+      <Link className="link-mais" href="/">
         Ir para a página inicial
       </Link>
     </div>
