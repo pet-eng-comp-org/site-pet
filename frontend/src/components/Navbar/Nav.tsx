@@ -135,8 +135,8 @@ function Nav() {
   useEffect(() => setLogado(Boolean(isAuth())), [pathname]);
 
 
-  // O fundo do menu leva meio milissegundo por pixel da tela, como no
-  // apple.com: numa tela alta ela desce mais devagar e não parece um salto.
+  // O fundo do menu leva meio milissegundo por pixel da tela: numa tela alta
+  // ele desce mais devagar e não parece um salto.
   // Durante a animação, o fundo e a página atrás ficam borrados; parado, o
   // menu é sólido e o borrado sai (globals.css, .barra).
   const [tempoDoMenu, setTempoDoMenu] = useState<string>();
