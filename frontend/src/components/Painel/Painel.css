@@ -204,9 +204,16 @@
     border-color: var(--color-erro);
   }
 
-  /* O arquivo escolhido fica abaixo do nome, que sobe para o topo da caixa. */
+  /* O arquivo escolhido fica abaixo do nome, que sobe para o topo da caixa,
+     em 56 px como os outros campos. No foco, a borda de 2 px tira 1 px da
+     folga, para nada abaixo andar. */
   .painel .campo input[type="file"].form-control {
-    padding: 28px 15px 10px;
+    height: 56px;
+    padding: 24px 15px 0;
+  }
+
+  .painel .campo input[type="file"].form-control:focus {
+    padding: 23px 14px 0;
   }
 
   .painel textarea.form-control {
@@ -218,6 +225,11 @@
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
     gap: 0 1rem;
     align-items: start;
+  }
+
+  /* A caixa de marcar ao lado de um campo fica no meio dele (56 px). */
+  .painel-form-dupla > .painel-caixa {
+    margin-top: 6px;
   }
 
   .painel-form-foto {

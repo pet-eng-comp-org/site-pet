@@ -305,8 +305,9 @@ export const Campo = ({ id, rotulo, dica, erro, children }: PropsCampo) => (
         "aria-describedby":
           [dica && `${id}-dica`, erro && `${id}-erro`].filter(Boolean).join(" ") || undefined,
         className: `form-control ${children.props.className || ""}`,
-        // Sem exemplo, um espaço: com o campo vazio, o nome fica no meio da caixa.
-        placeholder: children.props.placeholder ?? " ",
+        // Sem exemplo, um espaço: com o campo vazio, o nome fica no meio da
+        // caixa. Lista não tem placeholder.
+        ...(children.type !== "select" && { placeholder: children.props.placeholder ?? " " }),
       })}
     </div>
     {dica && (
