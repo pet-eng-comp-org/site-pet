@@ -185,7 +185,7 @@ const ContactPage = () => {
           </div>
           {erroDo("message")}
           {message.length > 4000 && (
-            <p className="-mt-[0.85rem] mb-5 text-[0.9rem]">{message.length} de 5000 caracteres</p>
+            <p className="campo-dica -mt-[6px]">{message.length} de 5000 caracteres</p>
           )}
 
           {/* Sem JavaScript, o formulário não envia: diz como falar com a gente. */}
