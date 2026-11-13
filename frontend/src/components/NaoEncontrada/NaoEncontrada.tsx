@@ -8,7 +8,7 @@ const NaoEncontrada = () => {
         O endereço pode estar errado ou a página mudou de lugar.
       </p>
       {/* Um link de texto com a seta, e não um botão: a página só aponta o
-          caminho de volta. 12 px em cima e embaixo: 44 px para o dedo. */}
+          caminho de volta. 12 px em cima e embaixo: 49 px para o dedo. */}
       <Link className="link-mais inline-block py-3" href="/">
         Ir para a página inicial
       </Link>
