@@ -875,26 +875,102 @@
   }
 
   /* Menu do celular, aberto pelo botão (data-menu="aberto" no topo): abre na
-     tela inteira, abaixo da barra, com fundo sólido e sem o símbolo, que some
-     mas guarda o lugar (o X não pula). Os links ficam sempre na página, de
-     altura zero e invisíveis quando fechados, para dar para animar. O fundo
-     desce em 0,24 s depois de 80 ms; os itens descem 8 px a partir de 0,2 s,
-     um a cada 20 ms (--ordem); ao fechar, saem todos juntos e o fundo sobe. */
+     tela inteira, abaixo da barra, e sem o símbolo, que some mas guarda o
+     lugar (o X não pula). Os links ficam sempre na página, de altura zero e
+     invisíveis quando fechados, para dar para animar. Tudo como no apple.com:
+     - o fundo da barra (::before) desce até o pé da tela na hora, em meio
+       milissegundo por pixel (--menu-tempo, posto pelo Nav.tsx: 0,35 s numa
+       tela de 700 px), ainda de vidro, e chega sólido;
+     - a página atrás escurece e borra (::after) em 0,32 s;
+     - os itens descem 8 px a partir de 0,2 s, um a cada 20 ms (--ordem);
+     - ao fechar, os itens somem, o primeiro mais devagar, e o fundo sobe
+       depois de 80 ms.
+     Os dois borrados só valem durante a animação (data-animando): com o menu
+     aberto o fundo é sólido e cobre a tela, e o borrado só gastaria bateria. */
   @media (max-width: 833.98px) {
-    .barra {
-      transition: background-color 0.24s var(--ease-barra) 80ms;
+    .barra,
+    [data-menu] .barra {
+      background: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .barra::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      z-index: -1;
+      height: 100%;
+      background: var(--barra-solida);
+      transition:
+        height var(--menu-tempo, 0.35s) var(--ease-barra) 80ms,
+        background-color var(--menu-tempo, 0.35s) var(--ease-barra) 80ms;
+    }
+
+    @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+      .barra::before {
+        background: var(--vidro-fundo);
+        -webkit-backdrop-filter: var(--vidro-filtro);
+        backdrop-filter: var(--vidro-filtro);
+      }
+    }
+
+    [data-menu="aberto"] .barra::before {
+      height: 100dvh;
+      background: var(--menu-fundo);
+      transition-delay: 0s;
+    }
+
+    [data-menu="aberto"]:not([data-animando]) .barra::before {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .barra::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: rgba(0, 0, 0, 0.4);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 0.32s var(--ease-barra) 80ms,
+        visibility 0.32s steps(1, end) 80ms;
+    }
+
+    [data-menu="aberto"] .barra::after {
+      opacity: 1;
+      visibility: visible;
+      transition:
+        opacity 0.32s var(--ease-barra) 80ms,
+        visibility 0.32s steps(1, start) 80ms;
+    }
+
+    [data-menu="aberto"]:not([data-animando]) .barra::after {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .barra::before {
+        background: var(--barra-solida);
+      }
+
+      .barra::before,
+      .barra::after {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
     }
 
     .barra-marca {
       transition:
         opacity 0.24s var(--ease-barra) 80ms,
         visibility 0.24s steps(1, start) 80ms;
-    }
-
-    [data-menu="aberto"] .barra {
-      background: var(--menu-fundo);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
     }
 
     [data-menu="aberto"] .barra-marca {
@@ -915,11 +991,10 @@
       overflow: hidden;
       overscroll-behavior: contain;
       padding: 0 48px;
-      background: var(--menu-fundo);
       visibility: hidden;
       transition:
-        height 0.24s var(--ease-barra) 80ms,
-        visibility 0s linear 0.32s;
+        height var(--menu-tempo, 0.35s) var(--ease-barra) 80ms,
+        visibility 0s linear calc(var(--menu-tempo, 0.35s) + 80ms);
     }
 
     /* A tela menos a barra: 100% aqui é a altura da barra. */
@@ -929,16 +1004,16 @@
       padding-bottom: calc(2rem + env(safe-area-inset-bottom));
       visibility: visible;
       transition:
-        height 0.24s var(--ease-barra) 80ms,
+        height var(--menu-tempo, 0.35s) var(--ease-barra),
         visibility 0s;
     }
 
     .barra-links li {
       opacity: 0;
       transform: translateY(-8px);
-      transition:
-        opacity 0.16s var(--ease-barra),
-        transform 0.16s var(--ease-barra);
+      transition-property: opacity, transform;
+      transition-timing-function: var(--ease-barra);
+      transition-duration: min(0.16s + (var(--total) - 1 - var(--ordem)) * 20ms, 0.24s);
     }
 
     [data-menu="aberto"] .barra-links li {
@@ -946,6 +1021,13 @@
       transform: none;
       transition-duration: 0.24s;
       transition-delay: calc(0.2s + var(--ordem) * 20ms);
+    }
+
+    /* Sem JavaScript os links ficam à vista: fundo sólido, sem vidro. */
+    .sem-js .barra::before {
+      background: var(--menu-fundo);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
     }
 
     .sem-js .barra-links {
@@ -961,7 +1043,10 @@
   }
 
   @media (max-width: 833.98px) and (prefers-reduced-motion: reduce) {
-    .barra,
+    .barra::before,
+    [data-menu="aberto"] .barra::before,
+    .barra::after,
+    [data-menu="aberto"] .barra::after,
     .barra-marca,
     [data-menu="aberto"] .barra-marca,
     .barra-links,

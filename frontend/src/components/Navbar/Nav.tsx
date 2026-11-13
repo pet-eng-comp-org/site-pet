@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, type CSSProperties } from "react";
+import { useState, useEffect, useRef, useCallback, type CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useApi from "../../services/useApi";
@@ -135,9 +135,25 @@ function Nav() {
   useEffect(() => setLogado(Boolean(isAuth())), [pathname]);
 
 
-  const toggleCollapse = () => {
-    setIsOpen(!isOpen);
-  };
+  // O fundo do menu leva meio milissegundo por pixel da tela, como no
+  // apple.com: numa tela alta ela desce mais devagar e não parece um salto.
+  // Durante a animação, o fundo e a página atrás ficam borrados; parado, o
+  // menu é sólido e o borrado sai (globals.css, .barra).
+  const [tempoDoMenu, setTempoDoMenu] = useState<string>();
+  const [animando, setAnimando] = useState(false);
+  const fimDaAnimacao = useRef<number>(undefined);
+  // Todo jeito de abrir ou fechar passa por aqui (botão, Esc, toque fora,
+  // escolher uma página), para a animação ser sempre a mesma.
+  const mudarMenu = useCallback((abrir: boolean) => {
+    const tempo = Math.round(window.innerHeight / 2);
+    setTempoDoMenu(`${tempo}ms`);
+    setAnimando(true);
+    window.clearTimeout(fimDaAnimacao.current);
+    // O borrado sai quando acaba o mais longo: o fundo ou a cortina (0,32 s),
+    // mais os 80 ms de atraso.
+    fimDaAnimacao.current = window.setTimeout(() => setAnimando(false), Math.max(tempo, 320) + 80);
+    setIsOpen(abrir);
+  }, []);
 
   // Esc fecha o menu aberto e devolve o foco ao botão que o abriu; tocar
   // fora do topo também fecha.
@@ -147,11 +163,11 @@ function Nav() {
     if (!isOpen) return;
     const fechaComEsc = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      setIsOpen(false);
+      mudarMenu(false);
       botaoMenu.current?.focus();
     };
     const fechaAoTocarFora = (e: PointerEvent) => {
-      if (!topo.current?.contains(e.target as Node)) setIsOpen(false);
+      if (!topo.current?.contains(e.target as Node)) mudarMenu(false);
     };
     document.addEventListener("keydown", fechaComEsc);
     document.addEventListener("pointerdown", fechaAoTocarFora);
@@ -159,7 +175,7 @@ function Nav() {
       document.removeEventListener("keydown", fechaComEsc);
       document.removeEventListener("pointerdown", fechaAoTocarFora);
     };
-  }, [isOpen]);
+  }, [isOpen, mudarMenu]);
 
   const comFaixa = showMessage && pathname !== "/inscricoes";
 
@@ -167,7 +183,7 @@ function Nav() {
   const atual = (to: string) => (to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(`${to}/`));
 
   // No celular, escolher uma página fecha o menu, que senão cobre o título.
-  const fecharMenu = () => setIsOpen(false);
+  const fecharMenu = () => isOpen && mudarMenu(false);
 
   // Menu aberto: a página fica parada atrás dele, e fora
   // do alcance do Tab e do VoiceOver (inert), que senão andavam pelo que o
@@ -191,7 +207,13 @@ function Nav() {
 
   return (
     <>
-      <header className={TOPO} data-menu={isOpen ? "aberto" : undefined} ref={topo}>
+      <header
+        className={TOPO}
+        data-menu={isOpen ? "aberto" : undefined}
+        data-animando={animando || undefined}
+        ref={topo}
+        style={tempoDoMenu ? ({ "--menu-tempo": tempoDoMenu } as CSSProperties) : undefined}
+      >
         <nav className={BARRA} aria-label="Principal">
           <Link href="/" onClick={fecharMenu} className={MARCA}>
             <img
@@ -206,7 +228,7 @@ function Nav() {
             type="button"
             className={BOTAO_MENU}
             ref={botaoMenu}
-            onClick={toggleCollapse}
+            onClick={() => mudarMenu(!isOpen)}
             aria-controls="menu-principal"
             aria-expanded={isOpen}
             aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
@@ -215,7 +237,7 @@ function Nav() {
           </button>
 
           <div id="menu-principal" className="barra-links">
-            <ul className={LISTA}>
+            <ul className={LISTA} style={{ "--total": paginas.length + (logado ? 1 : 0) } as CSSProperties}>
               {paginas.map(([to, rotulo], i) => (
                 <li key={to} className="group/item" style={{ "--ordem": i } as CSSProperties}>
                   <Link href={to} className={LINK} aria-current={atual(to) ? "page" : undefined} onClick={fecharMenu}>
