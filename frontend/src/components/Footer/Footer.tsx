@@ -1,3 +1,4 @@
+import Caminho from "./Caminho";
 
 const MAPA =
   "https://www.google.com/maps?ll=-20.273378,-40.305981&z=14&t=m&hl=pt-BR&gl=BR&mapclient=embed&cid=8957845249469204268";
@@ -5,9 +6,10 @@ const MAPA =
 // Os links do endereço e do contato: na cor de link, sublinhados.
 const LINK = "underline hover:decoration-2";
 
-// Rodapé: texto miúdo em cinza, links na cor de link,
-// uma linha fina e o copyright embaixo. Sem logo nem ícones: a marca já
-// está no topo, e o rodapé só responde onde estamos e como falar com a gente.
+// Rodapé: o caminho até a página, texto miúdo em cinza, links na cor de
+// link, uma linha fina e o copyright embaixo. Do logo, só o símbolo pequeno do
+// caminho: a marca já está no topo, e o rodapé responde onde a pessoa está,
+// onde estamos e como falar com a gente.
 const Footer = () => {
   return (
     // Fundo cinza sob a página branca, texto de 12 px com 16 px de entrelinha
@@ -15,6 +17,7 @@ const Footer = () => {
     <footer className="mt-auto bg-superficie text-12 text-[rgba(0,0,0,0.56)]">
       {/* Na coluna de 980 px do cabeçalho e das páginas. */}
       <div className="mx-auto max-w-[calc(980px+2*var(--margem))] px-(--margem) pt-[17px] pb-[19px]">
+        <Caminho />
         <p className="mt-0 mb-4 border-b border-separador pb-[19px] tracking-[inherit]">
           Estamos na sala 18, 2º andar do CT XIII, Ufes, campus de Goiabeiras,
           Vitória (ES), 29075-073 (
