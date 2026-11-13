@@ -18,6 +18,10 @@ const COM_ICONE = new Set([
   "topcom",
 ]);
 
+// Projeto com ícone no código: a primeira imagem enviada pelo painel não
+// aparece no site.
+export const temIconeFixo = (titulo: string) => COM_ICONE.has(slug(titulo));
+
 const iconeProjeto = (titulo: string, idDoPainel?: string): string => {
   const s = slug(titulo);
   if (COM_ICONE.has(s)) return `/icones-projetos/${s}.svg`;

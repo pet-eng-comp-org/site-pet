@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type CSSProperties } from "react";
 import Link from "next/link";
 import slug from "../../utils/slug";
+import iconeProjeto, { temIconeFixo } from "../../utils/iconeProjeto";
+import { ICONE } from "../Projects/Project/Project";
 import { painel, erroDe } from "./painelApi";
 import {
   API,
@@ -44,8 +46,13 @@ function Projetos() {
           <ul className="painel-lista">
             {lista.map((p) => (
               <li key={p._id} className="painel-item">
-                {p.photos[0] ? (
-                  <img className="painel-foto bg-acao-fundo object-contain p-[10px]" src={foto(p.photos[0])} alt="" width="56" height="56" loading="lazy" />
+                {/* O mesmo ícone do cartão do site. */}
+                {iconeProjeto(p.title, p.photos[0]) ? (
+                  <span
+                    className={`painel-foto ${ICONE}`}
+                    style={{ "--icone": `url("${iconeProjeto(p.title, p.photos[0])}")` } as CSSProperties}
+                    aria-hidden="true"
+                  />
                 ) : (
                   <span className="painel-foto painel-foto-vazia" aria-hidden="true" />
                 )}
@@ -293,7 +300,10 @@ function Fotos({ projeto, aoFechar, aoMudar }: PropsFotos) {
       setOcupado(false);
     }
   };
-  const papel = (i: number) => (i === 0 ? "ícone" : `foto ${i}`);
+  // Projeto com ícone no código: a primeira imagem é o ícone antigo, que não
+  // aparece no site.
+  const iconeFixo = temIconeFixo(projeto.title);
+  const papel = (i: number) => (i === 0 ? (iconeFixo ? "ícone antigo" : "ícone") : `foto ${i}`);
   const enviar = (arquivos: File[]) =>
     fazer(async () => {
       for (const arq of arquivos) {
@@ -315,7 +325,11 @@ function Fotos({ projeto, aoFechar, aoMudar }: PropsFotos) {
   return (
     <Janela titulo={`Fotos de ${projeto.title}`} aberta aoFechar={aoFechar} larga focoNoTitulo>
       <p>
-        A primeira é o <strong>ícone</strong> do cartão em Projetos (quadrada, de preferência). As outras formam a galeria,
+        {iconeFixo ? (
+          <>A primeira é o ícone antigo: este projeto já tem ícone no site, e ela não aparece. As outras formam a galeria,</>
+        ) : (
+          <>A primeira é o <strong>ícone</strong> do cartão em Projetos (quadrada, de preferência). As outras formam a galeria,</>
+        )}{" "}
         nessa ordem; a primeira que não está em pé também aparece quando alguém compartilha o link do projeto. Escreva em cada uma o
         que ela mostra, para quem usa leitor de tela. As mudanças valem na hora.
       </p>
@@ -323,7 +337,7 @@ function Fotos({ projeto, aoFechar, aoMudar }: PropsFotos) {
         {projeto.photos.map((id, i) => (
           <li key={id} data-foto={id}>
             <img className="block aspect-[4/3] w-full rounded-[12px] bg-superficie-suave object-cover" src={foto(id)} alt="" loading="lazy" />
-            <span className="my-[0.35rem] block font-semibold">{i === 0 ? "Ícone" : `Foto ${i}`}</span>
+            <span className="my-[0.35rem] block font-semibold">{i === 0 ? (iconeFixo ? "Ícone antigo (fora do site)" : "Ícone") : `Foto ${i}`}</span>
             {i > 0 && (
               <Descricao
                 id={id}
