@@ -135,7 +135,11 @@ function Nav() {
   useEffect(() => setLogado(Boolean(isAuth())), [pathname]);
 
 
+  // A cortina do menu leva meio milissegundo por pixel da tela, como no
+  // apple.com: numa tela alta ela desce mais devagar e não parece um salto.
+  const [tempoDoMenu, setTempoDoMenu] = useState<string>();
   const toggleCollapse = () => {
+    setTempoDoMenu(`${Math.round(window.innerHeight / 2)}ms`);
     setIsOpen(!isOpen);
   };
 
@@ -191,7 +195,12 @@ function Nav() {
 
   return (
     <>
-      <header className={TOPO} data-menu={isOpen ? "aberto" : undefined} ref={topo}>
+      <header
+        className={TOPO}
+        data-menu={isOpen ? "aberto" : undefined}
+        ref={topo}
+        style={tempoDoMenu ? ({ "--menu-tempo": tempoDoMenu } as CSSProperties) : undefined}
+      >
         <nav className={BARRA} aria-label="Principal">
           <Link href="/" onClick={fecharMenu} className={MARCA}>
             <img
@@ -215,7 +224,7 @@ function Nav() {
           </button>
 
           <div id="menu-principal" className="barra-links">
-            <ul className={LISTA}>
+            <ul className={LISTA} style={{ "--total": paginas.length + (logado ? 1 : 0) } as CSSProperties}>
               {paginas.map(([to, rotulo], i) => (
                 <li key={to} className="group/item" style={{ "--ordem": i } as CSSProperties}>
                   <Link href={to} className={LINK} aria-current={atual(to) ? "page" : undefined} onClick={fecharMenu}>
