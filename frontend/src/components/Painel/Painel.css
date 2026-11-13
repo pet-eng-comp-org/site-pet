@@ -209,11 +209,23 @@
      folga, para nada abaixo andar. */
   .painel .campo input[type="file"].form-control {
     height: 56px;
-    padding: 24px 15px 0;
+    padding: 25px 15px 0;
+    /* O nome do arquivo no tamanho do botão. */
+    font-size: var(--text-14);
   }
 
   .painel .campo input[type="file"].form-control:focus {
-    padding: 23px 14px 0;
+    padding: 24px 14px 0;
+  }
+
+  /* O botão com 24 px de altura em todo navegador: no Safari ele tinha 32 e
+     passava da borda de baixo. */
+  .painel .campo input[type="file"].form-control::file-selector-button {
+    height: 24px;
+    margin-right: 0.5rem;
+    padding: 0 0.625rem;
+    font: inherit;
+    line-height: 1;
   }
 
   .painel textarea.form-control {
