@@ -53,7 +53,7 @@
 
   --font-marca: "Sofia Sans Condensed", "Arial Narrow", sans-serif;
 
-  /* A escala de texto, a mesma do apple.com: cada tamanho tem a sua
+  /* A escala de texto: cada tamanho tem a sua
      entrelinha e o seu espaçamento entre letras (text-24, text-17...). O
      texto corrido é o de 17 px. Os títulos na fonte da marca usam só o
      tamanho, com a entrelinha deles. */
@@ -92,8 +92,8 @@
   }
 
   /* Texto na SF, a fonte do sistema no Mac e no iPhone: nada para baixar.
-     Fora da Apple, a Inter (public/fonts), a mais próxima da SF e a mesma do
-     guia no Figma; no Windows a Segoe deixava o site com outra cara. Como a
+     Nos outros sistemas, a Inter (public/fonts), a mais próxima da SF e a
+     mesma do guia no Figma; no Windows a Segoe deixava o site com outra cara. Como a
      SF vem antes, o Mac e o iPhone nem baixam a Inter. A marca fica no
      título, na Sofia Sans Condensed (.App h1). Sem system-ui na lista: no
      Linux ele segue a configuração da máquina e já caiu numa fonte chinesa. */
@@ -203,9 +203,9 @@
      cartões, blocos e rodapé em #f5f5f7, texto em #1d1d1f (o secundário em
      #6e6e73), separadores neutros e
      uma única cor de ação, o verde do PET. Um tema
-     só, claro, que não muda com o tema do aparelho. Sem color-scheme, como o
-     apple.com: os campos continuam claros, e só a barra de rolagem da página
-     segue o tema do sistema (escura no Windows escuro). */
+     só, claro, que não muda com o tema do aparelho. Sem color-scheme: os
+     campos continuam claros, e só a barra de rolagem da página segue o tema
+     do sistema (escura no Windows escuro). */
   :root {
     /* A seta do "Saiba mais ›" (traço de 2 em 8 de largura). */
     --seta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -878,7 +878,7 @@
   /* Menu do celular, aberto pelo botão (data-menu="aberto" no topo): abre na
      tela inteira, abaixo da barra, e sem o símbolo, que some mas guarda o
      lugar (o X não pula). Os links ficam sempre na página, de altura zero e
-     invisíveis quando fechados, para dar para animar. Tudo como no apple.com:
+     invisíveis quando fechados, para dar para animar.
      - o fundo da barra (::before) desce até o pé da tela na hora, em meio
        milissegundo por pixel (--menu-tempo, posto pelo Nav.tsx: 0,35 s numa
        tela de 700 px), ainda de vidro, e chega sólido;
