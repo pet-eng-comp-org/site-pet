@@ -26,7 +26,7 @@ const GrupoDocumentos = ({ document, busca = "" }: { document: GrupoDeDocumentos
   if (arquivos.length === 0) return null;
 
   return (
-    <section className="mb-6 break-inside-avoid rounded-cartao bg-superficie px-8 pt-8 pb-6">
+    <section data-revela className="mb-6 break-inside-avoid rounded-cartao bg-superficie px-8 pt-8 pb-6">
       <h2 className="mb-3 text-21 font-semibold">{document.title}</h2>
       {/* Do tablet em diante, os documentos em colunas que se alinham por
           linha: nome de duas linhas numa coluna não desalinha as divisórias

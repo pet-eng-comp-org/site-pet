@@ -196,7 +196,7 @@ function ProjetoPagina({ projeto }: { projeto: string }) {
             // A primeira linha costuma estar na primeira tela: vem logo.
             const primeira = n === 0;
             return (
-              <div className="flex items-start gap-4 max-tablet:flex-col max-tablet:gap-3" key={linha[0].id}>
+              <div data-revela className="flex items-start gap-4 max-tablet:flex-col max-tablet:gap-3" key={linha[0].id}>
                 {linha.map((f) => (
                   <img
                     key={f.id}
