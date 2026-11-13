@@ -1023,6 +1023,13 @@
       transition-delay: calc(0.2s + var(--ordem) * 20ms);
     }
 
+    /* Sem JavaScript os links ficam à vista: fundo sólido, sem vidro. */
+    .sem-js .barra::before {
+      background: var(--menu-fundo);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
     .sem-js .barra-links {
       position: static;
       height: auto;

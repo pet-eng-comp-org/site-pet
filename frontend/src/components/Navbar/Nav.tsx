@@ -135,7 +135,7 @@ function Nav() {
   useEffect(() => setLogado(Boolean(isAuth())), [pathname]);
 
 
-  // A cortina do menu leva meio milissegundo por pixel da tela, como no
+  // O fundo do menu leva meio milissegundo por pixel da tela, como no
   // apple.com: numa tela alta ela desce mais devagar e não parece um salto.
   // Durante a animação, o fundo e a página atrás ficam borrados; parado, o
   // menu é sólido e o borrado sai (globals.css, .barra).
@@ -149,7 +149,8 @@ function Nav() {
     setTempoDoMenu(`${tempo}ms`);
     setAnimando(true);
     window.clearTimeout(fimDaAnimacao.current);
-    // A cortina leva o tempo do fundo ou 0,32 s, o que for maior, mais 80 ms.
+    // O borrado sai quando acaba o mais longo: o fundo ou a cortina (0,32 s),
+    // mais os 80 ms de atraso.
     fimDaAnimacao.current = window.setTimeout(() => setAnimando(false), Math.max(tempo, 320) + 80);
     setIsOpen(abrir);
   }, []);
