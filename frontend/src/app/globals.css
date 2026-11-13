@@ -847,9 +847,12 @@
       translate 0.7s cubic-bezier(0.45, 0, 0.55, 1);
   }
 
-  main [data-esperando] {
-    opacity: 0;
-    translate: 0 30px;
+  /* Só na tela: impressa, a página sai inteira. */
+  @media screen {
+    main [data-esperando] {
+      opacity: 0;
+      translate: 0 30px;
+    }
   }
 
   /* ---- Barra do topo ---------------------------------------------------- */
