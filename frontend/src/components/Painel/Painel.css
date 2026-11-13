@@ -170,13 +170,21 @@
 
   /* ---- Formulário ------------------------------------------------------------ */
 
-  /* Os campos do painel têm o rótulo em cima, e não dentro, como os do site:
-     tudo aqui fica dentro do .painel, para não mudar o Contato e o login. */
-  .painel .campo {
-    margin-bottom: 1.25rem;
+  /* O campo (a caixa com o nome dentro) e, embaixo, a dica e o erro. */
+  /* 14 px até o próximo campo; com dica ou erro, eles dão a distância. */
+  .painel-campo {
+    margin-bottom: 14px;
   }
 
-  .painel .campo label,
+  .painel-campo:has(.campo-dica, .campo-erro) {
+    margin-bottom: 0;
+  }
+
+  /* Dica de um grupo vem antes das opções. */
+  .painel-grupo > .campo-dica {
+    margin: 0 0 0.5rem;
+  }
+
   .painel-grupo legend {
     display: block;
     margin-bottom: 0.25rem;
@@ -184,26 +192,32 @@
     letter-spacing: var(--text-17--letter-spacing);
   }
 
-  .campo-dica {
-    margin: 0 0 0.35rem;
-    color: var(--color-texto-suave);
-    font-size: var(--text-14);
-    line-height: var(--text-14--line-height);
-    letter-spacing: var(--text-14--letter-spacing);
-  }
-
-  .campo-erro {
-    margin: 0.35rem 0 0;
-    color: var(--color-erro);
-    font-weight: 600;
-  }
-
-  .painel .campo [aria-invalid="true"] {
+  .painel .campo [aria-invalid="true"]:not(:focus) {
     border-color: var(--color-erro);
   }
 
+  /* O arquivo escolhido fica abaixo do nome, que sobe para o topo da caixa,
+     em 56 px como os outros campos. No foco, a borda de 2 px tira 1 px da
+     folga, para nada abaixo andar. */
   .painel .campo input[type="file"].form-control {
-    padding: 0.5rem;
+    height: 56px;
+    padding: 25px 15px 0;
+    /* O nome do arquivo no tamanho do botão. */
+    font-size: var(--text-14);
+  }
+
+  .painel .campo input[type="file"].form-control:focus {
+    padding: 24px 14px 0;
+  }
+
+  /* O botão com 24 px de altura em todo navegador: no Safari ele tinha 32 e
+     passava da borda de baixo. */
+  .painel .campo input[type="file"].form-control::file-selector-button {
+    height: 24px;
+    margin-right: 0.5rem;
+    padding: 0 0.625rem;
+    font: inherit;
+    line-height: 1;
   }
 
   .painel textarea.form-control {
@@ -214,7 +228,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
     gap: 0 1rem;
-    align-items: end;
+    align-items: start;
+  }
+
+  /* A caixa de marcar ao lado de um campo fica no meio dele (56 px). */
+  .painel-form-dupla > .painel-caixa {
+    margin-top: 6px;
   }
 
   .painel-form-foto {
@@ -233,7 +252,7 @@
     object-position: top;
   }
 
-  .painel .painel-form-foto .campo {
+  .painel .painel-form-foto .painel-campo {
     flex: 1;
   }
 

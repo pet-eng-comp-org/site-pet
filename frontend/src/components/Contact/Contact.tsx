@@ -118,7 +118,8 @@ const ContactPage = () => {
 
   const erroDo = (id: IdCampo) =>
     erroCampo[id] && (
-      <p className="mx-0 -mt-[0.85rem] mb-5 text-[0.95rem] text-erro" id={`contato-${id}-erro`}>
+      // A caixa tem 14 px embaixo; o erro fica a 8 px dela.
+      <p className="campo-erro -mt-[6px]" id={`contato-${id}-erro`}>
         {erroCampo[id]}
       </p>
     );
@@ -184,7 +185,7 @@ const ContactPage = () => {
           </div>
           {erroDo("message")}
           {message.length > 4000 && (
-            <p className="-mt-[0.85rem] mb-5 text-[0.9rem]">{message.length} de 5000 caracteres</p>
+            <p className="campo-dica -mt-[6px]">{message.length} de 5000 caracteres</p>
           )}
 
           {/* Sem JavaScript, o formulário não envia: diz como falar com a gente. */}

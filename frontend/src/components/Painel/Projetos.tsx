@@ -355,24 +355,23 @@ function Fotos({ projeto, aoFechar, aoMudar }: PropsFotos) {
         ))}
       </ol>
       <p className="mx-0 mt-4 mb-0 font-semibold empty:m-0" role="status">{anuncio}</p>
-      <div className="campo">
-        <label htmlFor="fotos-novas">{projeto.photos.length ? "Enviar mais fotos" : "Enviar o ícone e as fotos"}</label>
-        <p className="campo-dica" id="fotos-dica">Pode escolher várias de uma vez; elas entram no fim, na ordem escolhida.</p>
+      <Campo
+        id="fotos-novas"
+        rotulo={projeto.photos.length ? "Enviar mais fotos" : "Enviar o ícone e as fotos"}
+        dica="Pode escolher várias de uma vez; elas entram no fim, na ordem escolhida."
+      >
         <input
-          id="fotos-novas"
-          className="form-control"
           type="file"
           accept="image/*"
           multiple
           disabled={ocupado}
-          aria-describedby="fotos-dica"
           onChange={(e) => {
             const arquivos = [...(e.target.files || [])];
             e.target.value = "";
             if (arquivos.length) enviar(arquivos);
           }}
         />
-      </div>
+      </Campo>
       {ocupado && <p>Salvando…</p>}
       <ErroDaJanela erro={erro} />
       <div className="janela-acoes">

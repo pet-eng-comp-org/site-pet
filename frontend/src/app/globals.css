@@ -26,6 +26,8 @@
   --color-separador: rgba(0, 0, 0, 0.16);
   --color-borda-campo: #8e8e93;
   --color-erro: #a3321f;
+  /* Fundo do campo com erro, fora do foco. */
+  --color-erro-fundo: #fff2f4;
   --color-ok-fundo: #e3f1ec;
   --color-alerta-fundo: #f8d7da;
   --color-alerta-borda: #f5c6cb;
@@ -349,8 +351,11 @@
     transition: top 0.125s ease-in, font-size 0.125s ease-in;
   }
 
+  /* Também fica no alto com um exemplo na caixa (placeholder de verdade, não
+     o " " do Contato). Data e arquivo já contam como não vazios. */
   .campo:has(.form-control:focus) label,
-  .campo:has(.form-control:not(:placeholder-shown)) label {
+  .campo:has(.form-control:not(:placeholder-shown)) label,
+  .campo:has(.form-control[placeholder]:not([placeholder=" "])) label {
     top: 10px;
     font-size: var(--text-12);
     line-height: var(--text-12--line-height);
@@ -405,9 +410,45 @@
     border-color: var(--color-erro);
   }
 
-  /* Campo com erro: o nome também na cor de erro. */
-  .campo:has(.is-invalid) label {
+  /* Dica e erro embaixo da caixa: 12 px, a 8 px dela, e 12 px até o
+     próximo campo. */
+  .campo-dica,
+  .campo-erro {
+    margin: 0.5rem 0 0.75rem;
+    font-size: var(--text-12);
+    line-height: var(--text-12--line-height);
+    letter-spacing: var(--text-12--letter-spacing);
+    color: var(--color-texto-suave);
+  }
+
+  .campo-erro {
     color: var(--color-erro);
+  }
+
+  /* O exemplo na cor suave: legível também no fundo rosado do erro. */
+  .campo .form-control::placeholder {
+    color: var(--color-texto-suave);
+  }
+
+  /* Campo com erro: fundo rosado fora do foco; no foco, a borda de ação. */
+  .campo .form-control:is(.is-invalid, [aria-invalid="true"]):not(:focus),
+  .campo:has(textarea:is(.is-invalid, [aria-invalid="true"]):not(:focus)) {
+    background-color: var(--color-erro-fundo);
+  }
+
+  /* Campo com erro: o nome também na cor de erro. */
+  .campo:has(.is-invalid, [aria-invalid="true"]) label {
+    color: var(--color-erro);
+  }
+
+  /* No Safari, a data fica no meio da caixa inteira, sem a folga de cima, e
+     encosta no nome: desce 7 px. O Chrome respeita a folga e não entra aqui
+     (só o Safari tem o -webkit-backdrop-filter). */
+  @supports (-webkit-backdrop-filter: none) {
+    .campo input:is([type="date"], [type="datetime-local"]).form-control::-webkit-datetime-edit,
+    .campo input:is([type="date"], [type="datetime-local"]).form-control::-webkit-date-and-time-value {
+      padding-top: 7px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

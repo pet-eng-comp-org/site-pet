@@ -284,30 +284,38 @@ export const Confirmar = ({
 
 // ---- Formulário --------------------------------------------------------------
 
-// Campo com rótulo, dica e erro ligados por id, como no formulário de contato.
+// Campo com o nome dentro, como no formulário de contato; a dica e o erro vêm
+// embaixo da caixa, ligados por id. Em cima, a dica empurrava a caixa e o
+// nome, preso ao topo do bloco, caía em cima dela.
 interface PropsCampo {
   id: string;
   rotulo: ReactNode;
   dica?: ReactNode;
   erro?: string;
-  children: ReactElement<{ className?: string }>;
+  children: ReactElement<{ className?: string; placeholder?: string }>;
 }
 
 export const Campo = ({ id, rotulo, dica, erro, children }: PropsCampo) => (
-  <div className="campo">
-    <label htmlFor={id}>{rotulo}</label>
-    {dica && (
+  <div className="painel-campo">
+    <div className="campo">
+      <label htmlFor={id}>{rotulo}</label>
+      {cloneElement(children as ReactElement<Record<string, unknown>>, {
+        id,
+        "aria-invalid": erro ? "true" : undefined,
+        "aria-describedby":
+          erro ? `${id}-erro` : dica ? `${id}-dica` : undefined,
+        className: `form-control ${children.props.className || ""}`,
+        // Sem exemplo, um espaço: com o campo vazio, o nome fica no meio da
+        // caixa. Lista não tem placeholder.
+        ...(children.type !== "select" && { placeholder: children.props.placeholder ?? " " }),
+      })}
+    </div>
+    {/* O erro toma o lugar da dica. */}
+    {dica && !erro && (
       <p className="campo-dica" id={`${id}-dica`}>
         {dica}
       </p>
     )}
-    {cloneElement(children as ReactElement<Record<string, unknown>>, {
-      id,
-      "aria-invalid": erro ? "true" : undefined,
-      "aria-describedby":
-        [dica && `${id}-dica`, erro && `${id}-erro`].filter(Boolean).join(" ") || undefined,
-      className: `form-control ${children.props.className || ""}`,
-    })}
     {erro && (
       <p className="campo-erro" id={`${id}-erro`}>
         {erro}
