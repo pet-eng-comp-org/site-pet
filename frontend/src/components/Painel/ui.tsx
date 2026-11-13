@@ -171,9 +171,9 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
   return (
     <dialog
       ref={ref}
-      // A folha: raio de 32 px e sombra, sobre o fundo escurecido. Rolar até
-      // o fim dela não passa a rolar a página atrás.
-      className={`max-h-[calc(100%-2rem)] overscroll-contain rounded-folha border-0 bg-folha p-6 text-texto shadow-[0_15px_37.5px_rgba(0,0,0,0.18)] backdrop:bg-sobreposicao ${larga ? "w-[min(100%-2rem,46rem)]" : "w-[min(100%-2rem,34rem)]"}`}
+      // A folha: raio de 32 px e sombra, sobre o fundo escurecido. O título e
+      // o X ficam fixos; só o conteúdo rola (.janela-corpo).
+      className={`max-h-[calc(100%-2rem)] flex-col overflow-hidden rounded-folha border-0 bg-folha p-0 text-texto open:flex shadow-[0_15px_37.5px_rgba(0,0,0,0.18)] backdrop:bg-sobreposicao ${larga ? "w-[min(100%-2rem,46rem)]" : "w-[min(100%-2rem,34rem)]"}`}
       aria-labelledby={idTitulo}
       onClose={aoFechar}
       // O Esc fecha só esta janela: sem isto, com uma pergunta aberta dentro
@@ -190,7 +190,7 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
     >
       {aberta && (
         <FecharJanela.Provider value={pedirFechar}>
-          <div className="mb-4 flex items-start justify-between gap-4">
+          <div className="janela-topo flex flex-none items-start justify-between gap-4 px-6 pt-6 pb-4">
             <h2 id={idTitulo} className="mt-2 mb-0 text-21 font-semibold focus:outline-none" tabIndex={-1}>
               {titulo}
             </h2>
@@ -204,7 +204,7 @@ export const Janela = ({ titulo, aberta, aoFechar, children, larga, focoNoTitulo
               <Icone nome="fechar" className="h-[1.1rem]" />
             </button>
           </div>
-          {children}
+          <div className="janela-corpo">{children}</div>
           {perguntando && (
             <Confirmar
               titulo="Descartar as alterações?"

@@ -158,6 +158,30 @@
     overflow: hidden;
   }
 
+  /* O conteúdo da janela rola sozinho, abaixo do título. A barra fina e sem
+     setas: no Windows a barra clássica cortava o canto arredondado. Os 12 px
+     de baixo, fora da rolagem, tiram a barra da curva do canto. */
+  .janela-corpo {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin-bottom: 12px;
+    padding: 0 1.5rem 12px;
+    scrollbar-width: thin;
+    /* O espaço da barra dos dois lados: as margens ficam iguais e nada anda
+       quando o conteúdo passa a rolar. No Mac a barra flutua e não ocupa nada. */
+    scrollbar-gutter: stable both-edges;
+    scrollbar-color: var(--color-linha) transparent;
+  }
+
+  /* O topo reserva o mesmo espaço da barra, sem rolar: o título e o X ficam
+     alinhados com os campos embaixo também no Windows. */
+  .janela-topo {
+    overflow: hidden;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable both-edges;
+  }
+
   .janela-acoes {
     scroll-margin-bottom: 1.5rem;
     display: flex;
