@@ -91,15 +91,15 @@
     box-sizing: border-box;
   }
 
-  /* Texto na fonte do sistema (SF no macOS e no iOS, Segoe no Windows, Roboto no
-     Android): feita para ler em tela em cada aparelho, com o espaçamento
-     ajustado ao tamanho, e sem nada para baixar. A marca fica no título, na
-     Sofia Sans Condensed (.App h1). Sem system-ui na lista: no Linux ele
-     segue a configuração da máquina e já caiu numa fonte chinesa; lá vale a
-     Arial. */
+  /* Texto na SF, a fonte do sistema no Mac e no iPhone: nada para baixar.
+     Fora da Apple, a Inter (public/fonts), a mais próxima da SF e a mesma do
+     guia no Figma; no Windows a Segoe deixava o site com outra cara. Como a
+     SF vem antes, o Mac e o iPhone nem baixam a Inter. A marca fica no
+     título, na Sofia Sans Condensed (.App h1). Sem system-ui na lista: no
+     Linux ele segue a configuração da máquina e já caiu numa fonte chinesa. */
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: var(--text-17);
     font-weight: 400;
     /* Texto de 17 px e entrelinha de 25 px. */
