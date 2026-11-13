@@ -36,12 +36,15 @@ export default function Revelar() {
     const pedir = () => {
       if (!quadro) quadro = requestAnimationFrame(conferir);
     };
-    // O teclado que chega a um cartão escondido mostra o cartão na hora: o
-    // foco nunca fica em algo invisível.
+    // O teclado que chega a um cartão escondido mostra o cartão na hora, sem
+    // animação: o foco nunca fica em algo invisível.
     const aoFocar = (e: FocusEvent) => {
-      const cartao = (e.target as Element).closest?.("[data-esperando]");
+      const cartao = (e.target as Element).closest?.<HTMLElement>("[data-esperando]");
       if (!cartao) return;
+      cartao.style.transition = "none";
       cartao.removeAttribute("data-esperando");
+      void cartao.offsetWidth; // aplica o estado final antes de devolver a transição
+      cartao.style.transition = "";
       esperando = esperando.filter((el) => el !== cartao);
     };
     // A página também muda sem rolar (a busca de Documentos filtra os
