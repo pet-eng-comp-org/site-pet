@@ -13,7 +13,7 @@ const ordenar = (petianos: Membro[]) => {
 const Team = ({ petianos, projetos }: { petianos: Membro[]; projetos: Comissao[] }) => (
   // A equipe numa grade de cartões, na página branca, sob um título à
   // esquerda: dois por linha do tablet em diante, um no celular.
-  <section className="px-(--margem) pb-[144px] max-desktop:pb-[120px] max-tablet:pb-[112px]">
+  <section id="equipe" className="px-(--margem) pb-[144px] max-desktop:pb-[120px] max-tablet:pb-[112px]">
     <div className="mx-auto max-w-[980px]">
       {/* A contagem fica no título da equipe, que chega junto com ela: no
           texto de cima, ela empurrava o parágrafo ao chegar. */}

@@ -4,6 +4,8 @@ import { useState, useEffect, useRef, useCallback, type CSSProperties } from "re
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useApi from "../../services/useApi";
+import api from "../../services/api";
+import PainelDoMenu, { temPainel, type DadosDoMenu } from "./PainelDoMenu";
 import isAuth from "../../services/Auth";
 import type { Selecao } from "../../tipos";
 
@@ -155,6 +157,64 @@ function Nav() {
     setIsOpen(abrir);
   }, []);
 
+  // ---- Painéis do computador ------------------------------------------------
+  // O mouse que para 130 ms num item abre o painel dele; passar a outro item
+  // troca na hora; sair do topo fecha. O teclado abre pelo botão de seta ao
+  // lado do link. O fundo da barra desce até a altura do painel em meio
+  // milissegundo por pixel, de vidro enquanto anda (globals.css).
+  const [painel, setPainel] = useState<string | null>(null);
+  const [ultimoPainel, setUltimoPainel] = useState<string | null>(null);
+  const [alturaPainel, setAlturaPainel] = useState(0);
+  const [dadosDoMenu, setDadosDoMenu] = useState<DadosDoMenu>({});
+  const intencao = useRef<number>(undefined);
+  const carregou = useRef(false);
+  // Projetos e documentos vêm da API na primeira vez que o mouse ou o teclado
+  // chega ao menu, e não em toda página.
+  const carregarDados = useCallback(() => {
+    if (carregou.current) return;
+    carregou.current = true;
+    api.get<{ comissions: { title: string }[] }>("api/comissions").then(
+      ({ data }) => setDadosDoMenu((d) => ({ ...d, projetos: data.comissions.map((c) => c.title) })),
+      () => {},
+    );
+    api.get<{ documents: { title: string }[] }>("api/documents/").then(
+      ({ data }) => setDadosDoMenu((d) => ({ ...d, documentos: data.documents.map((g) => g.title) })),
+      () => {},
+    );
+  }, []);
+  const marcarAnimacao = useCallback((altura: number) => {
+    setAnimando(true);
+    window.clearTimeout(fimDaAnimacao.current);
+    fimDaAnimacao.current = window.setTimeout(() => setAnimando(false), Math.max(altura / 2, 320) + 80);
+  }, []);
+  const mostrarPainel = useCallback(
+    (href: string | null) => {
+      window.clearTimeout(intencao.current);
+      setPainel((atual) => {
+        if (atual === href) return atual;
+        marcarAnimacao(alturaPainel);
+        if (href) setUltimoPainel(href);
+        return href;
+      });
+    },
+    [alturaPainel, marcarAnimacao],
+  );
+  const aoEntrarNoItem = (href: string, e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse" || !window.matchMedia("(min-width: 834px)").matches) return;
+    carregarDados();
+    window.clearTimeout(intencao.current);
+    const destino = temPainel(href) ? href : null;
+    // Com um painel aberto, a troca é imediata; fechado, espera a intenção.
+    if (painel) mostrarPainel(destino);
+    else if (destino) intencao.current = window.setTimeout(() => mostrarPainel(destino), 130);
+  };
+  const medirPainel = useCallback((altura: number) => setAlturaPainel(altura), []);
+  // Trocar de página fecha o painel.
+  useEffect(() => {
+    window.clearTimeout(intencao.current);
+    setPainel(null);
+  }, [pathname]);
+
   // Esc fecha o menu aberto e devolve o foco ao botão que o abriu; tocar
   // fora do topo também fecha.
   const botaoMenu = useRef<HTMLButtonElement>(null);
@@ -176,6 +236,20 @@ function Nav() {
       document.removeEventListener("pointerdown", fechaAoTocarFora);
     };
   }, [isOpen, mudarMenu]);
+
+  // Esc fecha o painel e devolve o foco ao botão dele.
+  useEffect(() => {
+    if (!painel) return undefined;
+    const fechaComEsc = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      const botao = document.querySelector<HTMLButtonElement>(`[aria-controls="painel-${painel.slice(1)}"]`);
+      const tinhaFoco = topo.current?.contains(document.activeElement);
+      mostrarPainel(null);
+      if (botao && tinhaFoco) botao.focus();
+    };
+    document.addEventListener("keydown", fechaComEsc);
+    return () => document.removeEventListener("keydown", fechaComEsc);
+  }, [painel, mostrarPainel]);
 
   const comFaixa = showMessage && pathname !== "/inscricoes";
 
@@ -211,8 +285,19 @@ function Nav() {
         className={TOPO}
         data-menu={isOpen ? "aberto" : undefined}
         data-animando={animando || undefined}
+        data-painel={painel || undefined}
         ref={topo}
-        style={tempoDoMenu ? ({ "--menu-tempo": tempoDoMenu } as CSSProperties) : undefined}
+        style={
+          {
+            ...(tempoDoMenu ? { "--menu-tempo": tempoDoMenu } : {}),
+            "--painel-altura": `${alturaPainel}px`,
+            "--painel-tempo": `${Math.round(alturaPainel / 2)}ms`,
+          } as CSSProperties
+        }
+        onPointerLeave={(e) => e.pointerType === "mouse" && mostrarPainel(null)}
+        onBlur={(e) => {
+          if (painel && !e.currentTarget.contains(e.relatedTarget as Node)) mostrarPainel(null);
+        }}
       >
         <nav className={BARRA} aria-label="Principal">
           <Link href="/" onClick={fecharMenu} className={MARCA}>
@@ -239,10 +324,39 @@ function Nav() {
           <div id="menu-principal" className="barra-links">
             <ul className={LISTA} style={{ "--total": paginas.length + (logado ? 1 : 0) } as CSSProperties}>
               {paginas.map(([to, rotulo], i) => (
-                <li key={to} className="group/item" style={{ "--ordem": i } as CSSProperties}>
+                <li
+                  key={to}
+                  className="group/item menu:flex menu:items-center"
+                  style={{ "--ordem": i } as CSSProperties}
+                  onPointerEnter={(e) => aoEntrarNoItem(to, e)}
+                >
                   <Link href={to} className={LINK} aria-current={atual(to) ? "page" : undefined} onClick={fecharMenu}>
                     {rotulo}
                   </Link>
+                  {temPainel(to) && (
+                    <>
+                      {/* Só para o teclado e só no computador: aparece ao
+                          receber o foco, logo depois do link. */}
+                      <button
+                        type="button"
+                        className="botao-painel"
+                        aria-controls={`painel-${to.slice(1)}`}
+                        aria-expanded={painel === to}
+                        aria-label={`${painel === to ? "Fechar" : "Abrir"} os links de ${rotulo}`}
+                        onFocus={carregarDados}
+                        onClick={() => mostrarPainel(painel === to ? null : to)}
+                      />
+                      {(painel === to || (!painel && ultimoPainel === to)) && (
+                        <PainelDoMenu
+                          href={to}
+                          rotulo={rotulo}
+                          dados={dadosDoMenu}
+                          aoMedir={medirPainel}
+                          aoEscolher={() => mostrarPainel(null)}
+                        />
+                      )}
+                    </>
+                  )}
                 </li>
               ))}
               {/* Só para quem entrou. O Sair fica no painel, junto da senha:

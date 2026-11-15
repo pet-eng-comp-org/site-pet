@@ -116,7 +116,7 @@ function Subscription() {
       </p>
       {/* Quem chega quer saber primeiro se pode se inscrever agora. */}
       {aviso}
-      <div className="desktop:col-start-1 desktop:row-start-3">
+      <div id="requisitos" className="desktop:col-start-1 desktop:row-start-3">
         <h2 className="titulo-bloco">Para se inscrever, é preciso</h2>
         <ul className="mt-0 mb-6 max-w-[36rem] pl-6 text-17">
           <li>
