@@ -169,21 +169,35 @@ function Nav() {
   const [alturaPainel, setAlturaPainel] = useState(0);
   const [dadosDoMenu, setDadosDoMenu] = useState<DadosDoMenu>({});
   const intencao = useRef<number>(undefined);
-  const carregou = useRef(false);
-  // Projetos e documentos vêm da API na primeira vez que o mouse ou o teclado
-  // chega ao menu, e não em toda página.
+  const montagem = useRef(0);
+  const alturaRef = useRef(0);
+  const carregando = useRef(false);
+  // Projetos e documentos vêm da API no computador, quando a página fica
+  // ociosa, para estarem prontos no primeiro painel; se falhar, o próximo
+  // hover tenta de novo. No celular, que não tem painel, nada é pedido.
   const carregarDados = useCallback(() => {
-    if (carregou.current) return;
-    carregou.current = true;
-    api.get<{ comissions: { title: string }[] }>("api/comissions").then(
-      ({ data }) => setDadosDoMenu((d) => ({ ...d, projetos: data.comissions.map((c) => c.title) })),
-      () => {},
-    );
-    api.get<{ documents: { title: string }[] }>("api/documents/").then(
-      ({ data }) => setDadosDoMenu((d) => ({ ...d, documentos: data.documents.map((g) => g.title) })),
-      () => {},
+    if (carregando.current) return;
+    carregando.current = true;
+    Promise.all([
+      api.get<{ comissions: { title: string }[] }>("api/comissions"),
+      api.get<{ documents: { title: string }[] }>("api/documents/"),
+    ]).then(
+      ([p, d]) =>
+        setDadosDoMenu({
+          projetos: p.data.comissions.map((c) => c.title),
+          documentos: d.data.documents.map((g) => g.title),
+        }),
+      () => {
+        carregando.current = false;
+      },
     );
   }, []);
+  useEffect(() => {
+    if (!window.matchMedia("(min-width: 834px)").matches) return undefined;
+    const ocioso = window.requestIdleCallback ?? ((f: () => void) => window.setTimeout(f, 1500));
+    const id = ocioso(carregarDados);
+    return () => (window.cancelIdleCallback ?? window.clearTimeout)(id);
+  }, [carregarDados]);
   const marcarAnimacao = useCallback((altura: number) => {
     setAnimando(true);
     window.clearTimeout(fimDaAnimacao.current);
@@ -192,14 +206,27 @@ function Nav() {
   const mostrarPainel = useCallback(
     (href: string | null) => {
       window.clearTimeout(intencao.current);
-      setPainel((atual) => {
-        if (atual === href) return atual;
+      cancelAnimationFrame(montagem.current);
+      if (!href || painel) {
+        // Fechar, ou trocar com um painel já aberto: na hora.
+        if (href === painel) return;
         marcarAnimacao(alturaPainel);
         if (href) setUltimoPainel(href);
-        return href;
+        setPainel(href);
+        return;
+      }
+      // Abrir: o painel monta fechado e é medido; só no quadro seguinte ele
+      // abre, já com a altura e o tempo certos (senão a primeira abertura
+      // saía sem animação e sem vidro).
+      setUltimoPainel(href);
+      montagem.current = requestAnimationFrame(() => {
+        montagem.current = requestAnimationFrame(() => {
+          marcarAnimacao(alturaRef.current);
+          setPainel(href);
+        });
       });
     },
-    [alturaPainel, marcarAnimacao],
+    [painel, alturaPainel, marcarAnimacao],
   );
   const aoEntrarNoItem = (href: string, e: React.PointerEvent) => {
     if (e.pointerType !== "mouse" || !window.matchMedia("(min-width: 834px)").matches) return;
@@ -208,9 +235,13 @@ function Nav() {
     const destino = temPainel(href) ? href : null;
     // Com um painel aberto, a troca é imediata; fechado, espera a intenção.
     if (painel) mostrarPainel(destino);
-    else if (destino) intencao.current = window.setTimeout(() => mostrarPainel(destino), 130);
+    // 100 ms mais os dois quadros da montagem: abre por volta dos 130 ms.
+    else if (destino) intencao.current = window.setTimeout(() => mostrarPainel(destino), 100);
   };
-  const medirPainel = useCallback((altura: number) => setAlturaPainel(altura), []);
+  const medirPainel = useCallback((altura: number) => {
+    alturaRef.current = altura;
+    setAlturaPainel(altura);
+  }, []);
   // Trocar de página fecha o painel.
   useEffect(() => {
     window.clearTimeout(intencao.current);
@@ -302,7 +333,7 @@ function Nav() {
         }}
       >
         <nav className={BARRA} aria-label="Principal">
-          <Link href="/" onClick={fecharMenu} className={MARCA}>
+          <Link href="/" onClick={fecharMenu} onFocus={() => painel && mostrarPainel(null)} className={MARCA}>
             <img
               alt="PET Engenharia de Computação, página inicial"
               src="/imagens/logo_pet_simbolo.svg"
@@ -331,6 +362,8 @@ function Nav() {
                   className="group/item menu:flex menu:items-center"
                   style={{ "--ordem": i } as CSSProperties}
                   onPointerEnter={(e) => aoEntrarNoItem(to, e)}
+                  // O Tab que chega a outro item da barra fecha o painel aberto.
+                  onFocus={() => painel && painel !== to && mostrarPainel(null)}
                 >
                   <Link href={to} className={LINK} aria-current={atual(to) ? "page" : undefined} onClick={fecharMenu}>
                     {rotulo}
@@ -338,16 +371,18 @@ function Nav() {
                   {temPainel(to) && (
                     <>
                       {/* Só para o teclado e só no computador: aparece ao
-                          receber o foco, logo depois do link. */}
-                      <button
-                        type="button"
-                        className="botao-painel"
-                        aria-controls={`painel-${to.slice(1)}`}
-                        aria-expanded={painel === to}
-                        aria-label={`${painel === to ? "Fechar" : "Abrir"} os links de ${rotulo}`}
-                        onFocus={carregarDados}
-                        onClick={() => mostrarPainel(painel === to ? null : to)}
-                      />
+                          receber o foco, na ponta direita do link. */}
+                      <span className="apoio-botao-painel">
+                        <button
+                          type="button"
+                          className="botao-painel"
+                          aria-controls={`painel-${to.slice(1)}`}
+                          aria-expanded={painel === to}
+                          aria-label={`${painel === to ? "Fechar" : "Abrir"} os links de ${rotulo}`}
+                          onFocus={carregarDados}
+                          onClick={() => mostrarPainel(painel === to ? null : to)}
+                        />
+                      </span>
                       {(painel === to || (!painel && ultimoPainel === to)) && (
                         <PainelDoMenu
                           href={to}

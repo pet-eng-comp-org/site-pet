@@ -7,6 +7,10 @@ import slug from "../../utils/slug";
 type Destino = { rotulo: string; href: string; externo?: boolean };
 type Grupo = { titulo: string; grandes?: boolean; links: Destino[] };
 
+// As comissões que cuidam do próprio PET (site, rede, artes). No painel,
+// ficam em letra pequena; os projetos abertos a quem visita, em letra grande.
+const COMISSOES = ["Dev", "Manutenção", "Pulga"];
+
 // O que a lista de projetos e a de documentos trazem para os painéis.
 export type DadosDoMenu = { projetos?: string[]; documentos?: string[] };
 
@@ -35,17 +39,22 @@ const grupos = (href: string, dados: DadosDoMenu): Grupo[] => {
           ],
         },
       ];
-    case "/projetos":
+    case "/projetos": {
+      const link = (p: string) => ({ rotulo: p, href: `/projetos/${slug(p)}` });
+      const projetos = dados.projetos || [];
+      const comissoes = projetos.filter((p) => COMISSOES.includes(p));
       return [
         {
           titulo: "Explorar projetos",
           grandes: true,
           links: [
             { rotulo: "Todos os projetos", href: "/projetos" },
-            ...(dados.projetos || []).map((p) => ({ rotulo: p, href: `/projetos/${slug(p)}` })),
+            ...projetos.filter((p) => !COMISSOES.includes(p)).map(link),
           ],
         },
+        ...(comissoes.length ? [{ titulo: "Comissões do PET", links: comissoes.map(link) }] : []),
       ];
+    }
     case "/documentos":
       return [
         {
@@ -84,11 +93,8 @@ const grupos = (href: string, dados: DadosDoMenu): Grupo[] => {
           links: [
             { rotulo: "Como entrar no PET", href: "/inscricoes" },
             { rotulo: "Quem pode se inscrever", href: "/inscricoes#requisitos" },
+            { rotulo: "Editais anteriores", href: "/documentos#editais-de-selecao" },
           ],
-        },
-        {
-          titulo: "Seleções",
-          links: [{ rotulo: "Editais anteriores", href: "/documentos#editais-de-selecao" }],
         },
       ];
     default:

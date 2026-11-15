@@ -1102,7 +1102,7 @@
      outro (--grupo-atraso) e cada link 20 ms depois do anterior (--item); ao
      fechar, somem juntos, o primeiro mais devagar. */
   .painel-menu,
-  .botao-painel {
+  .apoio-botao-painel {
     display: none;
   }
 
@@ -1152,7 +1152,7 @@
     }
 
     .painel-grupo-grande {
-      min-width: 25%;
+      min-width: 456px;
     }
 
     .painel-titulo {
@@ -1164,15 +1164,23 @@
       color: #86868b;
     }
 
+    /* Os links pequenos começam 4 px mais abaixo que os grandes. */
     .painel-menu ul {
       margin: 0;
-      padding: 0;
+      padding: 4px 0 0;
       list-style: none;
+    }
+
+    .painel-grupo-grande ul {
+      padding-top: 0;
     }
 
     .painel-item a {
       display: block;
-      padding: 4px 0;
+      /* A caixa tem 30 px (44 nos grandes), mas um link começa 24 px (38)
+         depois do anterior. */
+      margin-bottom: -6px;
+      padding: 7px 0;
       font-size: 12px;
       font-weight: 600;
       line-height: 16px;
@@ -1183,7 +1191,7 @@
     }
 
     .painel-grupo-grande .painel-item a {
-      padding: 5px 0;
+      padding: 9px 0 7px;
       font-size: 24px;
       line-height: 28px;
       letter-spacing: 0.009em;
@@ -1227,14 +1235,23 @@
       }
     }
 
-    /* Só para o teclado: uma seta para baixo logo depois do link, que
-       aparece ao receber o foco e abre o painel. Não ocupa lugar na fila. */
+    /* Só para o teclado: uma seta para baixo na ponta direita do link, que
+       aparece ao receber o foco e abre o painel. Fica num apoio de largura
+       zero logo depois do link, para não ocupar lugar na fila. */
+    .apoio-botao-painel {
+      display: block;
+      position: relative;
+      width: 0;
+      height: 14px;
+    }
+
     .botao-painel {
       display: block;
       position: absolute;
-      width: 14px;
+      top: 0;
+      left: -9px;
+      width: 10px;
       height: 14px;
-      margin-left: -4px;
       padding: 0;
       border: 0;
       border-radius: 4px;
@@ -1265,6 +1282,9 @@
     [data-painel] .painel-titulo,
     [data-painel] .painel-item {
       transition: none;
+    }
+  }
+
   @keyframes seta-menu-entra {
     from {
       opacity: 0;
