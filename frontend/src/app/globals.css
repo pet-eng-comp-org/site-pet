@@ -865,23 +865,79 @@
 
   /* ---- Barra do topo ---------------------------------------------------- */
 
-  /* Vidro: o conteúdo aparece borrado por baixo ao rolar. Sem suporte ao
-     filtro, ou com transparência reduzida, a barra fica sólida. */
+  /* O fundo da barra é uma camada (::before) de vidro: o conteúdo aparece
+     borrado por baixo ao rolar. Sem suporte ao filtro, ou com transparência
+     reduzida, ela fica sólida. Ela desce até o pé da tela com o menu do
+     celular aberto e até a altura do painel no computador, de vidro enquanto
+     anda e sólida no fim. A cortina (::after) escurece e borra a página atrás
+     nesse tempo. O borrado da camada só vale durante a animação
+     (data-animando): parada, ela é sólida. O da cortina sai com o menu do
+     celular parado, que cobre a tela. No celular, o fundo leva --menu-tempo e sobe 80 ms depois de
+     fechar; no computador, --painel-tempo, sem espera. */
   .barra {
+    --barra-tempo: var(--menu-tempo, 0.35s);
+    --barra-atraso: 80ms;
+  }
+
+  @media (min-width: 834px) {
+    .barra {
+      --barra-tempo: var(--painel-tempo, 0.25s);
+      --barra-atraso: 0s;
+    }
+  }
+
+  .barra::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: -1;
+    height: 100%;
     background: var(--barra-solida);
+    transition:
+      height var(--barra-tempo) var(--ease-barra) var(--barra-atraso),
+      background-color var(--barra-tempo) var(--ease-barra) var(--barra-atraso);
   }
 
   @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-    .barra {
+    .barra::before {
       background: var(--vidro-fundo);
       -webkit-backdrop-filter: var(--vidro-filtro);
       backdrop-filter: var(--vidro-filtro);
     }
   }
 
+  .barra::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: rgba(0, 0, 0, 0.4);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.32s var(--ease-barra) var(--barra-atraso),
+      visibility 0.32s steps(1, end) var(--barra-atraso);
+  }
+
+  /* No computador, a página atrás do painel continua borrada: ela aparece
+     abaixo dele. No celular, o menu cobre a tela inteira. */
+  [data-menu="aberto"]:not([data-animando]) .barra::before,
+  [data-menu="aberto"]:not([data-animando]) .barra::after,
+  [data-painel]:not([data-animando]) .barra::before {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   @media (prefers-reduced-transparency: reduce) {
-    .barra {
+    .barra::before {
       background: var(--barra-solida);
+    }
+
+    .barra::before,
+    .barra::after {
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
@@ -918,58 +974,10 @@
      Os dois borrados só valem durante a animação (data-animando): com o menu
      aberto o fundo é sólido e cobre a tela, e o borrado só gastaria bateria. */
   @media (max-width: 833.98px) {
-    .barra,
-    [data-menu] .barra {
-      background: none;
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-    }
-
-    .barra::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto;
-      z-index: -1;
-      height: 100%;
-      background: var(--barra-solida);
-      transition:
-        height var(--menu-tempo, 0.35s) var(--ease-barra) 80ms,
-        background-color var(--menu-tempo, 0.35s) var(--ease-barra) 80ms;
-    }
-
-    @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-      .barra::before {
-        background: var(--vidro-fundo);
-        -webkit-backdrop-filter: var(--vidro-filtro);
-        backdrop-filter: var(--vidro-filtro);
-      }
-    }
-
     [data-menu="aberto"] .barra::before {
       height: 100dvh;
       background: var(--menu-fundo);
       transition-delay: 0s;
-    }
-
-    [data-menu="aberto"]:not([data-animando]) .barra::before {
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-    }
-
-    .barra::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background: rgba(0, 0, 0, 0.4);
-      -webkit-backdrop-filter: blur(20px);
-      backdrop-filter: blur(20px);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition:
-        opacity 0.32s var(--ease-barra) 80ms,
-        visibility 0.32s steps(1, end) 80ms;
     }
 
     [data-menu="aberto"] .barra::after {
@@ -978,23 +986,6 @@
       transition:
         opacity 0.32s var(--ease-barra) 80ms,
         visibility 0.32s steps(1, start) 80ms;
-    }
-
-    [data-menu="aberto"]:not([data-animando]) .barra::after {
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-    }
-
-    @media (prefers-reduced-transparency: reduce) {
-      .barra::before {
-        background: var(--barra-solida);
-      }
-
-      .barra::before,
-      .barra::after {
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-      }
     }
 
     .barra-marca {
@@ -1101,6 +1092,202 @@
     .sem-js .barra-links li {
       opacity: 1;
       transform: none;
+    }
+  }
+
+  /* Painéis do computador (PainelDoMenu.tsx). O fundo da barra desce até a
+     altura do painel (--painel-altura) em meio milissegundo por pixel
+     (--painel-tempo) e a cortina escurece a página. Os títulos dos grupos e
+     os links entram um a um, subindo 4 px em 0,32 s, cada grupo depois do
+     outro (--grupo-atraso) e cada link 20 ms depois do anterior (--item); ao
+     fechar, somem juntos, o primeiro mais devagar. */
+  .painel-menu,
+  .apoio-botao-painel {
+    display: none;
+  }
+
+  @media (min-width: 834px) {
+    [data-painel] .barra::before {
+      height: calc(100% + var(--painel-altura));
+      background: var(--menu-fundo);
+    }
+
+    [data-painel] .barra::after {
+      opacity: 1;
+      visibility: visible;
+      transition:
+        opacity 0.32s var(--ease-barra) 80ms,
+        visibility 0.32s steps(1, start) 80ms;
+    }
+
+    .painel-menu {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition:
+        height var(--painel-tempo) var(--ease-barra),
+        visibility 0s linear var(--painel-tempo);
+    }
+
+    [data-painel] .painel-menu {
+      height: var(--painel-altura);
+      visibility: visible;
+      transition:
+        height var(--painel-tempo) var(--ease-barra),
+        visibility 0s;
+    }
+
+    .painel-menu-conteudo {
+      display: flex;
+      padding: 40px max(22px, calc((100% - 980px) / 2)) 84px;
+    }
+
+    .painel-grupo {
+      padding-right: 44px;
+    }
+
+    .painel-grupo-grande {
+      min-width: 456px;
+    }
+
+    .painel-titulo {
+      margin: 0 0 6px;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
+      letter-spacing: -0.01em;
+      color: #86868b;
+    }
+
+    /* Os links pequenos começam 4 px mais abaixo que os grandes. */
+    .painel-menu ul {
+      margin: 0;
+      padding: 4px 0 0;
+      list-style: none;
+    }
+
+    .painel-grupo-grande ul {
+      padding-top: 0;
+    }
+
+    .painel-item a {
+      display: block;
+      /* A caixa tem 30 px (44 nos grandes), mas um link começa 24 px (38)
+         depois do anterior. */
+      margin-bottom: -6px;
+      padding: 7px 0;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 16px;
+      letter-spacing: -0.01em;
+      color: var(--menu-texto);
+      text-decoration: none;
+      transition: color 0.32s var(--ease-barra);
+    }
+
+    .painel-grupo-grande .painel-item a {
+      padding: 9px 0 7px;
+      font-size: 24px;
+      line-height: 28px;
+      letter-spacing: 0.009em;
+    }
+
+    .painel-item a:hover,
+    .painel-item a:focus-visible {
+      color: var(--barra-texto);
+    }
+
+    .painel-item a:focus-visible {
+      outline: 2px solid var(--barra-texto);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .painel-titulo,
+    .painel-item {
+      opacity: 0;
+      transform: translateY(-4px);
+      transition-property: opacity, transform;
+      transition-timing-function: var(--ease-barra);
+      transition-duration: min(0.16s + (var(--total) - 1 - var(--item, 0)) * 20ms, 0.24s);
+    }
+
+    [data-painel] .painel-titulo,
+    [data-painel] .painel-item {
+      opacity: 1;
+      transform: none;
+      transition-duration: 0.32s;
+      transition-delay: calc(var(--grupo-atraso) + var(--item, 0) * 20ms + 80ms);
+    }
+
+    /* Ao trocar de item com o painel aberto, os links do novo entram do mesmo
+       jeito. */
+    @starting-style {
+      [data-painel] .painel-titulo,
+      [data-painel] .painel-item {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+    }
+
+    /* Só para o teclado: uma seta para baixo na ponta direita do link, que
+       aparece ao receber o foco e abre o painel. Fica num apoio de largura
+       zero logo depois do link, para não ocupar lugar na fila. */
+    .apoio-botao-painel {
+      display: block;
+      position: relative;
+      width: 0;
+      height: 14px;
+    }
+
+    .botao-painel {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -9px;
+      width: 10px;
+      height: 14px;
+      padding: 0;
+      border: 0;
+      border-radius: 4px;
+      background: var(--barra-texto);
+      mask: var(--seta) center / 5px 9px no-repeat;
+      rotate: 90deg;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* O link do último item encosta na margem (-8 px, Nav.tsx): a seta
+       recua o mesmo tanto. */
+    .barra-links li:last-child .botao-painel {
+      left: -1px;
+    }
+
+    .botao-painel:focus-visible {
+      opacity: 1;
+      outline: none;
+    }
+
+    .botao-painel[aria-expanded="true"] {
+      rotate: -90deg;
+    }
+  }
+
+  @media (min-width: 834px) and (prefers-reduced-motion: reduce) {
+    .barra::before,
+    .barra::after,
+    .painel-menu,
+    [data-painel] .painel-menu,
+    .painel-titulo,
+    .painel-item,
+    [data-painel] .painel-titulo,
+    [data-painel] .painel-item {
+      transition: none;
     }
   }
 

@@ -1,6 +1,7 @@
 import Icone from "../../Icone/Icone";
 import { API } from "../../../services/apiUrl";
 import type { GrupoDeDocumentos } from "../../../tipos";
+import slug from "../../../utils/slug";
 
 const url = `${API}api/file/downloadDocument/`;
 
@@ -26,7 +27,8 @@ const GrupoDocumentos = ({ document, busca = "" }: { document: GrupoDeDocumentos
   if (arquivos.length === 0) return null;
 
   return (
-    <section data-revela className="mb-6 break-inside-avoid rounded-cartao bg-superficie px-8 pt-8 pb-6">
+    // O id leva o link do menu (Documentos › Editais de seleção) ao grupo.
+    <section id={slug(document.title)} data-revela className="mb-6 break-inside-avoid rounded-cartao bg-superficie px-8 pt-8 pb-6">
       <h2 className="mb-3 text-21 font-semibold">{document.title}</h2>
       {/* Do tablet em diante, os documentos em colunas que se alinham por
           linha: nome de duas linhas numa coluna não desalinha as divisórias
