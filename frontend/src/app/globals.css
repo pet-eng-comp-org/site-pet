@@ -1083,7 +1083,9 @@
           transform 0.24s var(--ease-barra);
       }
 
-      .barra-links a:hover::after {
+      /* Também no foco do teclado, e nunca com o menu ainda andando. */
+      [data-menu="aberto"]:not([data-animando]) .barra-links a:hover::after,
+      [data-menu="aberto"]:not([data-animando]) .barra-links a:focus-visible::after {
         opacity: 1;
         transform: none;
         animation: seta-menu-entra 0.24s var(--ease-barra);
@@ -1121,7 +1123,8 @@
     .barra-links li,
     [data-menu="aberto"] .barra-links li,
     .barra-links a::after,
-    .barra-links a:hover::after {
+    .barra-links a:hover::after,
+    .barra-links a:focus-visible::after {
       transition: none;
       animation: none;
     }
