@@ -113,12 +113,14 @@ const LISTA = "m-0 flex list-none flex-col p-0 menu:flex-1 menu:flex-row menu:ju
 
 // Toque de 44 px, texto a 80% da cor e inteiro sob o ponteiro, sem marcar a
 // página atual (o aria-current fica para o leitor de tela). Teclado: contorno
-// branco. No celular, letra de 28 px em peso 600, um item a cada 46 px; a
+// branco. No celular, letra de 28 px em peso 600, um item a cada 46 px, a
+// linha de borda a borda da tela (o contorno de foco fica 4 px para dentro
+// dela, longe do texto) e, sob o mouse, branca com a seta (globals.css); a
 // partir de 834 px, texto de 12 px, e o do último link encosta na margem.
 const LINK = [
   "flex min-h-[44px] items-center py-2 font-medium text-[color-mix(in_srgb,var(--barra-texto)_80%,transparent)] no-underline transition-colors duration-320 ease-barra",
   "focus-visible:rounded-[4px] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-(--barra-texto)",
-  "max-menu:min-h-[46px] max-menu:p-0 max-menu:text-[1.75rem] max-menu:leading-[1.1] max-menu:font-semibold max-menu:tracking-[0.007em] max-menu:text-(--menu-texto)",
+  "max-menu:relative max-menu:min-h-[46px] max-menu:-mx-12 max-menu:p-0 max-menu:px-12 max-menu:text-[1.75rem] max-menu:leading-[1.1] max-menu:font-semibold max-menu:tracking-[0.007em] max-menu:text-(--menu-texto) max-menu:hover:text-(--barra-texto) max-menu:focus-visible:-outline-offset-[4px]",
   "menu:min-h-[44px] menu:px-2 menu:py-0 menu:text-12 menu:font-normal menu:group-last/item:-mr-2 menu:hover:text-(--barra-texto) menu:focus-visible:text-(--barra-texto)",
 ].join(" ");
 
