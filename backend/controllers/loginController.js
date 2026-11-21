@@ -1,7 +1,7 @@
 const Member = require("../models/Member");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { passwordValidation } = require("../utils/validation");
+const { passwordValidation, recusa } = require("../utils/validation");
 
 module.exports = {
   async login(req, res) {
@@ -46,7 +46,7 @@ module.exports = {
     const data = { password: req.body.newPassword };
     const { error } = passwordValidation(data);
     if (error) {
-      return res.status(400).send(error.details[0].message);
+      return recusa(res, error);
     }
 
     const member = await Member.findOne({ _id: req.params.idPetiano }).select(

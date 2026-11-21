@@ -1,6 +1,6 @@
 const News = require("../models/News");
 const File = require("../models/File");
-const { newsValidation } = require("../utils/validation");
+const { newsValidation, recusa } = require("../utils/validation");
 const { deleteFile } = require("../utils/functions");
 
 module.exports = {
@@ -20,9 +20,8 @@ module.exports = {
     
     const { error } = newsValidation(req.body);
     if (error) {
-      const f = { key: req.file.filename};
-      deleteFile(f, "news");
-      return res.status(400).send(error.details[0].message);
+      if (req.file) deleteFile({ key: req.file.filename }, "news");
+      return recusa(res, error);
     }
 
     if (!req.file)return res.status(400).send('"file" is required');
@@ -31,34 +30,23 @@ module.exports = {
     const file = new File({ name, size, key });
 
     try {
-      const savedFile = await file.save();
-      const news = new News({
+      await file.save();
+      const savedNew = await new News({
         title: req.body.title,
-        file: savedFile,
+        file,
         text: req.body.text,
-      });
-      try {
-        const savedNew = await news.save();
-        return res.send({ new: savedNew._id });
-      } catch (err) {
-
-        const f = { key: req.file.filename };
-        deleteFile(f, "news");
-
-        await File.deleteOne({ _id: savedFile._id });
-
-        return res.status(400).send(err);
-      }
+      }).save();
+      return res.send({ new: savedNew._id });
     } catch (err) {
-      const f = { key: req.file.filename };
-      deleteFile(f, "news");
-      return res.status(400).send(err);
+      deleteFile(file, "news");
+      await File.deleteOne({ _id: file._id });
+      throw err;
     }
   },
 
   async updateTexts(req, res) {
     const { error } = newsValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return recusa(res, error);
 
     try {
       const updatedNew = await News.updateOne(
@@ -70,7 +58,7 @@ module.exports = {
       );
       return res.status(200).send({ new: updatedNew });
     } catch (err) {
-      return res.status(500).send(err);
+      throw err;
     }
   },
 
@@ -91,7 +79,7 @@ module.exports = {
     } catch (err) {
       const f = { key };
       deleteFile(f, "news");
-      return res.status(500).send(err);
+      throw err;
     }
   },
 
@@ -115,7 +103,7 @@ module.exports = {
         new: removedNew,
       });
     } catch (err) {
-      return res.json({ message: err });
+      throw err;
     }
   },
 };

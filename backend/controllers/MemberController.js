@@ -1,14 +1,14 @@
 const Member = require("../models/Member");
 const File = require("../models/File");
 const bcrypt = require("bcryptjs");
-const { membersValidation } = require("../utils/validation");
+const { membersValidation, recusa } = require("../utils/validation");
 const { deleteFile } = require("../utils/functions");
 
 module.exports = {
   async store(request, response) {
     const { error } = membersValidation(request.body, false);
     if (error) {
-      return response.status(400).send(error.details[0].message);
+      return recusa(response, error);
     }
 
     const emailExist = await Member.findOne({ email: request.body.email });
@@ -35,7 +35,7 @@ module.exports = {
       const savedMember = await member.save();
       return response.send(savedMember._id);
     } catch (err) {
-      return response.status(400).send(err);
+      throw err;
     }
   },
 
@@ -77,7 +77,7 @@ module.exports = {
 
   async update(request, response) {
     const { error } = membersValidation(request.body, true);
-    if (error) return response.status(400).send(error.details[0].message);
+    if (error) return recusa(response, error);
 
     try {
       await Member.findOneAndUpdate(
@@ -162,7 +162,7 @@ module.exports = {
 
       response.status(200).send("Success");
     } catch (err) {
-      response.status(500).send(err);
+      throw err;
     }
   },
 
@@ -177,23 +177,16 @@ module.exports = {
     });
 
     try {
-      const savedFile = await file.save();
-
-      try {
-        const updatedMember = await Member.updateOne(
-          { _id: request.params.memberId },
-          { $push: { profilePhoto: savedFile } }
-        );
-
-        return response.json({ updatedMember });
-      } catch (err) {
-        deleteFile(file, "members");
-        await File.deleteOne({ _id: savedFile._id });
-        return response.status(400).send(err);
-      }
+      await file.save();
+      const updatedMember = await Member.updateOne(
+        { _id: request.params.memberId },
+        { $push: { profilePhoto: file } }
+      );
+      return response.json({ updatedMember });
     } catch (err) {
       deleteFile(file, "members");
-      return response.status(400).send(err);
+      await File.deleteOne({ _id: file._id });
+      throw err;
     }
   },
 
@@ -214,7 +207,7 @@ module.exports = {
     } catch (err) {
       const f = { key };
       deleteFile(f, "members");
-      response.status(500).send(err);
+      throw err;
     }
   },
 };

@@ -431,3 +431,73 @@ describe("imagens", () => {
     fs.rmSync(arquivo, { force: true });
   });
 });
+
+// Achados do CodeQL (20/11/2026). Todas estas rotas exigem login, mas o que
+// vem no corpo continua sendo dado de fora.
+describe("seguranca", () => {
+  const json = async () => ({ authorization: `Bearer ${await entra()}`, "content-type": "application/json" });
+
+  // {"$ne": null} no lugar de um id virava filtro: "qualquer arquivo que exista".
+  it("operador do MongoDB no corpo nao vira filtro", async () => {
+    const auth = await json();
+    const arquivos = await conexao.db.collection("files").insertMany([
+      { name: "a", size: 1, key: "nao-existe-a.pdf" },
+      { name: "b", size: 1, key: "nao-existe-b.pdf" },
+    ]);
+    const antes = await conexao.db.collection("files").countDocuments();
+    const r = await api("PATCH", `/api/documents/removeFile/${ID}`, {
+      headers: auth,
+      corpo: JSON.stringify({ idFile: { $ne: null } }),
+    });
+    assert.notEqual(r.status, 200);
+    assert.equal(await conexao.db.collection("files").countDocuments(), antes, "apagou um arquivo qualquer");
+
+    // Com o id de verdade, como o painel manda, continua apagando.
+    const certo = await api("PATCH", `/api/documents/removeFile/${ID}`, {
+      headers: auth,
+      corpo: JSON.stringify({ idFile: String(arquivos.insertedIds[0]) }),
+    });
+    assert.equal(certo.status, 200);
+    assert.equal(await conexao.db.collection("files").countDocuments(), antes - 1);
+    await conexao.db.collection("files").deleteMany({ _id: { $in: Object.values(arquivos.insertedIds) } });
+    await processoVivo();
+  });
+
+  it("erro do banco fica no log, nao vai na resposta", async () => {
+    const r = await api("PUT", "/api/documents/id-que-nao-e-id", {
+      headers: await json(),
+      corpo: JSON.stringify({ title: "Titulo valido" }),
+    });
+    assert.equal(r.status, 500);
+    assert.ok(!/Cast|ObjectId|stringValue/.test(await r.text()), "detalhe do erro na resposta");
+  });
+
+  // O Joi repete na mensagem o nome do campo recebido; em text/html, um campo
+  // chamado "<img onerror=...>" viraria HTML.
+  it("mensagem de validacao vai como texto puro", async () => {
+    const r = await api("POST", "/api/projects/", {
+      headers: await json(),
+      corpo: JSON.stringify({ title: "Projeto", description: "Descricao", "<img src=x>": 1 }),
+    });
+    assert.equal(r.status, 400);
+    assert.match(r.headers.get("content-type"), /^text\/plain/);
+  });
+
+  it("o nome do arquivo no servidor nao leva o nome enviado", async () => {
+    const auth = { authorization: `Bearer ${await entra()}` };
+    const criado = await api("POST", "/api/documents/", {
+      headers: { ...auth, "content-type": "application/json" },
+      corpo: JSON.stringify({ title: "Nome do arquivo" }),
+    });
+    const idDoc = (await criado.json()).document;
+    const corpo = new FormData();
+    corpo.append("file", new Blob([Buffer.from("%PDF-1.4\n%%EOF\n")], { type: "application/pdf" }), "edital #1 & anexo.pdf");
+    const r = await fetch(`${BASE}/api/documents/addFile/${idDoc}`, { method: "PATCH", headers: auth, body: corpo });
+    assert.equal(r.status, 200, await r.clone().text());
+    const doc = (await (await api("GET", `/api/documents/${idDoc}`)).json()).document;
+    const [arquivo] = doc.files;
+    require("node:fs").rmSync(path.join(RAIZ, "uploads", "documents", arquivo.key), { force: true });
+    assert.equal(arquivo.name, "edital #1 & anexo.pdf", "o site continua mostrando o nome enviado");
+    assert.match(arquivo.key, /^[0-9a-f]{32}\.pdf$/);
+  });
+});

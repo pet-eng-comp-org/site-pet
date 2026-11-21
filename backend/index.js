@@ -3,6 +3,10 @@
 // /api/login/ sem cabecalho bastava).
 const express = require("express");
 const mongoose = require("mongoose");
+// O que chega no corpo nao vira operador de consulta: {"$ne": null} no lugar de
+// um id escolhia "qualquer registro" e apagava um arquivo qualquer. Consulta
+// nossa com operador passa por mongoose.trusted().
+mongoose.set("sanitizeFilter", true);
 require("dotenv").config({ quiet: true });
 const cors = require("cors");
 

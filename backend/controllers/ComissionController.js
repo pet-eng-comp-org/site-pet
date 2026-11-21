@@ -1,7 +1,8 @@
+const mongoose = require('mongoose');
 const Comission = require('../models/Comission');
 const Project = require('../models/Project');
 const File = require('../models/File');
-const { comissionsValidation } = require('../utils/validation');
+const { comissionsValidation, recusa } = require('../utils/validation');
 const { deleteFile } = require('../utils/functions');
 const sharp = require('sharp');
 
@@ -10,7 +11,7 @@ const sharp = require('sharp');
 // gravadas é medida aqui uma vez e fica salva.
 const medidasDasFotos = async (comissions) => {
   const ids = comissions.flatMap((c) => c.photos);
-  const arquivos = await File.find({ _id: { $in: ids } }).lean();
+  const arquivos = await File.find({ _id: mongoose.trusted({ $in: ids }) }).lean();
   await Promise.all(
     arquivos
       .filter((f) => !f.width)
@@ -35,7 +36,7 @@ const medidasDasFotos = async (comissions) => {
 module.exports = {
   async store(request, response) {
     const { error } = comissionsValidation(request.body);
-    if (error) return response.status(400).send(error.details[0].message);
+    if (error) return recusa(response, error);
 
     const comission = new Comission({
       title: request.body.title,
@@ -46,7 +47,7 @@ module.exports = {
       const savedComission = await comission.save();
       response.send(savedComission);
     } catch (err) {
-      response.status(400).send(err);
+      throw err;
     }
   },
 
@@ -76,7 +77,7 @@ module.exports = {
 
   async update(request, response) {
     const { error } = comissionsValidation(request.body);
-    if (error) return response.status(400).send(error.details[0].message);
+    if (error) return recusa(response, error);
 
     try {
       await Comission.findOneAndUpdate(
@@ -107,23 +108,16 @@ module.exports = {
     });
 
     try {
-      const savedFile = await file.save();
-
-      try {
-        const updatedComission = await Comission.updateOne(
-          { _id: request.params.comissionId },
-          { $push: { photos: savedFile } }
-        );
-
-        return response.json({ updatedComission });
-      } catch (err) {
-        deleteFile(file, 'comissions');
-        await File.deleteOne({ _id: savedFile._id });
-        return response.status(400).send(err);
-      }
+      await file.save();
+      const updatedComission = await Comission.updateOne(
+        { _id: request.params.comissionId },
+        { $push: { photos: file } }
+      );
+      return response.json({ updatedComission });
     } catch (err) {
       deleteFile(file, 'comissions');
-      return response.status(400).send(err);
+      await File.deleteOne({ _id: file._id });
+      throw err;
     }
   },
 
@@ -150,10 +144,10 @@ module.exports = {
         return response.json({ comission: updatedComission });
       } catch (err) {
         console.log('Erro aquii');
-        return response.status(400).json({ message: err });
+        throw err;
       }
     } catch (err) {
-      return response.status(400).json({ message: err });
+      throw err;
     }
   },
 
@@ -227,7 +221,7 @@ module.exports = {
 
     const estaNaComissao = await Comission.findOne({
       _id: request.params.comissionId,
-      project: { $in: [project] },
+      project: mongoose.trusted({ $in: [project] }),
     });
 
     if (estaNaComissao) {
@@ -250,7 +244,7 @@ module.exports = {
 
     const estaNaComissao = await Comission.findOne({
       _id: request.params.comissionId,
-      project: { $in: [request.body.projectId] },
+      project: mongoose.trusted({ $in: [request.body.projectId] }),
     });
 
     if (!project) {
@@ -273,10 +267,10 @@ module.exports = {
         await Project.deleteOne({ _id: request.body.projectId });
         return response.json(updatedComission);
       } catch (err) {
-        return response.status(400).send(err);
+        throw err;
       }
     } catch (err) {
-      return response.status(400).send(err);
+      throw err;
     }
   },
 };

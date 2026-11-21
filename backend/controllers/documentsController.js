@@ -1,7 +1,7 @@
 const Documents = require("../models/Documents");
 const File = require("../models/File");
 const { deleteFile } = require("../utils/functions");
-const { documentsValidation } = require("../utils/validation");
+const { documentsValidation, recusa } = require("../utils/validation");
 
 module.exports = {
   async index(req, res) {
@@ -18,7 +18,7 @@ module.exports = {
 
   async store(req, res) {
     const { error } = documentsValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return recusa(res, error);
 
     const document = new Documents({
       title: req.body.title,
@@ -28,7 +28,7 @@ module.exports = {
       const savedDocument = await document.save();
       return res.send({ document: savedDocument._id });
     } catch (err) {
-      return res.status(400).send(err);
+      throw err;
     }
   },
 
@@ -45,24 +45,17 @@ module.exports = {
     });
 
     try {
-      const savedFile = await file.save();
-
-      try {
-        // O mais recente aparece primeiro na lista.
-        const updatedDocument = await Documents.updateOne(
-          { _id: req.params.id },
-          { $push: { files: { $each: [savedFile._id], $position: 0 } } }
-        ).populate("files");
-
-        return res.json({ updatedDocument });
-      } catch (err) {
-        deleteFile(file, "documents");
-        await File.deleteOne({ _id: savedFile._id });
-        return res.status(400).send(err);
-      }
+      await file.save();
+      // O mais recente aparece primeiro na lista.
+      const updatedDocument = await Documents.updateOne(
+        { _id: req.params.id },
+        { $push: { files: { $each: [file._id], $position: 0 } } }
+      ).populate("files");
+      return res.json({ updatedDocument });
     } catch (err) {
       deleteFile(file, "documents");
-      return res.status(400).send(err);
+      await File.deleteOne({ _id: file._id });
+      throw err;
     }
   },
 
@@ -83,10 +76,10 @@ module.exports = {
 
           return res.json({ updatedDocument });
         } catch (err) {
-          return res.status(400).send(err);
+          throw err;
         }
       } catch (err) {
-        return res.status(400).send(err);
+        throw err;
       }
     } else {
       return res.status(404).send("file not found in db.");
@@ -95,7 +88,7 @@ module.exports = {
 
   async update(req, res) {
     const { error } = documentsValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return recusa(res, error);
 
     try {
       const updatedDocument = await Documents.updateOne(
@@ -105,7 +98,7 @@ module.exports = {
 
       return res.json({ updatedDocument });
     } catch (err) {
-      return res.status(400).send(err);
+      throw err;
     }
   },
 
@@ -133,7 +126,7 @@ module.exports = {
         });
         return res.json({ document: removedDocument });
       } catch (err) {
-        return res.json({ message: err });
+        throw err;
       }
     } else {
       return res.status(404).send("documentId not found in db.");

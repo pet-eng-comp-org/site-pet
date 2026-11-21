@@ -1,7 +1,9 @@
 const fs = require("fs");
+const path = require("path");
 
 const deleteFile = (file, folderName) => {
-  const filename = file.key;
+  // A chave vem do banco; basename garante que nada sai da pasta de uploads.
+  const filename = path.basename(file.key);
   fs.unlink(`uploads/${folderName}/${filename}`, (err) => {
     if (err) console.log(err);
   });

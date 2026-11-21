@@ -1,5 +1,5 @@
 const Selection = require("../models/Selection");
-const { selectionValidation } = require("../utils/validation");
+const { selectionValidation, recusa } = require("../utils/validation");
 
 module.exports = {
   async index(req, res) {
@@ -22,7 +22,7 @@ module.exports = {
 
   async store(req, res) {
     const { error } = selectionValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return recusa(res, error);
 
     const openSelection = await Selection.findOne({ open: true });
     if (openSelection)
@@ -39,13 +39,13 @@ module.exports = {
       }).save();
       return res.send({ selection: selection._id });
     } catch (err) {
-      return res.status(400).send(err);
+      throw err;
     }
   },
 
   async update(req, res) {
     const { error } = selectionValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return recusa(res, error);
 
     try {
       const updatedSelection = await Selection.updateOne(
@@ -59,7 +59,7 @@ module.exports = {
       );
       return res.json({ updatedSelection });
     } catch (err) {
-      return res.status(400).send(err);
+      throw err;
     }
   },
 
@@ -73,7 +73,7 @@ module.exports = {
         return res.status(400).send("selection not found");
       return res.send(updatedSelection);
     } catch (err) {
-      return res.status(400).send(err);
+      throw err;
     }
   },
 
@@ -89,7 +89,7 @@ module.exports = {
       });
       return res.json({ selection: removedSelection });
     } catch (err) {
-      return res.json({ message: err });
+      throw err;
     }
   },
 };
