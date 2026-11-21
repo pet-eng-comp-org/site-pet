@@ -1,5 +1,10 @@
 const Joi = require("joi");
 
+// A mensagem do Joi repete o nome do campo recebido; em texto puro, um campo
+// chamado "<img onerror=...>" nao vira HTML no navegador.
+const recusa = (res, error) =>
+  res.status(400).set("Content-Type", "text/plain; charset=utf-8").send(error.details[0].message);
+
 const newsValidation = (data) => {
   const schema = Joi.object({
     title: Joi.string().min(5).max(100).required(),
@@ -120,3 +125,4 @@ module.exports.passwordValidation = passwordValidation;
 module.exports.projectsValidation = projectsValidation;
 module.exports.membersValidation = membersValidation;
 module.exports.comissionsValidation = comissionsValidation;
+module.exports.recusa = recusa;

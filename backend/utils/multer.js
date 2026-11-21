@@ -3,6 +3,15 @@ const path = require("path");
 const crypto = require("crypto");
 const fs = require("fs");
 
+const extensao = {
+  "application/pdf": ".pdf",
+  "image/jpeg": ".jpg",
+  "image/png": ".png",
+  "image/svg+xml": ".svg",
+  "image/gif": ".gif",
+  "image/webp": ".webp",
+};
+
 const multerConfig = (type) => {
   let folder, allowedMimes;
 
@@ -31,12 +40,11 @@ const multerConfig = (type) => {
         cb(null, path.resolve(__dirname, "..", "uploads", folder));
       },
       filename: (req, file, cb) => {
+        // O nome enviado fica so no banco (File.name), para o site mostrar; no
+        // disco, so o sorteio e a extensao do tipo ja conferido no fileFilter.
         crypto.randomBytes(16, (err, hash) => {
-          if (err) cb(err);
-
-          const fileName = `${hash.toString("hex")}-${file.originalname}`;
-
-          cb(null, fileName);
+          if (err) return cb(err);
+          cb(null, hash.toString("hex") + extensao[file.mimetype]);
         });
       },
     }),

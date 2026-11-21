@@ -1,10 +1,10 @@
 const Project = require("../models/Project");
-const { projectsValidation } = require("../utils/validation");
+const { projectsValidation, recusa } = require("../utils/validation");
 
 module.exports = {
   async store(request, response) {
     const { error } = projectsValidation(request.body);
-    if (error) return response.status(400).send(error.details[0].message);
+    if (error) return recusa(response, error);
 
     const project = new Project({
       title: request.body.title,
@@ -15,7 +15,7 @@ module.exports = {
       const savedProject = await project.save();
       return response.send(savedProject._id);
     } catch (err) {
-      return response.status(400).send(err);
+      throw err;
     }
   },
 
@@ -31,7 +31,7 @@ module.exports = {
 
   async update(request, response) {
     const { error } = projectsValidation(request.body);
-    if (error) return response.status(400).send(error.details[0].message);
+    if (error) return recusa(response, error);
 
     try {
       await Project.findOneAndUpdate(

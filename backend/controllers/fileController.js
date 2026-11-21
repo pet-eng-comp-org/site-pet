@@ -84,7 +84,7 @@ module.exports = {
       });
       res.json({ file: removedFile });
     } catch (err) {
-      res.json({ message: err });
+      throw err;
     }
   },
 };
