@@ -3,7 +3,7 @@ const Joi = require("joi");
 // A mensagem do Joi repete o nome do campo recebido; em texto puro, um campo
 // chamado "<img onerror=...>" nao vira HTML no navegador.
 const recusa = (res, error) =>
-  res.status(400).type("text/plain").send(error.details[0].message);
+  res.status(400).set("Content-Type", "text/plain; charset=utf-8").send(error.details[0].message);
 
 const newsValidation = (data) => {
   const schema = Joi.object({
