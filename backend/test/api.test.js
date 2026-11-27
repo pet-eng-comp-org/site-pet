@@ -528,11 +528,23 @@ describe("saida e volta de petiano", () => {
     const id = await criado.json();
 
     try {
+      const loginAntes = await api("GET", "/api/login/", {
+        headers: { authorization: `Basic ${Buffer.from(`${email}:${senha}`).toString("base64")}` },
+      });
+      assert.equal(loginAntes.status, 200);
+      const tokenAntes = (await loginAntes.json()).token;
+
       const sai = await api("PATCH", `/api/members/sairDoPet/${id}`, {
         headers: auth,
         corpo: JSON.stringify({ endPet: "2026-11-27" }),
       });
       assert.equal(sai.status, 200);
+
+      // Token emitido antes da saida e revogado na hora (nao pode se autorreativar)
+      const autoReativar = await api("PATCH", `/api/members/voltarAoPet/${id}`, {
+        headers: { authorization: `Bearer ${tokenAntes}` },
+      });
+      assert.equal(autoReativar.status, 401);
 
       const aposSair = await conexao.db.collection("members").findOne({ _id: new mongoose.Types.ObjectId(id) });
       assert.equal(aposSair.active, false);
