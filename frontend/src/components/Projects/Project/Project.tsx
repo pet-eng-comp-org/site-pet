@@ -19,7 +19,7 @@ const FRASES: Record<string, string> = {
   manutencao: "A rede, as máquinas e os servidores do PET.",
   interpet: "Os grupos PET da Ufes trabalhando juntos.",
   monitorias: "Monitoria de Programação I e II para a graduação.",
-  "pet-game-jam": "Competição de programação de um dia, em equipes.",
+  "pet-game-jam": "Campeonato de jogos e workshop de programação.",
   pesquisa: "Iniciação científica e artigos feitos no PET.",
 };
 const primeiraFrase = (texto: string) => texto.match(/^[\s\S]*?[.!?](?=\s|$)/)?.[0] || texto;
