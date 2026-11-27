@@ -62,9 +62,18 @@ describe("MemberController: saida e volta ao PET", () => {
     assert.equal(res.statusCode, 200);
     assert.ok(filtro);
     assert.equal(atualizacao.active, false);
-    assert.equal(atualizacao.endPet, "2026-11-27");
+    assert.ok(atualizacao.endPet instanceof Date);
+    assert.equal(atualizacao.endPet.toISOString().slice(0, 10), "2026-11-27");
     assert.equal("description" in atualizacao, false, "sairDoPet nao deve apagar description");
     assert.equal("tags" in atualizacao, false, "sairDoPet nao deve apagar tags");
+
+    const invalido = respostaFalsa();
+    invalido.set = () => invalido;
+    await MemberController.sairDoPet(
+      { params: { memberId: "000000000000000000000001" }, body: { endPet: { $ne: null } } },
+      invalido
+    );
+    assert.equal(invalido.statusCode, 400);
 
     Member.findByIdAndUpdate = async () => null;
     const ausente = respostaFalsa();

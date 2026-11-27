@@ -149,9 +149,18 @@ module.exports = {
   },
 
   async sairDoPet(request, response) {
+    const endPet =
+      typeof request.body.endPet === "string" ? new Date(request.body.endPet) : null;
+    if (!endPet || Number.isNaN(endPet.getTime())) {
+      return response
+        .status(400)
+        .set("Content-Type", "text/plain; charset=utf-8")
+        .send("Invalid endPet");
+    }
+
     const member = await Member.findByIdAndUpdate(request.params.memberId, {
       active: false,
-      endPet: request.body.endPet,
+      endPet,
     });
     if (!member) return response.status(404).send("Member not found");
 
