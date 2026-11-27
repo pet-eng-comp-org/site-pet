@@ -1147,15 +1147,15 @@
       padding: 40px max(22px, calc((100% - 980px) / 2)) 84px;
     }
 
-    .painel-grupo {
+    .painel-menu .painel-grupo {
       padding-right: 44px;
     }
 
-    .painel-grupo-grande {
+    .painel-menu .painel-grupo-grande {
       min-width: 456px;
     }
 
-    .painel-titulo {
+    .painel-menu .painel-titulo {
       margin: 0 0 6px;
       font-size: 12px;
       font-weight: 400;
@@ -1171,11 +1171,11 @@
       list-style: none;
     }
 
-    .painel-grupo-grande ul {
+    .painel-menu .painel-grupo-grande ul {
       padding-top: 0;
     }
 
-    .painel-item a {
+    .painel-menu .painel-item a {
       display: block;
       /* A caixa tem 30 px (44 nos grandes), mas um link começa 24 px (38)
          depois do anterior. */
@@ -1190,26 +1190,26 @@
       transition: color 0.32s var(--ease-barra);
     }
 
-    .painel-grupo-grande .painel-item a {
+    .painel-menu .painel-grupo-grande .painel-item a {
       padding: 9px 0 7px;
       font-size: 24px;
       line-height: 28px;
       letter-spacing: 0.009em;
     }
 
-    .painel-item a:hover,
-    .painel-item a:focus-visible {
+    .painel-menu .painel-item a:hover,
+    .painel-menu .painel-item a:focus-visible {
       color: var(--barra-texto);
     }
 
-    .painel-item a:focus-visible {
+    .painel-menu .painel-item a:focus-visible {
       outline: 2px solid var(--barra-texto);
       outline-offset: 2px;
       border-radius: 4px;
     }
 
-    .painel-titulo,
-    .painel-item {
+    .painel-menu .painel-titulo,
+    .painel-menu .painel-item {
       opacity: 0;
       transform: translateY(-4px);
       transition-property: opacity, transform;
@@ -1217,8 +1217,8 @@
       transition-duration: min(0.16s + (var(--total) - 1 - var(--item, 0)) * 20ms, 0.24s);
     }
 
-    [data-painel] .painel-titulo,
-    [data-painel] .painel-item {
+    [data-painel] .painel-menu .painel-titulo,
+    [data-painel] .painel-menu .painel-item {
       opacity: 1;
       transform: none;
       transition-duration: 0.32s;
@@ -1228,8 +1228,8 @@
     /* Ao trocar de item com o painel aberto, os links do novo entram do mesmo
        jeito. */
     @starting-style {
-      [data-painel] .painel-titulo,
-      [data-painel] .painel-item {
+      [data-painel] .painel-menu .painel-titulo,
+      [data-painel] .painel-menu .painel-item {
         opacity: 0;
         transform: translateY(-4px);
       }
@@ -1283,10 +1283,10 @@
     .barra::after,
     .painel-menu,
     [data-painel] .painel-menu,
-    .painel-titulo,
-    .painel-item,
-    [data-painel] .painel-titulo,
-    [data-painel] .painel-item {
+    .painel-menu .painel-titulo,
+    .painel-menu .painel-item,
+    [data-painel] .painel-menu .painel-titulo,
+    [data-painel] .painel-menu .painel-item {
       transition: none;
     }
   }

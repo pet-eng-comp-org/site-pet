@@ -90,7 +90,7 @@
   }
 
   /* Foto, nome e ações numa linha na tela larga; no celular, as ações descem. */
-  .painel-item {
+  .painel .painel-item {
     display: grid;
     grid-template-columns: 56px minmax(0, 1fr) auto;
     align-items: center;
@@ -138,11 +138,11 @@
   }
 
   @media (max-width: 767.98px) {
-    .painel-item {
+    .painel .painel-item {
       grid-template-columns: 48px minmax(0, 1fr);
     }
 
-    .painel-item .painel-foto {
+    .painel .painel-item .painel-foto {
       width: 48px;
       height: 48px;
     }
@@ -214,11 +214,11 @@
   }
 
   /* Dica de um grupo vem antes das opções. */
-  .painel-grupo > .campo-dica {
+  .painel .painel-grupo > .campo-dica {
     margin: 0 0 0.5rem;
   }
 
-  .painel-grupo legend {
+  .painel .painel-grupo legend {
     display: block;
     margin-bottom: 0.25rem;
     font-weight: 600;
@@ -291,7 +291,7 @@
     flex: 1;
   }
 
-  .painel-grupo {
+  .painel .painel-grupo {
     margin: 0 0 1.25rem;
     padding: 0;
     border: 0;
