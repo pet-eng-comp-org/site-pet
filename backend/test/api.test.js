@@ -157,6 +157,7 @@ describe("rotas do painel", () => {
     ["GET", "/api/members/showEgressAll"],
     ["PUT", `/api/members/${ID}`],
     ["PATCH", `/api/members/sairDoPet/${ID}`],
+    ["PATCH", `/api/members/voltarAoPet/${ID}`],
     ["PATCH", `/api/members/firstProfilePhoto/${ID}`],
     ["PATCH", `/api/members/updateProfilePhoto/${ID}`],
     ["DELETE", `/api/members/${ID}`],
@@ -499,5 +500,88 @@ describe("seguranca", () => {
     require("node:fs").rmSync(path.join(RAIZ, "uploads", "documents", arquivo.key), { force: true });
     assert.equal(arquivo.name, "edital #1 & anexo.pdf", "o site continua mostrando o nome enviado");
     assert.match(arquivo.key, /^[0-9a-f]{32}\.pdf$/);
+  });
+});
+
+describe("saida e volta de petiano", () => {
+  it("sairDoPet preserva descricao/tags e bloqueia login; voltarAoPet reativa e devolve 404 para id inexistente", async () => {
+    const token = await entra();
+    const auth = { authorization: `Bearer ${token}`, "content-type": "application/json" };
+    const email = "egresso.volta@exemplo.com";
+    const senha = "senha-egresso-volta";
+    const criado = await api("POST", "/api/members/", {
+      headers: auth,
+      corpo: JSON.stringify({
+        memberName: "Petiano Retorno",
+        description: "Descricao preservada na saida",
+        email,
+        password: senha,
+        phone: "(27) 99999-0000",
+        startPet: "2025-01-01",
+        active: true,
+        tutor: false,
+        tags: [{ title: "Dev" }],
+        socialMidia: [],
+      }),
+    });
+    assert.equal(criado.status, 200, await criado.clone().text());
+    const id = await criado.json();
+
+    try {
+      const loginAntes = await api("GET", "/api/login/", {
+        headers: { authorization: `Basic ${Buffer.from(`${email}:${senha}`).toString("base64")}` },
+      });
+      assert.equal(loginAntes.status, 200);
+      const tokenAntes = (await loginAntes.json()).token;
+
+      const sai = await api("PATCH", `/api/members/sairDoPet/${id}`, {
+        headers: auth,
+        corpo: JSON.stringify({ endPet: "2026-11-27" }),
+      });
+      assert.equal(sai.status, 200);
+
+      // Token emitido antes da saida e revogado na hora (nao pode se autorreativar)
+      const autoReativar = await api("PATCH", `/api/members/voltarAoPet/${id}`, {
+        headers: { authorization: `Bearer ${tokenAntes}` },
+      });
+      assert.equal(autoReativar.status, 401);
+
+      const aposSair = await conexao.db.collection("members").findOne({ _id: new mongoose.Types.ObjectId(id) });
+      assert.equal(aposSair.active, false);
+      assert.equal(aposSair.description, "Descricao preservada na saida");
+      assert.equal(aposSair.tags.length, 1);
+      assert.equal(aposSair.tags[0].title, "Dev");
+      assert.ok(aposSair.endPet);
+
+      const loginBloqueado = await api("GET", "/api/login/", {
+        headers: { authorization: `Basic ${Buffer.from(`${email}:${senha}`).toString("base64")}` },
+      });
+      assert.equal(loginBloqueado.status, 401);
+
+      const volta = await api("PATCH", `/api/members/voltarAoPet/${id}`, { headers: auth });
+      assert.equal(volta.status, 200);
+
+      const aposVoltar = await conexao.db.collection("members").findOne({ _id: new mongoose.Types.ObjectId(id) });
+      assert.equal(aposVoltar.active, true);
+      assert.equal(aposVoltar.endPet, null);
+      assert.equal(aposVoltar.description, "Descricao preservada na saida");
+      assert.equal(aposVoltar.tags[0].title, "Dev");
+
+      const loginRestaurado = await api("GET", "/api/login/", {
+        headers: { authorization: `Basic ${Buffer.from(`${email}:${senha}`).toString("base64")}` },
+      });
+      assert.equal(loginRestaurado.status, 200);
+
+      const naoExiste = await api("PATCH", `/api/members/voltarAoPet/${ID}`, { headers: auth });
+      assert.equal(naoExiste.status, 404);
+
+      const sairNaoExiste = await api("PATCH", `/api/members/sairDoPet/${ID}`, {
+        headers: auth,
+        corpo: JSON.stringify({ endPet: "2026-11-27" }),
+      });
+      assert.equal(sairNaoExiste.status, 404);
+    } finally {
+      await conexao.db.collection("members").deleteOne({ _id: new mongoose.Types.ObjectId(id) });
+    }
   });
 });

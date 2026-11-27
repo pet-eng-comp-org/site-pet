@@ -149,21 +149,32 @@ module.exports = {
   },
 
   async sairDoPet(request, response) {
-    try {
-      const member = await Member.findByIdAndUpdate(
-        { _id: request.params.memberId },
-        {
-          active: false,
-          description: null,
-          tags: null,
-          endPet: request.body.endPet,
-        }
-      );
-
-      response.status(200).send("Success");
-    } catch (err) {
-      throw err;
+    const endPet =
+      typeof request.body.endPet === "string" ? new Date(request.body.endPet) : null;
+    if (!endPet || Number.isNaN(endPet.getTime())) {
+      return response
+        .status(400)
+        .set("Content-Type", "text/plain; charset=utf-8")
+        .send("Invalid endPet");
     }
+
+    const member = await Member.findByIdAndUpdate(request.params.memberId, {
+      active: false,
+      endPet,
+    });
+    if (!member) return response.status(404).send("Member not found");
+
+    return response.status(200).send("Success");
+  },
+
+  async voltarAoPet(request, response) {
+    const member = await Member.findByIdAndUpdate(request.params.memberId, {
+      active: true,
+      endPet: null,
+    });
+    if (!member) return response.status(404).send("Member not found");
+
+    return response.status(200).send("Success");
   },
 
   async firstProfilePhoto(request, response) {

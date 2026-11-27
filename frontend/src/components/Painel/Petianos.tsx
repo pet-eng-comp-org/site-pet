@@ -25,7 +25,7 @@ import type { Comissao, Membro } from "../../tipos";
 // No painel, o cadastro vem com o e-mail e o celular, que o site não mostra.
 type Petiano = Membro & { email?: string; phone?: string };
 
-type Aberto = { tipo: "novo" } | { tipo: "editar" | "saida" | "excluir"; petiano: Petiano } | null;
+type Aberto = { tipo: "novo" } | { tipo: "editar" | "saida" | "voltar" | "excluir"; petiano: Petiano } | null;
 
 const REDES: [string, string][] = [
   ["instagram", "Instagram"],
@@ -105,9 +105,13 @@ function Petianos() {
                 <button type="button" className="botao-secundario" onClick={() => setAberto({ tipo: "editar", petiano: p })}>
                   Editar<span className="sr-only"> {p.memberName}</span>
                 </button>
-                {p.active && (
+                {p.active ? (
                   <button type="button" className="botao-secundario" onClick={() => setAberto({ tipo: "saida", petiano: p })}>
                     Registrar saída<span className="sr-only"> de {p.memberName}</span>
+                  </button>
+                ) : (
+                  <button type="button" className="botao-secundario" onClick={() => setAberto({ tipo: "voltar", petiano: p })}>
+                    Voltar ao PET<span className="sr-only"> ({p.memberName})</span>
                   </button>
                 )}
                 <button type="button" className="botao-texto-perigo" onClick={() => setAberto({ tipo: "excluir", petiano: p })}>
@@ -148,6 +152,24 @@ function Petianos() {
       )}
       {aberto?.tipo === "saida" && (
         <Saida petiano={aberto.petiano} aoFechar={fechar} aoSalvar={membros.recarregar} />
+      )}
+      {aberto?.tipo === "voltar" && (
+        <Confirmar
+          titulo={`Voltar ${aberto.petiano.memberName} para o PET?`}
+          texto={
+            aberto.petiano.description?.trim()
+              ? "A pessoa volta a aparecer em Quem somos e volta a poder entrar no painel."
+              : "A pessoa volta a aparecer em Quem somos e volta a poder entrar no painel. Como o cadastro está sem descrição, abra “Editar” depois para preenchê-la."
+          }
+          acao="Voltar ao PET"
+          perigo={false}
+          aoFechar={fechar}
+          aoConfirmar={async () => {
+            await painel.patch(`api/members/voltarAoPet/${aberto.petiano._id}`);
+            avisar(`${aberto.petiano.memberName} voltou para os petianos atuais.`);
+            membros.recarregar();
+          }}
+        />
       )}
       {aberto?.tipo === "excluir" && (
         <Confirmar
