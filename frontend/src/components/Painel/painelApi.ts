@@ -26,6 +26,7 @@ const traducoes: [RegExp, string][] = [
   [/Já existe uma seleção aberta/i, "Já existe uma seleção aberta. Encerre-a antes de criar outra."],
   [/Invalid Token|Access Denied/i, "Sua sessão expirou. Entre de novo."],
   [/invalid old password/i, "A senha de agora não confere."],
+  [/member not found/i, "Esse cadastro não existe mais. Atualize a página."],
 ];
 
 export const erroDe = (erro: unknown): string => {

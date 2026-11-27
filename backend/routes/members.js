@@ -13,6 +13,7 @@ router.get("/showEgress", memberController.showEgress);
 router.get("/showEgressAll", verify, memberController.showEgressAll);
 router.put("/:memberId", verify, memberController.update);
 router.patch("/sairDoPet/:memberId", verify, memberController.sairDoPet);
+router.patch("/voltarAoPet/:memberId", verify, memberController.voltarAoPet);
 router.patch(
   "/firstProfilePhoto/:memberId",
   verify,
